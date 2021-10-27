@@ -19,7 +19,10 @@
 using namespace Eigen;
 using namespace std;
 
-
+// Eigen is supposedly optimized for "using the entire processor",
+// thus hyperthreading is counterproductive
+// source: https://eigen.tuxfamily.org/dox/TopicMultiThreading.html
+#define HYPERTHREADING 0      // 1 if hyperthreading is on, 0 otherwise
 
 
 
@@ -27,9 +30,6 @@ void toy_simulation(int argc, char* argv[]){
 
     // Ring size initialization
     const int N = 20;
-
-
-
 
     // Open files
     ofstream cfiles[N];

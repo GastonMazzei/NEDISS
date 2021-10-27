@@ -4,11 +4,23 @@
 #include <Eigen/Sparse>
 #include <string>
 #include "graph.h"
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/graph_traits.hpp>
+
 #include <vector>
 #include <algorithm>
 #include <algorithm>
+
+// Parallel & Distributed libraries
+#include <boost/mpi.hpp>
+#include <boost/graph/use_mpi.hpp>
+#include <boost/graph/distributed/mpi_process_group.hpp>
+#include <boost/graph/distributed/adjacency_list.hpp>
+
+// Sequential libraries
+//#include <boost/graph/adjacency_list.hpp>
+
+// Common libraries
+#include <boost/graph/graph_traits.hpp>
+
 
 #include <boost/graph/erdos_renyi_generator.hpp>
 

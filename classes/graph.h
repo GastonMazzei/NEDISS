@@ -5,18 +5,28 @@
 #include <Eigen/Sparse>
 #include <string>
 #include "../utils/error.h"
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/graph_traits.hpp>
+
 #include <omp.h>
 #include <vector>
 #include <algorithm>
+
+// Parallel & Distributed libraries
 #include <boost/mpi.hpp>
-//#include <boost/graph/use_mpi.hpp>
+#include <boost/graph/use_mpi.hpp>
+#include <boost/graph/distributed/mpi_process_group.hpp>
+#include <boost/graph/distributed/adjacency_list.hpp>
 
-//#include <boost/graph/distributed/mpi_process_group.hpp>
-//#include <boost/graph/erdos_renyi_generator.hpp>
+// Sequential libraries
+//#include <boost/graph/adjacency_list.hpp>
 
-using namespace boost;
+// Common libraries
+#include <boost/graph/graph_traits.hpp>
+
+
+#include <boost/graph/erdos_renyi_generator.hpp>
+
+
+
 
 
 // SMALL WORLD https://www.boost.org/doc/libs/1_74_0/libs/graph/doc/small_world_generator.html
@@ -31,19 +41,17 @@ using namespace boost;
 
 using namespace std;
 using namespace Eigen;
-
+using namespace boost;
 
 
 
 // more info here: https://valelab4.ucsf.edu/svn/3rdpartypublic/boost/libs/graph/doc/quick_tour.html
 class GraphObject {
 public:
-    typedef adjacency_list<vecS, vecS, bidirectionalS> Graph;
+    //typedef adjacency_list<vecS, vecS, bidirectionalS> Graph;
     // choosing if list, vec or set: we chose vec
     // https://www.boost.org/doc/libs/1_77_0/libs/graph/doc/using_adjacency_list.html
-//    typedef adjacency_list<vecS,
-//            distributedS<parallel::mpi::bsp_process_group, vecS>,
-//    bidirectionalS> Graph;
+    typedef adjacency_list<vecS, distributedS<graph::distributed::mpi_process_group, vecS>, bidirectionalS> Graph;
     typedef graph_traits<Graph>::vertex_descriptor Vertex;
     typedef pair<int, int> Edge;
     Graph g;
