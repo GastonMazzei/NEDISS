@@ -22,7 +22,7 @@ using namespace std;
 // Eigen is supposedly optimized for "using the entire processor",
 // thus hyperthreading is counterproductive
 // source: https://eigen.tuxfamily.org/dox/TopicMultiThreading.html
-#define HYPERTHREADING 0      // 1 if hyperthreading is on, 0 otherwise
+//#define HYPERTHREADING 0      // 1 if hyperthreading is on, 0 otherwise
 
 
 

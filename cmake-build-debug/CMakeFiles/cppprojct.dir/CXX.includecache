@@ -7,30 +7,8 @@
 #IncludeRegexTransform: 
 
 /home/m4zz31/cppprojct/classes/graph.cpp
-Eigen/Sparse
--
-string
--
 graph.h
 /home/m4zz31/cppprojct/classes/graph.h
-vector
--
-algorithm
--
-algorithm
--
-boost/mpi.hpp
--
-boost/graph/use_mpi.hpp
--
-boost/graph/distributed/mpi_process_group.hpp
--
-boost/graph/distributed/adjacency_list.hpp
--
-boost/graph/graph_traits.hpp
--
-boost/graph/erdos_renyi_generator.hpp
--
 
 /home/m4zz31/cppprojct/classes/graph.h
 iostream
@@ -54,6 +32,14 @@ boost/graph/use_mpi.hpp
 boost/graph/distributed/mpi_process_group.hpp
 -
 boost/graph/distributed/adjacency_list.hpp
+-
+boost/mpi/communicator.hpp
+-
+boost/graph/distributed/named_graph.hpp
+-
+boost/graph/adjacency_list.hpp
+-
+boost/graph/named_graph.hpp
 -
 boost/graph/graph_traits.hpp
 -
