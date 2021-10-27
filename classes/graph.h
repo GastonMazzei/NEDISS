@@ -27,7 +27,7 @@
 #include <boost/graph/graph_traits.hpp>
 
 
-#include <boost/graph/erdos_renyi_generator.hpp>
+
 
 //--------------------MORE IMPORTS!--------------------
 //#include <boost/graph/adjacency_list.hpp>
@@ -147,10 +147,10 @@ public:
     typedef adjacency_list<vecS, distributedS<graph::distributed::mpi_process_group, vecS>,
             bidirectionalS, DynamicNode, DynamicEdge> Graph;
     //----------------
-
     Graph g;
-    int N;
-    GraphObject(int indicated_type, int num_nodes);
+    unsigned long N;
+    GraphObject(int indicated_type, unsigned long num_nodes);
+
 
 
     // a map that could give the value of the nodes but is not working!
