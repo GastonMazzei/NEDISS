@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 project(cppprojct)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_COMPILER mpicxx)
+set(CMAKE_CXX_COMPILER mpic++)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I/usr/lib/eigen")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L/usr/lib/eigen")

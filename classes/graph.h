@@ -11,7 +11,7 @@
 #include <vector>
 #include <algorithm>
 #include <boost/mpi.hpp>
-#include <boost/graph/use_mpi.hpp>
+//#include <boost/graph/use_mpi.hpp>
 
 //#include <boost/graph/distributed/mpi_process_group.hpp>
 //#include <boost/graph/erdos_renyi_generator.hpp>

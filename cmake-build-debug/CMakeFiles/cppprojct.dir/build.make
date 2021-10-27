@@ -79,54 +79,54 @@ include CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/main.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/main.cpp.o: ../main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/cppprojct.dir/main.cpp.o"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/main.cpp.o -c /home/m4zz31/cppprojct/main.cpp
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/main.cpp.o -c /home/m4zz31/cppprojct/main.cpp
 
 CMakeFiles/cppprojct.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/main.cpp.i"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/main.cpp > CMakeFiles/cppprojct.dir/main.cpp.i
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/main.cpp > CMakeFiles/cppprojct.dir/main.cpp.i
 
 CMakeFiles/cppprojct.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/main.cpp.s"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/main.cpp -o CMakeFiles/cppprojct.dir/main.cpp.s
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/main.cpp -o CMakeFiles/cppprojct.dir/main.cpp.s
 
 CMakeFiles/cppprojct.dir/utils/timers.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/utils/timers.cpp.o: ../utils/timers.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/cppprojct.dir/utils/timers.cpp.o"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/utils/timers.cpp.o -c /home/m4zz31/cppprojct/utils/timers.cpp
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/utils/timers.cpp.o -c /home/m4zz31/cppprojct/utils/timers.cpp
 
 CMakeFiles/cppprojct.dir/utils/timers.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/utils/timers.cpp.i"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/utils/timers.cpp > CMakeFiles/cppprojct.dir/utils/timers.cpp.i
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/utils/timers.cpp > CMakeFiles/cppprojct.dir/utils/timers.cpp.i
 
 CMakeFiles/cppprojct.dir/utils/timers.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/utils/timers.cpp.s"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/utils/timers.cpp -o CMakeFiles/cppprojct.dir/utils/timers.cpp.s
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/utils/timers.cpp -o CMakeFiles/cppprojct.dir/utils/timers.cpp.s
 
 CMakeFiles/cppprojct.dir/classes/graph.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/classes/graph.cpp.o: ../classes/graph.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/cppprojct.dir/classes/graph.cpp.o"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/classes/graph.cpp.o -c /home/m4zz31/cppprojct/classes/graph.cpp
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/classes/graph.cpp.o -c /home/m4zz31/cppprojct/classes/graph.cpp
 
 CMakeFiles/cppprojct.dir/classes/graph.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/classes/graph.cpp.i"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/classes/graph.cpp > CMakeFiles/cppprojct.dir/classes/graph.cpp.i
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/classes/graph.cpp > CMakeFiles/cppprojct.dir/classes/graph.cpp.i
 
 CMakeFiles/cppprojct.dir/classes/graph.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/classes/graph.cpp.s"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/classes/graph.cpp -o CMakeFiles/cppprojct.dir/classes/graph.cpp.s
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/classes/graph.cpp -o CMakeFiles/cppprojct.dir/classes/graph.cpp.s
 
 CMakeFiles/cppprojct.dir/utils/error.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/utils/error.cpp.o: ../utils/error.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/cppprojct.dir/utils/error.cpp.o"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/utils/error.cpp.o -c /home/m4zz31/cppprojct/utils/error.cpp
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/utils/error.cpp.o -c /home/m4zz31/cppprojct/utils/error.cpp
 
 CMakeFiles/cppprojct.dir/utils/error.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/utils/error.cpp.i"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/utils/error.cpp > CMakeFiles/cppprojct.dir/utils/error.cpp.i
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/utils/error.cpp > CMakeFiles/cppprojct.dir/utils/error.cpp.i
 
 CMakeFiles/cppprojct.dir/utils/error.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/utils/error.cpp.s"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/utils/error.cpp -o CMakeFiles/cppprojct.dir/utils/error.cpp.s
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/utils/error.cpp -o CMakeFiles/cppprojct.dir/utils/error.cpp.s
 
 # Object files for target cppprojct
 cppprojct_OBJECTS = \

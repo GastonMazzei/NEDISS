@@ -47,8 +47,6 @@ algorithm
 -
 boost/mpi.hpp
 -
-boost/graph/use_mpi.hpp
--
 
 /home/m4zz31/cppprojct/main.cpp
 iostream

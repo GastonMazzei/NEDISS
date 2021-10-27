@@ -1,1 +1,1 @@
-mpicxx  -I/usr/lib/eigen -g  -L/usr/lib/eigen CMakeFiles/cppprojct.dir/main.cpp.o CMakeFiles/cppprojct.dir/utils/timers.cpp.o CMakeFiles/cppprojct.dir/classes/graph.cpp.o CMakeFiles/cppprojct.dir/utils/error.cpp.o -o cppprojct  /usr/lib/gcc/x86_64-linux-gnu/7/libgomp.so -lpthread 
+mpic++  -I/usr/lib/eigen -g  -L/usr/lib/eigen CMakeFiles/cppprojct.dir/main.cpp.o CMakeFiles/cppprojct.dir/utils/timers.cpp.o CMakeFiles/cppprojct.dir/classes/graph.cpp.o CMakeFiles/cppprojct.dir/utils/error.cpp.o -o cppprojct  /usr/lib/gcc/x86_64-linux-gnu/7/libgomp.so -lpthread 
