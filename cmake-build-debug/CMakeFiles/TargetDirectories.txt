@@ -1,0 +1,3 @@
+/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir
