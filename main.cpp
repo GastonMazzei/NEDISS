@@ -1,20 +1,22 @@
 #include <iostream>
-#include <vector>
-#include <iostream>
+#include "mpi.h"
+//#include <vector>
+//#include <iostream>
 #include <string>
-#include <random>
+//#include <random>
 #include <omp.h>
-#include <algorithm>
-#include <iterator>
-#include <chrono>
+//#include <algorithm>
+//#include <iterator>
+//#include <chrono>
 #include  <cmath>
+#include <random>
 #include "utils/timers.h"
-#include "utils/error.h"
+//#include "utils/error.h"
 #include "classes/graph.h"
-#include <Eigen/Dense>
-#include <iostream>
-#include <math.h>
-#include <fstream>
+//#include <Eigen/Dense>
+//#include <iostream>
+//#include <math.h>
+//#include <fstream>
 
 using namespace Eigen;
 using namespace std;
@@ -106,16 +108,25 @@ void test_graph(){
 
     // intended type = 0 for fully connected
     // num_vertices = 5 for this test
+    // probability = 0.1 for Erdos Renyi
+    //GraphObject G(1, 5, 0.1);
     GraphObject G(0, 5);
-    G.showVertex();
-    G.showEdges();
+    //G.showVertex();
+    //G.showEdges();
 }
 
 
-int main(int argc, char* argv[])
+int main(int argc, char** argv)
 {
 
+
+    MPI_Init(&argc, &argv);
     // toy_simulation(argc, argv)
     test_graph();
-    return 0;
+
+
+    cout << "all was O.K. it seems" << endl;
+
+    int exit_status = MPI_Finalize();
+    return exit_status;
 }

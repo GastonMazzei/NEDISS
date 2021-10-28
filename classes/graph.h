@@ -15,8 +15,15 @@
 #include <boost/graph/use_mpi.hpp>
 #include <boost/graph/distributed/mpi_process_group.hpp>
 #include <boost/graph/distributed/adjacency_list.hpp>
-#include <boost/mpi/communicator.hpp>
+//#include <boost/mpi/communicator.hpp>
 #include <boost/graph/distributed/named_graph.hpp>
+#include <boost/graph/parallel/process_group.hpp>
+#include <boost/assert.hpp>
+#include <boost/property_map/property_map.hpp>
+#include <boost/property_map/parallel/caching_property_map.hpp>
+#include <boost/graph/parallel/algorithm.hpp>
+#include <boost/graph/connected_components.hpp>
+#include <boost/graph/parallel/process_group.hpp>
 
 
 // Sequential libraries
@@ -29,7 +36,7 @@
 
 
 
-//--------------------MORE IMPORTS!--------------------
+//--------------------MORE IMPORTS WE ARE NOT USING!--------------------
 //#include <boost/graph/adjacency_list.hpp>
 //#include <boost/graph/properties.hpp>
 //#include <boost/graph/graph_traits.hpp>
@@ -78,12 +85,15 @@ using namespace Eigen;
 using namespace boost;
 
 
+//--------------- SEQUENTIAL ADJACENCY LISTS
+//typedef adjacency_list<vecS, vecS, bidirectionalS> Graph;
+// a very humble definition of an edge and a vertex:
+// typedef pair<int, int> Edge; typedef graph_traits<Graph>::vertex_descriptor Vertex;
 
 
 
 // Dynamic Nodes are the elements we want to evolve over time
 // it should have:
-// (0) its ID, which is a string and should be unique.
 // (1) its value:
 //      - 1 dimensional for Kuramoto
 //      - 3 dimensional for Rossler Oscillators
@@ -92,16 +102,19 @@ using namespace boost;
 // (3) NOT IMPLEMENTED: a memory capacity that  potentially can remember N_neighbors * msg
 struct DynamicNode {
     DynamicNode() { }
-    DynamicNode(const int& name, int value): name(name), value(value) { };
-    DynamicNode(const int& name): name(name) { };
-    int name;
+    DynamicNode(int value): value(value) { };
     int value;
     // Serialization support is required!
     template<typename Archiver> /*version is const unsigned int*/
-    void serialize(Archiver& ar, const unsigned int version) {
-        ar & name & value;
+    void serialize(Archiver& ar, const unsigned int /*version*/) {
+        ar & value;
     }
 };
+
+
+
+
+
 
 // Edges should have  a (double precission) value which will always
 // account for some sort of "interaction"
@@ -111,47 +124,70 @@ struct DynamicEdge {
     double value;
     // Serialization support is required!
     template<typename Archiver>
-    void serialize(Archiver& ar, const unsigned int version) {
+    void serialize(Archiver& ar, const unsigned int /*version*/) {
         ar & value;
     }
 };
 
-// Enabling named vertices
-namespace boost { namespace graph {
-        template<>
-        struct internal_vertex_name<DynamicNode>
-        {
-            typedef multi_index::member<DynamicNode, int, &DynamicNode::name> type;
-        };
-}}
 
-// Enabling vertex creation in absence of previous existence,
-// in particular avoiding raising an exception
-namespace boost { namespace graph {
-        template<>
-        struct internal_vertex_constructor<DynamicNode>
-        {
-            typedef vertex_from_name<DynamicNode> type;
-        };
-}}
+
+
+// -----------named nodes were disabled for parallelization with iterators
+//
+//
+//Enabling named vertices
+//namespace boost { namespace graph {
+//        template<>
+//        struct internal_vertex_name<DynamicNode>
+//        {
+//            typedef multi_index::member<DynamicNode, int, &DynamicNode::name> type;
+//        };
+//}}
+//// Enabling vertex creation in absence of previous existence,
+//// in particular avoiding raising an exception
+//namespace boost { namespace graph {
+//        template<>
+//        struct internal_vertex_constructor<DynamicNode>
+//        {
+//            typedef vertex_from_name<DynamicNode> type;
+//        };
+//}}
+
+
+
+// INTERESTING STRUCTURE FOR A GENERALIZATION
+// after https://github.com/mousebird/boost/blob/master/libs/graph_parallel/test/distributed_betweenness_centrality_test.cpp
+//#ifdef CSR
+//typedef compressed_sparse_row_graph<directedS, no_property, WeightedEdge,
+//                                      no_property, distributedS<mpi_process_group> >
+//    Graph;
+//  typedef compressed_sparse_row_graph<directedS, no_property, WeightedEdge>
+//    seqGraph;
+//#else
+//typedef adjacency_list<vecS,
+//        distributedS<mpi_process_group, vecS>,
+//        directedS,
+//        no_property,
+//        property<edge_weight_t, int> > Graph;
+//
+//typedef adjacency_list<vecS, vecS, directedS, no_property,
+//        property<edge_weight_t, int> > seqGraph;
+//#endif
+
+
+typedef adjacency_list<vecS, distributedS<graph::distributed::mpi_process_group, vecS>,
+        bidirectionalS, DynamicNode, DynamicEdge> Graph;
+
+
 
 class GraphObject {
 public:
-    //--------------- adjacency lists are chosen using vectors:
-    // if sequential:
-    //typedef adjacency_list<vecS, vecS, bidirectionalS> Graph;
-    // a very humble definition of an edge and a vertex:
-    // typedef pair<int, int> Edge; typedef graph_traits<Graph>::vertex_descriptor Vertex;
-    // else
-    distributedS<graph::distributed::mpi_process_group, vecS> q;
-    typedef adjacency_list<vecS, distributedS<graph::distributed::mpi_process_group, vecS>,
-            bidirectionalS, DynamicNode, DynamicEdge> Graph;
-    //----------------
     Graph g;
     unsigned long N;
+    unsigned long E;
+    GraphObject();
     GraphObject(int indicated_type, unsigned long num_nodes);
-
-
+    GraphObject(int indicated_type, unsigned long num_nodes, double probability);
 
     // a map that could give the value of the nodes but is not working!
     //
@@ -165,6 +201,8 @@ public:
     // Potentially drawable if pipelined in graphviz format.
     void showVertex();
     void showEdges();
+
+
 };
 
 
@@ -172,25 +210,3 @@ public:
 #endif //CPPPROJCT_GRAPH_H
 
 
-//template <class Iter, class ID>
-//typename std::iterator_traits<Iter>::value_type
-//get(const iterator_map<Iter,ID>& i,
-//    typename boost::property_traits<ID>::key_type key)
-//{
-//    return i.m_iter[i.m_id[key]];
-//}
-//template <class Iter, class ID>
-//void
-//put(const iterator_map<Iter,ID>& i,
-//    typename boost::property_traits<ID>::key_type key,
-//    const typename std::iterator_traits<Iter>::value_type& value)
-//{
-//    i.m_iter[i.m_id[key]] = value;
-//}
-//template <class Iter, class ID>
-//typename std::iterator_traits<Iter>::reference
-//at(const iterator_map<Iter,ID>& i,
-//   typename boost::property_traits<ID>::key_type key)
-//{
-//    return i.m_iter[i.m_id[key]];
-//}

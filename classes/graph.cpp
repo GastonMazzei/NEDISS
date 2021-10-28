@@ -4,9 +4,33 @@
 
 #include "graph.h"
 #include <boost/random/linear_congruential.hpp>
+#include <boost/graph/erdos_renyi_generator.hpp>
 
 using namespace std;
 using namespace boost;
+
+
+typedef graph_traits<Graph>::vertex_descriptor vertex_descriptor;
+typedef graph_traits<Graph>::edge_descriptor edge_descriptor;
+
+
+
+
+
+
+
+// STUFF FOR PARALLEL BOT GRAPH
+//
+//    typedef boost::graph::parallel::process_group_type<Graph>::type
+//            process_group_type;
+//    process_group_type pg = process_group(g);
+//
+//    process_group_type::process_id_type id = process_id(pg);
+//    process_group_type::process_size_type p = num_processes(pg);
+
+
+
+
 
 void GraphObject::showVertex(){
 //    auto vpair = vertices(g);
@@ -14,6 +38,33 @@ void GraphObject::showVertex(){
 //        cout << "Vertex is: " << *iter << endl;
 //    }
 
+    typedef property_map<Graph, vertex_index_t>::const_type IndexMap;
+    typedef iterator_property_map<std::vector<int>::iterator, IndexMap>
+            CentralityMap;
+
+    std::vector<int> centralityS(num_vertices(g), 0);
+    CentralityMap centrality(centralityS.begin(), get(vertex_index, g));
+
+    typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
+    vertex_iterator v, v_end;
+
+    // We're cheating when we map vertices in g to vertices in sg
+    // since we know that g is using the block distribution here
+//    typedef property_map<Graph, vertex_owner_t>::const_type OwnerMap;
+//    typedef property_map<Graph, vertex_local_t>::const_type LocalMap;
+//    OwnerMap owner = get(vertex_owner, g);
+//    LocalMap local = get(vertex_local, g);
+
+
+//    for (boost::tie(v, v_end) = vertices(g); v != v_end; ++v) {
+//        cout << get(centrality, *v) << endl;
+//        cout << get(owner, *v) << endl;
+//        cout << get(local, *v) << endl;
+//    }
+//
+//    graph_traits<Graph>::vertex_descriptor start = vertex(0, g);
+//    property_map<Graph, DynamicNode>::type value =
+//            get(vertex_distance, g);
 }
 
 void GraphObject::showEdges(){
@@ -25,61 +76,64 @@ void GraphObject::showEdges(){
 
 
 
-template<typename RandomGenerator, typename Graph>
-class sorted_erdos_renyi_iterator
-{
-public:
-    typedef std::input_iterator_tag iterator_category;
-    typedef std::pair<vertices_size_type, vertices_size_type> value_type;
-    typedef const value_type& reference;
-    typedef const value_type* pointer;
-    typedef void difference_type;
+GraphObject::GraphObject(int indicated_type, unsigned long num_nodes, double probability){
+    // ALLOWED: Erdos Renyi (1)
+    // NOT IMPLEMENTED YET: ...
+    // DISALLOWED: Clique (0)
 
-    sorted_erdos_renyi_iterator();
-    sorted_erdos_renyi_iterator(RandomGenerator& gen, vertices_size_type n,
-                                double probability = 0.0, bool allow_self_loops = false);
+    if (indicated_type == 0) {
+        error_report("Dont initialize Clique using a probability: exiting because user might be confused");
+    }
 
-    // Iterator operations
-    reference operator*() const;
-    pointer operator->() const;
-    sorted_erdos_renyi_iterator& operator++();
-    sorted_erdos_renyi_iterator operator++(int);
-    bool operator==(const sorted_erdos_renyi_iterator& other) const;
-    bool operator!=(const sorted_erdos_renyi_iterator& other) const;
-};
+    // if this is Erdos Renyi then
+    N = num_nodes;
+    E = (long) (probability * (double) N);
 
+    typedef sorted_erdos_renyi_iterator<boost::minstd_rand, Graph> ERGen;
+    minstd_rand gen;
+#pragma omp parallel
+    // I guess this should only change something if each processor implements threading internally
+    {
+        Graph g(ERGen(gen, N, E, false), ERGen(), N);
+    }
 
+    //gen.seed(SEED_INT); reset seed?
+
+    // Note: edges and vertex still lack initialization for their internal values :-)
+}
 
 GraphObject::GraphObject(int indicated_type, unsigned long num_nodes) {
-    // indicated_type 0: Undirected & Fully Connected (i.e. Clique)
-    // indicated_type 1,2,... others PEND IMPLEMENT
-    //
-    // Please note that
-    // std::minstd_rand is std::linear_congruential_engine<std::uint_fast32_t, 48271, 0, 2147483647>
-    //
-    // refs of this function are:
-    // [1] https://www.boost.org/doc/libs/1_77_0/libs/graph_parallel/doc/html/distributed_adjacency_list.html
-    N = num_nodes;
-    if (indicated_type != 0) {
-        error_report("The indicated type does not exist (line 25 in graph.h)");
+    // ALLOWED: Clique (0)
+    // NOT IMPLEMENTED YET: ...
+    // DISALLOWED: Erdos Renyi (1)
+
+    if (indicated_type == 1) {
+        error_report("Erdos Renyi requires a probability");
     }
-    // This is Erdos Renyi, as per the docs [1]
-    typedef sorted_erdos_renyi_iterator<minstd_rand, Graph> ERIter;
-    minstd_rand gen;
-    Graph q(ERIter(gen, N, 0.15, false), ERIter(), N);
-    g = q;
+
+    // if this is Clique then
+    N = num_nodes;
+    E = N * (N-1);
+
+    // DOING THIS IN PARALLEL REQUIRES:
+    // https://www.boost.org/doc/libs/1_58_0/libs/graph_parallel/doc/html/index.html
+    // (accepted answer in) https://stackoverflow.com/questions/30135470/random-access-of-vertices-using-boostgraph
 
 
-    // This is Clique: it should be checked as it is probable that all the processes are lading
-    // the same data :-( [1]
-//#pragma omp parallel for collapse(2)
-//    for (int i = 0; i < num_nodes; i++) {
-//        for (int j = 0; j < num_nodes - 1; j++) {
-//            if (i != j) {
-//                add_edge(1, 2, DynamicEdge(1.), g);
-//            };
-//        }
-//    }
+    Graph g(N);
+    if (process_id(g.process_group()) == 0) {
+//#pragma omp parallel for
+            for (int i = 0; i < num_nodes; i++) {
+                add_vertex(DynamicNode(0), g);
+            }
+//#pragma omp parallel for
+            for (int i = 0; i < num_nodes; i++) {
+                for (int j = i; j < num_nodes; j++) {
+                    add_edge(vertex(i, g), vertex(j, g), g);
+                }
+            }
+    }
+    synchronize(g.process_group());
 }
 
 

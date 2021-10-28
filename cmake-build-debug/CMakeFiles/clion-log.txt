@@ -1,20 +1,40 @@
 /opt/clion-2021.1.1/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/m4zz31/cppprojct
-CMake Error at /usr/lib/cmake/Boost-1.77.0/BoostConfig.cmake:141 (find_package):
-  Could not find a package configuration file provided by "boost_lboost_mpi"
-  (requested version 1.77.0) with any of the following names:
-
-    boost_lboost_mpiConfig.cmake
-    boost_lboost_mpi-config.cmake
-
-  Add the installation prefix of "boost_lboost_mpi" to CMAKE_PREFIX_PATH or
-  set "boost_lboost_mpi_DIR" to a directory containing one of the above
-  files.  If "boost_lboost_mpi" provides a separate development package or
-  SDK, be sure it has been installed.
+CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1204 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
 Call Stack (most recent call first):
-  /usr/lib/cmake/Boost-1.77.0/BoostConfig.cmake:258 (boost_find_component)
-  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:460 (find_package)
-  CMakeLists.txt:29 (find_package)
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1326 (_Boost_COMPONENT_DEPENDENCIES)
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1935 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:26 (find_package)
 
 
--- Configuring incomplete, errors occurred!
-See also "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1204 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
+Call Stack (most recent call first):
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1326 (_Boost_COMPONENT_DEPENDENCIES)
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1935 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:26 (find_package)
+
+
+CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1204 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
+Call Stack (most recent call first):
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1326 (_Boost_COMPONENT_DEPENDENCIES)
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1935 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:26 (find_package)
+
+
+CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1204 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
+Call Stack (most recent call first):
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1326 (_Boost_COMPONENT_DEPENDENCIES)
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1935 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:26 (find_package)
+
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/m4zz31/cppprojct/cmake-build-debug

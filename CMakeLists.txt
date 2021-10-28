@@ -30,6 +30,6 @@ include_directories(${Boost_INCLUDE_DIRS})
 # Please use -02 or -03 for compilation in production
 
 # Run with mpirun or mpiexec
-add_executable(cppprojct main.cpp utils/timers.cpp utils/timers.h classes/graph.cpp classes/graph.h utils/error.cpp utils/error.h)
+add_executable(cppprojct main.cpp utils/timers.cpp utils/timers.h classes/graph.cpp classes/graph.h utils/error.cpp utils/error.h boostOverwritten/erdos_renyi_generator.h)
 target_link_libraries(cppprojct PRIVATE OpenMP::OpenMP_CXX ${Boost_LIBRARIES})
 
