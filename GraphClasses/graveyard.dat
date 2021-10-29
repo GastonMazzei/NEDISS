@@ -1,0 +1,222 @@
+
+//
+// -------------GRAVEYARD OF OLD FUNCTIONS AND METHODS
+
+//
+//GraphObject::GraphObject(int indicated_type, unsigned long num_nodes, double probability){
+//    if (indicated_type == 1) {
+//        typedef sorted_erdos_renyi_iterator<boost::minstd_rand, Graph> ERGen;
+//        boost::minstd_rand gen;
+//        //auto *g = new Graph(ERGen(gen, num_nodes, probability, false), ERGen(), num_nodes);
+//        auto *g = new Graph(ERGen(gen, num_nodes, probability, false), ERGen(), num_nodes);
+//        E = (long) (probability * (double) num_nodes);
+//        N = num_nodes;
+//        cout << "End of the Erdos  Renyi graph construction process :-) " << endl;
+//    } else throw invalid_argument("invalid type for erdos_renyi_vertex_constructor");
+//};
+//
+//
+//
+//GraphObject::GraphObject(int indicated_type, unsigned long num_nodes){
+//    if (indicated_type == 0) {
+//        if (process_id(g->process_group()) == 0) {
+////#pragma omp parallel for
+//            for (int i = 0; i < num_nodes; i++) {
+//                add_vertex(DynamicNode(0), *g);
+//                //put(IndexMap, g);
+//                cout << "Added one vertex..." << endl;
+//            }
+////#pragma omp parallel for
+//            for (int i = 0; i < num_nodes; i++) {
+//                for (int j = i; j < num_nodes; j++) {
+//                    add_edge(vertex(i, *g), vertex(j, *g), *g);
+//                }
+//            }
+//        }
+//        synchronize(g->process_group());
+//        E = num_nodes * (num_nodes - 1);
+//        N = num_nodes;
+//    } else throw invalid_argument("invalid type for clique_vertex_constructor");
+//};
+
+
+
+
+//
+//
+//
+//unsigned long GraphObject::erdos_edges(int indicated_type, unsigned long num_nodes, double probability){
+//    return (long) (probability * (double) num_nodes);
+//}
+//
+//Graph GraphObject::erdos_graph(int indicated_type, unsigned long num_nodes, double probability){
+//    typedef sorted_erdos_renyi_iterator<boost::minstd_rand, Graph> ERGen;
+//    boost::minstd_rand gen;
+//    Graph g(ERGen(gen, num_nodes, probability, false), ERGen(), num_nodes);
+//    return g;
+//}
+//
+//unsigned long GraphObject::clique_edges(int indicated_type, unsigned long num_nodes){
+//    return num_nodes * (num_nodes - 1);
+//}
+//
+//Graph GraphObject::clique_graph(int indicated_type, unsigned long num_nodes){
+//    Graph q(num_nodes);
+//    if (process_id(q.process_group()) == 0) {
+////#pragma omp parallel for
+//        for (int i = 0; i < num_nodes; i++) {
+//            add_vertex(DynamicNode(0), q);
+//            //put(IndexMap, q);
+//            cout << "Added one vertex..." << endl;
+//        }
+////#pragma omp parallel for
+//        for (int i = 0; i < num_nodes; i++) {
+//            for (int j = i; j < num_nodes; j++) {
+//                add_edge(vertex(i, q), vertex(j, q), q);
+//            }
+//        }
+//    }
+//    synchronize(q.process_group());
+//    return q;
+//}
+
+
+
+
+
+
+
+
+
+// GRAVEYARD OF OLD FUNCTIONS AND METHODS
+
+
+//unsigned long clique_vertex_constructor(int indicated_type, unsigned long num_nodes, Graph & g){
+//    if (indicated_type == 0) {
+//        if (process_id(g.process_group()) == 0) {
+////#pragma omp parallel for
+//            for (int i = 0; i < num_nodes; i++) {
+//                add_vertex(DynamicNode(0), g);
+//                //put(IndexMap, g);
+//                cout << "Added one vertex..." << endl;
+//            }
+////#pragma omp parallel for
+//            for (int i = 0; i < num_nodes; i++) {
+//                for (int j = i; j < num_nodes; j++) {
+//                    add_edge(vertex(i, g), vertex(j, g), g);
+//                }
+//            }
+//        }
+//        synchronize(g.process_group());
+//        return num_nodes * (num_nodes - 1);
+//    } else throw invalid_argument("invalid type for clique_vertex_constructor");
+//}
+
+//unsigned long erdos_renyi_vertex_constructor(int indicated_type, unsigned long num_nodes, double probability, Graph & g){
+//    if (indicated_type == 1) {
+
+//        auto *g = new Graph(ERGen(gen, num_nodes, probability, false), ERGen(), num_nodes);
+//        return (long) (probability * (double) num_nodes);
+//    } else throw invalid_argument("invalid type for erdos_renyi_vertex_constructor");
+//}
+
+
+
+
+//Graph clique_graph_constructor(int indicated_type, unsigned long num_nodes){
+//    if (indicated_type == 0) {
+//        Graph g(num_nodes);
+//
+//        // NOTE 1:
+//        // DOING THIS IN PARALLEL REQUIRES:
+//        // https://www.boost.org/doc/libs/1_58_0/libs/graph_parallel/doc/html/index.html
+//        // (accepted answer in) https://stackoverflow.com/questions/30135470/random-access-of-vertices-using-boostgraph
+//
+//        // NOTE 2:
+//        // Maybe this "add_vertex" behaviour is not allowed and we need a property map to be distributed
+//        // to invoke "put"...
+//        //        typedef vector_property_map<size_t> LocalMap;
+//        //        typedef graph_traits<Graph>::vertex_descriptor Key;
+//        //        typedef boost::parallel::distributed_property_map<boost::graph::distributed::mpi_process_group, LocalMap, Key> GlobalMap;
+//
+//        if (process_id(g.process_group()) == 0) {
+////#pragma omp parallel for
+//            for (int i = 0; i < num_nodes; i++) {
+//                add_vertex(DynamicNode(0), g);
+//                //put(IndexMap, g);
+//                cout << "Added one vertex..." << endl;
+//            }
+////#pragma omp parallel for
+//            for (int i = 0; i < num_nodes; i++) {
+//                for (int j = i; j < num_nodes; j++) {
+//                    add_edge(vertex(i, g), vertex(j, g), g);
+//                }
+//            }
+//        }
+//        synchronize(g.process_group());
+//        return g;
+//    } else throw invalid_argument("invalid type for clique_vertex_constructor");
+//}
+//
+//Graph erdos_renyi_graph_constructor(int indicated_type, unsigned long num_nodes, double probability){
+//    if (indicated_type == 1) {
+//        typedef sorted_erdos_renyi_iterator<boost::minstd_rand, Graph> ERGen;
+//        minstd_rand gen;
+//        Graph g(ERGen(gen, num_nodes, probability, false), ERGen(), num_nodes);
+//        // Note: edges and vertex still lack initialization for their internal values :-)
+//        return g;
+//    } else throw invalid_argument("invalid type for erdos_renyi_vertex_constructor");
+//}
+//
+
+// SMALL WORLD https://www.boost.org/doc/libs/1_74_0/libs/graph/doc/small_world_generator.html
+// BGL custom vertex properties https://www.boost.org/doc/libs/1_77_0/libs/graph/doc/using_adjacency_list.html
+// Migration to distributed adjacency list https://www.boost.org/doc/libs/1_77_0/libs/graph_parallel/doc/html/distributed_adjacency_list.html
+// An exterior property map for the edges should be a double that is used in integration https://www.boost.org/doc/libs/1_55_0/libs/graph/doc/using_property_maps.html
+// Example using map and stuff https://github.com/mmccoo/nerd_mmccoo/blob/master/boost_properties/adj_lists.cxx
+// Boost general tour: https://valelab4.ucsf.edu/svn/3rdpartypublic/boost/libs/graph/doc/quick_tour.html
+// Boost (sequential) adjacency list: https://www.boost.org/doc/libs/1_77_0/libs/graph/doc/using_adjacency_list.html
+// Examples of parallel graph usage are (1) https://github.com/boostorg/graph_parallel/tree/master/example
+// and (2) https://github.com/boostorg/graph_parallel/tree/master/test
+
+
+
+//
+// STUFF FOR PARALLEL BOT GRAPH
+//
+//    typedef boost::graph::parallel::process_group_type<Graph>::type
+//            process_group_type;
+//    process_group_type pg = process_group(g);
+//
+//    process_group_type::process_id_type id = process_id(pg);
+//    process_group_type::process_size_type p = num_processes(pg);
+
+
+
+// Keeping track of parents  and children is done via a graph descriptor, see e.g.
+// https://www.boost.org/doc/libs/1_37_0/libs/graph/example/dijkstra-example.cpp
+
+
+
+
+// INTERESTING STRUCTURE FOR A GENERALIZATION
+//  + USING IFDEF DISTRIBUTED OR NOT
+//  + MIGRATING TO COMPRESSED_SPARSE_ROW
+// after https://github.com/mousebird/boost/blob/master/libs/graph_parallel/test/distributed_betweenness_centrality_test.cpp
+//#ifdef CSR
+//typedef compressed_sparse_row_graph<directedS, no_property, WeightedEdge,
+//                                      no_property, distributedS<mpi_process_group> >
+//    Graph;
+//  typedef compressed_sparse_row_graph<directedS, no_property, WeightedEdge>
+//    seqGraph;
+//#else
+//typedef adjacency_list<vecS,
+//        distributedS<mpi_process_group, vecS>,
+//        directedS,
+//        no_property,
+//        property<edge_weight_t, int> > Graph;
+//
+//typedef adjacency_list<vecS, vecS, directedS, no_property,
+//        property<edge_weight_t, int> > seqGraph;
+//#endif
+
