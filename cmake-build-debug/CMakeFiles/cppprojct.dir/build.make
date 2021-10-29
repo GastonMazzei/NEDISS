@@ -89,119 +89,14 @@ CMakeFiles/cppprojct.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/main.cpp.s"
 	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/main.cpp -o CMakeFiles/cppprojct.dir/main.cpp.s
 
-CMakeFiles/cppprojct.dir/utils/timers.cpp.o: CMakeFiles/cppprojct.dir/flags.make
-CMakeFiles/cppprojct.dir/utils/timers.cpp.o: ../utils/timers.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/cppprojct.dir/utils/timers.cpp.o"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/utils/timers.cpp.o -c /home/m4zz31/cppprojct/utils/timers.cpp
-
-CMakeFiles/cppprojct.dir/utils/timers.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/utils/timers.cpp.i"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/utils/timers.cpp > CMakeFiles/cppprojct.dir/utils/timers.cpp.i
-
-CMakeFiles/cppprojct.dir/utils/timers.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/utils/timers.cpp.s"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/utils/timers.cpp -o CMakeFiles/cppprojct.dir/utils/timers.cpp.s
-
-CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o: CMakeFiles/cppprojct.dir/flags.make
-CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o: ../GraphClasses/ErdosRenyiGraph.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o -c /home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.cpp
-
-CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.i"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.cpp > CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.i
-
-CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.s"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.cpp -o CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.s
-
-CMakeFiles/cppprojct.dir/utils/error.cpp.o: CMakeFiles/cppprojct.dir/flags.make
-CMakeFiles/cppprojct.dir/utils/error.cpp.o: ../utils/error.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/cppprojct.dir/utils/error.cpp.o"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/utils/error.cpp.o -c /home/m4zz31/cppprojct/utils/error.cpp
-
-CMakeFiles/cppprojct.dir/utils/error.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/utils/error.cpp.i"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/utils/error.cpp > CMakeFiles/cppprojct.dir/utils/error.cpp.i
-
-CMakeFiles/cppprojct.dir/utils/error.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/utils/error.cpp.s"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/utils/error.cpp -o CMakeFiles/cppprojct.dir/utils/error.cpp.s
-
-CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o: CMakeFiles/cppprojct.dir/flags.make
-CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o: ../GraphClasses/GeneralGraph.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o -c /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.cpp
-
-CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.i"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.cpp > CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.i
-
-CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.s"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.cpp -o CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.s
-
-CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o: CMakeFiles/cppprojct.dir/flags.make
-CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o: ../GraphClasses/CliqueGraph.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o -c /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.cpp
-
-CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.i"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.cpp > CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.i
-
-CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.s"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.cpp -o CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.s
-
-CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o: CMakeFiles/cppprojct.dir/flags.make
-CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o: ../Simulation/Simulation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o -c /home/m4zz31/cppprojct/Simulation/Simulation.cpp
-
-CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.i"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/Simulation/Simulation.cpp > CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.i
-
-CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.s"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/Simulation/Simulation.cpp -o CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.s
-
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o: CMakeFiles/cppprojct.dir/flags.make
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o: ../tests/graph-test.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o -c /home/m4zz31/cppprojct/tests/graph-test.cpp
-
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/tests/graph-test.cpp.i"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/tests/graph-test.cpp > CMakeFiles/cppprojct.dir/tests/graph-test.cpp.i
-
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/tests/graph-test.cpp.s"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/tests/graph-test.cpp -o CMakeFiles/cppprojct.dir/tests/graph-test.cpp.s
-
 # Object files for target cppprojct
 cppprojct_OBJECTS = \
-"CMakeFiles/cppprojct.dir/main.cpp.o" \
-"CMakeFiles/cppprojct.dir/utils/timers.cpp.o" \
-"CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o" \
-"CMakeFiles/cppprojct.dir/utils/error.cpp.o" \
-"CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o" \
-"CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o" \
-"CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o" \
-"CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o"
+"CMakeFiles/cppprojct.dir/main.cpp.o"
 
 # External object files for target cppprojct
 cppprojct_EXTERNAL_OBJECTS =
 
 cppprojct: CMakeFiles/cppprojct.dir/main.cpp.o
-cppprojct: CMakeFiles/cppprojct.dir/utils/timers.cpp.o
-cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o
-cppprojct: CMakeFiles/cppprojct.dir/utils/error.cpp.o
-cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o
-cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o
-cppprojct: CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o
-cppprojct: CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/build.make
 cppprojct: /usr/lib/x86_64-linux-gnu/libboost_mpi.so
 cppprojct: /usr/lib/x86_64-linux-gnu/libboost_graph_parallel.so
@@ -210,7 +105,7 @@ cppprojct: /usr/lib/x86_64-linux-gnu/libboost_serialization.so
 cppprojct: /usr/lib/gcc/x86_64-linux-gnu/7/libgomp.so
 cppprojct: /usr/lib/x86_64-linux-gnu/libpthread.so
 cppprojct: CMakeFiles/cppprojct.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable cppprojct"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable cppprojct"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cppprojct.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

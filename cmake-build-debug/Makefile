@@ -142,114 +142,6 @@ cppprojct/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/build
 .PHONY : cppprojct/fast
 
-GraphClasses/CliqueGraph.o: GraphClasses/CliqueGraph.cpp.o
-
-.PHONY : GraphClasses/CliqueGraph.o
-
-# target to build an object file
-GraphClasses/CliqueGraph.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o
-.PHONY : GraphClasses/CliqueGraph.cpp.o
-
-GraphClasses/CliqueGraph.i: GraphClasses/CliqueGraph.cpp.i
-
-.PHONY : GraphClasses/CliqueGraph.i
-
-# target to preprocess a source file
-GraphClasses/CliqueGraph.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.i
-.PHONY : GraphClasses/CliqueGraph.cpp.i
-
-GraphClasses/CliqueGraph.s: GraphClasses/CliqueGraph.cpp.s
-
-.PHONY : GraphClasses/CliqueGraph.s
-
-# target to generate assembly for a file
-GraphClasses/CliqueGraph.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.s
-.PHONY : GraphClasses/CliqueGraph.cpp.s
-
-GraphClasses/ErdosRenyiGraph.o: GraphClasses/ErdosRenyiGraph.cpp.o
-
-.PHONY : GraphClasses/ErdosRenyiGraph.o
-
-# target to build an object file
-GraphClasses/ErdosRenyiGraph.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o
-.PHONY : GraphClasses/ErdosRenyiGraph.cpp.o
-
-GraphClasses/ErdosRenyiGraph.i: GraphClasses/ErdosRenyiGraph.cpp.i
-
-.PHONY : GraphClasses/ErdosRenyiGraph.i
-
-# target to preprocess a source file
-GraphClasses/ErdosRenyiGraph.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.i
-.PHONY : GraphClasses/ErdosRenyiGraph.cpp.i
-
-GraphClasses/ErdosRenyiGraph.s: GraphClasses/ErdosRenyiGraph.cpp.s
-
-.PHONY : GraphClasses/ErdosRenyiGraph.s
-
-# target to generate assembly for a file
-GraphClasses/ErdosRenyiGraph.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.s
-.PHONY : GraphClasses/ErdosRenyiGraph.cpp.s
-
-GraphClasses/GeneralGraph.o: GraphClasses/GeneralGraph.cpp.o
-
-.PHONY : GraphClasses/GeneralGraph.o
-
-# target to build an object file
-GraphClasses/GeneralGraph.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o
-.PHONY : GraphClasses/GeneralGraph.cpp.o
-
-GraphClasses/GeneralGraph.i: GraphClasses/GeneralGraph.cpp.i
-
-.PHONY : GraphClasses/GeneralGraph.i
-
-# target to preprocess a source file
-GraphClasses/GeneralGraph.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.i
-.PHONY : GraphClasses/GeneralGraph.cpp.i
-
-GraphClasses/GeneralGraph.s: GraphClasses/GeneralGraph.cpp.s
-
-.PHONY : GraphClasses/GeneralGraph.s
-
-# target to generate assembly for a file
-GraphClasses/GeneralGraph.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.s
-.PHONY : GraphClasses/GeneralGraph.cpp.s
-
-Simulation/Simulation.o: Simulation/Simulation.cpp.o
-
-.PHONY : Simulation/Simulation.o
-
-# target to build an object file
-Simulation/Simulation.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o
-.PHONY : Simulation/Simulation.cpp.o
-
-Simulation/Simulation.i: Simulation/Simulation.cpp.i
-
-.PHONY : Simulation/Simulation.i
-
-# target to preprocess a source file
-Simulation/Simulation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.i
-.PHONY : Simulation/Simulation.cpp.i
-
-Simulation/Simulation.s: Simulation/Simulation.cpp.s
-
-.PHONY : Simulation/Simulation.s
-
-# target to generate assembly for a file
-Simulation/Simulation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.s
-.PHONY : Simulation/Simulation.cpp.s
-
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -277,87 +169,6 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-tests/graph-test.o: tests/graph-test.cpp.o
-
-.PHONY : tests/graph-test.o
-
-# target to build an object file
-tests/graph-test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o
-.PHONY : tests/graph-test.cpp.o
-
-tests/graph-test.i: tests/graph-test.cpp.i
-
-.PHONY : tests/graph-test.i
-
-# target to preprocess a source file
-tests/graph-test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test.cpp.i
-.PHONY : tests/graph-test.cpp.i
-
-tests/graph-test.s: tests/graph-test.cpp.s
-
-.PHONY : tests/graph-test.s
-
-# target to generate assembly for a file
-tests/graph-test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test.cpp.s
-.PHONY : tests/graph-test.cpp.s
-
-utils/error.o: utils/error.cpp.o
-
-.PHONY : utils/error.o
-
-# target to build an object file
-utils/error.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/error.cpp.o
-.PHONY : utils/error.cpp.o
-
-utils/error.i: utils/error.cpp.i
-
-.PHONY : utils/error.i
-
-# target to preprocess a source file
-utils/error.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/error.cpp.i
-.PHONY : utils/error.cpp.i
-
-utils/error.s: utils/error.cpp.s
-
-.PHONY : utils/error.s
-
-# target to generate assembly for a file
-utils/error.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/error.cpp.s
-.PHONY : utils/error.cpp.s
-
-utils/timers.o: utils/timers.cpp.o
-
-.PHONY : utils/timers.o
-
-# target to build an object file
-utils/timers.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/timers.cpp.o
-.PHONY : utils/timers.cpp.o
-
-utils/timers.i: utils/timers.cpp.i
-
-.PHONY : utils/timers.i
-
-# target to preprocess a source file
-utils/timers.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/timers.cpp.i
-.PHONY : utils/timers.cpp.i
-
-utils/timers.s: utils/timers.cpp.s
-
-.PHONY : utils/timers.s
-
-# target to generate assembly for a file
-utils/timers.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/timers.cpp.s
-.PHONY : utils/timers.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -367,30 +178,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... cppprojct"
-	@echo "... GraphClasses/CliqueGraph.o"
-	@echo "... GraphClasses/CliqueGraph.i"
-	@echo "... GraphClasses/CliqueGraph.s"
-	@echo "... GraphClasses/ErdosRenyiGraph.o"
-	@echo "... GraphClasses/ErdosRenyiGraph.i"
-	@echo "... GraphClasses/ErdosRenyiGraph.s"
-	@echo "... GraphClasses/GeneralGraph.o"
-	@echo "... GraphClasses/GeneralGraph.i"
-	@echo "... GraphClasses/GeneralGraph.s"
-	@echo "... Simulation/Simulation.o"
-	@echo "... Simulation/Simulation.i"
-	@echo "... Simulation/Simulation.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... tests/graph-test.o"
-	@echo "... tests/graph-test.i"
-	@echo "... tests/graph-test.s"
-	@echo "... utils/error.o"
-	@echo "... utils/error.i"
-	@echo "... utils/error.s"
-	@echo "... utils/timers.o"
-	@echo "... utils/timers.i"
-	@echo "... utils/timers.s"
 .PHONY : help
 
 

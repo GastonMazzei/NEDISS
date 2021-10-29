@@ -5,7 +5,7 @@
 #define CPPPROJCT_ERDOSRENYIGRAPH_H
 #include "GeneralGraph.h"
 
-class ErdosRenyiGraphObject {
+class ErdosRenyiGraphObject : public CommonGraphObjectClass {
 public:
     typedef boost::sorted_erdos_renyi_iterator<boost::minstd_rand, Graph> ERGen;
     boost::minstd_rand gen;

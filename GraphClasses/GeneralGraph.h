@@ -80,9 +80,10 @@ typedef boost::adjacency_list<boost::vecS,
 
 // Printing and other stuff
 class CommonGraphObjectClass{
-    void showVertex(Graph & g);
-    void showEdges(Graph & g);
-    void reportNProcs(Graph & g);
+    public:
+        void showVertex(Graph & g);
+        void showEdges(Graph & g);
+        void reportNProcs(Graph & g);
 };
 
 

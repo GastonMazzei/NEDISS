@@ -9,7 +9,7 @@
 #include "GeneralGraph.h"
 
 
-class CliqueGraphObject {
+class CliqueGraphObject : public CommonGraphObjectClass {
 public:
     unsigned long N;
     unsigned long E;

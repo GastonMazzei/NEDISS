@@ -8,16 +8,16 @@
 void test_clique_graph(int N){
     //                  N
     CliqueGraphObject G(N);
-    G.showVertex();
-    G.reportNProcs();
-    G.showEdges();
+    G.showVertex(G.g);
+    G.reportNProcs(G.g);
+    G.showEdges(G.g);
 };
 
 
 void test_erdosRenyi_graph(int N, double p){
     //                      N, P
     ErdosRenyiGraphObject G(N, p);
-    G.showVertex();
-    G.reportNProcs();
-    G.showEdges();
+    G.showVertex(G.g);
+    G.reportNProcs(G.g);
+    G.showEdges(G.g);
 };
