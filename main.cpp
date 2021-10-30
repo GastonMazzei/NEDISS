@@ -3,9 +3,10 @@
 #include "mpi.h"
 #include "utils/timers.h"
 #include "tests/graph-test.h"
+#include <omp.h>
 
 //#include <string>
-//#include <omp.h>
+
 //#include  <cmath>
 //#include <random>
 //#include <algorithm>
@@ -32,10 +33,10 @@ using namespace std;
 void graph_tests(){
 
     // Clique Network
-    test_clique_graph(15);
+    test_clique_graph(20);
 
     // Erdos Renyi Network
-    test_erdosRenyi_graph(15, 0.3);
+    //test_erdosRenyi_graph(5, 0.5);
 }
 
 
@@ -44,13 +45,17 @@ int main(int argc, char** argv)
 
     // START:
     //
+    int rank;
     MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     graph_tests();
 
     // END:
     //
-    cout << "End of script has been reached" << endl;
+    if (rank == 0) {
+        cout << "End of script has been reached" << endl;
+    }
     int exit_status = MPI_Finalize();
     return exit_status;
 }

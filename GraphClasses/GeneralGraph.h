@@ -45,23 +45,27 @@
 //      - 1 dimensional for Kuramoto
 //      - 3 dimensional for Rossler Oscillators
 //      - something still unclear for the d(A)_t \propto \laplace^\alpha (A) model
-// (2) NOT IMPLEMENTED: an N-dimensional array with its own properties: characteristic frequency for example
+// (2) params:
+//      - an N-dimensional array with its own properties: characteristic frequency for example
 // (3) NOT IMPLEMENTED: a memory capacity that  potentially can remember N_neighbors * msg
 struct DynamicNode {
-    explicit DynamicNode(int value=1): value(value) { };
-    int value;
-    // Serialization support is required!
+    DynamicNode() = default;
+    DynamicNode(int i): value(i) {};
+    int value = 0;
+    std::vector<int> params;
     template<typename Archiver> /*version is const unsigned int*/
     void serialize(Archiver& ar, const unsigned int /*version*/) {
-        ar & value;
+        ar & value & params ;
     }
 };
+
 
 // Edges should have  a (double precission) value which will always
 // account for some sort of "interaction"
 struct DynamicEdge {
-    explicit DynamicEdge(double value = 1) : value(value) { }
-    double value;
+    DynamicEdge() = default;
+    DynamicEdge(int i): value(i) {};
+    double value = 1;
     // Serialization support is required!
     template<typename Archiver>
     void serialize(Archiver& ar, const unsigned int /*version*/) {
@@ -69,12 +73,17 @@ struct DynamicEdge {
     }
 };
 
+// Unclear if it is necessary
+typedef DynamicNode DynamicNode;
+typedef DynamicEdge DynamicEdge;
+
+
 // A central object in this work: the "Graph" type
 typedef boost::adjacency_list<boost::vecS,
         boost::distributedS<boost::graph::distributed::mpi_process_group, boost::vecS>,
         boost::bidirectionalS,
         DynamicNode,
-        DynamicEdge>
+        DynamicEdge, boost::vertex_index_t>
     Graph;
 
 

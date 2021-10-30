@@ -7,6 +7,7 @@
 
 class ErdosRenyiGraphObject : public CommonGraphObjectClass {
 public:
+    // WE SHOULD CHANGE PROBABILITY FOR NUMBER OF EDGES!
     typedef boost::sorted_erdos_renyi_iterator<boost::minstd_rand, Graph> ERGen;
     boost::minstd_rand gen;
     unsigned long N;

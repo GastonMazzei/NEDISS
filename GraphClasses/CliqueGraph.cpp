@@ -13,19 +13,22 @@ using namespace boost;
 
 
 void CliqueGraphObject::build_clique(){
+    typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
+    //typedef property_map<Graph, int DynamicNode::*>::type LocalMap;
+    //LocalMap local = get(&DynamicNode::value, g);
+    //get(g, *v).value = 8;
     if (process_id(g.process_group()) == 0) {
-//#pragma omp parallel for
-        for (int i = 0; i < N; i++) {
-            add_vertex(DynamicNode(0), g);
-            //put(IndexMap, g);
-            cout << "Added one vertex..." << endl;
-        }
-//#pragma omp parallel for
-        for (int i = 0; i < N; i++) {
-            for (int j = i; j < N; j++) {
-                add_edge(vertex(i, g), vertex(j, g), g);
+        vertex_iterator v, v_end, v_inner;
+        for (boost::tie(v, v_end) = vertices(g); v != v_end; ++v) {
+            v_inner = v;
+            while (++v_inner != v_end) {
+                add_edge(*v, *v_inner, g);
             }
         }
     }
     synchronize(g.process_group());
+    MPI_Barrier(MPI_COMM_WORLD);
+    if (process_id(g.process_group()) == 0) {
+        cout << "[info] Clique constructor informs: synchronization has been successful!" << endl;
+    }
 }

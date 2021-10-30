@@ -7,6 +7,7 @@
 void test_clique_graph(int N){
     //                  N
     CliqueGraphObject G(N);
+    G.build_clique();
     G.showVertex(G.g);
     G.reportNProcs(G.g);
     G.showEdges(G.g);

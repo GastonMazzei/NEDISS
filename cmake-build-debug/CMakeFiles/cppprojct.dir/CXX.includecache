@@ -6,17 +6,13 @@
 
 #IncludeRegexTransform: 
 
+/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.cpp
+GeneralGraph.h
+/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+CliqueGraph.h
 /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
-GeneralGraph.h
-/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
-/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.cpp
-GeneralGraph.h
-/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
-ErdosRenyiGraph.h
-/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
-
-/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
+/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
@@ -80,26 +76,6 @@ boost/random/linear_congruential.hpp
 boost/graph/erdos_renyi_generator.hpp
 -
 
-/home/m4zz31/cppprojct/main.cpp
-iostream
--
-mpi.h
-/home/m4zz31/cppprojct/mpi.h
-utils/timers.h
-/home/m4zz31/cppprojct/utils/timers.h
-tests/graph-test.h
-/home/m4zz31/cppprojct/tests/graph-test.h
-
-/home/m4zz31/cppprojct/tests/graph-test.cpp
-graph-test.h
-/home/m4zz31/cppprojct/tests/graph-test.h
-
-/home/m4zz31/cppprojct/tests/graph-test.h
-../GraphClasses/ErdosRenyiGraph.h
-/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
-../GraphClasses/CliqueGraph.h
-/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
-
 /home/m4zz31/cppprojct/utils/error.h
 stdlib.h
 -
@@ -107,6 +83,4 @@ iostream
 -
 string
 -
-
-/home/m4zz31/cppprojct/utils/timers.h
 

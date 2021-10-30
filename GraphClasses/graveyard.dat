@@ -220,3 +220,25 @@
 //        property<edge_weight_t, int> > seqGraph;
 //#endif
 
+
+
+// SPARSE ROW GRAPH IMPLEMENTATION INCLUDES THE POSSIBILITY OF BUILDING NODES IN PARALLEL
+//
+//
+//https://stackoverflow.com/questions/19519984/boost-big-graphs-multithreading
+
+
+
+// OPENMP EXAMPLE
+//unsigned int OPENMP_DYNAMIC = 0; // 0 and 1 dsable and enable Dynamic Teams
+//unsigned int OVERWRITE_OPENMP_NUMTHREADS = 2; // overwrite OpenMP envirvar "OMP_NUM_THREADS"
+//unsigned int OPENMP_NUM_THREADS = std::max(atoi(std::getenv("OMP_NUM_THREADS")), 1);
+//cout << "Built-in number of threads are: " <<
+//    OPENMP_NUM_THREADS <<
+//    " but the here proposed was" <<
+//     OVERWRITE_OPENMP_NUMTHREADS << endl;
+//omp_set_dynamic(OPENMP_DYNAMIC);
+//omp_set_num_threads(OVERWRITE_OPENMP_NUMTHREADS);
+// vertex iterators for the graph implemented with vectors have random access memory,
+// thus the parallelization is being used.
+// it is not the case for edge iterators tho!
