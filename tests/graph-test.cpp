@@ -1,9 +1,8 @@
 //
 // Created by m4zz31 on 29/10/21.
 //
+#include "graph-test.h"
 
-#include "../GraphClasses/ErdosRenyiGraph.h"
-#include "../GraphClasses/CliqueGraph.h"
 
 void test_clique_graph(int N){
     //                  N

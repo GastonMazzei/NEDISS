@@ -2,7 +2,7 @@
 
 #include "mpi.h"
 #include "utils/timers.h"
-#include "tests/graph-test.cpp"
+#include "tests/graph-test.h"
 
 //#include <string>
 //#include <omp.h>
