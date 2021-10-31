@@ -304,6 +304,33 @@ tests/graph-test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test.cpp.s
 .PHONY : tests/graph-test.cpp.s
 
+utils/adequate_synchronization.o: utils/adequate_synchronization.cpp.o
+
+.PHONY : utils/adequate_synchronization.o
+
+# target to build an object file
+utils/adequate_synchronization.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/adequate_synchronization.cpp.o
+.PHONY : utils/adequate_synchronization.cpp.o
+
+utils/adequate_synchronization.i: utils/adequate_synchronization.cpp.i
+
+.PHONY : utils/adequate_synchronization.i
+
+# target to preprocess a source file
+utils/adequate_synchronization.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/adequate_synchronization.cpp.i
+.PHONY : utils/adequate_synchronization.cpp.i
+
+utils/adequate_synchronization.s: utils/adequate_synchronization.cpp.s
+
+.PHONY : utils/adequate_synchronization.s
+
+# target to generate assembly for a file
+utils/adequate_synchronization.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/adequate_synchronization.cpp.s
+.PHONY : utils/adequate_synchronization.cpp.s
+
 utils/error.o: utils/error.cpp.o
 
 .PHONY : utils/error.o
@@ -330,6 +357,33 @@ utils/error.s: utils/error.cpp.s
 utils/error.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/error.cpp.s
 .PHONY : utils/error.cpp.s
+
+utils/reproductibility.o: utils/reproductibility.cpp.o
+
+.PHONY : utils/reproductibility.o
+
+# target to build an object file
+utils/reproductibility.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/reproductibility.cpp.o
+.PHONY : utils/reproductibility.cpp.o
+
+utils/reproductibility.i: utils/reproductibility.cpp.i
+
+.PHONY : utils/reproductibility.i
+
+# target to preprocess a source file
+utils/reproductibility.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/reproductibility.cpp.i
+.PHONY : utils/reproductibility.cpp.i
+
+utils/reproductibility.s: utils/reproductibility.cpp.s
+
+.PHONY : utils/reproductibility.s
+
+# target to generate assembly for a file
+utils/reproductibility.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/reproductibility.cpp.s
+.PHONY : utils/reproductibility.cpp.s
 
 utils/timers.o: utils/timers.cpp.o
 
@@ -385,9 +439,15 @@ help:
 	@echo "... tests/graph-test.o"
 	@echo "... tests/graph-test.i"
 	@echo "... tests/graph-test.s"
+	@echo "... utils/adequate_synchronization.o"
+	@echo "... utils/adequate_synchronization.i"
+	@echo "... utils/adequate_synchronization.s"
 	@echo "... utils/error.o"
 	@echo "... utils/error.i"
 	@echo "... utils/error.s"
+	@echo "... utils/reproductibility.o"
+	@echo "... utils/reproductibility.i"
+	@echo "... utils/reproductibility.s"
 	@echo "... utils/timers.o"
 	@echo "... utils/timers.i"
 	@echo "... utils/timers.s"

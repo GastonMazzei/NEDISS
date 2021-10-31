@@ -3,6 +3,11 @@
 //
 
 #include "GeneralGraph.h"
+#include "../utils/error.h"
+#include <cmath>
+#include "mpi.h"
+#include "../utils/adequate_synchronization.h"
+
 
 
 using namespace boost;
@@ -18,14 +23,20 @@ void CommonGraphObjectClass::reportNProcs(Graph &g) {
                   num_processes(boost::graph::distributed::mpi_process_group()) <<
                   std::endl;
     }
+    adsync_barrier(); // This barrier (attempts) to fix a bug:
+    //                  the program never ends if this function is called w/out barrier
 }
 
 
 void CommonGraphObjectClass::showVertex(Graph &g) {
-    // shows all vertex
+ // shows all vertex
     auto vpair = vertices(g);
     for(auto v=vpair.first; v!=vpair.second; v++) {
-        std::cout << "node w/ value " << g[*v].value << std::endl;
+        if (g[*v].params.size()>0){
+            std::cout << "node w/ value " << g[*v].value << " and first param " << g[*v].params[0] << std::endl;
+        } else {
+            std::cout << "node w/ value " << g[*v].value << std::endl;
+        }
     }
 }
 
@@ -38,6 +49,64 @@ void CommonGraphObjectClass::showEdges(Graph &g) {
 }
 
 
+void CommonGraphObjectClass::kuramoto_initialization(std::vector<pair<double, double>> X0_W, double J, Graph & g, unsigned int N){
+//    // Whatever Graph Architecture is recieved is populated with a Frequency W_i and Edge weights J
+
+    // 1)
+//    // Actually this clause should be changed: we would want to directly recieve W[N] split
+//    // into the number of processors, thus wanting W at each processor to be either W[1] or W[N/Nprocs]
+    if ((X0_W.size()>1) && (N != X0_W.size())) {
+        error_report("[error] Number of frequencies to initialize the Kuramoto model should be either 1 or N");
+    } else if (X0_W.size()==1){
+        for (int i=0; i<N-1; i++){
+            X0_W.push_back(X0_W[0]);
+        }
+    };
+
+
+    // 2)
+    // Definition of various required types
+    typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
+    typedef graph_traits<Graph>::edge_iterator edge_iterator;
+    typedef property_map<Graph, vertex_owner_t>::const_type OwnerMap;
+    OwnerMap owner = get(vertex_owner, g);
+    vertex_iterator v, v_end;
+    edge_iterator e, e_end;
+
+    // 3)
+    // split the data across processors :-)
+    static unsigned int NV = num_vertices(g);
+    unsigned int MY_NUM = process_id(g.process_group());
+    mpi::communicator world;
+    unsigned int NPROCS = world.size();
+    unsigned int BALANCE = std::floor(((double) N) / ((double) NPROCS));
+    pair<double, double> myvals[NV];
+    int j = 0;
+    for (j=0; j<BALANCE; j++){
+        myvals[j] = X0_W[MY_NUM * BALANCE + j];
+    }
+    if (NV == (BALANCE + 1)){
+        myvals[BALANCE] = X0_W[N-1];
+    }
+
+
+    // 4) Iterate along edges and nodes
+    j = 0;
+    for (boost::tie(v, v_end) = vertices(g); v != v_end; ++v) {
+        if (MY_NUM == get(owner, *v)) {
+            if (g[*v].params.size()==0) {
+                g[*v].params.push_back(myvals[j].second);
+            } else {
+                g[*v].params[0] = myvals[j].second;
+            }
+            g[*v].value = myvals[j].first;
+            ++j;
+        };
+    }
+    for (boost::tie(e, e_end) = edges(g); e != e_end; ++e) {
+        g[*e].value = J;
+    };
+};
 
 
 // ITERATE OVER ALL EDGES LOCALLY IN PARALLEL
@@ -125,3 +194,5 @@ void CommonGraphObjectClass::showEdges(Graph &g) {
 //            //get(centrality, *v) <<
 //            endl;
 //    }
+
+

@@ -114,10 +114,22 @@
 		<Unit filename="/home/m4zz31/cppprojct/tests/graph-test.h">
 			<Option target="cppprojct"/>
 		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/utils/adequate_synchronization.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/utils/adequate_synchronization.h">
+			<Option target="cppprojct"/>
+		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/utils/error.cpp">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/utils/error.h">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/utils/reproductibility.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/utils/reproductibility.h">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/utils/timers.cpp">

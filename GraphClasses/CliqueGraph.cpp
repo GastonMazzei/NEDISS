@@ -5,7 +5,7 @@
 
 #include "GeneralGraph.h"
 #include "CliqueGraph.h"
-
+#include "../utils/adequate_synchronization.h"
 
 
 using namespace std;
@@ -26,9 +26,9 @@ void CliqueGraphObject::build_clique(){
             }
         }
     }
-    synchronize(g.process_group());
-    MPI_Barrier(MPI_COMM_WORLD);
-    if (process_id(g.process_group()) == 0) {
-        cout << "[info] Clique constructor informs: synchronization has been successful!" << endl;
-    }
+    adsync_synchronization_barrier("Clique constructor", g);
 }
+
+
+
+

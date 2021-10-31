@@ -2,6 +2,7 @@
 
 #include "mpi.h"
 #include "utils/timers.h"
+#include "utils/reproductibility.h"
 #include "tests/graph-test.h"
 #include <omp.h>
 
@@ -29,13 +30,14 @@ using namespace std;
 // source: https://eigen.tuxfamily.org/dox/TopicMultiThreading.html
 //#define HYPERTHREADING 0      // 1 if hyperthreading is on, 0 otherwise
 
-
-void graph_tests(){
+void graph_tests(unsigned int SEED){
 
     // Clique Network
-    test_clique_graph(20);
+    reproductibility_lock(SEED);
+    test_clique_graph(4);
 
     // Erdos Renyi Network
+    //reproductibility_lock(SEED)
     //test_erdosRenyi_graph(5, 0.5);
 }
 
@@ -46,10 +48,12 @@ int main(int argc, char** argv)
     // START:
     //
     int rank;
+    unsigned int SEED = 12345;
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-    graph_tests();
+    graph_tests(SEED);
+
 
     // END:
     //

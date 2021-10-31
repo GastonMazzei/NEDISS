@@ -11,6 +11,8 @@ GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 CliqueGraph.h
 /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
+../utils/adequate_synchronization.h
+/home/m4zz31/cppprojct/utils/adequate_synchronization.h
 
 /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
 GeneralGraph.h
@@ -75,6 +77,10 @@ boost/random/linear_congruential.hpp
 -
 boost/graph/erdos_renyi_generator.hpp
 -
+
+/home/m4zz31/cppprojct/utils/adequate_synchronization.h
+../GraphClasses/GeneralGraph.h
+/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
 /home/m4zz31/cppprojct/utils/error.h
 stdlib.h
