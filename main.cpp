@@ -3,7 +3,8 @@
 #include "mpi.h"
 #include "utils/timers.h"
 #include "utils/reproductibility.h"
-#include "tests/graph-test.h"
+#include "tests/graph-test-init.h"
+#include "tests/graph-test-singlestep-evolution.h"
 #include <omp.h>
 
 //#include <string>
@@ -30,21 +31,30 @@ using namespace std;
 // source: https://eigen.tuxfamily.org/dox/TopicMultiThreading.html
 //#define HYPERTHREADING 0      // 1 if hyperthreading is on, 0 otherwise
 
-void graph_tests(unsigned int SEED){
+void graph_tests_init(unsigned int SEED){
+    // ---CONSTRUCTOR AND INITIALIZATION DEBUGGING---
 
     // Clique Network
-    //reproductibility_lock(SEED);
-    //test_clique_graph(4);
+    reproductibility_lock(SEED);
+    test_clique_graph_init(4);
 
     // Ring Network
-    //reproductibility_lock(SEED);
-    //test_ring_graph(4);
+    reproductibility_lock(SEED);
+    test_ring_graph_init(4);
 
     // Erdos Renyi Network
-    //reproductibility_lock(SEED);
-    //test_erdosRenyi_graph(5, 0.5);
+    reproductibility_lock(SEED);
+    test_erdosRenyi_graph_init(5, 0.5);
 }
 
+
+void graph_tests_singlestep_evolution(unsigned int SEED){
+    // ---SINGLE TIMESTEP EVOLUTION DEBUGGING---
+
+    // Ring Network
+    reproductibility_lock(SEED);
+    test_ring_graph_singlestep_evolution(4);
+}
 
 int main(int argc, char** argv)
 {
@@ -57,8 +67,8 @@ int main(int argc, char** argv)
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     // Testing Section ;-)
-    graph_tests(SEED);
-
+    //graph_tests_init(SEED);
+    graph_tests_singlestep_evolution(SEED);
 
     // END:
     //

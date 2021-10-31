@@ -167,18 +167,18 @@ CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.s"
 	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/Simulation/Simulation.cpp -o CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.s
 
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o: CMakeFiles/cppprojct.dir/flags.make
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o: ../tests/graph-test.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o -c /home/m4zz31/cppprojct/tests/graph-test.cpp
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o: CMakeFiles/cppprojct.dir/flags.make
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o: ../tests/graph-test-init.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o -c /home/m4zz31/cppprojct/tests/graph-test-init.cpp
 
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/tests/graph-test.cpp.i"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/tests/graph-test.cpp > CMakeFiles/cppprojct.dir/tests/graph-test.cpp.i
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.i"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/tests/graph-test-init.cpp > CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.i
 
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/tests/graph-test.cpp.s"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/tests/graph-test.cpp -o CMakeFiles/cppprojct.dir/tests/graph-test.cpp.s
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.s"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/tests/graph-test-init.cpp -o CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.s
 
 CMakeFiles/cppprojct.dir/utils/reproductibility.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/utils/reproductibility.cpp.o: ../utils/reproductibility.cpp
@@ -219,6 +219,19 @@ CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.s"
 	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/GraphClasses/RingGraph.cpp -o CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.s
 
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o: CMakeFiles/cppprojct.dir/flags.make
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o: ../tests/graph-test-singlestep-evolution.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o -c /home/m4zz31/cppprojct/tests/graph-test-singlestep-evolution.cpp
+
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.i"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/tests/graph-test-singlestep-evolution.cpp > CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.i
+
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.s"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/tests/graph-test-singlestep-evolution.cpp -o CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.s
+
 # Object files for target cppprojct
 cppprojct_OBJECTS = \
 "CMakeFiles/cppprojct.dir/main.cpp.o" \
@@ -228,10 +241,11 @@ cppprojct_OBJECTS = \
 "CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o" \
 "CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o" \
 "CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o" \
-"CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o" \
+"CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o" \
 "CMakeFiles/cppprojct.dir/utils/reproductibility.cpp.o" \
 "CMakeFiles/cppprojct.dir/utils/adequate_synchronization.cpp.o" \
-"CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o"
+"CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o" \
+"CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o"
 
 # External object files for target cppprojct
 cppprojct_EXTERNAL_OBJECTS =
@@ -243,10 +257,11 @@ cppprojct: CMakeFiles/cppprojct.dir/utils/error.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o
-cppprojct: CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o
+cppprojct: CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/utils/reproductibility.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/utils/adequate_synchronization.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o
+cppprojct: CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/build.make
 cppprojct: /usr/lib/x86_64-linux-gnu/libboost_mpi.so
 cppprojct: /usr/lib/x86_64-linux-gnu/libboost_graph_parallel.so
@@ -255,7 +270,7 @@ cppprojct: /usr/lib/x86_64-linux-gnu/libboost_serialization.so
 cppprojct: /usr/lib/gcc/x86_64-linux-gnu/7/libgomp.so
 cppprojct: /usr/lib/x86_64-linux-gnu/libpthread.so
 cppprojct: CMakeFiles/cppprojct.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable cppprojct"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable cppprojct"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cppprojct.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

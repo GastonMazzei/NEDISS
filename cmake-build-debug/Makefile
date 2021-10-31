@@ -304,32 +304,59 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-tests/graph-test.o: tests/graph-test.cpp.o
+tests/graph-test-init.o: tests/graph-test-init.cpp.o
 
-.PHONY : tests/graph-test.o
+.PHONY : tests/graph-test-init.o
 
 # target to build an object file
-tests/graph-test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o
-.PHONY : tests/graph-test.cpp.o
+tests/graph-test-init.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o
+.PHONY : tests/graph-test-init.cpp.o
 
-tests/graph-test.i: tests/graph-test.cpp.i
+tests/graph-test-init.i: tests/graph-test-init.cpp.i
 
-.PHONY : tests/graph-test.i
+.PHONY : tests/graph-test-init.i
 
 # target to preprocess a source file
-tests/graph-test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test.cpp.i
-.PHONY : tests/graph-test.cpp.i
+tests/graph-test-init.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.i
+.PHONY : tests/graph-test-init.cpp.i
 
-tests/graph-test.s: tests/graph-test.cpp.s
+tests/graph-test-init.s: tests/graph-test-init.cpp.s
 
-.PHONY : tests/graph-test.s
+.PHONY : tests/graph-test-init.s
 
 # target to generate assembly for a file
-tests/graph-test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test.cpp.s
-.PHONY : tests/graph-test.cpp.s
+tests/graph-test-init.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.s
+.PHONY : tests/graph-test-init.cpp.s
+
+tests/graph-test-singlestep-evolution.o: tests/graph-test-singlestep-evolution.cpp.o
+
+.PHONY : tests/graph-test-singlestep-evolution.o
+
+# target to build an object file
+tests/graph-test-singlestep-evolution.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o
+.PHONY : tests/graph-test-singlestep-evolution.cpp.o
+
+tests/graph-test-singlestep-evolution.i: tests/graph-test-singlestep-evolution.cpp.i
+
+.PHONY : tests/graph-test-singlestep-evolution.i
+
+# target to preprocess a source file
+tests/graph-test-singlestep-evolution.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.i
+.PHONY : tests/graph-test-singlestep-evolution.cpp.i
+
+tests/graph-test-singlestep-evolution.s: tests/graph-test-singlestep-evolution.cpp.s
+
+.PHONY : tests/graph-test-singlestep-evolution.s
+
+# target to generate assembly for a file
+tests/graph-test-singlestep-evolution.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.s
+.PHONY : tests/graph-test-singlestep-evolution.cpp.s
 
 utils/adequate_synchronization.o: utils/adequate_synchronization.cpp.o
 
@@ -466,9 +493,12 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... tests/graph-test.o"
-	@echo "... tests/graph-test.i"
-	@echo "... tests/graph-test.s"
+	@echo "... tests/graph-test-init.o"
+	@echo "... tests/graph-test-init.i"
+	@echo "... tests/graph-test-init.s"
+	@echo "... tests/graph-test-singlestep-evolution.o"
+	@echo "... tests/graph-test-singlestep-evolution.i"
+	@echo "... tests/graph-test-singlestep-evolution.s"
 	@echo "... utils/adequate_synchronization.o"
 	@echo "... utils/adequate_synchronization.i"
 	@echo "... utils/adequate_synchronization.s"

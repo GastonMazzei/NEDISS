@@ -26,18 +26,30 @@ CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../utils/error.h
 CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o: ../Simulation/Simulation.cpp
 
 CMakeFiles/cppprojct.dir/main.cpp.o: ../main.cpp
-CMakeFiles/cppprojct.dir/main.cpp.o: ../tests/graph-test.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../tests/graph-test-init.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../tests/graph-test-singlestep-evolution.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../utils/reproductibility.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../utils/timers.h
 
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o: ../GraphClasses/CliqueGraph.h
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o: ../GraphClasses/ErdosRenyiGraph.h
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o: ../GraphClasses/GeneralGraph.h
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o: ../GraphClasses/RingGraph.h
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o: ../tests/graph-test.cpp
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o: ../tests/graph-test.h
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o: ../utils/adequate_synchronization.h
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o: ../utils/error.h
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o: ../GraphClasses/CliqueGraph.h
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o: ../GraphClasses/ErdosRenyiGraph.h
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o: ../GraphClasses/RingGraph.h
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o: ../tests/graph-test-init.cpp
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o: ../tests/graph-test-init.h
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o: ../utils/adequate_synchronization.h
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o: ../utils/error.h
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o: ../utils/global_standard_messages.h
+
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/CliqueGraph.h
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/ErdosRenyiGraph.h
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/RingGraph.h
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o: ../tests/graph-test-singlestep-evolution.cpp
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o: ../tests/graph-test-singlestep-evolution.h
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o: ../utils/adequate_synchronization.h
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o: ../utils/error.h
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o: ../utils/global_standard_messages.h
 
 CMakeFiles/cppprojct.dir/utils/adequate_synchronization.cpp.o: ../GraphClasses/GeneralGraph.h
 CMakeFiles/cppprojct.dir/utils/adequate_synchronization.cpp.o: ../utils/adequate_synchronization.cpp

@@ -109,6 +109,45 @@ void CommonGraphObjectClass::kuramoto_initialization(std::vector<pair<double, do
 };
 
 
+
+void CommonGraphObjectClass::single_kuramoto_evolution(Graph &g){
+    // There is an evolution operator that should compute the next
+    // value and store it in the object's temporal register
+
+    // said evolution operator should take (vector1, vector2, ...)
+    //              where:
+    //                  vector1:    <the value of the edges>
+    //                  vector2:    <the value of the node at the other end of the edges>
+    //                  vector3:    central node's parameters
+    //                  value:      central node's value
+    //                  ??MATRIX??: the parameter of each of the nodes, which should not be necessary
+    //                              as it could be encoded in the edge.
+
+    // TEST1: check that edges and nodes are correctly indexed, i.e.
+    // (1)-1-(x)-2-(2) gets a vector1 and vector2 that is <1,2> and <1,2>
+
+    // This could be useful:
+    // https://www.boost.org/doc/libs/1_52_0/libs/graph/doc/adjacency_iterator.html
+    //graph_traits<adjacency_list>::out_edge_iterator
+    //graph_traits<adjacency_list>::adjacency_iterator
+    //
+    //boost::edge(u,v,g) returns pair<edge_descriptor, bool> where bool is if it exists
+
+    auto vs = vertices(g);
+
+    for (auto v = vs.first; v != vs.second; ++v) {
+        g[*v].value = 0; // I am the central node's value
+        g[*v].params = {1}; //  I am the central node's parameter vector
+        auto neighbors = boost::adjacent_vertices(*v, g);
+        for (auto n = neighbors.first; n != neighbors.second; ++n) {
+            g[*n].value = 0; // I am the neighbor node's value
+            g[boost::edge(*v,*n,g).first].value = 0; // I am the edge's value
+        }
+    }
+
+}
+
+
 // ITERATE OVER ALL EDGES LOCALLY IN PARALLEL
 // suited for initializing values ;-)
 //

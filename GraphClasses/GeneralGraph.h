@@ -94,7 +94,36 @@ class CommonGraphObjectClass{
         void showEdges(Graph & g);
         void reportNProcs(Graph & g);
         void kuramoto_initialization(std::vector<std::pair<double, double>> X0_W, double J, Graph & g, unsigned int N);
+        void single_kuramoto_evolution(Graph &g);
 };
+
+// THE FOLLOWING EXAMPLE ILLUSTRATES HOW TO IMPLEMENT
+// ARBITRARY EVOLUTION OPERATORS, AS TO BE ABLE TO
+// USE DIFFERENT DIFFERENTIAL SOLVERS ;-)
+//
+//} Aobject;
+//double A::evolve(int i){
+//    return (double) i*8;
+//}
+//
+//struct B{
+//
+//    double evolve(int i);
+//}Bobject;
+//double B::evolve(int i){
+//    return (double) 45 * i;
+//};
+//
+//
+//template <typename T>
+//void printer(int i, T o){
+//    std::cout << o.evolve(i) << std::endl;
+//}
+//
+//int main(){
+//    printer<A>(1, Aobject);
+//    printer<B>(2, Bobject);
+//}
 
 
 #endif //CPPPROJCT_GENERALGRAPH_H

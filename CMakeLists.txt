@@ -35,6 +35,6 @@ include_directories(${Boost_INCLUDE_DIRS})
 # Please use -02 or -03 for compilation in production
 
 # Run with mpirun or mpiexec
-add_executable(cppprojct main.cpp utils/timers.cpp utils/timers.h GraphClasses/ErdosRenyiGraph.cpp GraphClasses/ErdosRenyiGraph.h utils/error.cpp utils/error.h GraphClasses/GeneralGraph.cpp GraphClasses/GeneralGraph.h GraphClasses/CliqueGraph.h GraphClasses/CliqueGraph.cpp Simulation/Simulation.cpp tests/graph-test.cpp tests/graph-test.h utils/reproductibility.cpp utils/reproductibility.h utils/adequate_synchronization.h utils/adequate_synchronization.cpp GraphClasses/RingGraph.h GraphClasses/RingGraph.cpp)
+add_executable(cppprojct main.cpp utils/timers.cpp utils/timers.h GraphClasses/ErdosRenyiGraph.cpp GraphClasses/ErdosRenyiGraph.h utils/error.cpp utils/error.h GraphClasses/GeneralGraph.cpp GraphClasses/GeneralGraph.h GraphClasses/CliqueGraph.h GraphClasses/CliqueGraph.cpp Simulation/Simulation.cpp tests/graph-test-init.cpp tests/graph-test-init.h utils/reproductibility.cpp utils/reproductibility.h utils/adequate_synchronization.h utils/adequate_synchronization.cpp GraphClasses/RingGraph.h GraphClasses/RingGraph.cpp tests/graph-test-singlestep-evolution.h tests/graph-test-singlestep-evolution.cpp utils/global_standard_messages.h)
 target_link_libraries(cppprojct PRIVATE OpenMP::OpenMP_CXX ${Boost_LIBRARIES})
 

@@ -27,18 +27,30 @@ CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o
  /home/m4zz31/cppprojct/Simulation/Simulation.cpp
 CMakeFiles/cppprojct.dir/main.cpp.o
  /home/m4zz31/cppprojct/main.cpp
- /home/m4zz31/cppprojct/tests/graph-test.h
+ /home/m4zz31/cppprojct/tests/graph-test-init.h
+ /home/m4zz31/cppprojct/tests/graph-test-singlestep-evolution.h
  /home/m4zz31/cppprojct/utils/reproductibility.h
  /home/m4zz31/cppprojct/utils/timers.h
-CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o
+CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o
  /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
  /home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
  /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
  /home/m4zz31/cppprojct/GraphClasses/RingGraph.h
- /home/m4zz31/cppprojct/tests/graph-test.cpp
- /home/m4zz31/cppprojct/tests/graph-test.h
+ /home/m4zz31/cppprojct/tests/graph-test-init.cpp
+ /home/m4zz31/cppprojct/tests/graph-test-init.h
  /home/m4zz31/cppprojct/utils/adequate_synchronization.h
  /home/m4zz31/cppprojct/utils/error.h
+ /home/m4zz31/cppprojct/utils/global_standard_messages.h
+CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o
+ /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
+ /home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
+ /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+ /home/m4zz31/cppprojct/GraphClasses/RingGraph.h
+ /home/m4zz31/cppprojct/tests/graph-test-singlestep-evolution.cpp
+ /home/m4zz31/cppprojct/tests/graph-test-singlestep-evolution.h
+ /home/m4zz31/cppprojct/utils/adequate_synchronization.h
+ /home/m4zz31/cppprojct/utils/error.h
+ /home/m4zz31/cppprojct/utils/global_standard_messages.h
 CMakeFiles/cppprojct.dir/utils/adequate_synchronization.cpp.o
  /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
  /home/m4zz31/cppprojct/utils/adequate_synchronization.cpp
