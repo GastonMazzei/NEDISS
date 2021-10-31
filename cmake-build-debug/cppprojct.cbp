@@ -102,6 +102,12 @@
 		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h">
 			<Option target="cppprojct"/>
 		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/RingGraph.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/RingGraph.h">
+			<Option target="cppprojct"/>
+		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Simulation/Simulation.cpp">
 			<Option target="cppprojct"/>
 		</Unit>

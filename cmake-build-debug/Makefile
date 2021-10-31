@@ -223,6 +223,33 @@ GraphClasses/GeneralGraph.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.s
 .PHONY : GraphClasses/GeneralGraph.cpp.s
 
+GraphClasses/RingGraph.o: GraphClasses/RingGraph.cpp.o
+
+.PHONY : GraphClasses/RingGraph.o
+
+# target to build an object file
+GraphClasses/RingGraph.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o
+.PHONY : GraphClasses/RingGraph.cpp.o
+
+GraphClasses/RingGraph.i: GraphClasses/RingGraph.cpp.i
+
+.PHONY : GraphClasses/RingGraph.i
+
+# target to preprocess a source file
+GraphClasses/RingGraph.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.i
+.PHONY : GraphClasses/RingGraph.cpp.i
+
+GraphClasses/RingGraph.s: GraphClasses/RingGraph.cpp.s
+
+.PHONY : GraphClasses/RingGraph.s
+
+# target to generate assembly for a file
+GraphClasses/RingGraph.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.s
+.PHONY : GraphClasses/RingGraph.cpp.s
+
 Simulation/Simulation.o: Simulation/Simulation.cpp.o
 
 .PHONY : Simulation/Simulation.o
@@ -430,6 +457,9 @@ help:
 	@echo "... GraphClasses/GeneralGraph.o"
 	@echo "... GraphClasses/GeneralGraph.i"
 	@echo "... GraphClasses/GeneralGraph.s"
+	@echo "... GraphClasses/RingGraph.o"
+	@echo "... GraphClasses/RingGraph.i"
+	@echo "... GraphClasses/RingGraph.s"
 	@echo "... Simulation/Simulation.o"
 	@echo "... Simulation/Simulation.i"
 	@echo "... Simulation/Simulation.s"

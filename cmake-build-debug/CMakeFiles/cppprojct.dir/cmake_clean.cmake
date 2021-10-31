@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o"
   "CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o"
   "CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o"
+  "CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o"
   "CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o"
   "CMakeFiles/cppprojct.dir/main.cpp.o"
   "CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o"

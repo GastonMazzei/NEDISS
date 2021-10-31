@@ -12,9 +12,9 @@ void adsync_synchronization_barrier(std::string detail, Graph &g){
     MPI_Barrier(MPI_COMM_WORLD);
 }
 
-void adsync_message_barrier(std::string detail, Graph &g){
+void adsync_message_barrier(std::string message, Graph &g){
     if (process_id(g.process_group()) == 0) {
-        std::cout << "[info] " << detail << " informs: synchronization has been successful!" << std::endl;
+        std::cout << message << " informs: barrier has been successfully applied!" << std::endl;
     }
     MPI_Barrier(MPI_COMM_WORLD);
 }
@@ -26,7 +26,7 @@ void adsync_barrier(){
 
 void adsync_message(std::string message, Graph &g){
     if (process_id(g.process_group()) == 0) {
-        std::cout << "[info] " << message << std::endl;
+        std::cout << message << std::endl;
     }
 }
 

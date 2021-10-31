@@ -4,8 +4,8 @@
 #include "graph-test.h"
 #include "../utils/adequate_synchronization.h"
 
-std::string msg_prev = "[info] about to run ";
-std::string msg_post = "[info] (apparent) success ";
+std::string msg_prev = "[info][informal-test] about to run ";
+std::string msg_post = "[info][informal-test] (apparent) success ";
 
 void test_clique_graph(int N){
     //                  N

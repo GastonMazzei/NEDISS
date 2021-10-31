@@ -11,7 +11,7 @@ void adsync_message(std::string message, Graph &g);
 
 void adsync_barrier();
 
-void adsync_message_barrier(std::string detail, Graph &g);
+void adsync_message_barrier(std::string message, Graph &g);
 
 void adsync_synchronization_barrier(std::string detail, Graph &g);
 

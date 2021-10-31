@@ -7,6 +7,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o"
   "/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o"
   "/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o"
+  "/home/m4zz31/cppprojct/GraphClasses/RingGraph.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o"
   "/home/m4zz31/cppprojct/Simulation/Simulation.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o"
   "/home/m4zz31/cppprojct/main.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/main.cpp.o"
   "/home/m4zz31/cppprojct/tests/graph-test.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/tests/graph-test.cpp.o"
