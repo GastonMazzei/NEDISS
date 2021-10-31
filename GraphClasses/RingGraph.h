@@ -17,7 +17,7 @@ public:
     unsigned long Procs = num_processes(boost::graph::distributed::mpi_process_group());
 
     RingGraphObject(unsigned long num_nodes) :
-            E(2 * num_nodes),
+            E(num_nodes), // E =/= 2 * N as it is bidirectional ;-) so it's just N
             N(num_nodes),
             g(N) {};
 

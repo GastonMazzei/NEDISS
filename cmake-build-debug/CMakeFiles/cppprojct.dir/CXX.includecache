@@ -6,15 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.cpp
+/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
-CliqueGraph.h
-/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
-../utils/adequate_synchronization.h
-/home/m4zz31/cppprojct/utils/adequate_synchronization.h
 
-/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
+/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.cpp
+ErdosRenyiGraph.h
+/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
+
+/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
@@ -78,6 +78,44 @@ boost/random/linear_congruential.hpp
 boost/graph/erdos_renyi_generator.hpp
 -
 
+/home/m4zz31/cppprojct/GraphClasses/RingGraph.cpp
+RingGraph.h
+/home/m4zz31/cppprojct/GraphClasses/RingGraph.h
+../utils/adequate_synchronization.h
+/home/m4zz31/cppprojct/utils/adequate_synchronization.h
+
+/home/m4zz31/cppprojct/GraphClasses/RingGraph.h
+GeneralGraph.h
+/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+
+/home/m4zz31/cppprojct/main.cpp
+iostream
+-
+mpi.h
+/home/m4zz31/cppprojct/mpi.h
+utils/timers.h
+/home/m4zz31/cppprojct/utils/timers.h
+utils/reproductibility.h
+/home/m4zz31/cppprojct/utils/reproductibility.h
+tests/graph-test.h
+/home/m4zz31/cppprojct/tests/graph-test.h
+omp.h
+-
+
+/home/m4zz31/cppprojct/tests/graph-test.cpp
+graph-test.h
+/home/m4zz31/cppprojct/tests/graph-test.h
+../GraphClasses/ErdosRenyiGraph.h
+/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
+../GraphClasses/CliqueGraph.h
+/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
+../GraphClasses/RingGraph.h
+/home/m4zz31/cppprojct/GraphClasses/RingGraph.h
+../utils/adequate_synchronization.h
+/home/m4zz31/cppprojct/utils/adequate_synchronization.h
+
+/home/m4zz31/cppprojct/tests/graph-test.h
+
 /home/m4zz31/cppprojct/utils/adequate_synchronization.h
 ../GraphClasses/GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
@@ -89,4 +127,10 @@ iostream
 -
 string
 -
+
+/home/m4zz31/cppprojct/utils/reproductibility.h
+boost/random.hpp
+/home/m4zz31/cppprojct/utils/boost/random.hpp
+
+/home/m4zz31/cppprojct/utils/timers.h
 

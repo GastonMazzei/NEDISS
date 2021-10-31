@@ -33,11 +33,15 @@ using namespace std;
 void graph_tests(unsigned int SEED){
 
     // Clique Network
-    reproductibility_lock(SEED);
-    test_clique_graph(4);
+    //reproductibility_lock(SEED);
+    //test_clique_graph(4);
+
+    // Ring Network
+    //reproductibility_lock(SEED);
+    //test_ring_graph(4);
 
     // Erdos Renyi Network
-    //reproductibility_lock(SEED)
+    //reproductibility_lock(SEED);
     //test_erdosRenyi_graph(5, 0.5);
 }
 
@@ -52,6 +56,7 @@ int main(int argc, char** argv)
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
+    // Testing Section ;-)
     graph_tests(SEED);
 
 

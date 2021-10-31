@@ -5,11 +5,8 @@
 #ifndef CPPPROJCT_GRAPH_TEST_H
 #define CPPPROJCT_GRAPH_TEST_H
 
-
-#include "../GraphClasses/ErdosRenyiGraph.h"
-#include "../GraphClasses/CliqueGraph.h"
-
 void test_clique_graph(int N);
 void test_erdosRenyi_graph(int N, double p);
+void test_ring_graph(int N);
 
 #endif //CPPPROJCT_GRAPH_TEST_H
