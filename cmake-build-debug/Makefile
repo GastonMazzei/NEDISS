@@ -277,6 +277,249 @@ Simulation/Simulation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.s
 .PHONY : Simulation/Simulation.cpp.s
 
+Solvers/GeneralSolvers.o: Solvers/GeneralSolvers.cpp.o
+
+.PHONY : Solvers/GeneralSolvers.o
+
+# target to build an object file
+Solvers/GeneralSolvers.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/GeneralSolvers.cpp.o
+.PHONY : Solvers/GeneralSolvers.cpp.o
+
+Solvers/GeneralSolvers.i: Solvers/GeneralSolvers.cpp.i
+
+.PHONY : Solvers/GeneralSolvers.i
+
+# target to preprocess a source file
+Solvers/GeneralSolvers.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/GeneralSolvers.cpp.i
+.PHONY : Solvers/GeneralSolvers.cpp.i
+
+Solvers/GeneralSolvers.s: Solvers/GeneralSolvers.cpp.s
+
+.PHONY : Solvers/GeneralSolvers.s
+
+# target to generate assembly for a file
+Solvers/GeneralSolvers.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/GeneralSolvers.cpp.s
+.PHONY : Solvers/GeneralSolvers.cpp.s
+
+Tests/graph-test-init.o: Tests/graph-test-init.cpp.o
+
+.PHONY : Tests/graph-test-init.o
+
+# target to build an object file
+Tests/graph-test-init.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o
+.PHONY : Tests/graph-test-init.cpp.o
+
+Tests/graph-test-init.i: Tests/graph-test-init.cpp.i
+
+.PHONY : Tests/graph-test-init.i
+
+# target to preprocess a source file
+Tests/graph-test-init.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.i
+.PHONY : Tests/graph-test-init.cpp.i
+
+Tests/graph-test-init.s: Tests/graph-test-init.cpp.s
+
+.PHONY : Tests/graph-test-init.s
+
+# target to generate assembly for a file
+Tests/graph-test-init.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.s
+.PHONY : Tests/graph-test-init.cpp.s
+
+Tests/graph-test-singlestep-evolution.o: Tests/graph-test-singlestep-evolution.cpp.o
+
+.PHONY : Tests/graph-test-singlestep-evolution.o
+
+# target to build an object file
+Tests/graph-test-singlestep-evolution.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o
+.PHONY : Tests/graph-test-singlestep-evolution.cpp.o
+
+Tests/graph-test-singlestep-evolution.i: Tests/graph-test-singlestep-evolution.cpp.i
+
+.PHONY : Tests/graph-test-singlestep-evolution.i
+
+# target to preprocess a source file
+Tests/graph-test-singlestep-evolution.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.i
+.PHONY : Tests/graph-test-singlestep-evolution.cpp.i
+
+Tests/graph-test-singlestep-evolution.s: Tests/graph-test-singlestep-evolution.cpp.s
+
+.PHONY : Tests/graph-test-singlestep-evolution.s
+
+# target to generate assembly for a file
+Tests/graph-test-singlestep-evolution.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.s
+.PHONY : Tests/graph-test-singlestep-evolution.cpp.s
+
+Tests/solvers-test-init.o: Tests/solvers-test-init.cpp.o
+
+.PHONY : Tests/solvers-test-init.o
+
+# target to build an object file
+Tests/solvers-test-init.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o
+.PHONY : Tests/solvers-test-init.cpp.o
+
+Tests/solvers-test-init.i: Tests/solvers-test-init.cpp.i
+
+.PHONY : Tests/solvers-test-init.i
+
+# target to preprocess a source file
+Tests/solvers-test-init.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.i
+.PHONY : Tests/solvers-test-init.cpp.i
+
+Tests/solvers-test-init.s: Tests/solvers-test-init.cpp.s
+
+.PHONY : Tests/solvers-test-init.s
+
+# target to generate assembly for a file
+Tests/solvers-test-init.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.s
+.PHONY : Tests/solvers-test-init.cpp.s
+
+Utils/adequate_synchronization.o: Utils/adequate_synchronization.cpp.o
+
+.PHONY : Utils/adequate_synchronization.o
+
+# target to build an object file
+Utils/adequate_synchronization.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o
+.PHONY : Utils/adequate_synchronization.cpp.o
+
+Utils/adequate_synchronization.i: Utils/adequate_synchronization.cpp.i
+
+.PHONY : Utils/adequate_synchronization.i
+
+# target to preprocess a source file
+Utils/adequate_synchronization.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.i
+.PHONY : Utils/adequate_synchronization.cpp.i
+
+Utils/adequate_synchronization.s: Utils/adequate_synchronization.cpp.s
+
+.PHONY : Utils/adequate_synchronization.s
+
+# target to generate assembly for a file
+Utils/adequate_synchronization.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.s
+.PHONY : Utils/adequate_synchronization.cpp.s
+
+Utils/error.o: Utils/error.cpp.o
+
+.PHONY : Utils/error.o
+
+# target to build an object file
+Utils/error.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/error.cpp.o
+.PHONY : Utils/error.cpp.o
+
+Utils/error.i: Utils/error.cpp.i
+
+.PHONY : Utils/error.i
+
+# target to preprocess a source file
+Utils/error.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/error.cpp.i
+.PHONY : Utils/error.cpp.i
+
+Utils/error.s: Utils/error.cpp.s
+
+.PHONY : Utils/error.s
+
+# target to generate assembly for a file
+Utils/error.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/error.cpp.s
+.PHONY : Utils/error.cpp.s
+
+Utils/memory_management.o: Utils/memory_management.cpp.o
+
+.PHONY : Utils/memory_management.o
+
+# target to build an object file
+Utils/memory_management.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.o
+.PHONY : Utils/memory_management.cpp.o
+
+Utils/memory_management.i: Utils/memory_management.cpp.i
+
+.PHONY : Utils/memory_management.i
+
+# target to preprocess a source file
+Utils/memory_management.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.i
+.PHONY : Utils/memory_management.cpp.i
+
+Utils/memory_management.s: Utils/memory_management.cpp.s
+
+.PHONY : Utils/memory_management.s
+
+# target to generate assembly for a file
+Utils/memory_management.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.s
+.PHONY : Utils/memory_management.cpp.s
+
+Utils/reproductibility.o: Utils/reproductibility.cpp.o
+
+.PHONY : Utils/reproductibility.o
+
+# target to build an object file
+Utils/reproductibility.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.o
+.PHONY : Utils/reproductibility.cpp.o
+
+Utils/reproductibility.i: Utils/reproductibility.cpp.i
+
+.PHONY : Utils/reproductibility.i
+
+# target to preprocess a source file
+Utils/reproductibility.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.i
+.PHONY : Utils/reproductibility.cpp.i
+
+Utils/reproductibility.s: Utils/reproductibility.cpp.s
+
+.PHONY : Utils/reproductibility.s
+
+# target to generate assembly for a file
+Utils/reproductibility.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.s
+.PHONY : Utils/reproductibility.cpp.s
+
+Utils/timers.o: Utils/timers.cpp.o
+
+.PHONY : Utils/timers.o
+
+# target to build an object file
+Utils/timers.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/timers.cpp.o
+.PHONY : Utils/timers.cpp.o
+
+Utils/timers.i: Utils/timers.cpp.i
+
+.PHONY : Utils/timers.i
+
+# target to preprocess a source file
+Utils/timers.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/timers.cpp.i
+.PHONY : Utils/timers.cpp.i
+
+Utils/timers.s: Utils/timers.cpp.s
+
+.PHONY : Utils/timers.s
+
+# target to generate assembly for a file
+Utils/timers.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/timers.cpp.s
+.PHONY : Utils/timers.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -304,168 +547,6 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-tests/graph-test-init.o: tests/graph-test-init.cpp.o
-
-.PHONY : tests/graph-test-init.o
-
-# target to build an object file
-tests/graph-test-init.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.o
-.PHONY : tests/graph-test-init.cpp.o
-
-tests/graph-test-init.i: tests/graph-test-init.cpp.i
-
-.PHONY : tests/graph-test-init.i
-
-# target to preprocess a source file
-tests/graph-test-init.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.i
-.PHONY : tests/graph-test-init.cpp.i
-
-tests/graph-test-init.s: tests/graph-test-init.cpp.s
-
-.PHONY : tests/graph-test-init.s
-
-# target to generate assembly for a file
-tests/graph-test-init.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test-init.cpp.s
-.PHONY : tests/graph-test-init.cpp.s
-
-tests/graph-test-singlestep-evolution.o: tests/graph-test-singlestep-evolution.cpp.o
-
-.PHONY : tests/graph-test-singlestep-evolution.o
-
-# target to build an object file
-tests/graph-test-singlestep-evolution.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.o
-.PHONY : tests/graph-test-singlestep-evolution.cpp.o
-
-tests/graph-test-singlestep-evolution.i: tests/graph-test-singlestep-evolution.cpp.i
-
-.PHONY : tests/graph-test-singlestep-evolution.i
-
-# target to preprocess a source file
-tests/graph-test-singlestep-evolution.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.i
-.PHONY : tests/graph-test-singlestep-evolution.cpp.i
-
-tests/graph-test-singlestep-evolution.s: tests/graph-test-singlestep-evolution.cpp.s
-
-.PHONY : tests/graph-test-singlestep-evolution.s
-
-# target to generate assembly for a file
-tests/graph-test-singlestep-evolution.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/tests/graph-test-singlestep-evolution.cpp.s
-.PHONY : tests/graph-test-singlestep-evolution.cpp.s
-
-utils/adequate_synchronization.o: utils/adequate_synchronization.cpp.o
-
-.PHONY : utils/adequate_synchronization.o
-
-# target to build an object file
-utils/adequate_synchronization.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/adequate_synchronization.cpp.o
-.PHONY : utils/adequate_synchronization.cpp.o
-
-utils/adequate_synchronization.i: utils/adequate_synchronization.cpp.i
-
-.PHONY : utils/adequate_synchronization.i
-
-# target to preprocess a source file
-utils/adequate_synchronization.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/adequate_synchronization.cpp.i
-.PHONY : utils/adequate_synchronization.cpp.i
-
-utils/adequate_synchronization.s: utils/adequate_synchronization.cpp.s
-
-.PHONY : utils/adequate_synchronization.s
-
-# target to generate assembly for a file
-utils/adequate_synchronization.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/adequate_synchronization.cpp.s
-.PHONY : utils/adequate_synchronization.cpp.s
-
-utils/error.o: utils/error.cpp.o
-
-.PHONY : utils/error.o
-
-# target to build an object file
-utils/error.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/error.cpp.o
-.PHONY : utils/error.cpp.o
-
-utils/error.i: utils/error.cpp.i
-
-.PHONY : utils/error.i
-
-# target to preprocess a source file
-utils/error.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/error.cpp.i
-.PHONY : utils/error.cpp.i
-
-utils/error.s: utils/error.cpp.s
-
-.PHONY : utils/error.s
-
-# target to generate assembly for a file
-utils/error.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/error.cpp.s
-.PHONY : utils/error.cpp.s
-
-utils/reproductibility.o: utils/reproductibility.cpp.o
-
-.PHONY : utils/reproductibility.o
-
-# target to build an object file
-utils/reproductibility.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/reproductibility.cpp.o
-.PHONY : utils/reproductibility.cpp.o
-
-utils/reproductibility.i: utils/reproductibility.cpp.i
-
-.PHONY : utils/reproductibility.i
-
-# target to preprocess a source file
-utils/reproductibility.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/reproductibility.cpp.i
-.PHONY : utils/reproductibility.cpp.i
-
-utils/reproductibility.s: utils/reproductibility.cpp.s
-
-.PHONY : utils/reproductibility.s
-
-# target to generate assembly for a file
-utils/reproductibility.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/reproductibility.cpp.s
-.PHONY : utils/reproductibility.cpp.s
-
-utils/timers.o: utils/timers.cpp.o
-
-.PHONY : utils/timers.o
-
-# target to build an object file
-utils/timers.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/timers.cpp.o
-.PHONY : utils/timers.cpp.o
-
-utils/timers.i: utils/timers.cpp.i
-
-.PHONY : utils/timers.i
-
-# target to preprocess a source file
-utils/timers.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/timers.cpp.i
-.PHONY : utils/timers.cpp.i
-
-utils/timers.s: utils/timers.cpp.s
-
-.PHONY : utils/timers.s
-
-# target to generate assembly for a file
-utils/timers.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/utils/timers.cpp.s
-.PHONY : utils/timers.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -490,27 +571,36 @@ help:
 	@echo "... Simulation/Simulation.o"
 	@echo "... Simulation/Simulation.i"
 	@echo "... Simulation/Simulation.s"
+	@echo "... Solvers/GeneralSolvers.o"
+	@echo "... Solvers/GeneralSolvers.i"
+	@echo "... Solvers/GeneralSolvers.s"
+	@echo "... Tests/graph-test-init.o"
+	@echo "... Tests/graph-test-init.i"
+	@echo "... Tests/graph-test-init.s"
+	@echo "... Tests/graph-test-singlestep-evolution.o"
+	@echo "... Tests/graph-test-singlestep-evolution.i"
+	@echo "... Tests/graph-test-singlestep-evolution.s"
+	@echo "... Tests/solvers-test-init.o"
+	@echo "... Tests/solvers-test-init.i"
+	@echo "... Tests/solvers-test-init.s"
+	@echo "... Utils/adequate_synchronization.o"
+	@echo "... Utils/adequate_synchronization.i"
+	@echo "... Utils/adequate_synchronization.s"
+	@echo "... Utils/error.o"
+	@echo "... Utils/error.i"
+	@echo "... Utils/error.s"
+	@echo "... Utils/memory_management.o"
+	@echo "... Utils/memory_management.i"
+	@echo "... Utils/memory_management.s"
+	@echo "... Utils/reproductibility.o"
+	@echo "... Utils/reproductibility.i"
+	@echo "... Utils/reproductibility.s"
+	@echo "... Utils/timers.o"
+	@echo "... Utils/timers.i"
+	@echo "... Utils/timers.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... tests/graph-test-init.o"
-	@echo "... tests/graph-test-init.i"
-	@echo "... tests/graph-test-init.s"
-	@echo "... tests/graph-test-singlestep-evolution.o"
-	@echo "... tests/graph-test-singlestep-evolution.i"
-	@echo "... tests/graph-test-singlestep-evolution.s"
-	@echo "... utils/adequate_synchronization.o"
-	@echo "... utils/adequate_synchronization.i"
-	@echo "... utils/adequate_synchronization.s"
-	@echo "... utils/error.o"
-	@echo "... utils/error.i"
-	@echo "... utils/error.s"
-	@echo "... utils/reproductibility.o"
-	@echo "... utils/reproductibility.i"
-	@echo "... utils/reproductibility.s"
-	@echo "... utils/timers.o"
-	@echo "... utils/timers.i"
-	@echo "... utils/timers.s"
 .PHONY : help
 
 

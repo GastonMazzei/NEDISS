@@ -3,11 +3,11 @@
 //
 
 #include "GeneralGraph.h"
-#include "../utils/error.h"
+#include "../Utils/error.h"
 #include <cmath>
 #include "mpi.h"
-#include "../utils/adequate_synchronization.h"
-
+#include "../Utils/adequate_synchronization.h"
+#include "../Utils/memory_management.h"
 
 
 using namespace boost;
@@ -110,7 +110,7 @@ void CommonGraphObjectClass::kuramoto_initialization(std::vector<pair<double, do
 
 
 
-void CommonGraphObjectClass::single_kuramoto_evolution(Graph &g){
+void CommonGraphObjectClass::single_kuramoto_evolution(Graph &g, Solver &solver){
     // There is an evolution operator that should compute the next
     // value and store it in the object's temporal register
 
@@ -133,19 +133,55 @@ void CommonGraphObjectClass::single_kuramoto_evolution(Graph &g){
     //
     //boost::edge(u,v,g) returns pair<edge_descriptor, bool> where bool is if it exists
 
+    // define mutable variables :-)
     auto vs = vertices(g);
+    double centralValue, temporalResult;
+    std::vector<double> centralParams;
+    std::vector<double> edgeValues;
+    std::vector<double> neighborValues;
+
 
     for (auto v = vs.first; v != vs.second; ++v) {
-        g[*v].value = 0; // I am the central node's value
-        g[*v].params = {1}; //  I am the central node's parameter vector
+        // Get the central node's values
+        centralValue = g[*v].value;
+        centralParams = g[*v].params;
+
+        // Get the neighbor and edge's values
         auto neighbors = boost::adjacent_vertices(*v, g);
         for (auto n = neighbors.first; n != neighbors.second; ++n) {
-            g[*n].value = 0; // I am the neighbor node's value
-            g[boost::edge(*v,*n,g).first].value = 0; // I am the edge's value
+            neighborValues.push_back(g[*n].value);
+            edgeValues.push_back(g[boost::edge(*v,*n,g).first].value);
         }
+
+        // Perform the evolution and store the result in the central
+        // node's temporal register
+        g[*v].temporal_register = solver(centralValue,
+                                           centralParams,
+                                           neighborValues,
+                                           edgeValues);
+
+        // Empty the vectors using a function from utils :-)
+        clear_vectors(centralParams, neighborValues, edgeValues);
+
     }
 
+    // Block operations until all nodes have seen their neighbors ;-)
+    adsync_barrier();
+
+    // For all nodes,
+    // central_value :=  temporal_register
+    register_to_value(g);
+
+    // Block operations until all nodes have been updated ;-)
+    adsync_barrier();
 }
+
+void register_to_value(Graph &g){
+    auto vs = vertices(g);
+    for (auto v = vs.first; v != vs.second; ++v) {
+        g[*v].value = g[*v].temporal_register;
+    }
+};
 
 
 // ITERATE OVER ALL EDGES LOCALLY IN PARALLEL

@@ -8,7 +8,8 @@
 #include  <iostream>
 #include <Eigen/Sparse>
 #include <string>
-#include "../utils/error.h"
+#include "../Utils/error.h"
+#include "../Solvers/GeneralSolvers.h"
 
 #include <omp.h>
 #include <vector>
@@ -47,11 +48,13 @@
 //      - something still unclear for the d(A)_t \propto \laplace^\alpha (A) model
 // (2) params:
 //      - an N-dimensional array with its own properties: characteristic frequency for example
-// (3) NOT IMPLEMENTED: a memory capacity that  potentially can remember N_neighbors * msg
+// (3) temoral register:
+//      - store the result of operations aand keep it for some time
 struct DynamicNode {
+    double value = 0;
+    double temporal_register = 0;
     DynamicNode() = default;
     DynamicNode(double i): value(i) {};
-    double value = 0;
     std::vector<double> params;
     template<typename Archiver> /*version is const unsigned int*/
     void serialize(Archiver& ar, const unsigned int /*version*/) {
@@ -94,36 +97,10 @@ class CommonGraphObjectClass{
         void showEdges(Graph & g);
         void reportNProcs(Graph & g);
         void kuramoto_initialization(std::vector<std::pair<double, double>> X0_W, double J, Graph & g, unsigned int N);
-        void single_kuramoto_evolution(Graph &g);
+        void single_kuramoto_evolution(Graph &g, Solver &solver); // using single values and barriers instead of concurrently using stacks :O!
 };
 
-// THE FOLLOWING EXAMPLE ILLUSTRATES HOW TO IMPLEMENT
-// ARBITRARY EVOLUTION OPERATORS, AS TO BE ABLE TO
-// USE DIFFERENT DIFFERENTIAL SOLVERS ;-)
-//
-//} Aobject;
-//double A::evolve(int i){
-//    return (double) i*8;
-//}
-//
-//struct B{
-//
-//    double evolve(int i);
-//}Bobject;
-//double B::evolve(int i){
-//    return (double) 45 * i;
-//};
-//
-//
-//template <typename T>
-//void printer(int i, T o){
-//    std::cout << o.evolve(i) << std::endl;
-//}
-//
-//int main(){
-//    printer<A>(1, Aobject);
-//    printer<B>(2, Bobject);
-//}
+void register_to_value(Graph &g);
 
 
 #endif //CPPPROJCT_GENERALGRAPH_H

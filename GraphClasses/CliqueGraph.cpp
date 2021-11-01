@@ -5,7 +5,7 @@
 
 #include "GeneralGraph.h"
 #include "CliqueGraph.h"
-#include "../utils/adequate_synchronization.h"
+#include "../Utils/adequate_synchronization.h"
 
 
 using namespace std;

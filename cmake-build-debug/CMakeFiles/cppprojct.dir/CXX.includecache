@@ -21,8 +21,10 @@ Eigen/Sparse
 -
 string
 -
-../utils/error.h
-/home/m4zz31/cppprojct/utils/error.h
+../Utils/error.h
+/home/m4zz31/cppprojct/Utils/error.h
+../Solvers/GeneralSolvers.h
+/home/m4zz31/cppprojct/Solvers/GeneralSolvers.h
 omp.h
 -
 vector
@@ -78,43 +80,35 @@ boost/graph/erdos_renyi_generator.hpp
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
-/home/m4zz31/cppprojct/tests/graph-test-init.cpp
-graph-test-init.h
-/home/m4zz31/cppprojct/tests/graph-test-init.h
-../GraphClasses/ErdosRenyiGraph.h
-/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
-../GraphClasses/CliqueGraph.h
-/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
-../GraphClasses/RingGraph.h
-/home/m4zz31/cppprojct/GraphClasses/RingGraph.h
-../utils/adequate_synchronization.h
-/home/m4zz31/cppprojct/utils/adequate_synchronization.h
-../utils/global_standard_messages.h
-/home/m4zz31/cppprojct/utils/global_standard_messages.h
+/home/m4zz31/cppprojct/Solvers/GeneralSolvers.h
+functional
+-
+vector
+-
 
-/home/m4zz31/cppprojct/tests/graph-test-init.h
-
-/home/m4zz31/cppprojct/tests/graph-test-singlestep-evolution.cpp
+/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.cpp
 graph-test-singlestep-evolution.h
-/home/m4zz31/cppprojct/tests/graph-test-singlestep-evolution.h
+/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
 ../GraphClasses/ErdosRenyiGraph.h
 /home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
 ../GraphClasses/CliqueGraph.h
 /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
+../Solvers/GeneralSolvers.h
+/home/m4zz31/cppprojct/Solvers/GeneralSolvers.h
 ../GraphClasses/RingGraph.h
 /home/m4zz31/cppprojct/GraphClasses/RingGraph.h
-../utils/adequate_synchronization.h
-/home/m4zz31/cppprojct/utils/adequate_synchronization.h
-../utils/global_standard_messages.h
-/home/m4zz31/cppprojct/utils/global_standard_messages.h
+../Utils/adequate_synchronization.h
+/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
+../Utils/global_standard_messages.h
+/home/m4zz31/cppprojct/Utils/global_standard_messages.h
 
-/home/m4zz31/cppprojct/tests/graph-test-singlestep-evolution.h
+/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
 
-/home/m4zz31/cppprojct/utils/adequate_synchronization.h
+/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
 ../GraphClasses/GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
-/home/m4zz31/cppprojct/utils/error.h
+/home/m4zz31/cppprojct/Utils/error.h
 stdlib.h
 -
 iostream
@@ -122,5 +116,5 @@ iostream
 string
 -
 
-/home/m4zz31/cppprojct/utils/global_standard_messages.h
+/home/m4zz31/cppprojct/Utils/global_standard_messages.h
 

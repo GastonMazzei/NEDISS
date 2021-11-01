@@ -1,10 +1,10 @@
 #include <iostream>
 
 #include "mpi.h"
-#include "utils/timers.h"
-#include "utils/reproductibility.h"
-#include "tests/graph-test-init.h"
-#include "tests/graph-test-singlestep-evolution.h"
+#include "Utils/timers.h"
+#include "Utils/reproductibility.h"
+#include "Tests/graph-test-init.h"
+#include "Tests/graph-test-singlestep-evolution.h"
 #include <omp.h>
 
 //#include <string>
@@ -14,7 +14,7 @@
 //#include <algorithm>
 //#include <iterator>
 //#include <chrono>
-//#include "utils/error.h"
+//#include "Utils/error.h"
 //#include <Eigen/Dense>
 //#include <iostream>
 //#include <math.h>

@@ -2,7 +2,7 @@
 // Created by m4zz31 on 31/10/21.
 //
 #include "RingGraph.h"
-#include "../utils/adequate_synchronization.h"
+#include "../Utils/adequate_synchronization.h"
 
 using namespace boost;
 using namespace std;
