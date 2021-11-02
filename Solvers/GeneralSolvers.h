@@ -9,7 +9,10 @@
 #include <vector>
 
 // Typedef to make things easier in other files
+#ifndef SOLVER_TYPE
+#define SOLVER_TYPE
 typedef std::function<double(double, std::vector<double>, std::vector<double>, std::vector<double>)> Solver;
+#endif
 
 // Factory that is a thin-wrapper for general solvers
 template <typename T>
@@ -18,9 +21,11 @@ Solver GeneralSolverFactory();
 // Selector that instantiates specific solvers from the factory
 Solver SolverSelector(std::string name);
 
-class EulerSolver {
+class GeneralSolver{
 public:
-    double evolve(double a, std::vector<double> b, std::vector<double> c, std::vector<double> d);
+    double h = 0.01;
+    double t = 0;
+    GeneralSolver(){};
 };
 
 #endif //CPPPROJCT_GENERALSOLVERS_H

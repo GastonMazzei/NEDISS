@@ -271,6 +271,58 @@ CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.s"
 	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/Tests/solvers-test-init.cpp -o CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.s
 
+CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o: CMakeFiles/cppprojct.dir/flags.make
+CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o -c /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.cpp
+
+CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.i"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.cpp > CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.i
+
+CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.s"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.cpp -o CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.s
+
+CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: CMakeFiles/cppprojct.dir/flags.make
+CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../Solvers/EulerSolver.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o -c /home/m4zz31/cppprojct/Solvers/EulerSolver.cpp
+
+CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.i"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/Solvers/EulerSolver.cpp > CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.i
+
+CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.s"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/Solvers/EulerSolver.cpp -o CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.s
+
+CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o: CMakeFiles/cppprojct.dir/flags.make
+CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o: ../Utils/differential_equations_aux.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o -c /home/m4zz31/cppprojct/Utils/differential_equations_aux.cpp
+
+CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.i"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/Utils/differential_equations_aux.cpp > CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.i
+
+CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.s"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/Utils/differential_equations_aux.cpp -o CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.s
+
+CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o: CMakeFiles/cppprojct.dir/flags.make
+CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o: ../DifferentialEquations/NoiselessKuramoto.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o -c /home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.cpp
+
+CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.i"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.cpp > CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.i
+
+CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.s"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.cpp -o CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.s
+
 # Object files for target cppprojct
 cppprojct_OBJECTS = \
 "CMakeFiles/cppprojct.dir/main.cpp.o" \
@@ -287,7 +339,11 @@ cppprojct_OBJECTS = \
 "CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o" \
 "CMakeFiles/cppprojct.dir/Solvers/GeneralSolvers.cpp.o" \
 "CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.o" \
-"CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o"
+"CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o" \
+"CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o" \
+"CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o" \
+"CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o" \
+"CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o"
 
 # External object files for target cppprojct
 cppprojct_EXTERNAL_OBJECTS =
@@ -307,6 +363,10 @@ cppprojct: CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Solvers/GeneralSolvers.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o
+cppprojct: CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o
+cppprojct: CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o
+cppprojct: CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o
+cppprojct: CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/build.make
 cppprojct: /usr/lib/x86_64-linux-gnu/libboost_mpi.so
 cppprojct: /usr/lib/x86_64-linux-gnu/libboost_graph_parallel.so
@@ -315,7 +375,7 @@ cppprojct: /usr/lib/x86_64-linux-gnu/libboost_serialization.so
 cppprojct: /usr/lib/gcc/x86_64-linux-gnu/7/libgomp.so
 cppprojct: /usr/lib/x86_64-linux-gnu/libpthread.so
 cppprojct: CMakeFiles/cppprojct.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX executable cppprojct"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Linking CXX executable cppprojct"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cppprojct.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

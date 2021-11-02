@@ -84,6 +84,18 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.h">
+			<Option target="cppprojct"/>
+		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.cpp">
 			<Option target="cppprojct"/>
 		</Unit>
@@ -109,6 +121,12 @@
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Simulation/Simulation.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Solvers/EulerSolver.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Solvers/EulerSolver.h">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Solvers/GeneralSolvers.cpp">
@@ -139,6 +157,12 @@
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Utils/adequate_synchronization.h">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Utils/differential_equations_aux.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Utils/differential_equations_aux.h">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Utils/error.cpp">

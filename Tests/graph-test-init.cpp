@@ -154,7 +154,7 @@ void test_ring_graph_init(int N){
     G.build_ring();
     adsync_message_barrier(msg_post + "'build_ring'", G.g);
 
-    // Show the number of created nodes
+    // Show the nodes
     adsync_message(msg_prev + "'showVertex'", G.g);
     G.showVertex(G.g);
     adsync_message_barrier(msg_post + "'showVertex'", G.g);

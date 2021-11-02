@@ -3,6 +3,7 @@
 //
 
 #include  "GeneralSolvers.h"
+#include "EulerSolver.h"
 #include "../Utils/error.h"
 
 template <typename T>
@@ -28,6 +29,3 @@ Solver SolverSelector(std::string name){
     return GeneralSolverFactory<EulerSolver>();
 };
 
-double EulerSolver::evolve(double a, std::vector<double> b, std::vector<double> c, std::vector<double> d) {
-    return a*2;
-};
