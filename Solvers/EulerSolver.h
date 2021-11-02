@@ -10,7 +10,7 @@
 class EulerSolver : public GeneralSolver {
 public:
     int deg = 1;
-    EulerSolver();
+    EulerSolver(){};
     EulerSolver(int deg): deg(deg){};
     double evolve(double a, std::vector<double> &b, std::vector<double> &c, std::vector<double> &d);
 };

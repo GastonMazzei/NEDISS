@@ -4,7 +4,7 @@
 
 #include "differential_equations_aux.h"
 
-double scalar_flow_placeholder(double, std::vector<double>, std::vector<double>, std::vector<double>){
+double scalar_flow_placeholder(double,double, std::vector<double>, std::vector<double>, std::vector<double>){
     return 0.;
 };
 

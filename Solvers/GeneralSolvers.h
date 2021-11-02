@@ -9,10 +9,10 @@
 #include <vector>
 
 // Typedef to make things easier in other files
-#ifndef SOLVER_TYPE
-#define SOLVER_TYPE
+//#ifndef SOLVER_TYPE
+//#define SOLVER_TYPE
 typedef std::function<double(double, std::vector<double>, std::vector<double>, std::vector<double>)> Solver;
-#endif
+//#endif
 
 // Factory that is a thin-wrapper for general solvers
 template <typename T>
