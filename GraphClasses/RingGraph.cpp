@@ -8,26 +8,13 @@ using namespace boost;
 using namespace std;
 
 void RingGraphObject::build(){
-    int counter = 0;
-    typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
     if (process_id(g.process_group()) == 0) {
-        vertex_iterator v, v_end, v_inner;
-        tie(v, v_end) = vertices(g);
-        add_edge(*v, *(v_end-1), g); // Connect the first one to the last one, i.e. S1 topology
-        while (v != (v_end-2)) {
-            v_inner = v;
-            v_inner ++;
-            add_edge(*v, *v_inner, g);
-            counter += 1; // DEBUG!
-            v += 2;
-            add_edge(*v, *v_inner, g);
-            counter += 1; // DEBUG!
+        int i=0;
+        add_edge(vertex(0, g), vertex(N-1, g), g);
+#pragma omp parallel for
+        for (int i=0; i<N-1; i++){
+            add_edge(vertex(i,g), vertex(i+1,g), g);
         }
-        add_edge(*v, *(v+1), g); // Connect the last two together,
-        counter += 1; // DEBUG!
-        std::cout << "In total there were " << counter << " edges created ! :-)" << std::endl;
-        //  as applying here the 3-items connectivity algorithm from the loop leads to segmentation fault
-        // because there is no g[*(v+2)] ;-)
     }
     adsync_synchronization_barrier<0>("Ring constructor", g);
 }

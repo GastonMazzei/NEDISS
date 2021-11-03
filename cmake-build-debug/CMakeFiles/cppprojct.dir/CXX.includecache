@@ -14,13 +14,9 @@ vector
 ../Utils/differential_equations_aux.h
 /home/m4zz31/cppprojct/Utils/differential_equations_aux.h
 
-/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.cpp
-GeneralGraph.h
-/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
-CliqueGraph.h
-/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
-../Utils/adequate_synchronization.h
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
+/home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.h
+GeneralDifferentialEquation.h
+/home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
 
 /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
 GeneralGraph.h
@@ -29,22 +25,6 @@ GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
-
-/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.cpp
-GeneralGraph.h
-/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
-../Utils/error.h
-/home/m4zz31/cppprojct/Utils/error.h
-cmath
--
-mpi.h
-/home/m4zz31/cppprojct/GraphClasses/mpi.h
-../Utils/adequate_synchronization.h
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
-../Utils/memory_management.h
-/home/m4zz31/cppprojct/Utils/memory_management.h
-../Utils/msleep.h
-/home/m4zz31/cppprojct/Utils/msleep.h
 
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 iostream
@@ -108,31 +88,13 @@ boost/graph/erdos_renyi_generator.hpp
 boost/range/adaptors.hpp
 -
 
-/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp
-GraphFunctions.h
-/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
+/home/m4zz31/cppprojct/GraphClasses/RingGraph.h
+GeneralGraph.h
+/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
-/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
-../Solvers/GeneralSolver.h
+/home/m4zz31/cppprojct/Solvers/EulerSolver.h
+GeneralSolver.h
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
-../Utils/adequate_synchronization.h
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
-../Utils/memory_management.h
-/home/m4zz31/cppprojct/Utils/memory_management.h
-GeneralGraph.h
-/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
-mpi.h
--
-
-/home/m4zz31/cppprojct/GraphClasses/RingGraph.cpp
-RingGraph.h
-/home/m4zz31/cppprojct/GraphClasses/RingGraph.h
-../Utils/adequate_synchronization.h
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
-
-/home/m4zz31/cppprojct/GraphClasses/RingGraph.h
-GeneralGraph.h
-/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
 functional
@@ -141,6 +103,10 @@ functional
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 ../DifferentialEquations/GeneralDifferentialEquation.h
 /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
+
+/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
+GeneralSolver.h
+/home/m4zz31/cppprojct/Solvers/GeneralSolver.h
 
 /home/m4zz31/cppprojct/Tests/graph-test-init.cpp
 graph-test-init.h
@@ -151,18 +117,22 @@ graph-test-init.h
 /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
 ../GraphClasses/RingGraph.h
 /home/m4zz31/cppprojct/GraphClasses/RingGraph.h
-../Utils/adequate_synchronization.h
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
-../Utils/global_standard_messages.h
-/home/m4zz31/cppprojct/Utils/global_standard_messages.h
 ../Utils/reproductibility.h
 /home/m4zz31/cppprojct/Utils/reproductibility.h
 
 /home/m4zz31/cppprojct/Tests/graph-test-init.h
-
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.cpp
-adequate_synchronization.h
+string
+-
+vector
+-
+cmath
+-
+../Utils/global_standard_messages.h
+/home/m4zz31/cppprojct/Utils/global_standard_messages.h
+../Utils/adequate_synchronization.h
 /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
+
+/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
 
 /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
 ../GraphClasses/GeneralGraph.h
@@ -186,13 +156,37 @@ string
 
 /home/m4zz31/cppprojct/Utils/global_standard_messages.h
 
-/home/m4zz31/cppprojct/Utils/memory_management.h
-vector
--
-
 /home/m4zz31/cppprojct/Utils/msleep.h
 
 /home/m4zz31/cppprojct/Utils/reproductibility.h
 boost/random.hpp
 /home/m4zz31/cppprojct/Utils/boost/random.hpp
+
+/home/m4zz31/cppprojct/Utils/timers.h
+
+/home/m4zz31/cppprojct/Utils/typed_combinations.h
+../Solvers/GeneralSolver.h
+/home/m4zz31/cppprojct/Solvers/GeneralSolver.h
+../Solvers/EulerSolver.h
+/home/m4zz31/cppprojct/Solvers/EulerSolver.h
+../Solvers/RungeKuttaSolver.h
+/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
+../DifferentialEquations/NoiselessKuramoto.h
+/home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.h
+
+/home/m4zz31/cppprojct/main.cpp
+iostream
+-
+mpi.h
+/home/m4zz31/cppprojct/mpi.h
+Utils/timers.h
+/home/m4zz31/cppprojct/Utils/timers.h
+Tests/graph-test-init.h
+/home/m4zz31/cppprojct/Tests/graph-test-init.h
+Tests/graph-test-singlestep-evolution.h
+/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
+omp.h
+-
+Utils/typed_combinations.h
+/home/m4zz31/cppprojct/Utils/typed_combinations.h
 

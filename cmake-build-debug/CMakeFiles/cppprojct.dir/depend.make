@@ -87,6 +87,26 @@ CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../Utils/global_standard_m
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../Utils/msleep.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../Utils/reproductibility.h
 
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../DifferentialEquations/NoiselessKuramoto.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/CliqueGraph.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/ErdosRenyiGraph.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/GraphFunctions.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/RingGraph.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Solvers/EulerSolver.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Solvers/GeneralSolver.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Solvers/RungeKuttaSolver.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Tests/graph-test-singlestep-evolution.cpp
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Tests/graph-test-singlestep-evolution.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/adequate_synchronization.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/differential_equations_aux.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/error.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/global_standard_messages.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/memory_management.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/msleep.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/reproductibility.h
+
 CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o: ../Tests/solvers-test-init.cpp
 
 CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o: ../GraphClasses/GeneralGraph.h
@@ -119,8 +139,11 @@ CMakeFiles/cppprojct.dir/main.cpp.o: ../Solvers/GeneralSolver.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Solvers/RungeKuttaSolver.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Tests/graph-test-init.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Tests/graph-test-singlestep-evolution.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/adequate_synchronization.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/differential_equations_aux.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/error.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/global_standard_messages.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/msleep.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/timers.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/typed_combinations.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../main.cpp
