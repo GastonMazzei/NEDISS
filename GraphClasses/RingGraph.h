@@ -21,7 +21,20 @@ public:
             N(num_nodes),
             g(N) {};
 
-    void build();
+    void build(); // Ring constructor
+//    using vertex = typename Graph::vertex_descriptor;
+//    auto bundles() {
+//        auto accessor = [map = get(boost::vertex_bundle, g)](vertex v) -> auto& {
+//            return map[v];
+//        };
+//        return vertices(g) | transformed(accessor);
+//    }
+//    auto bundles() const {
+//        auto accessor = [map = get(boost::vertex_bundle, g)](vertex v) -> auto& {
+//            return map[v];
+//        };
+//        return vertices(g) | transformed(accessor);
+//    }
 };
 
 

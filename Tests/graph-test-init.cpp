@@ -9,47 +9,55 @@
 #include "../Utils/global_standard_messages.h"
 #include "../Utils/reproductibility.h"
 
+
+
+
+
+
+
+
+template <int T>
 void test_clique_graph_init(int N){
     //                  N
     CliqueGraphObject G(N);
 
     // Print in command that the test is Clique
-    adsync_message(msg_prev + "'test_clique_graph_init'", G.g);
+    adsync_message<T>(msg_prev + "'test_clique_graph_init'", G.g);
 
     // Build it
-    adsync_message(msg_prev + "'build_clique'", G.g);
+    adsync_message<T>(msg_prev + "'build_clique'", G.g);
     G.build();
-    adsync_message_barrier(msg_post + "'build_clique'", G.g);
+    adsync_message_barrier<T>(msg_post + "'build_clique'", G.g);
 
     // Show the number of created nodes
-    adsync_message(msg_prev + "'showVertex'", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showVertex'", G.g);
     G.showVertex(G.g);
-    adsync_message_barrier(msg_post + "'showVertex'", G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
 
     // Show the number of processors
-    adsync_message(msg_prev + "'reportNProcs'", G.g);
-    //G.reportNProcs(G.g);
-    adsync_message_barrier(msg_post + "'reportNProcs'", G.g);
+    adsync_message_barrier<T>(msg_prev + "'reportNProcs'", G.g);
+    G.reportNProcs(G.g);
+    adsync_message_barrier<T>(msg_post + "'reportNProcs'", G.g);
 
     // Show the edges
-    adsync_message(msg_prev + "'showEdges'", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showEdges'", G.g);
     G.showEdges(G.g);
-    adsync_message_barrier(msg_post + "'showEdges'", G.g);
+    adsync_message_barrier<T>(msg_post + "'showEdges'", G.g);
 
     // Initialize for constant kuramoto
-    adsync_message(msg_prev + "'kuramoto_initialization (constant values)'", G.g);
+    adsync_message_barrier<T>(msg_prev + "'kuramoto_initialization (constant values)'", G.g);
     G.kuramoto_initialization({{12.345, 6.78}}, 3.14, G.g, G.N);
-    adsync_message_barrier(msg_post + "'kuramoto_initialization (constant values)'", G.g);
+    adsync_message_barrier<T>(msg_post + "'kuramoto_initialization (constant values)'", G.g);
 
     // Show the number of created nodes again
-    adsync_message(msg_prev + "'showVertex' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showVertex' (post kuramoto constant values)", G.g);
     G.showVertex(G.g);
-    adsync_message_barrier(msg_post + "'showVertex' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex' (post kuramoto constant values)", G.g);
 
     // Show the edges again
-    adsync_message(msg_prev + "'showEdges' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showEdges' (post kuramoto constant values)", G.g);
     G.showEdges(G.g);
-    adsync_message_barrier(msg_post + "'showEdges' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showEdges' (post kuramoto constant values)", G.g);
 
     // Initialize for varied kuramoto
     //--------INITIALIZATION that is not parallelized yet
@@ -60,62 +68,62 @@ void test_clique_graph_init(int N){
                 1/((double) G.N) * (double) i
             });
     }
-    adsync_message(msg_prev + "'kuramoto_initialization (varied values)'", G.g);
+    adsync_message_barrier<T>(msg_prev + "'kuramoto_initialization (varied values)'", G.g);
     G.kuramoto_initialization(X0_W, 5.67, G.g, G.N);
-    adsync_message_barrier(msg_post + "'kuramoto_initialization (varied values)'", G.g);
+    adsync_message_barrier<T>(msg_post + "'kuramoto_initialization (varied values)'", G.g);
 
     // Show the number of created nodes again
-    adsync_message(msg_prev + "'showVertex' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showVertex' (post kuramoto varied values)", G.g);
     G.showVertex(G.g);
-    adsync_message_barrier(msg_post + "'showVertex' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex' (post kuramoto varied values)", G.g);
 
     // Show the edges again
-    adsync_message(msg_prev + "'showEdges' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showEdges' (post kuramoto varied values)", G.g);
     G.showEdges(G.g);
-    adsync_message_barrier(msg_post + "'showEdges' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showEdges' (post kuramoto varied values)", G.g);
 
     // Print in command that the test is Clique
-    adsync_message(msg_post + "'test_clique_graph_init'", G.g);
+    adsync_message<T>(msg_post + "'test_clique_graph_init'", G.g);
 };
 
-
+template <int T>
 void test_erdosRenyi_graph_init(int N, double p){
     //                      N, P
     ErdosRenyiGraphObject G(N, p);
     G.build();
 
     // Print in command that the test is Erdos Renyi
-    adsync_message(msg_prev + "'test_erdosRenyi_graph_init'", G.g);
+    adsync_message_barrier<T>(msg_prev + "'test_erdosRenyi_graph_init'", G.g);
 
     // Show the number of created nodes
-    adsync_message(msg_prev + "'showVertex'", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showVertex'", G.g);
     G.showVertex(G.g);
-    adsync_message_barrier(msg_post + "'showVertex'", G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
 
     // Show the number of processors
-    adsync_message(msg_prev + "'reportNProcs'", G.g);
+    adsync_message_barrier<T>(msg_prev + "'reportNProcs'", G.g);
     //G.reportNProcs(G.g);
-    adsync_message_barrier(msg_post + "'reportNProcs'", G.g);
+    adsync_message_barrier<T>(msg_post + "'reportNProcs'", G.g);
 
     // Show the edges
-    adsync_message(msg_prev + "'showEdges'", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showEdges'", G.g);
     G.showEdges(G.g);
-    adsync_message_barrier(msg_post + "'showEdges'", G.g);
+    adsync_message_barrier<T>(msg_post + "'showEdges'", G.g);
 
     // Initialize for constant kuramoto
-    adsync_message(msg_prev + "'kuramoto_initialization (constant values)'", G.g);
+    adsync_message_barrier<T>(msg_prev + "'kuramoto_initialization (constant values)'", G.g);
     G.kuramoto_initialization({{12.345, 6.78}}, 3.14, G.g, G.N);
-    adsync_message_barrier(msg_post + "'kuramoto_initialization (constant values)'", G.g);
+    adsync_message_barrier<T>(msg_post + "'kuramoto_initialization (constant values)'", G.g);
 
     // Show the number of created nodes again
-    adsync_message(msg_prev + "'showVertex' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showVertex' (post kuramoto constant values)", G.g);
     G.showVertex(G.g);
-    adsync_message_barrier(msg_post + "'showVertex' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex' (post kuramoto constant values)", G.g);
 
     // Show the edges again
-    adsync_message(msg_prev + "'showEdges' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showEdges' (post kuramoto constant values)", G.g);
     G.showEdges(G.g);
-    adsync_message_barrier(msg_post + "'showEdges' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showEdges' (post kuramoto constant values)", G.g);
 
     // Initialize for varied kuramoto
     //--------INITIALIZATION that is not parallelized yet
@@ -126,65 +134,66 @@ void test_erdosRenyi_graph_init(int N, double p){
                                1/((double) G.N) * (double) i
                        });
     }
-    adsync_message(msg_prev + "'kuramoto_initialization (varied values)'", G.g);
+    adsync_message_barrier<T>(msg_prev + "'kuramoto_initialization (varied values)'", G.g);
     G.kuramoto_initialization(X0_W, 5.67, G.g, G.N);
-    adsync_message_barrier(msg_post + "'kuramoto_initialization (varied values)'", G.g);
+    adsync_message_barrier<T>(msg_post + "'kuramoto_initialization (varied values)'", G.g);
 
     // Show the number of created nodes again
-    adsync_message(msg_prev + "'showVertex' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showVertex' (post kuramoto varied values)", G.g);
     G.showVertex(G.g);
-    adsync_message_barrier(msg_post + "'showVertex' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex' (post kuramoto varied values)", G.g);
 
     // Show the edges again
-    adsync_message(msg_prev + "'showEdges' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showEdges' (post kuramoto varied values)", G.g);
     G.showEdges(G.g);
-    adsync_message_barrier(msg_post + "'showEdges' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showEdges' (post kuramoto varied values)", G.g);
 
     // Print in command that the test is Erdos Renyi
-    adsync_message(msg_post + "'test_erdosRenyi_graph'", G.g);
+    adsync_message_barrier<T>(msg_post + "'test_erdosRenyi_graph'", G.g);
 };
 
+template <int T>
 void test_ring_graph_init(int N){
     //                  N
     RingGraphObject G(N);
 
     // Print in command that the test is Ring
-    adsync_message(msg_prev + "'test_ring_graph_init'", G.g);
+    adsync_message<T>(msg_prev + "'test_ring_graph_init'", G.g);
 
     // Build it
-    adsync_message(msg_prev + "'build_ring'", G.g);
+    adsync_message<T>(msg_prev + "'build_ring'", G.g);
     G.build();
-    adsync_message_barrier(msg_post + "'build_ring'", G.g);
+    adsync_message_barrier<T>(msg_post + "'build_ring'", G.g);
 
     // Show the nodes
-    adsync_message(msg_prev + "'showVertex'", G.g);
+    adsync_message<T>(msg_prev + "'showVertex'", G.g);
     G.showVertex(G.g);
-    adsync_message_barrier(msg_post + "'showVertex'", G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
 
     // Show the number of processors
-    adsync_message(msg_prev + "'reportNProcs'", G.g);
+    adsync_message<T>(msg_prev + "'reportNProcs'", G.g);
     //G.reportNProcs(G.g);
-    adsync_message_barrier(msg_post + "'reportNProcs'", G.g);
+    adsync_message_barrier<T>(msg_post + "'reportNProcs'", G.g);
 
     // Show the edges
-    adsync_message(msg_prev + "'showEdges'", G.g);
+    adsync_message<T>(msg_prev + "'showEdges'", G.g);
     G.showEdges(G.g);
-    adsync_message_barrier(msg_post + "'showEdges'", G.g);
+    adsync_message_barrier<T>(msg_post + "'showEdges'", G.g);
 
     // Initialize for constant kuramoto
-    adsync_message(msg_prev + "'kuramoto_initialization (constant values)'", G.g);
+    adsync_message<T>(msg_prev + "'kuramoto_initialization (constant values)'", G.g);
     G.kuramoto_initialization({{12.345, 6.78}}, 3.14, G.g, G.N);
-    adsync_message_barrier(msg_post + "'kuramoto_initialization (constant values)'", G.g);
+    adsync_message_barrier<T>(msg_post + "'kuramoto_initialization (constant values)'", G.g);
 
     // Show the number of created nodes again
-    adsync_message(msg_prev + "'showVertex' (post kuramoto constant values)", G.g);
+    adsync_message<T>(msg_prev + "'showVertex' (post kuramoto constant values)", G.g);
     G.showVertex(G.g);
-    adsync_message_barrier(msg_post + "'showVertex' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex' (post kuramoto constant values)", G.g);
 
     // Show the edges again
-    adsync_message(msg_prev + "'showEdges' (post kuramoto constant values)", G.g);
+    adsync_message<T>(msg_prev + "'showEdges' (post kuramoto constant values)", G.g);
     G.showEdges(G.g);
-    adsync_message_barrier(msg_post + "'showEdges' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showEdges' (post kuramoto constant values)", G.g);
 
     // Initialize for varied kuramoto
     //--------INITIALIZATION that is not parallelized yet
@@ -195,22 +204,22 @@ void test_ring_graph_init(int N){
                                1/((double) G.N) * (double) i
                        });
     }
-    adsync_message(msg_prev + "'kuramoto_initialization (varied values)'", G.g);
+    adsync_message<T>(msg_prev + "'kuramoto_initialization (varied values)'", G.g);
     G.kuramoto_initialization(X0_W, 5.67, G.g, G.N);
-    adsync_message_barrier(msg_post + "'kuramoto_initialization (varied values)'", G.g);
+    adsync_message_barrier<T>(msg_post + "'kuramoto_initialization (varied values)'", G.g);
 
     // Show the number of created nodes again
-    adsync_message(msg_prev + "'showVertex' (post kuramoto varied values)", G.g);
+    adsync_message<T>(msg_prev + "'showVertex' (post kuramoto varied values)", G.g);
     G.showVertex(G.g);
-    adsync_message_barrier(msg_post + "'showVertex' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex' (post kuramoto varied values)", G.g);
 
     // Show the edges again
-    adsync_message(msg_prev + "'showEdges' (post kuramoto varied values)", G.g);
+    adsync_message<T>(msg_prev + "'showEdges' (post kuramoto varied values)", G.g);
     G.showEdges(G.g);
-    adsync_message_barrier(msg_post + "'showEdges' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showEdges' (post kuramoto varied values)", G.g);
 
     // Print in command that the test is Ring
-    adsync_message(msg_post + "'test_ring_graph_init'", G.g);
+    adsync_message<T>(msg_post + "'test_ring_graph_init'", G.g);
 };
 
 
@@ -219,13 +228,13 @@ void graph_tests_init(unsigned int SEED, int N, double p){
 
     // Clique Network
     //reproductibility_lock(SEED);
-    //test_clique_graph_init(N);
+    //test_clique_graph_init<200>(N);
 
     // Ring Network
     //reproductibility_lock(SEED);
-    //test_ring_graph_init(N);
+    //test_ring_graph_init<200>(N);
 
     // Erdos Renyi Network
     reproductibility_lock(SEED);
-    test_erdosRenyi_graph_init(N, p);
+    test_erdosRenyi_graph_init<200>(N, p);
 }

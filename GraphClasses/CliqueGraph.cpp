@@ -26,7 +26,7 @@ void CliqueGraphObject::build(){
             }
         }
     }
-    adsync_synchronization_barrier("Clique constructor", g);
+    adsync_synchronization_barrier<0>("Clique constructor", g);
 }
 
 

@@ -8,6 +8,7 @@ using namespace boost;
 using namespace std;
 
 void RingGraphObject::build(){
+    int counter = 0;
     typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
     if (process_id(g.process_group()) == 0) {
         vertex_iterator v, v_end, v_inner;
@@ -17,13 +18,17 @@ void RingGraphObject::build(){
             v_inner = v;
             v_inner ++;
             add_edge(*v, *v_inner, g);
+            counter += 1; // DEBUG!
             v += 2;
             add_edge(*v, *v_inner, g);
+            counter += 1; // DEBUG!
         }
         add_edge(*v, *(v+1), g); // Connect the last two together,
+        counter += 1; // DEBUG!
+        std::cout << "In total there were " << counter << " edges created ! :-)" << std::endl;
         //  as applying here the 3-items connectivity algorithm from the loop leads to segmentation fault
         // because there is no g[*(v+2)] ;-)
     }
-    adsync_synchronization_barrier("Ring constructor", g);
+    adsync_synchronization_barrier<0>("Ring constructor", g);
 }
 

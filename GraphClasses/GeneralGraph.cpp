@@ -8,7 +8,7 @@
 #include "mpi.h"
 #include "../Utils/adequate_synchronization.h"
 #include "../Utils/memory_management.h"
-
+#include "../Utils/msleep.h"
 
 using namespace boost;
 using namespace std;
@@ -23,23 +23,22 @@ void CommonGraphObjectClass::reportNProcs(Graph &g) {
                   num_processes(boost::graph::distributed::mpi_process_group()) <<
                   std::endl;
     }
-    adsync_barrier(); // This barrier (attempts) to fix a bug:
+    adsync_barrier<0>(); // This barrier (attempts) to fix a bug:
     //                  the program never ends if this function is called w/out barrier
 }
 
 
-//    int world_rank;
-//    int world_size;
-//
-//    MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
-//    MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 
 
 void CommonGraphObjectClass::showVertex(Graph &g) {
-    typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
+    unsigned int MY_NUM = process_id(g.process_group());
+    unsigned int MY_NODES = num_vertices(g);
+    unsigned int MY_EDGES = num_edges(g);
+
+    cout << " I Have " << MY_NODES << " NODES! and " << MY_EDGES << " EDGES!" << endl;
     vertex_iterator v, v_end;
     for (boost::tie(v, v_end) = vertices(g); v != v_end; ++v) {
-        if (g[*v].params.size()>0){
+        if (g[*v].params.size() > 0) {
             std::cout << "node w/ value " << g[*v].value << " and first param " << g[*v].params[0] << std::endl;
         } else {
             std::cout << "node w/ value " << g[*v].value << std::endl;
@@ -47,11 +46,17 @@ void CommonGraphObjectClass::showVertex(Graph &g) {
     }
 }
 
+
+
+
+
+
 void CommonGraphObjectClass::showEdges(Graph &g) {
-    typedef graph_traits<Graph>::edge_iterator edge_iterator;
+    typedef boost::iterator_property_map<std::vector<int>::iterator, IndexMap> CentralMap;
     edge_iterator e, e_end;
     for (boost::tie(e, e_end) = edges(g); e != e_end; ++e) {
-            std::cout << "edge w/value " << g[*e].value << std::endl;
+        std::cout << "edge w/value " << g[*e].value << std::endl;
+        //std::cout << get(&DynamicEdge::value, g) << std::endl;
     }
 }
 
@@ -73,9 +78,7 @@ void CommonGraphObjectClass::kuramoto_initialization(std::vector<pair<double, do
 
     // 2)
     // Definition of various required types
-    typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
-    typedef graph_traits<Graph>::edge_iterator edge_iterator;
-    typedef property_map<Graph, vertex_owner_t>::const_type OwnerMap;
+
     OwnerMap owner = get(vertex_owner, g);
     vertex_iterator v, v_end;
     edge_iterator e, e_end;
@@ -207,5 +210,4 @@ void CommonGraphObjectClass::kuramoto_initialization(std::vector<pair<double, do
 //            //get(centrality, *v) <<
 //            endl;
 //    }
-
 

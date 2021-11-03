@@ -153,12 +153,6 @@
 		<Unit filename="/home/m4zz31/cppprojct/Tests/graph-test-init.h">
 			<Option target="cppprojct"/>
 		</Unit>
-		<Unit filename="/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.cpp">
-			<Option target="cppprojct"/>
-		</Unit>
-		<Unit filename="/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h">
-			<Option target="cppprojct"/>
-		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Tests/solvers-test-init.cpp">
 			<Option target="cppprojct"/>
 		</Unit>
@@ -190,6 +184,12 @@
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Utils/memory_management.h">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Utils/msleep.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Utils/msleep.h">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Utils/reproductibility.cpp">

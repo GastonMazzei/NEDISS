@@ -22,7 +22,7 @@ void test_clique_graph_singlestep_evolution(int N) {
     //                  N
     CliqueGraphObject G(N);
     // Print in command that the test is Ring
-    adsync_message(msg_prev + "'test_clique_graph_singlestep_evolution'", G.g);
+    adsync_message<0>(msg_prev + "'test_clique_graph_singlestep_evolution'", G.g);
 
     // Preprocessing
     adsync_message(msg_prev + "'preparing clique graph for singlestep evolution'", G.g);

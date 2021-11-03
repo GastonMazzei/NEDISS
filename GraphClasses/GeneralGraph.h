@@ -91,9 +91,29 @@ typedef boost::adjacency_list<boost::vecS,
 
 
 
-// Printing and other stuff
+// Useful types :-)
+typedef boost::property_map<Graph, boost::vertex_index_t>::const_type IndexMap;
+typedef boost::property_map<Graph, double DynamicEdge::*>::type DynamicEdgeMap;
+typedef boost::iterator_property_map<std::vector<double>::iterator, DynamicEdgeMap> DynamicEdgeCentralMap;
+typedef boost::iterator_property_map<std::vector<int>::iterator, IndexMap> CentralMap;
+typedef boost::graph_traits<Graph>::vertex_iterator vertex_iterator;
+typedef boost::graph_traits<Graph>::edge_iterator edge_iterator;
+typedef boost::property_map<Graph, boost::vertex_owner_t>::const_type OwnerMap;
+
+
+
+// ---------------------------------------------------------------------------------
+// AN ANSWER IN STACKOVERFLOW (https://stackoverflow.com/questions/68936738/iterate-over-bundled-properties-in-boost-graph-in-a-direct-way)
+// TO THE PROBLEM OF NOT BEING ABLE TO BUILD A VERTEX LIST ADAPTOR AFTER https://www.boost.org/doc/libs/1_77_0/libs/graph_parallel/doc/html/vertex_list_adaptor.html
+// ---------------------------------------------------------------------------------
+//#include <boost/graph/adjacency_list.hpp>
+#include <boost/range/adaptors.hpp>
+//using boost::adaptors::transformed;
+
+
 class CommonGraphObjectClass{
     public:
+        //using vertex = typename graph::vertex_descriptor
         void showVertex(Graph & g);
         void showEdges(Graph & g);
         void reportNProcs(Graph & g);
@@ -101,5 +121,12 @@ class CommonGraphObjectClass{
 };
 
 
-
 #endif //CPPPROJCT_GENERALGRAPH_H
+
+
+
+//    int world_rank;
+//    int world_size;
+//
+//    MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
+//    MPI_Comm_size(MPI_COMM_WORLD, &world_size);

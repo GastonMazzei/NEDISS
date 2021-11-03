@@ -126,14 +126,14 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver){
     }
 
     // Block operations until all nodes have seen their neighbors ;-)
-    adsync_barrier();
+    adsync_barrier<0>();
 
     // For all nodes,
     // central_value :=  temporal_register
     register_to_value(g);
 
     // Block operations until all nodes have been updated ;-)
-    adsync_barrier();
+    adsync_barrier<0>();
 }
 
 
