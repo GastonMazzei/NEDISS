@@ -7,6 +7,7 @@
 #include "../GraphClasses/RingGraph.h"
 #include "../Utils/adequate_synchronization.h"
 #include "../Utils/global_standard_messages.h"
+#include "../Utils/reproductibility.h"
 
 void test_clique_graph_init(int N){
     //                  N
@@ -17,7 +18,7 @@ void test_clique_graph_init(int N){
 
     // Build it
     adsync_message(msg_prev + "'build_clique'", G.g);
-    G.build_clique();
+    G.build();
     adsync_message_barrier(msg_post + "'build_clique'", G.g);
 
     // Show the number of created nodes
@@ -81,6 +82,7 @@ void test_clique_graph_init(int N){
 void test_erdosRenyi_graph_init(int N, double p){
     //                      N, P
     ErdosRenyiGraphObject G(N, p);
+    G.build();
 
     // Print in command that the test is Erdos Renyi
     adsync_message(msg_prev + "'test_erdosRenyi_graph_init'", G.g);
@@ -151,7 +153,7 @@ void test_ring_graph_init(int N){
 
     // Build it
     adsync_message(msg_prev + "'build_ring'", G.g);
-    G.build_ring();
+    G.build();
     adsync_message_barrier(msg_post + "'build_ring'", G.g);
 
     // Show the nodes
@@ -210,3 +212,20 @@ void test_ring_graph_init(int N){
     // Print in command that the test is Ring
     adsync_message(msg_post + "'test_ring_graph_init'", G.g);
 };
+
+
+void graph_tests_init(unsigned int SEED, int N, double p){
+    // ---CONSTRUCTOR AND INITIALIZATION DEBUGGING---
+
+    // Clique Network
+    //reproductibility_lock(SEED);
+    //test_clique_graph_init(N);
+
+    // Ring Network
+    //reproductibility_lock(SEED);
+    //test_ring_graph_init(N);
+
+    // Erdos Renyi Network
+    reproductibility_lock(SEED);
+    test_erdosRenyi_graph_init(N, p);
+}

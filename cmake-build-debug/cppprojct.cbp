@@ -114,6 +114,12 @@
 		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h">
 			<Option target="cppprojct"/>
 		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h">
+			<Option target="cppprojct"/>
+		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/RingGraph.cpp">
 			<Option target="cppprojct"/>
 		</Unit>
@@ -129,10 +135,16 @@
 		<Unit filename="/home/m4zz31/cppprojct/Solvers/EulerSolver.h">
 			<Option target="cppprojct"/>
 		</Unit>
-		<Unit filename="/home/m4zz31/cppprojct/Solvers/GeneralSolvers.cpp">
+		<Unit filename="/home/m4zz31/cppprojct/Solvers/GeneralSolver.cpp">
 			<Option target="cppprojct"/>
 		</Unit>
-		<Unit filename="/home/m4zz31/cppprojct/Solvers/GeneralSolvers.h">
+		<Unit filename="/home/m4zz31/cppprojct/Solvers/GeneralSolver.h">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Tests/graph-test-init.cpp">
@@ -190,6 +202,9 @@
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Utils/timers.h">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Utils/typed_combinations.h">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/main.cpp">

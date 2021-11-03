@@ -21,5 +21,7 @@ public:
             N(num_nodes),
             Proba(probability),
             g(ERGen(gen, num_nodes, probability, false), ERGen(), num_nodes) {};
+
+    void build(){}; // empty function for inter-class compatibility :-)
 };
 #endif //CPPPROJCT_ERDOSRENYIGRAPH_H

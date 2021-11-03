@@ -12,7 +12,7 @@ using namespace std;
 using namespace boost;
 
 
-void CliqueGraphObject::build_clique(){
+void CliqueGraphObject::build(){
     typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
     //typedef property_map<Graph, int DynamicNode::*>::type LocalMap;
     //LocalMap local = get(&DynamicNode::value, g);

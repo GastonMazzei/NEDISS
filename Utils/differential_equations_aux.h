@@ -8,10 +8,7 @@
 #include <functional>
 #include <vector>
 
-#ifndef SCALAR_FLOW_TYPE
-#define SCALAR_FLOW_TYPE
-typedef std::function<double(double,double, std::vector<double>, std::vector<double>, std::vector<double>)> ScalarFlow;
-#endif
+
 
 double scalar_flow_placeholder(double,double, std::vector<double>, std::vector<double>, std::vector<double>);
 

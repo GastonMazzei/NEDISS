@@ -12,9 +12,20 @@ void GeneralDifferentialEquation::BuildForSolver(){
     }
 }
 
+void GeneralDifferentialEquation::Reset(){
+    Specs.result = 0.;
+}
 
-
-void GeneralDifferentialEquation::RefreshSpecs() {
+void GeneralDifferentialEquation::UpdateFlowSpecs(std::vector<double> &T1,
+                                        std::vector<double> &T2,
+                                        std::vector<double> &T3,
+                                        std::vector<double> &T4,
+                                        int &N){
+    Specs.N = N;
+    Specs.T1 = T1;
+    Specs.T2 = T2;
+    Specs.T3 = T3;
+    Specs.T4 = T4;
     Specs.result = 0.;
     Specs.j1 = 0;
     Specs.j2 = 0;
@@ -36,18 +47,6 @@ void GeneralDifferentialEquation::RefreshSpecs() {
         assert(Specs.T1.size() == Specs.N);
         Specs.j4 = 1;
     }
-}
-
-void GeneralDifferentialEquation::UpdateFlowSpecs(std::vector<double> &T1,
-                                        std::vector<double> &T2,
-                                        std::vector<double> &T3,
-                                        std::vector<double> &T4,
-                                        int &N){
-    Specs.N = N;
-    Specs.T1 = T1;
-    Specs.T2 = T2;
-    Specs.T3 = T3;
-    Specs.T4 = T4;
 };
 
 

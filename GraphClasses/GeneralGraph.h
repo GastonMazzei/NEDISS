@@ -9,7 +9,7 @@
 #include <Eigen/Sparse>
 #include <string>
 #include "../Utils/error.h"
-#include "../Solvers/GeneralSolvers.h"
+
 
 #include <omp.h>
 #include <vector>
@@ -90,6 +90,7 @@ typedef boost::adjacency_list<boost::vecS,
     Graph;
 
 
+
 // Printing and other stuff
 class CommonGraphObjectClass{
     public:
@@ -97,10 +98,8 @@ class CommonGraphObjectClass{
         void showEdges(Graph & g);
         void reportNProcs(Graph & g);
         void kuramoto_initialization(std::vector<std::pair<double, double>> X0_W, double J, Graph & g, unsigned int N);
-        void single_kuramoto_evolution(Graph &g, Solver &solver); // using single values and barriers instead of concurrently using stacks :O!
 };
 
-void register_to_value(Graph &g);
 
 
 #endif //CPPPROJCT_GENERALGRAPH_H

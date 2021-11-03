@@ -21,7 +21,7 @@ public:
             N(num_nodes),
             g(N) {};
 
-    void build_ring();
+    void build();
 };
 
 

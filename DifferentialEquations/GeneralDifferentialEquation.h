@@ -10,10 +10,10 @@
 #include "../Utils/differential_equations_aux.h"
 
 // Typedef to make things easier in other files
-#ifndef SCALAR_FLOW_TYPE
-#define SCALAR_FLOW_TYPE
-typedef std::function<double(double, double, std::vector<double>, std::vector<double>, std::vector<double>)> ScalarFlow;
-#endif
+//#ifndef SCALAR_FLOW_TYPE
+//#define SCALAR_FLOW_TYPE
+//typedef std::function<double(double, double, std::vector<double>, std::vector<double>, std::vector<double>)> ScalarFlow;
+//#endif
 
 
 struct FlowSpecs{
@@ -23,7 +23,7 @@ struct FlowSpecs{
     std::vector<double> T4;
     int N, j1, j2, j3, j4;
     double result;
-    FlowSpecs();
+    FlowSpecs(){};
     FlowSpecs(std::vector<double> T1,
               std::vector<double> T2,
               std::vector<double> T3,
@@ -40,16 +40,20 @@ struct FlowSpecs{
 class GeneralDifferentialEquation {
 public:
     int type; // 0 is ODE, 1 is PDE, 2 could be SDE :-)
+    bool RequiresBuilding = false; // true  if it requires building :-)
     FlowSpecs Specs;
-    void UpdateFlowSpecs(std::vector<double> &T1,
-                         std::vector<double> &T2,
-                         std::vector<double> &T3,
-                         std::vector<double> &T4,
-                         int &N);
     GeneralDifferentialEquation(int type): type(type) {};
+
+    void UpdateFlowSpecs(std::vector<double> &T1,
+                                 std::vector<double> &T2,
+                                 std::vector<double> &T3,
+                                 std::vector<double> &T4,
+                                 int &N);
+    void Reset(); // reset result to 0
     void BuildForSolver();
-    void RefreshSpecs();
 };
+
+
 
 #endif //CPPPROJCT_GENERALDIFFERENTIALEQUATION_H
 

@@ -5,15 +5,35 @@
 #ifndef CPPPROJCT_EULERSOLVER_H
 #define CPPPROJCT_EULERSOLVER_H
 
-#include "GeneralSolvers.h"
+#include "GeneralSolver.h"
 
-class EulerSolver : public GeneralSolver {
+template <typename Equation>
+class EulerSolver {
 public:
-    int deg = 1;
     EulerSolver(){};
-    EulerSolver(int deg): deg(deg){};
-    double evolve(double a, std::vector<double> &b, std::vector<double> &c, std::vector<double> &d);
+    double evolve(double t,
+                  double h,
+                  double a,
+                  std::vector<double> &b,
+                  std::vector<double> &c,
+                  std::vector<double> &d,
+                  Equation &E,//auto F,// ScalarFlow &F,
+                  FlowSpecs &Specs);
 };
 
+
+
+template <typename Equation>
+double EulerSolver<Equation>::evolve(double t,
+                           double h,
+                           double a,
+                           std::vector<double> &b,
+                           std::vector<double> &c,
+                           std::vector<double> &d,
+                           Equation &E,//ScalarFlow &F,
+                           FlowSpecs &Specs){
+
+    return 1.0;
+}
 
 #endif //CPPPROJCT_EULERSOLVER_H

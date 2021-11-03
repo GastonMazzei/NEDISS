@@ -7,7 +7,7 @@
 using namespace boost;
 using namespace std;
 
-void RingGraphObject::build_ring(){
+void RingGraphObject::build(){
     typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
     if (process_id(g.process_group()) == 0) {
         vertex_iterator v, v_end, v_inner;

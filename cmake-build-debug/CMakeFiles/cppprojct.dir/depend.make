@@ -14,67 +14,96 @@ CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o: ../Utils
 CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o: ../GraphClasses/CliqueGraph.cpp
 CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o: ../GraphClasses/CliqueGraph.h
 CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o: ../GraphClasses/GeneralGraph.h
-CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o: ../Solvers/GeneralSolvers.h
 CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o: ../Utils/adequate_synchronization.h
 CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o: ../Utils/error.h
 
 CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o: ../GraphClasses/ErdosRenyiGraph.cpp
 CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o: ../GraphClasses/ErdosRenyiGraph.h
 CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o: ../GraphClasses/GeneralGraph.h
-CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o: ../Solvers/GeneralSolvers.h
 CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o: ../Utils/error.h
 
 CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o: ../GraphClasses/GeneralGraph.cpp
 CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o: ../GraphClasses/GeneralGraph.h
-CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o: ../Solvers/GeneralSolvers.h
 CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o: ../Utils/adequate_synchronization.h
 CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o: ../Utils/error.h
 CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o: ../Utils/memory_management.h
 
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../GraphClasses/GraphFunctions.cpp
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../GraphClasses/GraphFunctions.h
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Solvers/GeneralSolver.h
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/adequate_synchronization.h
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/differential_equations_aux.h
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/error.h
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/memory_management.h
+
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../GraphClasses/GeneralGraph.h
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../GraphClasses/RingGraph.cpp
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../GraphClasses/RingGraph.h
-CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../Solvers/GeneralSolvers.h
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../Utils/adequate_synchronization.h
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../Utils/error.h
 
 CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o: ../Simulation/Simulation.cpp
 
+CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
+CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../GraphClasses/GeneralGraph.h
 CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../Solvers/EulerSolver.cpp
 CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../Solvers/EulerSolver.h
-CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../Solvers/GeneralSolvers.h
+CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../Solvers/GeneralSolver.h
+CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../Utils/differential_equations_aux.h
+CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../Utils/error.h
 
-CMakeFiles/cppprojct.dir/Solvers/GeneralSolvers.cpp.o: ../Solvers/EulerSolver.h
-CMakeFiles/cppprojct.dir/Solvers/GeneralSolvers.cpp.o: ../Solvers/GeneralSolvers.cpp
-CMakeFiles/cppprojct.dir/Solvers/GeneralSolvers.cpp.o: ../Solvers/GeneralSolvers.h
-CMakeFiles/cppprojct.dir/Solvers/GeneralSolvers.cpp.o: ../Utils/error.h
+CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
+CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../Solvers/EulerSolver.h
+CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../Solvers/GeneralSolver.cpp
+CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../Solvers/GeneralSolver.h
+CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../Solvers/RungeKuttaSolver.h
+CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../Utils/differential_equations_aux.h
+CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../Utils/error.h
+
+CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
+CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../Solvers/GeneralSolver.h
+CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../Solvers/RungeKuttaSolver.cpp
+CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../Solvers/RungeKuttaSolver.h
+CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../Utils/differential_equations_aux.h
+CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../Utils/error.h
 
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../GraphClasses/CliqueGraph.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../GraphClasses/ErdosRenyiGraph.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../GraphClasses/GeneralGraph.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../GraphClasses/RingGraph.h
-CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../Solvers/GeneralSolvers.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../Tests/graph-test-init.cpp
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../Tests/graph-test-init.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../Utils/adequate_synchronization.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../Utils/error.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../Utils/global_standard_messages.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../Utils/reproductibility.h
 
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../DifferentialEquations/NoiselessKuramoto.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/CliqueGraph.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/ErdosRenyiGraph.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/GraphFunctions.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../GraphClasses/RingGraph.h
-CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Solvers/GeneralSolvers.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Solvers/EulerSolver.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Solvers/GeneralSolver.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Solvers/RungeKuttaSolver.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Tests/graph-test-singlestep-evolution.cpp
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Tests/graph-test-singlestep-evolution.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/adequate_synchronization.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/differential_equations_aux.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/error.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/global_standard_messages.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/memory_management.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/reproductibility.h
 
 CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o: ../Tests/solvers-test-init.cpp
 
 CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o: ../GraphClasses/GeneralGraph.h
-CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o: ../Solvers/GeneralSolvers.h
 CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o: ../Utils/adequate_synchronization.cpp
 CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o: ../Utils/adequate_synchronization.h
 CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o: ../Utils/error.h
@@ -92,9 +121,17 @@ CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.o: ../Utils/reproductibility
 
 CMakeFiles/cppprojct.dir/Utils/timers.cpp.o: ../Utils/timers.cpp
 
+CMakeFiles/cppprojct.dir/main.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../DifferentialEquations/NoiselessKuramoto.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Solvers/EulerSolver.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Solvers/GeneralSolver.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Solvers/RungeKuttaSolver.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Tests/graph-test-init.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Tests/graph-test-singlestep-evolution.h
-CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/reproductibility.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/differential_equations_aux.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/error.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/timers.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/typed_combinations.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../main.cpp
 
