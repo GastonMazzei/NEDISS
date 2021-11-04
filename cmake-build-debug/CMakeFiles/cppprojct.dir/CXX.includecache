@@ -88,6 +88,26 @@ boost/graph/erdos_renyi_generator.hpp
 boost/range/adaptors.hpp
 -
 
+/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp
+GraphFunctions.h
+/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
+
+/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
+../Solvers/GeneralSolver.h
+/home/m4zz31/cppprojct/Solvers/GeneralSolver.h
+../Utils/adequate_synchronization.h
+/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
+../Utils/memory_management.h
+/home/m4zz31/cppprojct/Utils/memory_management.h
+../Utils/msleep.h
+/home/m4zz31/cppprojct/Utils/msleep.h
+../Utils/error.h
+/home/m4zz31/cppprojct/Utils/error.h
+GeneralGraph.h
+/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+mpi.h
+-
+
 /home/m4zz31/cppprojct/GraphClasses/RingGraph.h
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
@@ -108,18 +128,6 @@ functional
 GeneralSolver.h
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
 
-/home/m4zz31/cppprojct/Tests/graph-test-init.cpp
-graph-test-init.h
-/home/m4zz31/cppprojct/Tests/graph-test-init.h
-../GraphClasses/ErdosRenyiGraph.h
-/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
-../GraphClasses/CliqueGraph.h
-/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
-../GraphClasses/RingGraph.h
-/home/m4zz31/cppprojct/GraphClasses/RingGraph.h
-../Utils/reproductibility.h
-/home/m4zz31/cppprojct/Utils/reproductibility.h
-
 /home/m4zz31/cppprojct/Tests/graph-test-init.h
 string
 -
@@ -132,7 +140,31 @@ cmath
 ../Utils/adequate_synchronization.h
 /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
 
+/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.cpp
+graph-test-singlestep-evolution.h
 /home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
+../GraphClasses/ErdosRenyiGraph.h
+/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
+../GraphClasses/CliqueGraph.h
+/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
+../GraphClasses/RingGraph.h
+/home/m4zz31/cppprojct/GraphClasses/RingGraph.h
+../Utils/reproductibility.h
+/home/m4zz31/cppprojct/Utils/reproductibility.h
+
+/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
+../Utils/adequate_synchronization.h
+/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
+../Utils/global_standard_messages.h
+/home/m4zz31/cppprojct/Utils/global_standard_messages.h
+../Solvers/EulerSolver.h
+/home/m4zz31/cppprojct/Solvers/EulerSolver.h
+../Solvers/RungeKuttaSolver.h
+/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
+../DifferentialEquations/NoiselessKuramoto.h
+/home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.h
+../GraphClasses/GraphFunctions.h
+/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
 
 /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
 ../GraphClasses/GeneralGraph.h
@@ -155,6 +187,10 @@ string
 -
 
 /home/m4zz31/cppprojct/Utils/global_standard_messages.h
+
+/home/m4zz31/cppprojct/Utils/memory_management.h
+vector
+-
 
 /home/m4zz31/cppprojct/Utils/msleep.h
 

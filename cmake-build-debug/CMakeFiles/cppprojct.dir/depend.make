@@ -134,6 +134,7 @@ CMakeFiles/cppprojct.dir/Utils/timers.cpp.o: ../Utils/timers.cpp
 CMakeFiles/cppprojct.dir/main.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../DifferentialEquations/NoiselessKuramoto.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../GraphClasses/GraphFunctions.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Solvers/EulerSolver.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Solvers/GeneralSolver.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Solvers/RungeKuttaSolver.h
@@ -143,6 +144,7 @@ CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/adequate_synchronization.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/differential_equations_aux.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/error.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/global_standard_messages.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/memory_management.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/msleep.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/timers.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/typed_combinations.h

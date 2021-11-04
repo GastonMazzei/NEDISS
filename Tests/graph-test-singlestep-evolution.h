@@ -11,6 +11,7 @@
 #include "../Solvers/EulerSolver.h"
 #include "../Solvers/RungeKuttaSolver.h"
 #include "../DifferentialEquations/NoiselessKuramoto.h"
+#include "../GraphClasses/GraphFunctions.h"
 
 template <int T, typename GRAPHTYPE>
 void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name) {

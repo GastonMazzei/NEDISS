@@ -13,7 +13,8 @@
 using namespace boost;
 using namespace std;
 
-
+// Please include in your radar the following bug: (potential segfault when one process has 0 nodes)
+// https://github.com/boostorg/graph_parallel/issues/18
 
 
 void CommonGraphObjectClass::reportNProcs(Graph &g) {

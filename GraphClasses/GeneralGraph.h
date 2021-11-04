@@ -99,8 +99,9 @@ typedef boost::iterator_property_map<std::vector<int>::iterator, IndexMap> Centr
 typedef boost::graph_traits<Graph>::vertex_iterator vertex_iterator;
 typedef boost::graph_traits<Graph>::edge_iterator edge_iterator;
 typedef boost::property_map<Graph, boost::vertex_owner_t>::const_type OwnerMap;
-
-
+typedef boost::property_map<Graph, boost::edge_owner_t>::const_type EdgeOwnerMap;
+typedef boost::property_map<Graph, boost::vertex_local_t>::const_type LocalVertexMap;
+typedef boost::property_map<Graph, boost::vertex_global_t>::const_type GlobalVertexMap;
 
 // ---------------------------------------------------------------------------------
 // AN ANSWER IN STACKOVERFLOW (https://stackoverflow.com/questions/68936738/iterate-over-bundled-properties-in-boost-graph-in-a-direct-way)

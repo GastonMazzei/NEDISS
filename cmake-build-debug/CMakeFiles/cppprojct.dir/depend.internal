@@ -135,6 +135,7 @@ CMakeFiles/cppprojct.dir/main.cpp.o
  /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
  /home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.h
  /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+ /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
  /home/m4zz31/cppprojct/Solvers/EulerSolver.h
  /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
  /home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
@@ -144,6 +145,7 @@ CMakeFiles/cppprojct.dir/main.cpp.o
  /home/m4zz31/cppprojct/Utils/differential_equations_aux.h
  /home/m4zz31/cppprojct/Utils/error.h
  /home/m4zz31/cppprojct/Utils/global_standard_messages.h
+ /home/m4zz31/cppprojct/Utils/memory_management.h
  /home/m4zz31/cppprojct/Utils/msleep.h
  /home/m4zz31/cppprojct/Utils/timers.h
  /home/m4zz31/cppprojct/Utils/typed_combinations.h

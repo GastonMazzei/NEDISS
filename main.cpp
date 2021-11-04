@@ -44,8 +44,8 @@ int main(int argc, char** argv)
     // Testing Section ;-)
     int N = 4;
     double p = 0.5;
-    graph_tests_init(SEED, N, p);
-    //graph_tests_singlestep_evolution(SEED, N, p);
+    //graph_tests_init(SEED, N, p);
+    graph_tests_singlestep_evolution(SEED, N, p);
 
     // END:
     //
