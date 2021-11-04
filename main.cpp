@@ -42,7 +42,7 @@ int main(int argc, char** argv)
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     // Testing Section ;-)
-    int N = 4;
+    int N = 12;
     double p = 0.5;
     //graph_tests_init(SEED, N, p);
     graph_tests_singlestep_evolution(SEED, N, p);

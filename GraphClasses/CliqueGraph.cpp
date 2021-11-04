@@ -17,12 +17,12 @@ void CliqueGraphObject::build(){
     //typedef property_map<Graph, int DynamicNode::*>::type LocalMap;
     //LocalMap local = get(&DynamicNode::value, g);
     //get(g, *v).value = 8;
-    int i=0, j=0;
+    int i=0;
     if (process_id(g.process_group()) == 0) {
-#pragma omp parallel for
-        for (int i=0; i<N; i++){
-            for (int j=i+1; j<N; j++){
-                add_edge(vertex(i,g), vertex(j,g), g);
+        for (int i = 0; i < N; i++) {
+#pragma omp for
+            for (int j = i + 1; j < N; j++) {
+                add_edge(vertex(i, g), vertex(j, g), g);
             }
         }
     }

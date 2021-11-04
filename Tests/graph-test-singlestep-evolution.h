@@ -32,29 +32,30 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name) {
     G.showVertex(G.g);
     adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
 
-    // Test several kuramoto evolutions with Euler
-    adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (1 of 3)", G.g);
-    single_evolution<NoiselessKuramoto,EulerSolver<NoiselessKuramoto>>(G.g, S_eu);
-    adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (1 of 3)", G.g);
-    adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (2 of 3)", G.g);
-    single_evolution<NoiselessKuramoto,EulerSolver<NoiselessKuramoto>>(G.g, S_eu);
-    adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (2 of 3)", G.g);
-    adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (3 of 3)", G.g);
-    single_evolution<NoiselessKuramoto,EulerSolver<NoiselessKuramoto>>(G.g, S_eu);
-    adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (3 of 3)", G.g);
+    if (true) {
+        // Test several kuramoto evolutions with Euler
+        adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (1 of 3)", G.g);
+        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu);
+        adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (1 of 3)", G.g);
+        adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (2 of 3)", G.g);
+        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu);
+        adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (2 of 3)", G.g);
+        adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (3 of 3)", G.g);
+        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu);
+        adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (3 of 3)", G.g);
 
 
-    // Test several kuramoto evolutions with RungeKutta
-    adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (1 of 3)", G.g);
-    single_evolution<NoiselessKuramoto,RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk);
-    adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (1 of 3)", G.g);
-    adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (2 of 3)", G.g);
-    single_evolution<NoiselessKuramoto,RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk);
-    adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (2 of 3)", G.g);
-    adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (3 of 3)", G.g);
-    single_evolution<NoiselessKuramoto,RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk);
-    adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (3 of 3)", G.g);
-
+        // Test several kuramoto evolutions with RungeKutta
+        adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (1 of 3)", G.g);
+        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk);
+        adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (1 of 3)", G.g);
+        adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (2 of 3)", G.g);
+        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk);
+        adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (2 of 3)", G.g);
+        adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (3 of 3)", G.g);
+        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk);
+        adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (3 of 3)", G.g);
+    };
 
     // Show nodes
     adsync_message<T>(msg_prev + "'showVertex'", G.g);
