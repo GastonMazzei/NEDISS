@@ -336,22 +336,9 @@ CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.s"
 	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.cpp -o CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.s
 
-CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: CMakeFiles/cppprojct.dir/flags.make
-CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../GraphClasses/GraphFunctions.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o -c /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp
-
-CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.i"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp > CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.i
-
-CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.s"
-	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp -o CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.s
-
 CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o: ../Utils/msleep.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o"
 	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o -c /home/m4zz31/cppprojct/Utils/msleep.cpp
 
 CMakeFiles/cppprojct.dir/Utils/msleep.cpp.i: cmake_force
@@ -361,6 +348,19 @@ CMakeFiles/cppprojct.dir/Utils/msleep.cpp.i: cmake_force
 CMakeFiles/cppprojct.dir/Utils/msleep.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/Utils/msleep.cpp.s"
 	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/Utils/msleep.cpp -o CMakeFiles/cppprojct.dir/Utils/msleep.cpp.s
+
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: CMakeFiles/cppprojct.dir/flags.make
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../GraphClasses/GraphFunctions.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o -c /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp
+
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.i"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp > CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.i
+
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.s"
+	mpic++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp -o CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.s
 
 # Object files for target cppprojct
 cppprojct_OBJECTS = \
@@ -384,8 +384,8 @@ cppprojct_OBJECTS = \
 "CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o" \
 "CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o" \
 "CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o" \
-"CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o" \
-"CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o"
+"CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o" \
+"CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o"
 
 # External object files for target cppprojct
 cppprojct_EXTERNAL_OBJECTS =
@@ -410,8 +410,8 @@ cppprojct: CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o
-cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o
+cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/build.make
 cppprojct: /usr/lib/x86_64-linux-gnu/libboost_mpi.so
 cppprojct: /usr/lib/x86_64-linux-gnu/libboost_graph_parallel.so

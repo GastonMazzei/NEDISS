@@ -88,6 +88,10 @@ boost/graph/erdos_renyi_generator.hpp
 boost/range/adaptors.hpp
 -
 
+/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp
+GraphFunctions.h
+/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
+
 /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
 ../Solvers/GeneralSolver.h
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
