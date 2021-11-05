@@ -7,9 +7,11 @@ CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o: ../Differen
 CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o: ../GraphClasses/GeneralGraph.h
 CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o: ../GraphClasses/GraphFunctions.h
 CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o: ../Solvers/GeneralSolver.h
+CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o: ../Utils/HelperClasses.h
 CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o: ../Utils/adequate_synchronization.h
 CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o: ../Utils/differential_equations_aux.h
 CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o: ../Utils/error.h
+CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o: ../Utils/global_standard_messages.h
 CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o: ../Utils/memory_management.h
 CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o: ../Utils/msleep.h
 
@@ -42,11 +44,13 @@ CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o: ../Utils/error.h
 CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o: ../Utils/memory_management.h
 CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o: ../Utils/msleep.h
 
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Communication/CommunicationFunctions.h
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../GraphClasses/GeneralGraph.h
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../GraphClasses/GraphFunctions.cpp
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../GraphClasses/GraphFunctions.h
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Solvers/GeneralSolver.h
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/HelperClasses.h
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/adequate_synchronization.h
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/differential_equations_aux.h
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/error.h
@@ -112,6 +116,7 @@ CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Solvers
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Solvers/RungeKuttaSolver.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Tests/graph-test-singlestep-evolution.cpp
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Tests/graph-test-singlestep-evolution.h
+CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/HelperClasses.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/adequate_synchronization.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/differential_equations_aux.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/error.h
@@ -121,6 +126,11 @@ CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/m
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/reproductibility.h
 
 CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o: ../Tests/solvers-test-init.cpp
+
+CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.o: ../Utils/HelperClasses.cpp
+CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.o: ../Utils/HelperClasses.h
+CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.o: ../Utils/error.h
 
 CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o: ../GraphClasses/GeneralGraph.h
 CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o: ../Utils/adequate_synchronization.cpp
@@ -144,6 +154,7 @@ CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.o: ../Utils/reproductibility
 
 CMakeFiles/cppprojct.dir/Utils/timers.cpp.o: ../Utils/timers.cpp
 
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Communication/CommunicationFunctions.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../DifferentialEquations/NoiselessKuramoto.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../GraphClasses/GeneralGraph.h
@@ -153,6 +164,7 @@ CMakeFiles/cppprojct.dir/main.cpp.o: ../Solvers/GeneralSolver.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Solvers/RungeKuttaSolver.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Tests/graph-test-init.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Tests/graph-test-singlestep-evolution.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/HelperClasses.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/adequate_synchronization.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/differential_equations_aux.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/error.h
@@ -160,6 +172,5 @@ CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/global_standard_messages.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/memory_management.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/msleep.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/timers.h
-CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/typed_combinations.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../main.cpp
 

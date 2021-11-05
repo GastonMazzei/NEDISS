@@ -171,6 +171,12 @@
 		<Unit filename="/home/m4zz31/cppprojct/Tests/solvers-test-init.h">
 			<Option target="cppprojct"/>
 		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Utils/HelperClasses.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Utils/HelperClasses.h">
+			<Option target="cppprojct"/>
+		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Utils/adequate_synchronization.cpp">
 			<Option target="cppprojct"/>
 		</Unit>

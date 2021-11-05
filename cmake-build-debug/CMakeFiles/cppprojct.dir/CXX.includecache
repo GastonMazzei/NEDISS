@@ -9,12 +9,16 @@
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.cpp
 CommunicationFunctions.h
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
+../Utils/global_standard_messages.h
+/home/m4zz31/cppprojct/Utils/global_standard_messages.h
 
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
 ../GraphClasses/GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 ../GraphClasses/GraphFunctions.h
 /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
+../Utils/HelperClasses.h
+/home/m4zz31/cppprojct/Utils/HelperClasses.h
 
 /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
 functional
@@ -115,12 +119,16 @@ GraphFunctions.h
 /home/m4zz31/cppprojct/Utils/error.h
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+../Utils/HelperClasses.h
+/home/m4zz31/cppprojct/Utils/HelperClasses.h
 mpi.h
 -
 set
 -
 boost/mpi/environment.hpp
 -
+../Communication/CommunicationFunctions.h
+/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
 
 /home/m4zz31/cppprojct/GraphClasses/RingGraph.h
 GeneralGraph.h
@@ -183,6 +191,18 @@ graph-test-singlestep-evolution.h
 /home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.h
 ../GraphClasses/GraphFunctions.h
 /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
+../Utils/HelperClasses.h
+/home/m4zz31/cppprojct/Utils/HelperClasses.h
+../Communication/CommunicationFunctions.h
+/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
+
+/home/m4zz31/cppprojct/Utils/HelperClasses.cpp
+HelperClasses.h
+/home/m4zz31/cppprojct/Utils/HelperClasses.h
+
+/home/m4zz31/cppprojct/Utils/HelperClasses.h
+../GraphClasses/GeneralGraph.h
+/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
 /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
 ../GraphClasses/GeneralGraph.h
@@ -218,16 +238,6 @@ boost/random.hpp
 
 /home/m4zz31/cppprojct/Utils/timers.h
 
-/home/m4zz31/cppprojct/Utils/typed_combinations.h
-../Solvers/GeneralSolver.h
-/home/m4zz31/cppprojct/Solvers/GeneralSolver.h
-../Solvers/EulerSolver.h
-/home/m4zz31/cppprojct/Solvers/EulerSolver.h
-../Solvers/RungeKuttaSolver.h
-/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
-../DifferentialEquations/NoiselessKuramoto.h
-/home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.h
-
 /home/m4zz31/cppprojct/main.cpp
 iostream
 -
@@ -239,10 +249,6 @@ Tests/graph-test-init.h
 /home/m4zz31/cppprojct/Tests/graph-test-init.h
 Tests/graph-test-singlestep-evolution.h
 /home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
-omp.h
--
-Utils/typed_combinations.h
-/home/m4zz31/cppprojct/Utils/typed_combinations.h
 Utils/global_standard_messages.h
 /home/m4zz31/cppprojct/Utils/global_standard_messages.h
 

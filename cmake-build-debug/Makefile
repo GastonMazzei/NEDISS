@@ -547,6 +547,33 @@ Tests/solvers-test-init.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.s
 .PHONY : Tests/solvers-test-init.cpp.s
 
+Utils/HelperClasses.o: Utils/HelperClasses.cpp.o
+
+.PHONY : Utils/HelperClasses.o
+
+# target to build an object file
+Utils/HelperClasses.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.o
+.PHONY : Utils/HelperClasses.cpp.o
+
+Utils/HelperClasses.i: Utils/HelperClasses.cpp.i
+
+.PHONY : Utils/HelperClasses.i
+
+# target to preprocess a source file
+Utils/HelperClasses.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.i
+.PHONY : Utils/HelperClasses.cpp.i
+
+Utils/HelperClasses.s: Utils/HelperClasses.cpp.s
+
+.PHONY : Utils/HelperClasses.s
+
+# target to generate assembly for a file
+Utils/HelperClasses.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.s
+.PHONY : Utils/HelperClasses.cpp.s
+
 Utils/adequate_synchronization.o: Utils/adequate_synchronization.cpp.o
 
 .PHONY : Utils/adequate_synchronization.o
@@ -817,6 +844,9 @@ help:
 	@echo "... Tests/solvers-test-init.o"
 	@echo "... Tests/solvers-test-init.i"
 	@echo "... Tests/solvers-test-init.s"
+	@echo "... Utils/HelperClasses.o"
+	@echo "... Utils/HelperClasses.i"
+	@echo "... Utils/HelperClasses.s"
 	@echo "... Utils/adequate_synchronization.o"
 	@echo "... Utils/adequate_synchronization.i"
 	@echo "... Utils/adequate_synchronization.s"

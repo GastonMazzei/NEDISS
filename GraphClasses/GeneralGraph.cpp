@@ -56,12 +56,12 @@ void CommonGraphObjectClass::reportNodes(Graph &g){
         }
     }
     std::cout << "I am Proc N'" << process_id(g.process_group()) <<
-    " and, according to 'boost::num_vertices', I report having " <<
-    boost::num_vertices(g) <<
-    " nodes! After iterating 'boost::vertices' I noted I own " <<
-    counter <<
-    " nodes." <<
-    std::endl;
+              " and, according to 'boost::num_vertices', I report having " <<
+              boost::num_vertices(g) <<
+              " nodes! After iterating 'boost::vertices' I noted I own " <<
+              counter <<
+              " nodes." <<
+              std::endl;
 }
 
 

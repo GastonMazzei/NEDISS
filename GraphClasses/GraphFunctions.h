@@ -11,10 +11,11 @@
 #include "../Utils/msleep.h"
 #include "../Utils/error.h"
 #include "GeneralGraph.h"
+#include "../Utils/HelperClasses.h"
 #include <mpi.h>
 #include <set>
 #include <boost/mpi/environment.hpp>
-
+#include "../Communication/CommunicationFunctions.h"
 
 // processors will iterate their "N=num_vertex(g)" nodes,
 // and in each iteration they will either
@@ -36,58 +37,14 @@
 
 void register_to_value(Graph &g);
 
-typedef Graph::vertex_descriptor VD;
-typedef Graph::edge_descriptor ED;
-typedef std::pair<VD, ED> InfoVecElem;
-typedef std::tuple<VD, ED, int> PartialInfoVecElem;
-
-struct ParallelCell{
-    // Container of variable size that can keep track of different threads storing objects
-    std::vector<std::list<InfoVecElem>> ProcessLocally;
-    std::vector<std::list<PartialInfoVecElem>> Missing;
-    explicit ParallelCell(){};
-};
-
-struct ParallelHelper{
-    std::vector<ParallelCell> data; // initialized to NNodes x NT
-    explicit ParallelHelper(int NT, unsigned long NNodes);
-};
-
-struct IntegrationHelper{
-    double centralValue;
-    std::vector<double> centralParams;
-    std::vector<double> edgeValues;
-    std::vector<double> neighborValues;
-};
-
-struct CommunicationHelper{
-    // _NUM_THREADS can be captured from
-    std::vector<int> WORLD_RANK, WORLD_SIZE, MY_NUM;
-    int NUM_THREADS;
-    boost::mpi::environment ENV;
-    boost::mpi::communicator WORLD;
-    explicit CommunicationHelper(Graph &g);
-};
-
-struct MappingHelper{
-    // Relevant maps that should be passed as an instance
-    // of a struct ;-)
-    EdgeOwnerMap EdgeOwner;
-    OwnerMap NodeOwner;
-    LocalVertexMap Local;
-    GlobalVertexMap Global;
-    explicit MappingHelper(Graph &g): EdgeOwner(get(boost::edge_owner, g)),
-                                     NodeOwner(get(boost::vertex_owner, g)),
-                                     Local(get(boost::vertex_local, g)),
-                                     Global(get(boost::vertex_global, g)){};
-};
-
-
-
 
 // Fully declared template
 template<typename DIFFEQ, typename SOLVER> // e.g. DIFFEQ = NoiselessKuramoto, SOLVER = EulerSolver<NoiselessKuramoto>
-void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver){
+void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver,
+                      CommunicationHelper &ComHelper,
+                      ParallelHelper &ParHelper,
+                      IntegrationHelper &IntHelper,
+                      MappingHelper &MapHelper){
     // There is an evolution operator that should compute the next
     // value and store it in the object's temporal register
 
@@ -107,47 +64,36 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver){
     //
     // !!! THEY SHOULD BE CONSUMED AS REFERENCES, NOT INSTANTIATED IN EACH CALL !!!
     //
+    void GetAllMsgs(int NNodes, CommunicationHelper &H, Graph &g, ParallelHelper &P, IntegrationHelper &I, std::queue<long> &C);
     unsigned long NVtot = boost::num_vertices(g), NT;
-    CommunicationHelper ComHelper(g);
-    ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
-    IntegrationHelper IntHelper[NVtot];
-    MappingHelper MapHelper(g);
-    boost::mpi::environment env(boost::mpi::threading::funneled);
 
 
 
-    std::set<long> CHECKED;
+
+    std::queue<long> CHECKED;
     NT = ComHelper.NUM_THREADS;
     auto vs = vertices(g);
     double temporalResult;
 
 #pragma omp parallel firstprivate(NVtot, vs, NT)// Try me out! :-) Iterators are random access ones ;-)
 {
-
     bool I_AM_NOT_MASTER = true; // this is mistrusting implementation of
                                 // OpenMP standard where Master implies thread_id = 0 :-(
     long i=-1;
 #pragma omp master
 {
-    mssleep(500);
     I_AM_NOT_MASTER = false;
+    GetAllMsgs(NVtot, ComHelper, g, ParHelper, IntHelper, CHECKED);
 };
     if (I_AM_NOT_MASTER) {
 
-        long MY_THREAD = omp_get_thread_num();
-        long N_THREADS = omp_get_num_threads();
-        long MY_OFFSET, MY_LENGTH;
-        long NLocals, M, rank;
+        long NLocals, NInedges, M, rank;
+        OpenMPHelper OmpHelper(NVtot, 1);
 
 
-        MY_OFFSET = (NVtot / (N_THREADS-1)) * (MY_THREAD-1) ; // (N_THREADS-1) instead of (N_THREADS)
-        MY_LENGTH = (NVtot / (N_THREADS-1)); // because master will be entirely devoted to MPI ^.^
-        if (MY_THREAD + 1 == N_THREADS) {
-            MY_LENGTH += NLocals % N_THREADS;
-        }
-
-        i += MY_OFFSET;
-        for (auto v = vs.first + MY_OFFSET; v != vs.first + (MY_OFFSET + MY_LENGTH - 1); ++v) {
+        i += OmpHelper.MY_OFFSET_n;
+        for (auto v = vs.first + OmpHelper.MY_OFFSET_n;
+                v != vs.first + OmpHelper.MY_OFFSET_n + OmpHelper.MY_LENGTH_n; ++v) {
             ++i;
 
             // Capture the central node's values
@@ -155,85 +101,57 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver){
             IntHelper[i].centralParams = g[*v].params;
             // Get the neighbor and edge's values
             auto neighbors = boost::adjacent_vertices(*v, g);
+            auto in_edges = boost::in_edges(*v, g);
             rank = in_degree(*v, g) + out_degree(*v, g);
             NLocals = neighbors.second - neighbors.first;
             M = rank - NLocals;
 
-
-#pragma omp parallel firstprivate(i, M, neighbors, NLocals)
+#pragma omp parallel firstprivate(i, M, neighbors, NLocals, NInedges)
 {
-            long MY_THREAD_n = omp_get_thread_num();
-            long N_THREADS_n = omp_get_num_threads();
-            long MY_OFFSET_n, MY_LENGTH_n;
-            MY_OFFSET_n = (NLocals / N_THREADS_n) * MY_THREAD_n;
-            MY_LENGTH_n = (NLocals / N_THREADS_n);
-            if (MY_THREAD_n + 1 == N_THREADS_n) {
-                MY_LENGTH_n += NLocals % N_THREADS_n;
+            OpenMPHelper OmpHelperN(NLocals, 0);
+            for (auto n = neighbors.first + OmpHelperN.MY_OFFSET_n;
+                        n != neighbors.first + OmpHelperN.MY_OFFSET_n + OmpHelperN.MY_LENGTH_n; ++n) {
+                auto local_e = edge(*v, *n, g).first;
+                auto local_v = *n;
+                if (get(MapHelper.Local, *n) == 1) { // Case (1): locally available elements ;-)
+                    if (edge(*v, *n, g).second == 1) {
+                        //std::make_tuple(std::as_const(local_v), std::as_const(local_e)));
+                        ParHelper.data[i].ProcessLocally[OmpHelperN.MY_THREAD_n].emplace_back(local_v,
+                                                                                    local_e,
+                                                                                    get(get(boost::vertex_index, g), *v),
+                                                                                    get(get(boost::vertex_index, g), *n));
+                    } else { error_report("Push back mechanism for local nodes has failed"); };
+                } else { // Case (2.A): We 'see' this neighbor because it is connected
+                    // via an edge that we own. Get the edge and record who is the other node's owner
+                    ParHelper.data[i].MissingA[OmpHelperN.MY_THREAD_n].emplace_back(local_v,
+                                                                            local_e,
+                                                                            get(get(boost::vertex_index, g), *v),
+                                                                            get(get(boost::vertex_index, g), *n),
+                                                                            get(MapHelper.NodeOwner, *n));
+                }
             }
-
-            // debugging station ;-)
-//            std::cout << "i: " << i << std::endl;
-//            std::cout << "M: " << M << std::endl;
-//            std::cout << "rank: " << rank << std::endl;
-//            std::cout << "NLocals: " << NLocals << std::endl;
-//            std::cout << "in_degree: " << in_degree(*v, g) << std::endl;
-//            std::cout << "out_degree: " << out_degree(*v, g) << std::endl;
-//            std::cout << "MY_THREAD: " << MY_THREAD << std::endl;
-//            std::cout << "MY_OFFSET: " << MY_OFFSET << std::endl;
-//            std::cout << "MY_LENGTH: " << MY_LENGTH << std::endl;
-//            std::cout << "N_THREADS: " << N_THREADS << std::endl;
-//            std::cout << "MY_THREAD_n: " << MY_THREAD_n << std::endl;
-//            std::cout << "MY_OFFSET_n: " << MY_OFFSET_n << std::endl;
-//            std::cout << "MY_LENGTH_n: " << MY_LENGTH_n << std::endl;
-//            std::cout << "N_THREADS_n: " << N_THREADS_n << std::endl;
-
-
-            if (M == 0) { // THE LEAST PROBABLE CASE! :-)
-                // Skip directly to a Protocol to populate locally
-                for (auto n = neighbors.first + MY_OFFSET_n;
-                    n != neighbors.first + MY_OFFSET_n + MY_LENGTH_n; ++n) {
-                    ED local_e = edge(*v, *n, g).first;
-                    VD local_v = *n;
-                    ParHelper.data[i].ProcessLocally[MY_THREAD_n].push_back(
-                            std::make_pair(std::as_const(local_v), std::as_const(local_e)));
-                }
-            } else { // THE MOST PROBABLE CASE! :-)
-
-                for (auto n = neighbors.first + MY_OFFSET_n;
-                            n != neighbors.first + MY_OFFSET_n + MY_LENGTH_n; ++n) {
-                    auto local_e = edge(*v, *n, g).first;
-                    auto local_v = *n;
-                    if (get(MapHelper.Local, *n) == 1) { // Case (1): locally available elements ;-)
-                        if (edge(*v, *n, g).second == 1) {
-                            ParHelper.data[i].ProcessLocally[MY_THREAD_n].push_back(
-                                    std::make_pair(std::as_const(local_v), std::as_const(local_e)));
-                        } else { error_report("Push back mechanism for local nodes has failed"); };
-                    } else { // Case (2.A): We 'see' this neighbor because it is connected
-                        // via an edge that we own. Get the edge and record who is the other node's owner
-                        ParHelper.data[i].Missing[MY_THREAD_n].push_back(
-                                std::make_tuple(std::as_const(local_v),
-                                                std::as_const(local_e),
-                                                get(MapHelper.NodeOwner, *n)));
-                    }
-                }
-                // Finally please contemplate the 3rd case:
-                // we have in-edges that are not available
-                // locally so we have neighbors that cant
-                // be indexed by 'neighbors'
-                auto in_edges = boost::in_edges(*v, g);
-                for (auto e = in_edges.first; e != in_edges.second; ++e) {
+            // Finally please contemplate the 3rd case:
+            // we have in-edges that are not available
+            // locally so we have neighbors that cant
+            // be indexed by 'neighbors'
+            OpenMPHelper OmpHelperE(M, 0, OmpHelperN.N_THREADS_n, OmpHelperN.MY_THREAD_n);
+            int j = 0;
+            for (auto e = in_edges.first; e != in_edges.second; ++e) {
+                if ((j>=OmpHelperE.MY_OFFSET_n) && (j<OmpHelperE.MY_OFFSET_n + OmpHelperE.MY_LENGTH_n)) {
                     auto local_e = *e;
                     auto local_v = boost::source(*e, g);
-                    ParHelper.data[i].Missing[MY_THREAD_n].push_back(
-                            std::make_tuple(std::as_const(local_v), std::as_const(local_e),
-                                            get(MapHelper.EdgeOwner, *e)));
+                    ParHelper.data[i].MissingB[OmpHelperE.MY_THREAD_n].emplace_back(local_v,
+                                                                         local_e,
+                                                                         get(get(boost::vertex_index, g), *v),
+                                                                         get(get(boost::vertex_index, g), local_v),
+                                                                         get(MapHelper.NodeOwner, local_v));
                 }
+                ++j;
             }
 } // end of the nested parallelism! :-)
             std::cout << "End of the neighbor iteration! starting new lap :-)" << std::endl;
 #pragma atomic
-            CHECKED.insert(i); // Adding the index to the list of checked indexes ;-)
-
+            CHECKED.push(i); // Adding the index to the list of checked indexes ;-)
         } // end of the for :-)
     } // end of the NON_MASTER_ONLY section :-)
 } // end of the parallel construct

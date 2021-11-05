@@ -14,6 +14,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o"
   "CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o"
   "CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o"
+  "CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.o"
   "CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o"
   "CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o"
   "CMakeFiles/cppprojct.dir/Utils/error.cpp.o"

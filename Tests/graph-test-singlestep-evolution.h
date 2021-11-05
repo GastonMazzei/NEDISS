@@ -12,9 +12,15 @@
 #include "../Solvers/RungeKuttaSolver.h"
 #include "../DifferentialEquations/NoiselessKuramoto.h"
 #include "../GraphClasses/GraphFunctions.h"
+#include "../Utils/HelperClasses.h"
+#include "../Communication/CommunicationFunctions.h"
 
 template <int T, typename GRAPHTYPE>
-void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name) {
+void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
+                                     CommunicationHelper &ComHelper,
+                                     ParallelHelper &ParHelper,
+                                     IntegrationHelper &IntHelper,
+                                     MappingHelper &MapHelper) {
     // Print in command what test is it
     adsync_message<T>(msg_prev + "'test_" + name + "_graph_singlestep_evolution'", G.g);
 
@@ -35,25 +41,31 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name) {
     if (true) {
         // Test several kuramoto evolutions with Euler
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (1 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu);
+        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu,ComHelper, ParHelper,
+                                                                            IntHelper, MapHelper);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (1 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (2 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu);
+        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu,ComHelper, ParHelper,
+                                                                            IntHelper, MapHelper);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (2 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (3 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu);
+        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu,ComHelper, ParHelper,
+                                                                            IntHelper, MapHelper);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (3 of 3)", G.g);
 
 
         // Test several kuramoto evolutions with RungeKutta
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (1 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk);
+        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk,ComHelper, ParHelper,
+                                                                                 IntHelper, MapHelper);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (1 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (2 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk);
+        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk,ComHelper, ParHelper,
+                                                                                 IntHelper, MapHelper);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (2 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (3 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk);
+        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk,ComHelper, ParHelper,
+                                                                                 IntHelper, MapHelper);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (3 of 3)", G.g);
     };
 

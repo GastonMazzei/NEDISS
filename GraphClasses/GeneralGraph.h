@@ -86,15 +86,25 @@ typedef boost::adjacency_list<boost::vecS,
         boost::distributedS<boost::graph::distributed::mpi_process_group, boost::vecS>,
         boost::bidirectionalS,
         DynamicNode,
-        DynamicEdge, boost::vertex_index_t>
+        DynamicEdge>
+//        boost::property<DynamicNode, boost::vertex_index_t>,
+//        boost::property<DynamicEdge, boost::edge_index_t>>
     Graph;
 
 
 
 // Useful types :-)
+//property_map<Graph, capacity_t>::type capacity
+//        = get(capacity_t(), G);
+//property_map<Graph, flow_t>::type flow
+//        = get(flow_t(), G);
+//
+// those can be accessed according to what is explained  here:
+// https://www.boost.org/doc/libs/1_77_0/libs/graph/doc/using_adjacency_list.html
+//
 typedef boost::property_map<Graph, boost::vertex_index_t>::const_type IndexMap;
-typedef boost::property_map<Graph, double DynamicEdge::*>::type DynamicEdgeMap;
-typedef boost::iterator_property_map<std::vector<double>::iterator, DynamicEdgeMap> DynamicEdgeCentralMap;
+//typedef boost::property_map<Graph, double DynamicEdge::*>::type DynamicEdgeMap;
+//typedef boost::iterator_property_map<std::vector<double>::iterator, DynamicEdgeMap> DynamicEdgeCentralMap;
 typedef boost::iterator_property_map<std::vector<int>::iterator, IndexMap> CentralMap;
 typedef boost::graph_traits<Graph>::vertex_iterator vertex_iterator;
 typedef boost::graph_traits<Graph>::edge_iterator edge_iterator;

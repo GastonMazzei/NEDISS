@@ -4,23 +4,8 @@
 #include "Utils/timers.h"
 #include "Tests/graph-test-init.h"
 #include "Tests/graph-test-singlestep-evolution.h"
-#include <omp.h>
-#include "Utils/typed_combinations.h"
 #include "Utils/global_standard_messages.h"
-//#include <string>
 
-//#include  <cmath>
-//#include <random>
-//#include <algorithm>
-//#include <iterator>
-//#include <chrono>
-//#include "Utils/error.h"
-//#include <Eigen/Dense>
-//#include <iostream>
-//#include <math.h>
-//#include <random>
-//#include <vector>
-//#include <iostream>
 
 using namespace std;
 
@@ -40,7 +25,7 @@ int main(int argc, char** argv)
     unsigned int SEED = 12345;
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    static int OMP_THREAD_LIMIT = std::atoi(std::getenv("OMP_THREAD_LIMIT"));
+    static int OMP_THREAD_LIMIT = std::stoi(std::getenv("OMP_THREAD_LIMIT"));
     if (OMP_THREAD_LIMIT<2){error_report(min_threads);};
 
     // Testing Section ;-)

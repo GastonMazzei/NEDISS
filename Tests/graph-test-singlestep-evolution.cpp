@@ -23,9 +23,22 @@ void graph_tests_singlestep_evolution(unsigned int SEED, int N, double p){
     // Ring Network
     reproductibility_lock(SEED);
     RingGraphObject G2(N);
-    test_graph_singlestep_evolution<100, RingGraphObject>(G2, "Ring");
+
+    // helpers instantiated here just temporaly :-)
+    unsigned long NVtot = boost::num_vertices(G2.g);
+    CommunicationHelper ComHelper(G2.g);
+    ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
+    IntegrationHelper IntHelper(NVtot);
+    MappingHelper MapHelper(G2.g);
+
+    test_graph_singlestep_evolution<100, RingGraphObject>(G2, "Ring",
+                                                          ComHelper, ParHelper,
+                                                          IntHelper, MapHelper);
     //CommunicationHelper H(G2.g);
     //GetMsgFromSomeone(H,G2.g);
+
+
+
 
 //    // Erdos Renyi Network
 //    reproductibility_lock(SEED);

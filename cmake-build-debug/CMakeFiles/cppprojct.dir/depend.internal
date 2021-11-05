@@ -8,9 +8,11 @@ CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o
  /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
  /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
  /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
+ /home/m4zz31/cppprojct/Utils/HelperClasses.h
  /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
  /home/m4zz31/cppprojct/Utils/differential_equations_aux.h
  /home/m4zz31/cppprojct/Utils/error.h
+ /home/m4zz31/cppprojct/Utils/global_standard_messages.h
  /home/m4zz31/cppprojct/Utils/memory_management.h
  /home/m4zz31/cppprojct/Utils/msleep.h
 CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o
@@ -43,11 +45,13 @@ CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o
  /home/m4zz31/cppprojct/Utils/memory_management.h
  /home/m4zz31/cppprojct/Utils/msleep.h
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o
+ /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
  /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
  /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
  /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp
  /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
  /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
+ /home/m4zz31/cppprojct/Utils/HelperClasses.h
  /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
  /home/m4zz31/cppprojct/Utils/differential_equations_aux.h
  /home/m4zz31/cppprojct/Utils/error.h
@@ -113,6 +117,7 @@ CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o
  /home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
  /home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.cpp
  /home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
+ /home/m4zz31/cppprojct/Utils/HelperClasses.h
  /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
  /home/m4zz31/cppprojct/Utils/differential_equations_aux.h
  /home/m4zz31/cppprojct/Utils/error.h
@@ -122,6 +127,11 @@ CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o
  /home/m4zz31/cppprojct/Utils/reproductibility.h
 CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o
  /home/m4zz31/cppprojct/Tests/solvers-test-init.cpp
+CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.o
+ /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+ /home/m4zz31/cppprojct/Utils/HelperClasses.cpp
+ /home/m4zz31/cppprojct/Utils/HelperClasses.h
+ /home/m4zz31/cppprojct/Utils/error.h
 CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o
  /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
  /home/m4zz31/cppprojct/Utils/adequate_synchronization.cpp
@@ -145,6 +155,7 @@ CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.o
 CMakeFiles/cppprojct.dir/Utils/timers.cpp.o
  /home/m4zz31/cppprojct/Utils/timers.cpp
 CMakeFiles/cppprojct.dir/main.cpp.o
+ /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
  /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
  /home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.h
  /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
@@ -154,6 +165,7 @@ CMakeFiles/cppprojct.dir/main.cpp.o
  /home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
  /home/m4zz31/cppprojct/Tests/graph-test-init.h
  /home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
+ /home/m4zz31/cppprojct/Utils/HelperClasses.h
  /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
  /home/m4zz31/cppprojct/Utils/differential_equations_aux.h
  /home/m4zz31/cppprojct/Utils/error.h
@@ -161,5 +173,4 @@ CMakeFiles/cppprojct.dir/main.cpp.o
  /home/m4zz31/cppprojct/Utils/memory_management.h
  /home/m4zz31/cppprojct/Utils/msleep.h
  /home/m4zz31/cppprojct/Utils/timers.h
- /home/m4zz31/cppprojct/Utils/typed_combinations.h
  /home/m4zz31/cppprojct/main.cpp
