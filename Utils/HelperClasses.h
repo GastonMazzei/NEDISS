@@ -36,6 +36,8 @@ struct IntegrationCell{
 
 typedef std::vector<IntegrationCell> IntegrationHelper;
 
+
+
 struct CommunicationHelper{
     // _NUM_THREADS can be captured from
     std::vector<int> WORLD_RANK, WORLD_SIZE, MY_NUM;

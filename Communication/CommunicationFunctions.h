@@ -13,6 +13,8 @@ typedef std::list<PartialInfoVecElem>::const_iterator PartialInfoVecElem_iterato
 
 void GetAllMsgs(int NNodes, CommunicationHelper &H, Graph &g, ParallelHelper &P, IntegrationHelper &I, std::queue<long> &C);
 
+
+
 void GetOneMsg(int ix,
                CommunicationHelper &H,
                Graph &g,

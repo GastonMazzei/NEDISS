@@ -6,13 +6,28 @@
 #include "CommunicationFunctions.h"
 #include "../Utils/global_standard_messages.h"
 
+// Keep building MPI with https://www.boost.org/doc/libs/1_77_0/doc/html/mpi/tutorial.html
 
 void ask_for_node(int owner, VD &v, CommunicationHelper &H, int ix){
     //asks processor 'owner' for the 'v' element
+    if (H.WORLD_RANK[0] == 0) {
+        H.WORLD.send(1, 0, std::string("Hello"));
+        std::string msg;
+        H.WORLD.recv(1, 1, msg);
+        std::cout << msg << "!" << std::endl;
+    } else {
+        std::string msg;
+        H.WORLD.recv(0, 0, msg);
+        std::cout << msg << ", ";
+        std::cout.flush();
+        H.WORLD.send(0, 1, std::string("world"));
+    }
 };
 
 void ask_for_node_and_vertex(int owner, VD &v, ED &e, CommunicationHelper &H, int ix){
     //asks processor 'owner' for the 'v' and 'e' elements
+
+
 };
 
 void GetOneMsg(int ix,
