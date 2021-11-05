@@ -12,7 +12,8 @@
 #include "../Utils/error.h"
 #include "GeneralGraph.h"
 #include <mpi.h>
-
+#include <set>
+#include <boost/mpi/environment.hpp>
 
 
 // processors will iterate their "N=num_vertex(g)" nodes,
@@ -79,7 +80,6 @@ struct MappingHelper{
                                      NodeOwner(get(boost::vertex_owner, g)),
                                      Local(get(boost::vertex_local, g)),
                                      Global(get(boost::vertex_global, g)){};
-
 };
 
 
@@ -103,137 +103,153 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver){
     // TEST1: check that edges and nodes are correctly indexed, i.e.
     // (1)-1-(x)-2-(2) gets a vector1 and vector2 that is <1,2> and <1,2>
 
-    // Instantiate the communication, parallel and mapping helpers :-)
+    // Instantiate the communication, parallel, integration and mapping helpers :-)
     //
     // !!! THEY SHOULD BE CONSUMED AS REFERENCES, NOT INSTANTIATED IN EACH CALL !!!
     //
+    unsigned long NVtot = boost::num_vertices(g), NT;
     CommunicationHelper ComHelper(g);
-    ParallelHelper ParHelper(ComHelper.NUM_THREADS, num_vertices(g));
+    ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
+    IntegrationHelper IntHelper[NVtot];
     MappingHelper MapHelper(g);
+    boost::mpi::environment env(boost::mpi::threading::funneled);
 
 
-    // Auxiliaries for computations
-    unsigned int ctrl_ownr, nghb_ownr;
-    long i=-1;
-    long NLocals, M, rank;
-    VD local_v[ComHelper.NUM_THREADS]; // dynamic vertex and edge descriptors
-    ED local_e[ComHelper.NUM_THREADS];  // (respectively)
+
+    std::set<long> CHECKED;
+    NT = ComHelper.NUM_THREADS;
     auto vs = vertices(g);
     double temporalResult;
 
-    //---------------USE-ME-IF-YOU-NEED-TO-DEBUG--;-)-----------------
-    //std::cout << "So far so good, flag N " << DEBUG_FLAG << std::endl;
-    //++DEBUG_FLAG;
-    //----------------------------------------------------------------
-    // Start the loop! :-)
-    for (auto v = vs.first; v != vs.second; ++v) {
-        i = v - vs.first;
-
-
-        // Instantiate the Integration Helper from this node's perspective ;-)
-        const unsigned long Nmax = boost::num_vertices(g);
-        IntegrationHelper IntHelper;
-
-        // Capture the central node's values
-        IntHelper.centralValue = g[*v].value;
-        IntHelper.centralParams = g[*v].params;
-
-
-        // Get the neighbor and edge's values
-        auto neighbors = boost::adjacent_vertices(*v, g);
-        rank = in_degree(*v, g) + out_degree(*v, g);
-        NLocals = neighbors.second - neighbors.first;
-        M = rank - NLocals;
-        // THERE ARE 2 POSSIBLE SCENARIOS:
-        // (1) all the data is available locally, which is Nlocals == rank
-        // (2) there are M missing neighbors, where M = rank - NLocals,
-
-        // Addressing (2):
-        // there are 2 types of missing values.
-        // 2.A) Nodes that are absent, but the edge object is available.
-        //      This requires using that we know who is the owner and asking
-        //      for the respective node.
-        //      u=source(*ep.first,g);
-        //      v=target(*ep.first,g);
-        //      edge(vertex_descriptor u, vertex_descriptor v,
-        //              const adjacency_list& g);
-        //
-        // 2.B) Nodes that are absent, and we only know about the incident edge.
-        //      We must get the edge's owner and ask him for both the node and
-        //      the edge's information.
-        //      THIS DEFINES THE NEED FOR AN ASK_FOR_BOTH CALL
-
-
-        if (M == 0) { // THE LEAST PROBABLE CASE! :-)
-            // Skip directly to a Protocol to populate locally
-            std::cout << "Implementing 'ALL-LOCAL' shortcut :-)" << std::endl;
-#pragma omp parallel // Try me out! :-) Iterators are random access ones ;-)
+#pragma omp parallel firstprivate(NVtot, vs, NT)// Try me out! :-) Iterators are random access ones ;-)
 {
-                // ***[beginning][parallel]***
-                // balancing workload among threads :O
-                long MY_THREAD = omp_get_thread_num();
-                long N_THREADS = omp_get_num_threads();
-                long MY_OFFSET, MY_LENGTH;
-                MY_OFFSET = (NLocals / N_THREADS) * MY_THREAD;
-                MY_LENGTH = (NLocals / N_THREADS);
-                if (MY_THREAD + 1 == N_THREADS) {
-                    MY_LENGTH += NLocals % N_THREADS;
-                }
-                std::cout << "Hey there! I'm a thread of a parallel region A telling you that I'm thread N " << MY_THREAD << std::endl;
-                for (auto n = neighbors.first + MY_OFFSET; n != neighbors.first + MY_OFFSET + MY_LENGTH; ++n) { // parallel
-                    local_e[MY_THREAD] = edge(*v, *n, g).first;
-                    local_v[MY_THREAD] = *n;//
-                    std::cout << "About to write... " << std::endl;
-                    ParHelper.data[i].ProcessLocally[MY_THREAD].push_back(std::make_pair(std::as_const(local_v[MY_THREAD]), std::as_const(local_e[MY_THREAD])));
-                    std::cout << "...SUCCESS! " << std::endl;
-                }
-}
-            std::cout << "Ended the 'ALL-LOCAL' shortcut :-)" << std::endl;
-        } else { // THE MOST PROBABLE CASE! :-)
-#pragma omp parallel // Try me out! :-) Iterators are random access ones ;-)
+
+    bool I_AM_NOT_MASTER = true; // this is mistrusting implementation of
+                                // OpenMP standard where Master implies thread_id = 0 :-(
+    long i=-1;
+#pragma omp master
 {
-                // ***[beginning][parallel]***
-                long MY_THREAD = omp_get_thread_num();
-                long N_THREADS = omp_get_num_threads();
-                long MY_OFFSET, MY_LENGTH;
-                MY_OFFSET = (NLocals / N_THREADS) * MY_THREAD;
-                MY_LENGTH = (NLocals / N_THREADS);
-                if (MY_THREAD + 1 == N_THREADS) {
-                    MY_LENGTH += NLocals % N_THREADS;
+    mssleep(500);
+    I_AM_NOT_MASTER = false;
+};
+    if (I_AM_NOT_MASTER) {
+
+        long MY_THREAD = omp_get_thread_num();
+        long N_THREADS = omp_get_num_threads();
+        long MY_OFFSET, MY_LENGTH;
+        long NLocals, M, rank;
+
+
+        MY_OFFSET = (NVtot / (N_THREADS-1)) * (MY_THREAD-1) ; // (N_THREADS-1) instead of (N_THREADS)
+        MY_LENGTH = (NVtot / (N_THREADS-1)); // because master will be entirely devoted to MPI ^.^
+        if (MY_THREAD + 1 == N_THREADS) {
+            MY_LENGTH += NLocals % N_THREADS;
+        }
+
+        i += MY_OFFSET;
+        for (auto v = vs.first + MY_OFFSET; v != vs.first + (MY_OFFSET + MY_LENGTH - 1); ++v) {
+            ++i;
+
+            // Capture the central node's values
+            IntHelper[i].centralValue = g[*v].value;
+            IntHelper[i].centralParams = g[*v].params;
+            // Get the neighbor and edge's values
+            auto neighbors = boost::adjacent_vertices(*v, g);
+            rank = in_degree(*v, g) + out_degree(*v, g);
+            NLocals = neighbors.second - neighbors.first;
+            M = rank - NLocals;
+
+
+#pragma omp parallel firstprivate(i, M, neighbors, NLocals)
+{
+            long MY_THREAD_n = omp_get_thread_num();
+            long N_THREADS_n = omp_get_num_threads();
+            long MY_OFFSET_n, MY_LENGTH_n;
+            MY_OFFSET_n = (NLocals / N_THREADS_n) * MY_THREAD_n;
+            MY_LENGTH_n = (NLocals / N_THREADS_n);
+            if (MY_THREAD_n + 1 == N_THREADS_n) {
+                MY_LENGTH_n += NLocals % N_THREADS_n;
+            }
+
+            // debugging station ;-)
+//            std::cout << "i: " << i << std::endl;
+//            std::cout << "M: " << M << std::endl;
+//            std::cout << "rank: " << rank << std::endl;
+//            std::cout << "NLocals: " << NLocals << std::endl;
+//            std::cout << "in_degree: " << in_degree(*v, g) << std::endl;
+//            std::cout << "out_degree: " << out_degree(*v, g) << std::endl;
+//            std::cout << "MY_THREAD: " << MY_THREAD << std::endl;
+//            std::cout << "MY_OFFSET: " << MY_OFFSET << std::endl;
+//            std::cout << "MY_LENGTH: " << MY_LENGTH << std::endl;
+//            std::cout << "N_THREADS: " << N_THREADS << std::endl;
+//            std::cout << "MY_THREAD_n: " << MY_THREAD_n << std::endl;
+//            std::cout << "MY_OFFSET_n: " << MY_OFFSET_n << std::endl;
+//            std::cout << "MY_LENGTH_n: " << MY_LENGTH_n << std::endl;
+//            std::cout << "N_THREADS_n: " << N_THREADS_n << std::endl;
+
+
+            if (M == 0) { // THE LEAST PROBABLE CASE! :-)
+                // Skip directly to a Protocol to populate locally
+                for (auto n = neighbors.first + MY_OFFSET_n;
+                    n != neighbors.first + MY_OFFSET_n + MY_LENGTH_n; ++n) {
+                    ED local_e = edge(*v, *n, g).first;
+                    VD local_v = *n;
+                    ParHelper.data[i].ProcessLocally[MY_THREAD_n].push_back(
+                            std::make_pair(std::as_const(local_v), std::as_const(local_e)));
                 }
-                //ProcessLocally
-                std::cout << "Hey there! I'm a thread of a parallel region B telling you that I'm thread N " << MY_THREAD << std::endl;
-                // ***[end][parallel]***
-                for (auto n = neighbors.first + MY_OFFSET; n != neighbors.first + MY_OFFSET + MY_LENGTH; ++n) {
+            } else { // THE MOST PROBABLE CASE! :-)
+
+                for (auto n = neighbors.first + MY_OFFSET_n;
+                            n != neighbors.first + MY_OFFSET_n + MY_LENGTH_n; ++n) {
+                    auto local_e = edge(*v, *n, g).first;
+                    auto local_v = *n;
                     if (get(MapHelper.Local, *n) == 1) { // Case (1): locally available elements ;-)
                         if (edge(*v, *n, g).second == 1) {
-                            local_e[MY_THREAD] = edge(*v, *n, g).first;
-                            local_v[MY_THREAD] = *n;//       "MY_OFFSET" here is the only parallel trait ;-) remove for sequential op
+                            ParHelper.data[i].ProcessLocally[MY_THREAD_n].push_back(
+                                    std::make_pair(std::as_const(local_v), std::as_const(local_e)));
                         } else { error_report("Push back mechanism for local nodes has failed"); };
                     } else { // Case (2.A): We 'see' this neighbor because it is connected
                         // via an edge that we own. Get the edge and record who is the other node's owner
-                        local_e[MY_THREAD] = edge(*v, *n, g).first;
-                        local_v[MY_THREAD] = *n;
-                        ParHelper.data[i].Missing[MY_THREAD].push_back(std::make_tuple(std::as_const(local_v[MY_THREAD]), std::as_const(local_e[MY_THREAD]),get(MapHelper.NodeOwner, *n)));
+                        ParHelper.data[i].Missing[MY_THREAD_n].push_back(
+                                std::make_tuple(std::as_const(local_v),
+                                                std::as_const(local_e),
+                                                get(MapHelper.NodeOwner, *n)));
                     }
                 }
-            // Finally please contemplate the 3rd case:
-            // we have in-edges that are not available
-            // locally so we have neighbors that cant
-            // be indexed by 'neighbors'
-            auto in_edges = boost::in_edges(*v, g);
-            for (auto e = in_edges.first; e != in_edges.second; ++e) {
-                local_e[MY_THREAD] = *e;
-                local_v[MY_THREAD] = boost::source(*e, g);
-                ParHelper.data[i].Missing[MY_THREAD].push_back(std::make_tuple(std::as_const(local_v[MY_THREAD]), std::as_const(local_e[MY_THREAD]),get(MapHelper.EdgeOwner, *e)));
+                // Finally please contemplate the 3rd case:
+                // we have in-edges that are not available
+                // locally so we have neighbors that cant
+                // be indexed by 'neighbors'
+                auto in_edges = boost::in_edges(*v, g);
+                for (auto e = in_edges.first; e != in_edges.second; ++e) {
+                    auto local_e = *e;
+                    auto local_v = boost::source(*e, g);
+                    ParHelper.data[i].Missing[MY_THREAD_n].push_back(
+                            std::make_tuple(std::as_const(local_v), std::as_const(local_e),
+                                            get(MapHelper.EdgeOwner, *e)));
+                }
             }
-} // end of parallel section ;-)
-        }
+} // end of the nested parallelism! :-)
+            std::cout << "End of the neighbor iteration! starting new lap :-)" << std::endl;
+#pragma atomic
+            CHECKED.insert(i); // Adding the index to the list of checked indexes ;-)
 
-        adsync_barrier<70>();
-        std::cout << "End of the neighbor iteration! starting new lap :-)" << std::endl;
-        adsync_barrier<30>();
-    }
+        } // end of the for :-)
+    } // end of the NON_MASTER_ONLY section :-)
+} // end of the parallel construct
+
+        // ******************HOW THE INTEGRATION CONTINUES  ;-)*****************
+        //
+        // Perform the evolution and store the result in the central
+        // node's temporal register
+//        g[*v].temporal_register = solver.evolve(centralValue,
+//                                             centralParams,
+//                                             neighborValues,
+//                                             edgeValues);
+//        clear_vectors(centralParams, neighborValues, edgeValues);
+
+
+
 
 
 // **************************SOME COMMUNICATION WILL BE REQUIRED ;-)
@@ -268,22 +284,6 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver){
 
 
 
-        // ******************HOW THE INTEGRATION CONTINUES  ;-)*****************
-        //
-        // Perform the evolution and store the result in the central
-        // node's temporal register
-//        g[*v].temporal_register = solver.evolve(centralValue,
-//                                             centralParams,
-//                                             neighborValues,
-//                                             edgeValues);
-
-        // Empty the vectors using a function from utils :-)
-        //clear_vectors(centralParams, neighborValues, edgeValues);
-
-    //}
-
-
-
 
 
 
@@ -293,7 +293,7 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver){
     // :-) there is no Queue so we must be strict.
     // Parallel BGL uses the BSP model, which we could enforce by replacing a barrier
     // with a synchronization directive.
-    //synchronize(g.process_group());
+    synchronize(g.process_group());
 
 
     // For all nodes,

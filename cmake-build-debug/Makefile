@@ -142,6 +142,33 @@ cppprojct/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/build
 .PHONY : cppprojct/fast
 
+Communication/CommunicationFunctions.o: Communication/CommunicationFunctions.cpp.o
+
+.PHONY : Communication/CommunicationFunctions.o
+
+# target to build an object file
+Communication/CommunicationFunctions.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o
+.PHONY : Communication/CommunicationFunctions.cpp.o
+
+Communication/CommunicationFunctions.i: Communication/CommunicationFunctions.cpp.i
+
+.PHONY : Communication/CommunicationFunctions.i
+
+# target to preprocess a source file
+Communication/CommunicationFunctions.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.i
+.PHONY : Communication/CommunicationFunctions.cpp.i
+
+Communication/CommunicationFunctions.s: Communication/CommunicationFunctions.cpp.s
+
+.PHONY : Communication/CommunicationFunctions.s
+
+# target to generate assembly for a file
+Communication/CommunicationFunctions.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.s
+.PHONY : Communication/CommunicationFunctions.cpp.s
+
 DifferentialEquations/GeneralDifferentialEquation.o: DifferentialEquations/GeneralDifferentialEquation.cpp.o
 
 .PHONY : DifferentialEquations/GeneralDifferentialEquation.o
@@ -745,6 +772,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... cppprojct"
+	@echo "... Communication/CommunicationFunctions.o"
+	@echo "... Communication/CommunicationFunctions.i"
+	@echo "... Communication/CommunicationFunctions.s"
 	@echo "... DifferentialEquations/GeneralDifferentialEquation.o"
 	@echo "... DifferentialEquations/GeneralDifferentialEquation.i"
 	@echo "... DifferentialEquations/GeneralDifferentialEquation.s"

@@ -9,7 +9,8 @@
 #include "../Utils/reproductibility.h"
 
 
-
+#include "../Communication/CommunicationFunctions.h"
+#include "../GraphClasses/GraphFunctions.h"
 
 void graph_tests_singlestep_evolution(unsigned int SEED, int N, double p){
     // ---SINGLE TIMESTEP EVOLUTION DEBUGGING---
@@ -23,7 +24,8 @@ void graph_tests_singlestep_evolution(unsigned int SEED, int N, double p){
     reproductibility_lock(SEED);
     RingGraphObject G2(N);
     test_graph_singlestep_evolution<100, RingGraphObject>(G2, "Ring");
-
+    //CommunicationHelper H(G2.g);
+    //GetMsgFromSomeone(H,G2.g);
 
 //    // Erdos Renyi Network
 //    reproductibility_lock(SEED);

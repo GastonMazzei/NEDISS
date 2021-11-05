@@ -47,7 +47,22 @@ void CommonGraphObjectClass::showVertex(Graph &g) {
     }
 }
 
-
+void CommonGraphObjectClass::reportNodes(Graph &g){
+    vertex_iterator v, v_end;
+    int counter = 0;
+    for (boost::tie(v, v_end) = vertices(g); v != v_end; ++v) {
+        if (get(get(vertex_owner, g), *v) == process_id(g.process_group())){
+            counter++;
+        }
+    }
+    std::cout << "I am Proc N'" << process_id(g.process_group()) <<
+    " and, according to 'boost::num_vertices', I report having " <<
+    boost::num_vertices(g) <<
+    " nodes! After iterating 'boost::vertices' I noted I own " <<
+    counter <<
+    " nodes." <<
+    std::endl;
+}
 
 
 

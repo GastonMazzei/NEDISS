@@ -11,6 +11,11 @@
 #include "../Utils/global_standard_messages.h"
 #include "../Utils/adequate_synchronization.h"
 
+
+
+void graph_tests_init(unsigned int SEED, int N = 4, double p = 0.4);
+
+
 template <int T, typename GRAPHTYPE>
 void test_graph_init(GRAPHTYPE &G, std::string name){
 
@@ -22,7 +27,12 @@ void test_graph_init(GRAPHTYPE &G, std::string name){
     G.build();
     adsync_message_barrier<T>(msg_post +  "build_" + name, G.g);
 
-    // Show the number of created nodes
+    // Show the total number of created nodes
+    adsync_message_barrier<T>(msg_prev + "'reportNodes'", G.g);
+    G.reportNodes(G.g);
+    adsync_message_barrier<T>(msg_post + "'reportNodes'", G.g);
+
+    // Show the created nodes
     adsync_message_barrier<T>(msg_prev + "'showVertex'", G.g);
     G.showVertex(G.g);
     adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
@@ -65,6 +75,12 @@ void test_graph_init(GRAPHTYPE &G, std::string name){
     G.showVertex(G.g);
     adsync_message_barrier<T>(msg_post + "'showVertex' (post kuramoto varied values)", G.g);
 
+    // Show the number of created nodes again
+    adsync_message_barrier<T>(msg_prev + "'showVertex' (post kuramoto varied values)(again, to confirm the vertex iterator conserves the order)", G.g);
+    G.showVertex(G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex' (post kuramoto varied values)(again, to confirm the vertex iterator conserves the order)", G.g);
+
+
     // Show the edges again
     adsync_message_barrier<T>(msg_prev + "'showEdges' (post kuramoto varied values)", G.g);
     G.showEdges(G.g);
@@ -75,6 +91,5 @@ void test_graph_init(GRAPHTYPE &G, std::string name){
 };
 
 
-void graph_tests_init(unsigned int SEED, int N = 4, double p = 0.4);
 
 #endif //CPPPROJCT_GRAPH_TEST_INIT_H

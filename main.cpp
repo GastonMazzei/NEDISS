@@ -6,7 +6,7 @@
 #include "Tests/graph-test-singlestep-evolution.h"
 #include <omp.h>
 #include "Utils/typed_combinations.h"
-
+#include "Utils/global_standard_messages.h"
 //#include <string>
 
 //#include  <cmath>
@@ -40,14 +40,15 @@ int main(int argc, char** argv)
     unsigned int SEED = 12345;
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    static int OMP_THREAD_LIMIT = std::atoi(std::getenv("OMP_THREAD_LIMIT"));
+    if (OMP_THREAD_LIMIT<2){error_report(min_threads);};
 
     // Testing Section ;-)
-    int N = 4;
+    int N = 8;
     double p = 0.5;
     //graph_tests_init(SEED, N, p);
     graph_tests_singlestep_evolution(SEED, N, p);
-    static int OMP_THREAD_LIMIT = std::atoi(std::getenv("OMP_THREAD_LIMIT"));
-    cout <<" ENV is " << OMP_THREAD_LIMIT << endl;
+
 
     // END:
     //

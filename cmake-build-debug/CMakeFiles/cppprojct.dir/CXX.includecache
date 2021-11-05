@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+/home/m4zz31/cppprojct/Communication/CommunicationFunctions.cpp
+CommunicationFunctions.h
+/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
+
+/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
+../GraphClasses/GeneralGraph.h
+/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+../GraphClasses/GraphFunctions.h
+/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
+
 /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
 functional
 -
@@ -107,6 +117,10 @@ GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 mpi.h
 -
+set
+-
+boost/mpi/environment.hpp
+-
 
 /home/m4zz31/cppprojct/GraphClasses/RingGraph.h
 GeneralGraph.h
@@ -151,6 +165,10 @@ graph-test-singlestep-evolution.h
 /home/m4zz31/cppprojct/GraphClasses/RingGraph.h
 ../Utils/reproductibility.h
 /home/m4zz31/cppprojct/Utils/reproductibility.h
+../Communication/CommunicationFunctions.h
+/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
+../GraphClasses/GraphFunctions.h
+/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
 
 /home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
 ../Utils/adequate_synchronization.h
@@ -225,4 +243,6 @@ omp.h
 -
 Utils/typed_combinations.h
 /home/m4zz31/cppprojct/Utils/typed_combinations.h
+Utils/global_standard_messages.h
+/home/m4zz31/cppprojct/Utils/global_standard_messages.h
 

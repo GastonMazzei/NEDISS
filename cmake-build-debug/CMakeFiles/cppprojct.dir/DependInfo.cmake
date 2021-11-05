@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/m4zz31/cppprojct/Communication/CommunicationFunctions.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o"
   "/home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o"
   "/home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o"
   "/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o"
