@@ -12,4 +12,14 @@ void register_to_value(Graph &g){
     }
 };
 
-
+void contribute_to_integration(ReferenceContainer &REF){
+    // ******************HOW THE INTEGRATION CONTINUES  ;-)*****************
+    //
+    // Perform the evolution and store the result in the central
+    // node's temporal register
+//        g[*v].temporal_register = solver.evolve(centralValue,
+//                                             centralParams,
+//                                             neighborValues,
+//                                             edgeValues);
+//        clear_vectors(centralParams, neighborValues, edgeValues);
+}

@@ -47,3 +47,42 @@ OpenMPHelper::OpenMPHelper(long NLocals, int i, long N_THREADS, long MY_THREAD){
         MY_LENGTH_n += NLocals % N_THREADS_n;
     }
 }
+
+
+void IntegrationCell::build(Graph &g, VD v, MappingHelper &Map,
+                            unsigned long &NOwned,
+                            unsigned long &rank,
+                            unsigned long &NLocals,
+                            unsigned long &M){
+    auto neighbors = boost::adjacent_vertices(v, g);
+    auto in_edges = boost::in_edges(v, g);
+    NOwned = 0;
+    rank = in_degree(v, g) + out_degree(v, g);
+    NLocals = neighbors.second - neighbors.first;
+    M = rank - NLocals;
+    for (auto n = neighbors.first; n != neighbors.second; ++n) {
+        if (get(Map.Local, *n) == 1){
+            ++NOwned;
+        }
+    }
+    neighborValues.resize(rank);
+    edgeValues.resize(rank);
+}
+
+ReferenceContainer::ReferenceContainer(ParallelHelper &ParHelper,
+                                       CommunicationHelper &ComHelper,
+                                       Graph & g,
+                                       std::queue<long> & CHECKED,
+                                       std::queue<long> & READY_FOR_INTEGRATION,
+                                       IntegrationHelper & IntHelper,
+                                       int & TOT,
+                                       int & PENDING_INT){
+    p_ParHelper = &ParHelper;
+    p_ComHelper = &ComHelper;
+    p_PENDING_INT = &PENDING_INT;
+    p_g = &g;
+    p_CHECKED = &CHECKED;
+    p_READY_FOR_INTEGRATION = &READY_FOR_INTEGRATION;
+    p_IntHelper = reinterpret_cast<IntegrationHelper *>(&IntHelper);
+    p_TOT = &TOT;
+}

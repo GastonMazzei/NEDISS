@@ -42,30 +42,30 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
         // Test several kuramoto evolutions with Euler
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (1 of 3)", G.g);
         single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu,ComHelper, ParHelper,
-                                                                            IntHelper, MapHelper);
+                                                                            IntHelper, MapHelper, G.N);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (1 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (2 of 3)", G.g);
         single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu,ComHelper, ParHelper,
-                                                                            IntHelper, MapHelper);
+                                                                            IntHelper, MapHelper, G.N);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (2 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (3 of 3)", G.g);
         single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu,ComHelper, ParHelper,
-                                                                            IntHelper, MapHelper);
+                                                                            IntHelper, MapHelper, G.N);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (3 of 3)", G.g);
 
 
         // Test several kuramoto evolutions with RungeKutta
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (1 of 3)", G.g);
         single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk,ComHelper, ParHelper,
-                                                                                 IntHelper, MapHelper);
+                                                                                 IntHelper, MapHelper, G.N);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (1 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (2 of 3)", G.g);
         single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk,ComHelper, ParHelper,
-                                                                                 IntHelper, MapHelper);
+                                                                                 IntHelper, MapHelper, G.N);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (2 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (3 of 3)", G.g);
         single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk,ComHelper, ParHelper,
-                                                                                 IntHelper, MapHelper);
+                                                                                 IntHelper, MapHelper, G.N);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (3 of 3)", G.g);
     };
 

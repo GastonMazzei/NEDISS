@@ -9,9 +9,9 @@
 
 
 typedef Graph::vertex_descriptor VD;
-typedef Graph::edge_descriptor ED;
-typedef std::tuple<VD, ED, int, int> InfoVecElem;
-typedef std::tuple<VD, ED, int, int, int> PartialInfoVecElem;
+typedef Graph::edge_descriptor ED;//                        (UID is [Number of total nodes] * P_id  + local_index)
+typedef std::tuple<double, double, unsigned long> InfoVecElem; // DynamicNode.value, DynamicEdge.value, UID
+typedef std::tuple<double, int, int> PartialInfoVecElem; // DynamicNode.value Owner Index
 
 struct ParallelCell{
     // Container of variable size that can keep track of different threads storing objects
@@ -25,16 +25,6 @@ struct ParallelHelper{
     std::vector<ParallelCell> data; // initialized to NNodes x NT
     explicit ParallelHelper(int NT, unsigned long NNodes);
 };
-
-struct IntegrationCell{
-    double centralValue;
-    std::vector<double> centralParams;
-    std::list<InfoVecElem> ResultsPendProcess;
-    std::vector<double> edgeValues;
-    std::vector<double> neighborValues;
-};
-
-typedef std::vector<IntegrationCell> IntegrationHelper;
 
 
 
@@ -61,6 +51,46 @@ struct MappingHelper{
                                       Local(get(boost::vertex_local, g)),
                                       Global(get(boost::vertex_global, g)){};
 };
+
+
+
+struct IntegrationCell{
+    double centralValue;
+    std::vector<double> centralParams;
+    std::list<InfoVecElem> ResultsPendProcess;
+    std::vector<double> edgeValues;
+    std::vector<double> neighborValues;
+    void build(Graph &g, VD v, MappingHelper &Map,
+               unsigned long &NOwned,
+               unsigned long &rank,
+               unsigned long &NLocals,
+               unsigned long &M);
+};
+
+
+typedef std::vector<IntegrationCell> IntegrationHelper;
+
+
+struct ReferenceContainer {
+    ParallelHelper * p_ParHelper;
+    CommunicationHelper * p_ComHelper;
+    IntegrationHelper * p_IntHelper;
+    Graph * p_g;
+    int * p_TOT;
+    int * p_PENDING_INT;
+    std::queue<long> * p_CHECKED;
+    std::queue<long> * p_READY_FOR_INTEGRATION;
+    ReferenceContainer(ParallelHelper &ParHelper,
+                       CommunicationHelper &ComHelper,
+                       Graph & g,
+                       std::queue<long> & CHECKED,
+                       std::queue<long> & READY_FOR_INTEGRATION,
+                       IntegrationHelper & IntHelper,
+                       int & TOT,
+                       int & PENDING_INT);
+};
+
+
 
 struct OpenMPHelper{
     long MY_THREAD_n, N_THREADS_n, MY_OFFSET_n, MY_LENGTH_n;

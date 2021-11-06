@@ -5,7 +5,9 @@
 #include "Tests/graph-test-init.h"
 #include "Tests/graph-test-singlestep-evolution.h"
 #include "Utils/global_standard_messages.h"
-
+#include "Utils/print_init.h"
+#include "Utils/print_warnings.h"
+#include "Utils/parallel_sanitizer.h"
 
 using namespace std;
 
@@ -25,8 +27,11 @@ int main(int argc, char** argv)
     unsigned int SEED = 12345;
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    print_init(rank);
+    print_warnings(rank);
     static int OMP_THREAD_LIMIT = std::stoi(std::getenv("OMP_THREAD_LIMIT"));
-    if (OMP_THREAD_LIMIT<2){error_report(min_threads);};
+    if (OMP_THREAD_LIMIT<3){error_report(min_threads);};
+    check_nested_status();
 
     // Testing Section ;-)
     int N = 8;

@@ -54,6 +54,7 @@ CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/HelperClass
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/adequate_synchronization.h
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/differential_equations_aux.h
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/error.h
+CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/global_standard_messages.h
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/memory_management.h
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/msleep.h
 
@@ -149,6 +150,22 @@ CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.o: ../Utils/memory_manageme
 CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o: ../Utils/msleep.cpp
 CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o: ../Utils/msleep.h
 
+CMakeFiles/cppprojct.dir/Utils/print_init.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/Utils/print_init.cpp.o: ../Utils/adequate_synchronization.h
+CMakeFiles/cppprojct.dir/Utils/print_init.cpp.o: ../Utils/error.h
+CMakeFiles/cppprojct.dir/Utils/print_init.cpp.o: ../Utils/global_standard_messages.h
+CMakeFiles/cppprojct.dir/Utils/print_init.cpp.o: ../Utils/msleep.h
+CMakeFiles/cppprojct.dir/Utils/print_init.cpp.o: ../Utils/print_init.cpp
+CMakeFiles/cppprojct.dir/Utils/print_init.cpp.o: ../Utils/print_init.h
+
+CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.o: ../Utils/adequate_synchronization.h
+CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.o: ../Utils/error.h
+CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.o: ../Utils/global_standard_messages.h
+CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.o: ../Utils/msleep.h
+CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.o: ../Utils/print_warnings.cpp
+CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.o: ../Utils/print_warnings.h
+
 CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.o: ../Utils/reproductibility.cpp
 CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.o: ../Utils/reproductibility.h
 
@@ -171,6 +188,9 @@ CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/error.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/global_standard_messages.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/memory_management.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/msleep.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/parallel_sanitizer.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/print_init.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/print_warnings.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/timers.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../main.cpp
 
