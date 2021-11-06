@@ -8,23 +8,56 @@
 
 // Keep building MPI with https://www.boost.org/doc/libs/1_77_0/doc/html/mpi/tutorial.html
 
-void ask_for_node(int owner, VD &v, CommunicationHelper &H, int ix){
+void ask_for_node(int owner, VD &v, CommunicationHelper &H, int ix, Graph &g){
     //asks processor 'owner' for the 'v' element
+
+
+//    if (H.WORLD_RANK[0] == 0){
+//        value = ix;
+//    }
+//    boost::mpi::broadcast(H.WORLD, value, 0);
+//    std::cout << "Process " << H.WORLD_RANK[0] << " recieved value ix: " << value << std::endl;
+    MPI_Request request[2];
+    double value = ix;
+    int TAG = 0;
     if (H.WORLD_RANK[0] == 0) {
-        H.WORLD.send(1, 0, std::string("Hello"));
-        std::string msg;
-        H.WORLD.recv(1, 1, msg);
-        std::cout << msg << "!" << std::endl;
-    } else {
-        std::string msg;
-        H.WORLD.recv(0, 0, msg);
-        std::cout << msg << ", ";
-        std::cout.flush();
-        H.WORLD.send(0, 1, std::string("world"));
+        MPI_Isend(&value,
+                  1,//count
+                  MPI_DOUBLE, // type
+                  owner, // destination
+                  TAG, MPI_COMM_WORLD, &request[0]);
+        MPI_Wait(&request[0], MPI_STATUS_IGNORE);
+        std::cout << "[P0] The first send was accepted" << std::endl;
+        std::cout << "[P0] I sent a message to 1 asking about index "<< (int) value << std::endl;
+        MPI_Irecv(&value, 1, MPI_DOUBLE, owner, TAG, MPI_COMM_WORLD, &request[1]);
+        MPI_Wait(&request[1], MPI_STATUS_IGNORE);
+        std::cout << "[P0] The first send was recieved :-)" << std::endl;
+        std::cout << "[P0] It reports a value of " << value << std::endl;
+    } else  if (H.WORLD_RANK[0] == 1) {
+        MPI_Irecv(&value, 1, MPI_DOUBLE, 0, TAG, MPI_COMM_WORLD, &request[0]);
+        std::cout << "[P1] The first message was recieved" << std::endl;
+        std::cout << "[P1] I got a message from 0 asking for index "<< (int) value << std::endl;
+        MPI_Wait(&request[0], MPI_STATUS_IGNORE);
+        std::tuple required(0,value); // Process "0" requires index "value"
+        auto verts = vertices(g);
+        for (auto vit = verts.first; vit != verts.second; ++vit){
+            if (get(get(boost::vertex_index, g), *vit) == (int) std::get<1>(required)){
+                value = g[*vit].value;
+                MPI_Isend(&value,
+                          1,//count
+                          MPI_DOUBLE, // type
+                          std::get<0>(required), // destination
+                          TAG, MPI_COMM_WORLD, &request[1]);
+            }
+            MPI_Wait(&request[1], MPI_STATUS_IGNORE);
+            std::cout << "[P1] The second send was accepted" << std::endl;
+            std::cout << "[P1] I sent a message to 0 telling that the value was "<< value << std::endl;
+        }
     }
+    mssleep(2000);
 };
 
-void ask_for_node_and_vertex(int owner, VD &v, ED &e, CommunicationHelper &H, int ix){
+void ask_for_node_and_vertex(int owner, VD &v, ED &e, CommunicationHelper &H, int ix, Graph &g){
     //asks processor 'owner' for the 'v' and 'e' elements
 
 
@@ -49,7 +82,7 @@ void GetOneMsg(int ix,
             int their_vix = std::get<3>(*it);
             int owner = std::get<4>(*it);
             // ask for it, recieve it, and store it.
-            ask_for_node(owner, new_v, H, their_vix);
+            ask_for_node(owner, new_v, H, their_vix, g);
 #pragma atomic
             I[ix].ResultsPendProcess.emplace_back(new_v, std::as_const(e),our_vix, their_vix);
         }
@@ -67,7 +100,7 @@ void GetOneMsg(int ix,
             int their_vix = std::get<3>(*it);
             int owner = std::get<4>(*it);
             // ask for it, recieve it, and store it.
-            ask_for_node_and_vertex(owner, new_v, new_e, H, their_vix);
+            ask_for_node_and_vertex(owner, new_v, new_e, H, their_vix, g);
 #pragma atomic
             I[ix].ResultsPendProcess.emplace_back(new_v, std::as_const(e),our_vix, their_vix);
         }
