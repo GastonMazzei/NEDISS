@@ -9,58 +9,62 @@
 // Keep building MPI with https://www.boost.org/doc/libs/1_77_0/doc/html/mpi/tutorial.html
 
 void ask_for_node(int owner, VD &v, CommunicationHelper &H, int ix, Graph &g){
-    //asks processor 'owner' for the 'v' element
+    // asks processor 'owner' for the 'v' element
+    // while trying to dispatch as much requests
+    // as possible ;-)
+    //
+    // This should be templated in order to use hyper-params comfortably,
+    // e.g. batched-ops
+    //
+    // This could include a total pend in queue by reference and participate in
+    // GetAllMsgs and GetOneMsg concurently...
 
-
-//    if (H.WORLD_RANK[0] == 0){
-//        value = ix;
-//    }
-//    boost::mpi::broadcast(H.WORLD, value, 0);
-//    std::cout << "Process " << H.WORLD_RANK[0] << " recieved value ix: " << value << std::endl;
-    MPI_Request request[2];
-    double value = ix;
-    int TAG = 0;
-    if (H.WORLD_RANK[0] == 0) {
-        MPI_Isend(&value,
-                  1,//count
-                  MPI_DOUBLE, // type
-                  owner, // destination
-                  TAG, MPI_COMM_WORLD, &request[0]);
-        MPI_Wait(&request[0], MPI_STATUS_IGNORE);
-        std::cout << "[P0] The first send was accepted" << std::endl;
-        std::cout << "[P0] I sent a message to 1 asking about index "<< (int) value << std::endl;
-        MPI_Irecv(&value, 1, MPI_DOUBLE, owner, TAG, MPI_COMM_WORLD, &request[1]);
-        MPI_Wait(&request[1], MPI_STATUS_IGNORE);
-        std::cout << "[P0] The first send was recieved :-)" << std::endl;
-        std::cout << "[P0] It reports a value of " << value << std::endl;
-    } else  if (H.WORLD_RANK[0] == 1) {
-        MPI_Irecv(&value, 1, MPI_DOUBLE, 0, TAG, MPI_COMM_WORLD, &request[0]);
-        std::cout << "[P1] The first message was recieved" << std::endl;
-        std::cout << "[P1] I got a message from 0 asking for index "<< (int) value << std::endl;
-        MPI_Wait(&request[0], MPI_STATUS_IGNORE);
-        std::tuple required(0,value); // Process "0" requires index "value"
-        auto verts = vertices(g);
-        for (auto vit = verts.first; vit != verts.second; ++vit){
-            if (get(get(boost::vertex_index, g), *vit) == (int) std::get<1>(required)){
-                value = g[*vit].value;
-                MPI_Isend(&value,
-                          1,//count
-                          MPI_DOUBLE, // type
-                          std::get<0>(required), // destination
-                          TAG, MPI_COMM_WORLD, &request[1]);
-            }
-            MPI_Wait(&request[1], MPI_STATUS_IGNORE);
-            std::cout << "[P1] The second send was accepted" << std::endl;
-            std::cout << "[P1] I sent a message to 0 telling that the value was "<< value << std::endl;
+    // Call "Nprocs - 1" probes with TAG=1 as in looking for questions
+    int unread = H.WORLD_SIZE[0]-1;
+    std::vector<int> flag(H.WORLD_SIZE[0],0);
+    for (int i=0; i<H.WORLD_SIZE[0]; i++) {
+        if  (i != H.WORLD_RANK[0]) {
+            MPI_Iprobe(i, 1, MPI_COMM_WORLD, &flag[i], MPI_STATUS_IGNORE);
         }
     }
-    mssleep(2000);
+
+    // Send my specific request with TAG = 1 as it is a question
+    MPI_Request r;
+    int r_stat_1 = 0, r_stat_2 = 0;
+    MPI_Isend(&ix,
+              1,//count
+              MPI_DOUBLE, // type
+              owner, // destination
+              1, MPI_COMM_WORLD, &r);
+
+    // Loop over the probes waiting for some potential question with TAG=1
+    while ((unread!=0) && (!r_stat_2)){
+        // one lap checking for requests and responding them
+        for (int i=0; i<H.WORLD_SIZE[0]; i++) {
+            if  ((i != H.WORLD_RANK[0]) && flag[i]){
+                double value;
+                MPI_Recv(&value, 1, MPI_DOUBLE, i, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                //---
+                // respond accordingly!
+                //--- USE TAG 0, FOR ANSWERS ONLY
+                unread--;
+            }
+            if (!r_stat_1) {
+                MPI_Request_get_status(r, &r_stat_1, MPI_STATUS_IGNORE);
+                if (r_stat_1) {
+                    double result;
+                    r = MPI_Request();
+                    //     Now we use TAG 0 which is the tag for answers :-)
+                    MPI_Irecv(&result, 1, MPI_DOUBLE, owner, 0, MPI_COMM_WORLD, &r);
+                }
+            }
+            if ((r_stat_1) && (!r_stat_2)){MPI_Request_get_status(r, &r_stat_2, MPI_STATUS_IGNORE);}
+        }
+    }
 };
 
 void ask_for_node_and_vertex(int owner, VD &v, ED &e, CommunicationHelper &H, int ix, Graph &g){
     //asks processor 'owner' for the 'v' and 'e' elements
-
-
 };
 
 void GetOneMsg(int ix,
