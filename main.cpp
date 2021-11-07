@@ -8,6 +8,7 @@
 #include "Utils/print_init.h"
 #include "Utils/print_warnings.h"
 #include "Utils/parallel_sanitizer.h"
+#include "Tests/long-singlestep-run.h"
 
 using namespace std;
 
@@ -35,10 +36,11 @@ int main(int argc, char** argv)
 
     // Testing Section ;-)
     int N = 80;
+    int NRUNS = 2000;
     double p = 0.5;
     //graph_tests_init(SEED, N, p);
-    graph_tests_singlestep_evolution(SEED, N, p);
-
+    //graph_tests_singlestep_evolution(SEED, N, p);
+    central_test_long_singlestep_run(SEED, N, p, NRUNS);
 
     // END:
     //

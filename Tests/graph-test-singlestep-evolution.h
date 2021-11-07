@@ -33,6 +33,13 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
     G.kuramoto_initialization({{12.345, 6.78}}, 3.14, G.g, G.N);
     adsync_message_barrier<T>(msg_post + "'preparing ring graph for singlestep evolution'", G.g);
 
+
+    // Show the total number of created nodes
+    adsync_message_barrier<T>(msg_prev + "'reportNodes'", G.g);
+    G.reportNodes(G.g);
+    adsync_message_barrier<T>(msg_post + "'reportNodes'", G.g);
+
+
     // Show nodes
 //    adsync_message<T>(msg_prev + "'showVertex'", G.g);
 //    G.showVertex(G.g);
@@ -71,7 +78,7 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
 
     // Show nodes
     adsync_message<T>(msg_prev + "'showVertex'", G.g);
-    G.showVertex(G.g);
+    //G.showVertex(G.g);
     adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
 
     // Print in command what test is it

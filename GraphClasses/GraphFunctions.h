@@ -95,9 +95,9 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver,
         // it requires <Number of timesteps, Delta time, Num Subthreads, BATCH>
         // we allow a delay of 5 failed attemps waiting 1ms and using only ONE helper (i.e. subthread)
         // the so-called 'BATCH' is how many requests are handled simultaneously (by each thread)
-        GetAllMsgs<5,1,1,4> (NVtot, REF, N_total_nodes, OmpHelper);
+        //GetAllMsgs<5,1,1,4> (NVtot, REF, N_total_nodes, OmpHelper);
         // STRONG INTEGRATION OCCURS HERE! just call:
-        std::cout << " I am thread " << omp_get_thread_num() << " and I have finished doing my job ;-)" << std::endl;
+        //std::cout << " I am thread " << omp_get_thread_num() << " and I have finished doing my job ;-)" << std::endl;
         contribute_to_integration(REF);
     }
     else {

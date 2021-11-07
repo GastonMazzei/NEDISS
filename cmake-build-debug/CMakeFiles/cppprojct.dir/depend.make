@@ -126,6 +126,28 @@ CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/m
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/msleep.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Utils/reproductibility.h
 
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Communication/CommunicationFunctions.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../DifferentialEquations/NoiselessKuramoto.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../GraphClasses/CliqueGraph.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../GraphClasses/ErdosRenyiGraph.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../GraphClasses/GraphFunctions.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../GraphClasses/RingGraph.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Solvers/EulerSolver.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Solvers/GeneralSolver.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Solvers/RungeKuttaSolver.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Tests/long-singlestep-run.cpp
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Tests/long-singlestep-run.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Utils/HelperClasses.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Utils/adequate_synchronization.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Utils/differential_equations_aux.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Utils/error.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Utils/global_standard_messages.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Utils/memory_management.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Utils/msleep.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Utils/reproductibility.h
+
 CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o: ../Tests/solvers-test-init.cpp
 
 CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.o: ../GraphClasses/GeneralGraph.h
@@ -181,6 +203,7 @@ CMakeFiles/cppprojct.dir/main.cpp.o: ../Solvers/GeneralSolver.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Solvers/RungeKuttaSolver.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Tests/graph-test-init.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Tests/graph-test-singlestep-evolution.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../Tests/long-singlestep-run.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/HelperClasses.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/adequate_synchronization.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Utils/differential_equations_aux.h

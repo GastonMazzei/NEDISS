@@ -165,6 +165,12 @@
 		<Unit filename="/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h">
 			<Option target="cppprojct"/>
 		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Tests/long-singlestep-run.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Tests/long-singlestep-run.h">
+			<Option target="cppprojct"/>
+		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Tests/solvers-test-init.cpp">
 			<Option target="cppprojct"/>
 		</Unit>
