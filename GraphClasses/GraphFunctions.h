@@ -181,8 +181,8 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver,
                 CHECKED.push(i); // Adding the index to the list of checked indexes ;-)
 }
             }
-            mssleep(1000); // DEBUG: watch what occurs in the MPI section :-0
-            std::cout << " I am 'for' worker " << omp_get_thread_num() << " and I have completed one lap" << std::endl;
+            //mssleep(10000); // DEBUG: watch what occurs in the MPI section :-0
+            //std::cout << " I am 'for' worker " << omp_get_thread_num() << " and I have completed one lap" << std::endl;
         } // end of the for :-)
         // STRONG INTEGRATION OCCURS HERE! just call:
         contribute_to_integration(REF);

@@ -34,9 +34,9 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
     adsync_message_barrier<T>(msg_post + "'preparing ring graph for singlestep evolution'", G.g);
 
     // Show nodes
-    adsync_message<T>(msg_prev + "'showVertex'", G.g);
-    G.showVertex(G.g);
-    adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
+//    adsync_message<T>(msg_prev + "'showVertex'", G.g);
+//    G.showVertex(G.g);
+//    adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
 
     if (true) {
         // Test several kuramoto evolutions with Euler

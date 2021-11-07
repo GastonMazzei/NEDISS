@@ -34,7 +34,7 @@ int main(int argc, char** argv)
     check_nested_status();
 
     // Testing Section ;-)
-    int N = 8;
+    int N = 80;
     double p = 0.5;
     //graph_tests_init(SEED, N, p);
     graph_tests_singlestep_evolution(SEED, N, p);

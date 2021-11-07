@@ -11,78 +11,153 @@
 #include "../Utils/HelperClasses.h"
 #include "../Utils/error.h"
 #include "../Utils/global_standard_messages.h"
+#include "../Utils/msleep.h"
 #include <set>
+#include <iterator>
 
-void send_nonblocking_request(int &owner, MPI_Request &r, double *ix, int TAG);
-void recv_nonblocking_request(int &owner, MPI_Request &r, double *result, int TAG);
+void send_nonblocking(int owner, MPI_Request &r, double *ix, int TAG);
+void recv_nonblocking(int owner, MPI_Request &r, double *result, int TAG);
+
+void irespond_value(ReferenceContainer &REF, double ix, int owner, std::list<MPI_Request>::iterator &R);
+
+
+template<int DT, int TIMETOL, int BATCH>
+void answer_messages(ReferenceContainer &REF,
+                     int MYTHR,
+                     std::list<MPI_Request>::iterator &R,
+                     std::list<MPI_Request> &R_tot){};
+
+template<int DT, int TIMETOL, int BATCH>
+void answer_messages2(ReferenceContainer &REF,
+                     int MYTHR,
+                     std::list<MPI_Request>::iterator &R,
+                     std::list<MPI_Request> &R_tot){
+
+    // please add BATCH * (TIMETOL + 1) if N_remaining isnt enough
+    size_t d = std::distance(R, R_tot.end());
+    int N_remaining = sizeof(d)/sizeof(MPI_Request);
+    int N_SafeRequired = BATCH * (TIMETOL + 1) - N_remaining;
+    if (N_SafeRequired > 0){
+        for (int i=0; i<N_SafeRequired; i++){
+            R_tot.push_back(MPI_Request());
+        }
+    }
+
+    // lay the probes for all the procs
+    int flagprobes[REF.p_ComHelper->WORLD_SIZE[MYTHR]] = {0};
+    for (int i=0; i<REF.p_ComHelper->WORLD_SIZE[MYTHR]; i++){
+        if (i != REF.p_ComHelper->WORLD_RANK[MYTHR]){
+            MPI_Iprobe(i, 1, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
+        }
+    }
+
+    // initialize auxiliary variables
+    int ticks = 0;
+    std::set<int> answered;
+    answered.insert(REF.p_ComHelper->WORLD_RANK[MYTHR]);
+    double ix;
+    int i = 0;
+    int status = 0;
+
+    // start iterating
+    while (ticks < TIMETOL){
+        for (int j=0; j < BATCH; ++j) {
+            if (flagprobes[i] == 1) { // a message is available! recieve it!
+                MPI_Recv(&ix, 1, MPI_DOUBLE, i, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                if (R != R_tot.end()) {
+                    irespond_value(REF, ix, i, R);
+                    ++R;
+                }
+            }
+            if (i >= REF.p_ComHelper->WORLD_SIZE[MYTHR]) {
+                i = 0;
+            } else {
+                ++i;
+            }
+            if (answered.count(i) == 1) {
+                while (answered.count(i)==1) {
+                    ++i;
+                }
+            }
+        }
+        mssleep(DT);
+        ++ticks;
+    }
+};
+
+//template <int BATCH>
+//void GetOneMsg(int ix,
+//               ReferenceContainer &REF,
+//               unsigned long N){};
 
 template <int BATCH>
 void GetOneMsg(int ix,
                ReferenceContainer &REF,
-               unsigned long N){};
+               unsigned long N){
 
-//template <int BATCH>
-//void GetOneMsg_BIS(int ix,
-//               ReferenceContainer &REF,
-//               unsigned long N){
-//
-//    if (BATCH<=0){error_report(min_batch_msg);} // guard: we need a batch size of at least 1 :-)
-//
-//
-//    bool waiting = false;
-//    int rstatus = 0, sstatus = 0;
-//    MPI_Request requests_send[BATCH], requests_recv[BATCH];
-//    InfoVecElem results[BATCH];
-//    std::queue<int> QAvailable;
-//    std::list<int> QPend;
-//    for (int i = 0; i < BATCH; ++i){
-//        QAvailable.push(i);
-//    }
-//
-//    double vval[BATCH], their_vix[BATCH];
-//    int owner[BATCH];
-//
-//    // Collect missing nodes
-//    for (auto & thread : P.data[ix].MissingA) {
-//        for (auto it =  thread.begin();it != thread.end(); it++){
-//            // retrieve data
-//            owner[QAvailable.front()] = std::get<1>(*it);
-//            their_vix[QAvailable.front()] = std::get<2>(*it);
-//            // send request for missing info
-//            send_nonblocking_request(owner[QAvailable.front()],
-//                                     requests_send[QAvailable.front()],
-//                                     & their_vix[QAvailable.front()], 1);
-//            recv_nonblocking_request(owner[QAvailable.front()],
-//                                     requests_recv[QAvailable.front()],
-//                                     & vval[QAvailable.front()], 3);
-//            results[QAvailable.front()] = std::make_tuple(0, // placeholder until we get the correct val
-//                                                          std::get<0>(*it),
-//                                                          owner[QAvailable.front()] * N + their_vix[QAvailable.front()]);
-//            QPend.push_back(QAvailable.front());
-//            QAvailable.pop();
-//            if (QAvailable.empty()) {
-//                waiting = true;
-//                while (waiting) {
-//                    auto i = QPend.begin();
-//                    while (i != QPend.end()) {
-//                        MPI_Request_get_status(requests_send[*i], &sstatus, MPI_STATUS_IGNORE);
-//                        MPI_Request_get_status(requests_recv[*i], &rstatus, MPI_STATUS_IGNORE);
-//                        if ((sstatus==1) && (rstatus==1)) {
-//                            std::get<0>(results[*i]) = vval[*i];
-//#pragma omp atomic
-//                            I[ix].ResultsPendProcess.push_back(results[*i]);
-//                            QAvailable.push(*i);
-//                            QPend.erase(i++);
-//                            waiting = false;
-//                        } else {
-//                            ++i;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    // Collect missing nodes+edges
+    if (BATCH<=0){error_report(min_batch_msg);} // guard: we need a batch size of at least 1 :-)
+
+
+    bool waiting = false;
+    int rstatus = 0, sstatus = 0;
+    MPI_Request requests_send[BATCH], requests_recv[BATCH];
+    InfoVecElem results[BATCH];
+    std::queue<int> QAvailable;
+    std::list<int> QPend;
+    for (int i = 0; i < BATCH; ++i){
+        QAvailable.push(i);
+    }
+
+    double vval[BATCH], their_vix[BATCH];
+    int owner[BATCH];
+
+    // Collect missing nodes:
+    // Access to "MissingA" can be direct as there are not
+    // race conditions :-)
+    for (auto & thread : REF.p_ParHelper->data[ix].MissingA) {
+        for (auto it =  thread.begin();it != thread.end(); it++){
+            // retrieve data
+            owner[QAvailable.front()] = std::get<1>(*it);
+            their_vix[QAvailable.front()] = std::get<2>(*it);
+            // send request for missing info
+            send_nonblocking(owner[QAvailable.front()],
+                                     requests_send[QAvailable.front()],
+                                     & their_vix[QAvailable.front()], 1);
+            recv_nonblocking(owner[QAvailable.front()],
+                                     requests_recv[QAvailable.front()],
+                                     & vval[QAvailable.front()], 3);
+            results[QAvailable.front()] = std::make_tuple(0, // placeholder until we get the correct val
+                                                          std::get<0>(*it),
+                                                          owner[QAvailable.front()] * N + their_vix[QAvailable.front()]);
+            QPend.push_back(QAvailable.front());
+            QAvailable.pop();
+            if (QAvailable.empty()) {
+                waiting = true;
+                while (waiting) {
+                    auto i = QPend.begin();
+                    while (i != QPend.end()) {
+                        MPI_Request_get_status(requests_send[*i], &sstatus, MPI_STATUS_IGNORE);
+                        MPI_Request_get_status(requests_recv[*i], &rstatus, MPI_STATUS_IGNORE);
+                        if ((sstatus==1) && (rstatus==1)) {
+                            std::get<0>(results[*i]) = vval[*i];
+                            // No lock is needed: this index is entirely ours :-)
+                            (*REF.p_IntHelper)[ix].ResultsPendProcess.push_back(results[*i]);
+                            QAvailable.push(*i);
+                            QPend.erase(i++);
+                            waiting = false;
+                        } else {
+                            ++i;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // Collect missing nodes+edges
+    //****************************
+    //The following section is commented
+    // as to debug only the previous one :-)
+    //****************************
 //    for (auto & thread : P.data[ix].MissingB) {
 //        for (auto it =  thread.begin();
 //             it != thread.end(); it++){
@@ -96,7 +171,7 @@ void GetOneMsg(int ix,
 //            I[ix].ResultsPendProcess.emplace_back(vval,eval,owner * N + their_vix);
 //        }
 //    }
-//}
+}
 
 template <int TIMETOL, int DT, int MAX_SUBTHR, int BATCH>
 void GetAllMsgs(int NNodes,
@@ -112,6 +187,8 @@ void GetAllMsgs(int NNodes,
     macro_threadn = O.MY_THREAD_n;
     std::set<int> covered;
     long ix; // the index we will get, use and change from the global queue :-)!
+    std::list<MPI_Request> REQUESTLIST(10);
+    std::list<MPI_Request>::iterator p_REQUESTLIST = REQUESTLIST.begin();
 
 #pragma omp parallel firstprivate(REF, macro_threadn)
 {
@@ -125,18 +202,22 @@ void GetAllMsgs(int NNodes,
         atomic_helper = *(REF.p_TOT);
         globalstatus = (atomic_helper < NNodes);
         while (globalstatus) {
-            mssleep(500);
-            std::cout << " subworker " << omp_get_thread_num() << " of worker " << macro_threadn << " has completed one lap" << std::endl;
+            //mssleep(5000);
+            //std::cout << " subworker " << omp_get_thread_num() << " of worker " << macro_threadn << " has completed one lap" << std::endl;
 #pragma omp critical
 {
             isempty = REF.p_CHECKED->empty();
 }
+            //std::cout << "[DEBUG] Finished omp critical  " << std::endl;
 #pragma omp read
             atomic_helper = N_SPAWNED;
+            //std::cout << "[DEBUG] Finished omp atomic  " << std::endl;
             spawned_max_capacity = (atomic_helper == MAX_SUBTHR);
+            //std::cout << "[DEBUG] Finished spawned_max_capacity  " << std::endl;
             if ((spawned_max_capacity) || (isempty)) {
                 // spend some time answering messages :-0
-                mssleep(DT * TIMETOL);
+                //std::cout << "[DEBUG] calling  answer_messages" << std::endl;
+                answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
             } else if (!isempty) { // update our index so
                 // in the elapsed time, it could happen that the only available
                 // thread has just become busy and now you would be overwriting a value
@@ -173,17 +254,19 @@ void GetAllMsgs(int NNodes,
         globalstatus = (atomic_helper < NNodes); // just in case: update global status. At first it should
         //   not be necessary but it could occur in relatively small systems and in single-processor cases
         while (globalstatus) {
-            mssleep(500);
-            std::cout << " subworker " << omp_get_thread_num() << " of worker " << macro_threadn << " has completed one lap" << std::endl;
+            //mssleep(5000);
+            //std::cout << " subworker " << omp_get_thread_num() << " of worker " << macro_threadn << " has completed one lap" << std::endl;
             if (ix_update) { // Perform the main task: ask for the required information!
 #pragma omp atomic update
                 ++ N_SPAWNED;
+                //std::cout << "[DEBUG] about to call GetOneMsg" << std::endl;
                 GetOneMsg<BATCH>(local_ix, REF, N);
 #pragma omp atomic update
                 ++ *(REF.p_TOT);
 #pragma omp atomic update
                 -- N_SPAWNED; // let the thread=0 know you may become idle.
                 ix_update = false;
+                //std::cout << "[DEBUG] finished section B of the loop in comm" << std::endl;
             }
             int local_ix;
 #pragma omp atomic read // recompute the index: maybe a new one is available!
@@ -206,7 +289,7 @@ void GetAllMsgs(int NNodes,
 } // end of parallel region
 
     // Please spend some prudential time answering messages before joining the communal integration :O
-    mssleep(TIMETOL * DT);
+    answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
 
 } // end of function
 
