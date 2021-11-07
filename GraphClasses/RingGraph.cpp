@@ -11,7 +11,7 @@ void RingGraphObject::build(){
     if (process_id(g.process_group()) == 0) {
         int i=0;
         add_edge(vertex(0, g), vertex(N-1, g), g);
-#pragma omp parallel for
+//#pragma omp parallel for
         for (int i=0; i<N-1; i++){
             add_edge(vertex(i,g), vertex(i+1,g), g);
         }

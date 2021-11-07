@@ -174,22 +174,6 @@ cmath
 ../Utils/adequate_synchronization.h
 /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
 
-/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.cpp
-graph-test-singlestep-evolution.h
-/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
-../GraphClasses/ErdosRenyiGraph.h
-/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
-../GraphClasses/CliqueGraph.h
-/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
-../GraphClasses/RingGraph.h
-/home/m4zz31/cppprojct/GraphClasses/RingGraph.h
-../Utils/reproductibility.h
-/home/m4zz31/cppprojct/Utils/reproductibility.h
-../Communication/CommunicationFunctions.h
-/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
-../GraphClasses/GraphFunctions.h
-/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
-
 /home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
 ../Utils/adequate_synchronization.h
 /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
@@ -207,6 +191,20 @@ graph-test-singlestep-evolution.h
 /home/m4zz31/cppprojct/Utils/HelperClasses.h
 ../Communication/CommunicationFunctions.h
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
+graph-test-singlestep-evolution.h
+/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
+../GraphClasses/ErdosRenyiGraph.h
+/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
+../GraphClasses/CliqueGraph.h
+/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
+../GraphClasses/RingGraph.h
+/home/m4zz31/cppprojct/GraphClasses/RingGraph.h
+../Utils/reproductibility.h
+/home/m4zz31/cppprojct/Utils/reproductibility.h
+../Communication/CommunicationFunctions.h
+/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
+../GraphClasses/GraphFunctions.h
+/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
 
 /home/m4zz31/cppprojct/Tests/long-singlestep-run.cpp
 ../GraphClasses/ErdosRenyiGraph.h
@@ -241,6 +239,10 @@ long-singlestep-run.h
 /home/m4zz31/cppprojct/Utils/HelperClasses.h
 ../Communication/CommunicationFunctions.h
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
+
+/home/m4zz31/cppprojct/Utils/HelperClasses.cpp
+HelperClasses.h
+/home/m4zz31/cppprojct/Utils/HelperClasses.h
 
 /home/m4zz31/cppprojct/Utils/HelperClasses.h
 ../GraphClasses/GeneralGraph.h

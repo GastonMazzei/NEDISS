@@ -15,10 +15,13 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 # OpenMPI 2.1.1
 # Boost 1.77.0
 
+# ----------Build Type----------
+#set(CMAKE_BUILD_TYPE Debug)
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
 
 # Looking for OpenMP
 find_package(OpenMP REQUIRED)

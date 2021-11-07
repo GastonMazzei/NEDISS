@@ -7,6 +7,7 @@
 
 void register_to_value(Graph &g){
     auto vs = vertices(g);
+#pragma omp parallel firstprivate(vs)
     for (auto v = vs.first; v != vs.second; ++v) {
         g[*v].value = g[*v].temporal_register;
     }

@@ -21,14 +21,14 @@ void recv_nonblocking(int owner, MPI_Request &r, double *result, int TAG);
 void irespond_value(ReferenceContainer &REF, double ix, int owner, std::list<MPI_Request>::iterator &R);
 
 
-template<int DT, int TIMETOL, int BATCH>
-void answer_messages(ReferenceContainer &REF,
-                     int MYTHR,
-                     std::list<MPI_Request>::iterator &R,
-                     std::list<MPI_Request> &R_tot){};
+//template<int DT, int TIMETOL, int BATCH>
+//void answer_messages(ReferenceContainer &REF,
+//                     int MYTHR,
+//                     std::list<MPI_Request>::iterator &R,
+//                     std::list<MPI_Request> &R_tot){};
 
 template<int DT, int TIMETOL, int BATCH>
-void answer_messages2(ReferenceContainer &REF,
+void answer_messages(ReferenceContainer &REF,
                      int MYTHR,
                      std::list<MPI_Request>::iterator &R,
                      std::list<MPI_Request> &R_tot){
@@ -36,12 +36,15 @@ void answer_messages2(ReferenceContainer &REF,
     // please add BATCH * (TIMETOL + 1) if N_remaining isnt enough
     size_t d = std::distance(R, R_tot.end());
     int N_remaining = sizeof(d)/sizeof(MPI_Request);
+#pragma omp critical
+{
     int N_SafeRequired = BATCH * (TIMETOL + 1) - N_remaining;
     if (N_SafeRequired > 0){
         for (int i=0; i<N_SafeRequired; i++){
             R_tot.push_back(MPI_Request());
         }
     }
+}
 
     // lay the probes for all the procs
     int flagprobes[REF.p_ComHelper->WORLD_SIZE[MYTHR]] = {0};
@@ -68,20 +71,24 @@ void answer_messages2(ReferenceContainer &REF,
                     irespond_value(REF, ix, i, R);
                     ++R;
                 }
+                flagprobes[i] = 0;
+                answered.insert(i);
             }
             if (i >= REF.p_ComHelper->WORLD_SIZE[MYTHR]) {
                 i = 0;
             } else {
                 ++i;
             }
+            if (answered.size() == REF.p_ComHelper->WORLD_SIZE[MYTHR]){
+                return;
+            }
             if (answered.count(i) == 1) {
-                while (answered.count(i)==1) {
                     ++i;
-                }
             }
         }
         mssleep(DT);
         ++ticks;
+//        std::cout << "Ticks are " << ticks << " out of " << TIMETOL << std::endl;
     }
 };
 
@@ -94,6 +101,9 @@ template <int BATCH>
 void GetOneMsg(int ix,
                ReferenceContainer &REF,
                unsigned long N){
+
+//    std::cout << "Hi, welcome to 'GetOneMsg'... " << std::endl;
+//    mssleep(500);
 
     if (BATCH<=0){error_report(min_batch_msg);} // guard: we need a batch size of at least 1 :-)
 
@@ -114,7 +124,12 @@ void GetOneMsg(int ix,
     // Collect missing nodes:
     // Access to "MissingA" can be direct as there are not
     // race conditions :-)
-    for (auto & thread : REF.p_ParHelper->data[ix].MissingA) {
+#pragma atomic
+    auto itBeg = REF.p_ParHelper->data[ix].MissingA.begin();
+#pragma atomic
+    auto itEnd = REF.p_ParHelper->data[ix].MissingA.end();
+    for (auto _it= itBeg; _it != itEnd; ++_it) {
+        auto &thread = *_it;
         for (auto it =  thread.begin();it != thread.end(); it++){
             // retrieve data
             owner[QAvailable.front()] = std::get<1>(*it);
@@ -179,20 +194,37 @@ void GetAllMsgs(int NNodes,
                 unsigned long N,
                 OpenMPHelper &O) {
 
+//    std::cout << "Hi, welcome to 'GetAllMsgs'... " << std::endl;
+//    mssleep(2000);
+
     // template the number of subthreads :-)
     if (MAX_SUBTHR<=0){error_report(min_subthread_msg);} // guard: we need at least 1 subth :-)
+    omp_set_dynamic(0);
     omp_set_num_threads(MAX_SUBTHR + 1);
     int N_SPAWNED = 0;
     int macro_threadn;
     macro_threadn = O.MY_THREAD_n;
     std::set<int> covered;
-    long ix; // the index we will get, use and change from the global queue :-)!
+    long ix = - 1; // the index we will get, use and change from the global queue :-)!
     std::list<MPI_Request> REQUESTLIST(10);
     std::list<MPI_Request>::iterator p_REQUESTLIST = REQUESTLIST.begin();
 
-#pragma omp parallel firstprivate(REF, macro_threadn)
+//    std::cout << "Confirm we are at the face of the parallel region..." << std::endl;
+//    mssleep(2000);
+
+#pragma omp parallel firstprivate(REF, macro_threadn, NNodes, N)
 {
-    if (omp_get_thread_num() == 0) {
+
+    if (omp_get_num_threads()==1){
+//        std::cout << "There is only one thread, so I will answer some messages and then call again itself hoping that more threads are spawned :o"<< std::endl;
+        //answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
+        GetAllMsgs<TIMETOL, DT, MAX_SUBTHR, BATCH>(NNodes,
+                                                   REF,
+                                                   N,
+                                                   O);
+    }
+
+    if ((omp_get_thread_num() == 0) && (omp_get_num_threads()>1)) {
         bool spawned_max_capacity = true;
         bool isempty = false;
         bool globalstatus = true;
@@ -202,7 +234,7 @@ void GetAllMsgs(int NNodes,
         atomic_helper = *(REF.p_TOT);
         globalstatus = (atomic_helper < NNodes);
         while (globalstatus) {
-            //mssleep(5000);
+//            mssleep(1000);
             //std::cout << " subworker " << omp_get_thread_num() << " of worker " << macro_threadn << " has completed one lap" << std::endl;
 #pragma omp critical
 {
@@ -215,6 +247,8 @@ void GetAllMsgs(int NNodes,
             spawned_max_capacity = (atomic_helper == MAX_SUBTHR);
             //std::cout << "[DEBUG] Finished spawned_max_capacity  " << std::endl;
             if ((spawned_max_capacity) || (isempty)) {
+//                std::cout << "One thread will start answering msgs... " << std::endl;
+//                mssleep(1000);
                 // spend some time answering messages :-0
                 //std::cout << "[DEBUG] calling  answer_messages" << std::endl;
                 answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
@@ -227,11 +261,13 @@ void GetAllMsgs(int NNodes,
                 //      (3) you could overwrite it before a thread is able to consume it, so instead
                 //          of just using a queue for this we patch this problem by double-checking
                 //          with a (locally) shared set.
+//                std::cout << " MASTER: capacity is not max, and an ix appears available... " <<  std::endl;
 #pragma omp critical
 {
-                    if (covered.count(ix) == 1) {
+                    if ((ix==-1) || (covered.count(ix) == 1)) {
                         ix = REF.p_CHECKED->front();
                         REF.p_CHECKED->pop();
+//                        std::cout << " MASTER: index update was effective" << std::endl;
                     }
 }
                 }
@@ -239,26 +275,31 @@ void GetAllMsgs(int NNodes,
                 atomic_helper = *(REF.p_TOT);
                 globalstatus = (atomic_helper < NNodes);
         }
+        // Please spend some prudential time answering messages before exiting to join the communal integration :O
+        answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
     }
     else {
         bool globalstatus = true;
         int local_ix;
+        int old_ix = -1;
 #pragma omp atomic read
         local_ix = ix;
-        int old_ix = local_ix;
         bool ix_update = false;
         int atomic_helper;
-        if (omp_get_thread_num() == 1){ix_update = true;} // only thread=1 grabs the initial index
+        //if (omp_get_thread_num() == 1){ix_update = true;} // only thread=1 grabs the initial index
 #pragma omp atomic read
         atomic_helper = *(REF.p_TOT);
         globalstatus = (atomic_helper < NNodes); // just in case: update global status. At first it should
         //   not be necessary but it could occur in relatively small systems and in single-processor cases
+//        std::cout << " global_status and ix_update are initially: " << globalstatus << " and " << ix_update << std::endl;
         while (globalstatus) {
             //mssleep(5000);
             //std::cout << " subworker " << omp_get_thread_num() << " of worker " << macro_threadn << " has completed one lap" << std::endl;
             if (ix_update) { // Perform the main task: ask for the required information!
 #pragma omp atomic update
                 ++ N_SPAWNED;
+//                std::cout << "The other thread will go try get one msg... " << std::endl;
+//                mssleep(1000);
                 //std::cout << "[DEBUG] about to call GetOneMsg" << std::endl;
                 GetOneMsg<BATCH>(local_ix, REF, N);
 #pragma omp atomic update
@@ -266,9 +307,8 @@ void GetAllMsgs(int NNodes,
 #pragma omp atomic update
                 -- N_SPAWNED; // let the thread=0 know you may become idle.
                 ix_update = false;
-                //std::cout << "[DEBUG] finished section B of the loop in comm" << std::endl;
+//                std::cout << " subworker finished processing data via GetOneMsg " << ix << std::endl;
             }
-            int local_ix;
 #pragma omp atomic read // recompute the index: maybe a new one is available!
             local_ix = ix;
             if (local_ix != old_ix) { // if there is a new one, please make sure it hasnt been
@@ -277,6 +317,7 @@ void GetAllMsgs(int NNodes,
                 if (!covered.count(ix)) {
                     ix_update = true;
                     covered.insert(ix); // effectively claim ownership
+//                    std::cout << " subworker claimed ownership of ix " << ix << std::endl;
                 }
 }               // outside the critical block:
                 if (!ix_update){old_ix=local_ix;} // let it go: it has already been claimed
@@ -285,12 +326,11 @@ void GetAllMsgs(int NNodes,
             atomic_helper = *(REF.p_TOT);
             globalstatus = (atomic_helper < NNodes);
         }
+        // Please spend some prudential time answering messages before joining the communal integration :O
+        answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
     } // this was all for the threads!= 0
 } // end of parallel region
-
-    // Please spend some prudential time answering messages before joining the communal integration :O
-    answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
-
+    omp_set_dynamic(1); // make the behaviour dynamic again! :-)
 } // end of function
 
 

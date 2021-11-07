@@ -15,7 +15,20 @@
 #include "../Utils/HelperClasses.h"
 #include "../Communication/CommunicationFunctions.h"
 
-template <int T, typename GRAPHTYPE>
+
+#include "graph-test-singlestep-evolution.h"
+
+#include "../GraphClasses/ErdosRenyiGraph.h"
+#include "../GraphClasses/CliqueGraph.h"
+#include "../GraphClasses/RingGraph.h"
+#include "../Utils/reproductibility.h"
+
+
+#include "../Communication/CommunicationFunctions.h"
+#include "../GraphClasses/GraphFunctions.h"
+
+
+template <int T, typename GRAPHTYPE, int BATCH>
 void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
                                      CommunicationHelper &ComHelper,
                                      ParallelHelper &ParHelper,
@@ -48,30 +61,30 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
     if (true) {
         // Test several kuramoto evolutions with Euler
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (1 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu,ComHelper, ParHelper,
+        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>, BATCH>(G.g, S_eu,ComHelper, ParHelper,
                                                                             IntHelper, MapHelper, G.N);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (1 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (2 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu,ComHelper, ParHelper,
+        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>, BATCH>(G.g, S_eu,ComHelper, ParHelper,
                                                                             IntHelper, MapHelper, G.N);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (2 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (3 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu,ComHelper, ParHelper,
+        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>, BATCH>(G.g, S_eu,ComHelper, ParHelper,
                                                                             IntHelper, MapHelper, G.N);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (3 of 3)", G.g);
 
 
         // Test several kuramoto evolutions with RungeKutta
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (1 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk,ComHelper, ParHelper,
+        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>, BATCH>(G.g, S_rk,ComHelper, ParHelper,
                                                                                  IntHelper, MapHelper, G.N);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (1 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (2 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk,ComHelper, ParHelper,
+        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>, BATCH>(G.g, S_rk,ComHelper, ParHelper,
                                                                                  IntHelper, MapHelper, G.N);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (2 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (3 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>>(G.g, S_rk,ComHelper, ParHelper,
+        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>, BATCH>(G.g, S_rk,ComHelper, ParHelper,
                                                                                  IntHelper, MapHelper, G.N);
         adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (3 of 3)", G.g);
     };
@@ -86,6 +99,42 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
 }
 
 
-void graph_tests_singlestep_evolution(unsigned int SEED, int N = 4, double p = 0.4);
+
+template <int BATCH>
+void graph_tests_singlestep_evolution(unsigned int SEED, int N, double p){
+    // ---SINGLE TIMESTEP EVOLUTION DEBUGGING---
+
+    // Clique Network
+//    reproductibility_lock(SEED);
+//    CliqueGraphObject G1(N);
+//    test_graph_singlestep_evolution<100, ErdosRenyiGraphObject, BATCH>(G1, "Clique",
+//                                                                 ComHelper, ParHelper,
+//                                                                 IntHelper, MapHelper);
+
+    // Ring Network
+    reproductibility_lock(SEED);
+    RingGraphObject G2(N);
+
+    // helpers instantiated here just temporaly :-)
+    unsigned long NVtot = boost::num_vertices(G2.g);
+    CommunicationHelper ComHelper(G2.g);
+    ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
+    IntegrationHelper IntHelper(NVtot);
+    MappingHelper MapHelper(G2.g);
+
+    test_graph_singlestep_evolution<100, RingGraphObject, BATCH>(G2, "Ring",
+                                                          ComHelper, ParHelper,
+                                                          IntHelper, MapHelper);
+
+
+
+
+//    // Erdos Renyi Network
+//    reproductibility_lock(SEED);
+//    ErdosRenyiGraphObject G3(N, p);
+//    test_graph_singlestep_evolution<100, ErdosRenyiGraphObject, BATCH>(G3, "ErdosRenyi",
+//                                                                 ComHelper, ParHelper,
+//                                                                 IntHelper, MapHelper);
+}
 
 #endif //CPPPROJCT_GRAPH_TEST_SINGLESTEP_EVOLUTION_H

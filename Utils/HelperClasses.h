@@ -91,7 +91,6 @@ struct ReferenceContainer {
 };
 
 
-
 struct OpenMPHelper{
     long MY_THREAD_n, N_THREADS_n, MY_OFFSET_n, MY_LENGTH_n;
     OpenMPHelper(long NLocals, int i);

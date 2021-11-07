@@ -5,7 +5,7 @@ CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/Fi
 Call Stack (most recent call first):
   /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1326 (_Boost_COMPONENT_DEPENDENCIES)
   /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1935 (_Boost_MISSING_DEPENDENCIES)
-  CMakeLists.txt:31 (find_package)
+  CMakeLists.txt:34 (find_package)
 
 
 CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1204 (message):
@@ -14,7 +14,7 @@ CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/Fi
 Call Stack (most recent call first):
   /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1326 (_Boost_COMPONENT_DEPENDENCIES)
   /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1935 (_Boost_MISSING_DEPENDENCIES)
-  CMakeLists.txt:31 (find_package)
+  CMakeLists.txt:34 (find_package)
 
 
 CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1204 (message):
@@ -23,7 +23,7 @@ CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/Fi
 Call Stack (most recent call first):
   /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1326 (_Boost_COMPONENT_DEPENDENCIES)
   /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1935 (_Boost_MISSING_DEPENDENCIES)
-  CMakeLists.txt:31 (find_package)
+  CMakeLists.txt:34 (find_package)
 
 
 CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1204 (message):
@@ -32,7 +32,7 @@ CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/Fi
 Call Stack (most recent call first):
   /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1326 (_Boost_COMPONENT_DEPENDENCIES)
   /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1935 (_Boost_MISSING_DEPENDENCIES)
-  CMakeLists.txt:31 (find_package)
+  CMakeLists.txt:34 (find_package)
 
 
 -- Configuring done

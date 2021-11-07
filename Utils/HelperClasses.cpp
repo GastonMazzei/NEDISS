@@ -4,7 +4,11 @@
 #include "HelperClasses.h"
 
 CommunicationHelper::CommunicationHelper(Graph &g) {
-    boost::mpi::environment env(boost::mpi::threading::funneled);
+    // set the threading lvl: https://www.boost.org/doc/libs/1_68_0/doc/html/boost/mpi/threading/level.html
+    // (our version is 1.77)
+    //    boost::mpi::environment env(boost::mpi::threading::funneled);
+    boost::mpi::environment env(boost::mpi::threading::serialized);
+
     int MY_NUM_v, WORLD_RANK_v, WORLD_SIZE_v;
     NUM_THREADS = std::stoi(std::getenv("OMP_THREAD_LIMIT"));
     MY_NUM_v = process_id(g.process_group());
@@ -33,7 +37,7 @@ OpenMPHelper::OpenMPHelper(long NLocals, int i){
     MY_OFFSET_n = (NLocals / (N_THREADS_n-i)) * (MY_THREAD_n-i);
     MY_LENGTH_n = (NLocals / (N_THREADS_n-i));
     if (MY_THREAD_n + 1 == N_THREADS_n) {
-        MY_LENGTH_n += NLocals % N_THREADS_n;
+        MY_LENGTH_n += NLocals % (N_THREADS_n-i);
     }
 }
 
@@ -44,7 +48,7 @@ OpenMPHelper::OpenMPHelper(long NLocals, int i, long N_THREADS, long MY_THREAD){
     MY_OFFSET_n = (NLocals / (N_THREADS_n-i)) * (MY_THREAD_n-i);
     MY_LENGTH_n = (NLocals / (N_THREADS_n-i));
     if (MY_THREAD_n + 1 == N_THREADS_n) {
-        MY_LENGTH_n += NLocals % N_THREADS_n;
+        MY_LENGTH_n += NLocals % (N_THREADS_n-i);
     }
 }
 

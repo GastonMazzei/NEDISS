@@ -15,7 +15,7 @@
 #include "../Utils/HelperClasses.h"
 #include "../Communication/CommunicationFunctions.h"
 
-template <int T, typename GRAPHTYPE>
+template <int T, typename GRAPHTYPE, int BATCH>
 void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
                                      CommunicationHelper &ComHelper,
                                      ParallelHelper &ParHelper,
@@ -37,12 +37,30 @@ void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
 
     for (int i = 0; i < NRUNS; i++) {
         // Test several kuramoto evolutions with Euler
-        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>>(G.g, S_eu, ComHelper, ParHelper,
-                                                                            IntHelper, MapHelper, G.N);
+        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>, BATCH>(G.g, S_eu, ComHelper, ParHelper,
+                                                                                IntHelper, MapHelper, G.N);
     }
 
 }
 
-void central_test_long_singlestep_run(unsigned int SEED, int N, double p, int NRUNS);
+
+template <int BATCH>
+void central_test_long_singlestep_run(unsigned int SEED, int N, double p, int NRUNS){
+    // Ring Network
+    reproductibility_lock(SEED);
+    RingGraphObject G2(N);
+
+    // helpers instantiated here just temporaly :-)
+    unsigned long NVtot = boost::num_vertices(G2.g);
+    CommunicationHelper ComHelper(G2.g);
+    ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
+    IntegrationHelper IntHelper(NVtot);
+    MappingHelper MapHelper(G2.g);
+
+    test_long_singlestep_run<100, RingGraphObject, BATCH>(G2, "Ring",
+                                                   ComHelper, ParHelper,
+                                                   IntHelper, MapHelper,
+                                                   NRUNS);
+};
 
 #endif //CPPPROJCT_LONG_SINGLESTEP_RUN_H

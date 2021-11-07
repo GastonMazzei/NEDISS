@@ -51,8 +51,9 @@ void register_to_value(Graph &g);
 
 
 // Fully declared template
-template<typename DIFFEQ, typename SOLVER> // e.g. DIFFEQ = NoiselessKuramoto, SOLVER = EulerSolver<NoiselessKuramoto>
-void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver,
+template<typename DIFFEQ, typename SOLVER, int BATCH> // e.g. DIFFEQ = NoiselessKuramoto, SOLVER = EulerSolver<NoiselessKuramoto>
+void single_evolution(Graph &g,
+                      GeneralSolver<DIFFEQ,SOLVER> &solver,
                       CommunicationHelper &ComHelper,
                       ParallelHelper &ParHelper,
                       IntegrationHelper &IntHelper,
@@ -66,9 +67,6 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver,
     //void GetAllMsgs(int NNodes, CommunicationHelper &H, Graph &g, ParallelHelper &P, IntegrationHelper &I, std::queue<long> &C);
     unsigned long NVtot = boost::num_vertices(g), NT;
     int PENDING_INT = NVtot;
-
-    // "there are no arguments to ‘GetAllMsgs’ that depend on a template parameter,
-    // so a declaration of ‘GetAllMsgs’ must be available"
 
 
     std::queue<long> CHECKED, READY_FOR_INTEGRATION;
@@ -89,20 +87,39 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver,
 
 #pragma omp parallel firstprivate(NVtot, vs, NT, N_total_nodes, REF) // Node iterators have random access ;-)
 {
-    OpenMPHelper OmpHelper(NVtot, omp_get_num_threads()/2);
-    mssleep(std::rand() % 200);
-    std::cout << "[DEBUG] I will consume from "<< OmpHelper.MY_OFFSET_n << " to "<<OmpHelper.MY_OFFSET_n + OmpHelper.MY_LENGTH_n<<std::endl;
-    if ( omp_get_thread_num() < (omp_get_num_threads()/2)){
-        // The following is a templated function:
+    int SplitCoef = omp_get_num_threads()/2;
+    if (SplitCoef < 2){SplitCoef = 2;}
+    OpenMPHelper OmpHelper(NVtot, SplitCoef);
+
+
+    if (OmpHelper.MY_THREAD_n < SplitCoef){
+                // The following is a templated function:
         // it requires <Number of timesteps, Delta time, Num Subthreads, BATCH>
         // we allow a delay of 5 failed attemps waiting 1ms and using only ONE helper (i.e. subthread)
         // the so-called 'BATCH' is how many requests are handled simultaneously (by each thread)
-        //GetAllMsgs<5,1,1,4> (NVtot, REF, N_total_nodes, OmpHelper);
+//        mssleep(5000);
+        GetAllMsgs<5,1,1,BATCH> (NVtot, REF, N_total_nodes, OmpHelper);
         // STRONG INTEGRATION OCCURS HERE! just call:
         //std::cout << " I am thread " << omp_get_thread_num() << " and I have finished doing my job ;-)" << std::endl;
         contribute_to_integration(REF);
     }
     else {
+        //*************************************DEBUG!!!**************************************
+//        if (OmpHelper.MY_THREAD_n == SplitCoef){
+//#pragma omp critical
+//{
+//                CHECKED.push(0);
+//                ParHelper.data[0].MissingA[0].emplace_back(4.,
+//                                                                                1,
+//                                                                                0);
+//                CHECKED.push(1);
+//                ParHelper.data[1].MissingA[0].emplace_back(5.,
+//                                                                                2,
+//                                                                                0);
+//            }
+//}
+//        mssleep(50000); // DEBUG: watch what occurs in the MPI section :-0
+        //*********************************************************************************
         unsigned long NLocals, NInedges, M, rank, NOwned;
         long i=-1;
 
@@ -113,14 +130,19 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver,
             ++i;
 
             // Capture the central node's values
+
             IntHelper[i].centralValue = g[*v].value;
             IntHelper[i].centralParams = g[*v].params;
             IntHelper[i].build(g, *v, MapHelper, NOwned, rank, NLocals, M);
-            if (NOwned == rank){ready4int = true;};
+            if (NOwned == rank){
+                ready4int = true;
+            } else {
+                ready4int = false;
+            };
 
             auto neighbors = boost::adjacent_vertices(*v, g);
             auto in_edges = boost::in_edges(*v, g);
-#pragma omp parallel firstprivate(i, M, neighbors, NLocals, NInedges, NOwned, N_total_nodes)
+#pragma omp parallel firstprivate(i, v, M, neighbors, NLocals, NInedges, NOwned, N_total_nodes)
             {
                 OpenMPHelper OmpHelperN(NLocals, 0);
                 for (auto n = neighbors.first + OmpHelperN.MY_OFFSET_n;
@@ -159,13 +181,19 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver,
                 // be indexed by 'neighbors'
                 OpenMPHelper OmpHelperE(M, 0, OmpHelperN.N_THREADS_n, OmpHelperN.MY_THREAD_n);
                 int j = 0;
+                long central_ix;
+#pragma omp critical
+{
+                central_ix = get(get(boost::vertex_index,g), *v);
+}
                 for (auto e = in_edges.first; e != in_edges.second; ++e) {
                     if ((j >= OmpHelperE.MY_OFFSET_n) && (j < OmpHelperE.MY_OFFSET_n + OmpHelperE.MY_LENGTH_n)) {
                         auto local_e = *e;
                         auto local_v = boost::source(*e, g);
 #pragma omp critical
 {
-                        ParHelper.data[i].MissingB[OmpHelperE.MY_THREAD_n].emplace_back(0,
+                        ParHelper.data[i].MissingB[OmpHelperE.MY_THREAD_n].emplace_back(
+                                                                                        (double) central_ix,
                                                                                         get(MapHelper.NodeOwner,
                                                                                             local_v),
                                                                                         get(get(boost::vertex_index,
@@ -176,12 +204,13 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver,
                 }
             } // end of the nested parallelism! :-)
 
+            // FROZEN FOR DEBUGGING!
             if (ready4int){
 #pragma omp critical
 {
                 READY_FOR_INTEGRATION.push(i);
 }
-#pragma omp update
+#pragma omp atomic update
                 ++TOT;
             } else {
 #pragma omp critical
@@ -189,28 +218,34 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver,
                 CHECKED.push(i); // Adding the index to the list of checked indexes ;-)
 }
             }
-            //mssleep(10000); // DEBUG: watch what occurs in the MPI section :-0
+
+
             //std::cout << " I am 'for' worker " << omp_get_thread_num() << " and I have completed one lap" << std::endl;
+        //std::cout << " Completed one lap successfully" << std::endl;
         } // end of the for :-)
         // STRONG INTEGRATION OCCURS HERE! just call:
         contribute_to_integration(REF);
+        //mssleep(50000); // DEBUG: watch what occurs in the MPI section :-0
     }
 } // end of the parallel construct
 
+    // By now, there is only one thread and is not
+    // dispatching other process' requests, so only
+    // for assertion purposes we will produce:
+    // wait until the global max of PENDING_INT is  exactly 0
+    // use:
+    // MPI_Barrier();
+    // PENDING_INT
+    // MPI_Gather (or similar)
 
-    // For all nodes,
-    // central_value :=  temporal_register
+    // swap (local) node's values with
+    // the value at register
     register_to_value(g);
 
 
-    // We could block operations until all nodes have seen their neighbors ;-)
-    // :-) there is no Queue so we must be strict.
-    // Parallel BGL uses the BSP model, which we could enforce by replacing a barrier
-    // with a synchronization directive.
-    synchronize(g.process_group());
-
-    // Block operations until all nodes have been updated ;-)
-    adsync_barrier<0>();
+    // ************SYNCHRONIZATION DIRECTIVES: Only for Dynamic Networks
+    // we are not modifying the topology so there is no need for synchronization
+    //synchronize(g.process_group());
 }
 
 
