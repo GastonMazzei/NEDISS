@@ -89,7 +89,9 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver,
 
 #pragma omp parallel firstprivate(NVtot, vs, NT, N_total_nodes, REF) // Node iterators have random access ;-)
 {
-    OpenMPHelper OmpHelper(NVtot, omp_get_num_threads() - omp_get_num_threads()/2);
+    OpenMPHelper OmpHelper(NVtot, omp_get_num_threads()/2);
+    mssleep(std::rand() % 200);
+    std::cout << "[DEBUG] I will consume from "<< OmpHelper.MY_OFFSET_n << " to "<<OmpHelper.MY_OFFSET_n + OmpHelper.MY_LENGTH_n<<std::endl;
     if ( omp_get_thread_num() < (omp_get_num_threads()/2)){
         // The following is a templated function:
         // it requires <Number of timesteps, Delta time, Num Subthreads, BATCH>
@@ -141,11 +143,14 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver,
                         } else { error_report("Push back mechanism for local nodes has failed"); };
                     } else { // Case (2.A): We 'see' this neighbor because it is connected
                         // via an edge that we own. Get the edge and record who is the other node's owner
+#pragma omp critical
+{
                         ParHelper.data[i].MissingA[OmpHelperN.MY_THREAD_n].emplace_back(g[local_e].value,
                                                                                         get(MapHelper.NodeOwner,
                                                                                             *n),
                                                                                         get(get(boost::vertex_index,
                                                                                                 g), *n));
+}
                     }
                 }
                 // Finally please contemplate the 3rd case:
@@ -158,11 +163,14 @@ void single_evolution(Graph &g, GeneralSolver<DIFFEQ,SOLVER> &solver,
                     if ((j >= OmpHelperE.MY_OFFSET_n) && (j < OmpHelperE.MY_OFFSET_n + OmpHelperE.MY_LENGTH_n)) {
                         auto local_e = *e;
                         auto local_v = boost::source(*e, g);
+#pragma omp critical
+{
                         ParHelper.data[i].MissingB[OmpHelperE.MY_THREAD_n].emplace_back(0,
                                                                                         get(MapHelper.NodeOwner,
                                                                                             local_v),
                                                                                         get(get(boost::vertex_index,
                                                                                                 g), local_v));
+}
                     }
                     ++j;
                 }
