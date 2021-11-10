@@ -1,0 +1,599 @@
+        -:    0:Source:/usr/include/boost/system/detail/error_code.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_SYSTEM_DETAIL_ERROR_CODE_HPP_INCLUDED
+        -:    2:#define BOOST_SYSTEM_DETAIL_ERROR_CODE_HPP_INCLUDED
+        -:    3:
+        -:    4://  Copyright Beman Dawes 2006, 2007
+        -:    5://  Copyright Christoper Kohlhoff 2007
+        -:    6://  Copyright Peter Dimov 2017, 2018
+        -:    7://
+        -:    8://  Distributed under the Boost Software License, Version 1.0. (See accompanying
+        -:    9://  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+        -:   10://
+        -:   11://  See library home page at http://www.boost.org/libs/system
+        -:   12:
+        -:   13:#include <boost/system/is_error_code_enum.hpp>
+        -:   14:#include <boost/system/detail/error_category.hpp>
+        -:   15:#include <boost/system/detail/error_condition.hpp>
+        -:   16:#include <boost/system/detail/system_category.hpp>
+        -:   17:#include <boost/system/detail/system_category_impl.hpp>
+        -:   18:#include <boost/system/detail/interop_category.hpp>
+        -:   19:#include <boost/system/detail/enable_if.hpp>
+        -:   20:#include <boost/system/detail/is_same.hpp>
+        -:   21:#include <boost/system/detail/snprintf.hpp>
+        -:   22:#include <boost/system/detail/config.hpp>
+        -:   23:#include <boost/cstdint.hpp>
+        -:   24:#include <boost/config.hpp>
+        -:   25:#include <ostream>
+        -:   26:#include <new>
+        -:   27:
+        -:   28:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:   29:# include <system_error>
+        -:   30:#endif
+        -:   31:
+        -:   32:#if defined(BOOST_GCC) && BOOST_GCC >= 40600 && BOOST_GCC < 70000
+        -:   33:# pragma GCC diagnostic push
+        -:   34:# pragma GCC diagnostic ignored "-Wstrict-aliasing"
+        -:   35:#endif
+        -:   36:
+        -:   37:namespace boost
+        -:   38:{
+        -:   39:
+        -:   40:namespace system
+        -:   41:{
+        -:   42:
+        -:   43://  class error_code
+        -:   44:
+        -:   45://  We want error_code to be a value type that can be copied without slicing
+        -:   46://  and without requiring heap allocation, but we also want it to have
+        -:   47://  polymorphic behavior based on the error category. This is achieved by
+        -:   48://  abstract base class error_category supplying the polymorphic behavior,
+        -:   49://  and error_code containing a pointer to an object of a type derived
+        -:   50://  from error_category.
+        -:   51:
+        -:   52:std::size_t hash_value( error_code const & ec );
+        -:   53:
+        -:   54:class error_code
+        -:   55:{
+        -:   56:private:
+        -:   57:
+        -:   58:    friend std::size_t hash_value( error_code const & ec );
+        -:   59:
+        -:   60:private:
+        -:   61:
+        -:   62:    struct data
+        -:   63:    {
+        -:   64:        int val_;
+        -:   65:        const error_category * cat_;
+        -:   66:    };
+        -:   67:
+        -:   68:    union
+        -:   69:    {
+        -:   70:        data d1_;
+        -:   71:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:   72:        unsigned char d2_[ sizeof(std::error_code) ];
+        -:   73:#endif
+        -:   74:    };
+        -:   75:
+        -:   76:    // 0: default constructed, d1_ value initialized
+        -:   77:    // 1: holds std::error_code in d2_
+        -:   78:    // 2: holds error code in d1_, failed == false
+        -:   79:    // 3: holds error code in d1_, failed == true
+        -:   80:    unsigned flags_;
+        -:   81:
+        -:   82:public:
+        -:   83:
+        -:   84:    // constructors:
+        -:   85:
+        -:   86:    BOOST_SYSTEM_CONSTEXPR error_code() BOOST_NOEXCEPT:
+        -:   87:        d1_(), flags_( 0 )
+        -:   88:    {
+        -:   89:    }
+        -:   90:
+function _ZN5boost6system10error_codeC2EiRKNS0_14error_categoryE called 0 returned 0% blocks executed 0%
+    #####:   91:    BOOST_SYSTEM_CONSTEXPR error_code( int val, const error_category & cat ) BOOST_NOEXCEPT:
+    $$$$$:   91-block  0
+    #####:   92:        d1_(), flags_( 2 + detail::failed_impl( val, cat ) )
+    $$$$$:   92-block  0
+call    0 never executed
+        -:   93:    {
+    #####:   94:        d1_.val_ = val;
+    #####:   95:        d1_.cat_ = &cat;
+    #####:   96:    }
+        -:   97:
+        -:   98:    template<class ErrorCodeEnum> BOOST_SYSTEM_CONSTEXPR error_code( ErrorCodeEnum e,
+        -:   99:        typename detail::enable_if<is_error_code_enum<ErrorCodeEnum>::value>::type* = 0 ) BOOST_NOEXCEPT
+        -:  100:    {
+        -:  101:        *this = make_error_code( e );
+        -:  102:    }
+        -:  103:
+        -:  104:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:  105:
+        -:  106:    error_code( std::error_code const& ec ) BOOST_NOEXCEPT:
+        -:  107:        flags_( 1 )
+        -:  108:    {
+        -:  109:        ::new( d2_ ) std::error_code( ec );
+        -:  110:    }
+        -:  111:
+        -:  112:#endif
+        -:  113:
+        -:  114:    // modifiers:
+        -:  115:
+        -:  116:    BOOST_SYSTEM_CONSTEXPR void assign( int val, const error_category & cat ) BOOST_NOEXCEPT
+        -:  117:    {
+        -:  118:        *this = error_code( val, cat );
+        -:  119:    }
+        -:  120:
+        -:  121:    template<typename ErrorCodeEnum>
+        -:  122:        BOOST_SYSTEM_CONSTEXPR typename detail::enable_if<is_error_code_enum<ErrorCodeEnum>::value, error_code>::type &
+        -:  123:        operator=( ErrorCodeEnum val ) BOOST_NOEXCEPT
+        -:  124:    {
+        -:  125:        *this = make_error_code( val );
+        -:  126:        return *this;
+        -:  127:    }
+        -:  128:
+        -:  129:    BOOST_SYSTEM_CONSTEXPR void clear() BOOST_NOEXCEPT
+        -:  130:    {
+        -:  131:        *this = error_code();
+        -:  132:    }
+        -:  133:
+        -:  134:    // observers:
+        -:  135:
+function _ZNK5boost6system10error_code5valueEv called 0 returned 0% blocks executed 0%
+    #####:  136:    BOOST_SYSTEM_CONSTEXPR int value() const BOOST_NOEXCEPT
+    $$$$$:  136-block  0
+        -:  137:    {
+    #####:  138:        if( flags_ != 1 )
+    $$$$$:  138-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  139:        {
+    #####:  140:            return d1_.val_;
+    $$$$$:  140-block  0
+        -:  141:        }
+        -:  142:        else
+        -:  143:        {
+        -:  144:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:  145:
+    #####:  146:            std::error_code const& ec = *reinterpret_cast<std::error_code const*>( d2_ );
+    #####:  147:            return ec.value() + 1000 * static_cast<unsigned>( reinterpret_cast<boost::uintptr_t>( &ec.category() ) % 2097143 ); // 2^21-9, prime
+    $$$$$:  147-block  0
+call    0 never executed
+call    1 never executed
+        -:  148:#else
+        -:  149:
+        -:  150:            return -1;
+        -:  151:#endif
+        -:  152:        }
+        -:  153:    }
+        -:  154:
+function _ZNK5boost6system10error_code8categoryEv called 0 returned 0% blocks executed 0%
+    #####:  155:    BOOST_SYSTEM_CONSTEXPR const error_category & category() const BOOST_NOEXCEPT
+    $$$$$:  155-block  0
+        -:  156:    {
+    #####:  157:        if( flags_ == 0 )
+    $$$$$:  157-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  158:        {
+    #####:  159:            return system_category();
+    $$$$$:  159-block  0
+call    0 never executed
+        -:  160:        }
+    #####:  161:        else if( flags_ == 1 )
+    $$$$$:  161-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  162:        {
+    #####:  163:            return detail::interop_category();
+    $$$$$:  163-block  0
+call    0 never executed
+        -:  164:        }
+        -:  165:        else
+        -:  166:        {
+    #####:  167:            return *d1_.cat_;
+    $$$$$:  167-block  0
+        -:  168:        }
+        -:  169:    }
+        -:  170:
+        -:  171:    // deprecated?
+        -:  172:    error_condition default_error_condition() const BOOST_NOEXCEPT
+        -:  173:    {
+        -:  174:        return category().default_error_condition( value() );
+        -:  175:    }
+        -:  176:
+function _ZNK5boost6system10error_code7messageB5cxx11Ev called 0 returned 0% blocks executed 0%
+    #####:  177:    std::string message() const
+    $$$$$:  177-block  0
+        -:  178:    {
+        -:  179:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:  180:
+    #####:  181:        if( flags_ == 1 )
+    $$$$$:  181-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  182:        {
+    #####:  183:            std::error_code const& ec = *reinterpret_cast<std::error_code const*>( d2_ );
+    #####:  184:            return ec.message();
+    $$$$$:  184-block  0
+call    0 never executed
+        -:  185:        }
+        -:  186:
+        -:  187:#endif
+        -:  188:
+    #####:  189:        return category().message( value() );
+    $$$$$:  189-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  190:    }
+        -:  191:
+        -:  192:    char const * message( char * buffer, std::size_t len ) const BOOST_NOEXCEPT
+        -:  193:    {
+        -:  194:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:  195:        if( flags_ == 1 )
+        -:  196:        {
+        -:  197:#if !defined(BOOST_NO_EXCEPTIONS)
+        -:  198:            try
+        -:  199:#endif
+        -:  200:            {
+        -:  201:                std::error_code const& ec = *reinterpret_cast<std::error_code const*>( d2_ );
+        -:  202:                detail::snprintf( buffer, len, "%s", ec.message().c_str() );
+        -:  203:                return buffer;
+        -:  204:            }
+        -:  205:#if !defined(BOOST_NO_EXCEPTIONS)
+        -:  206:            catch( ... )
+        -:  207:            {
+        -:  208:            }
+        -:  209:#endif
+        -:  210:        }
+        -:  211:#endif
+        -:  212:
+        -:  213:        return category().message( value(), buffer, len );
+        -:  214:    }
+        -:  215:
+        -:  216:    BOOST_SYSTEM_CONSTEXPR bool failed() const BOOST_NOEXCEPT
+        -:  217:    {
+        -:  218:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:  219:
+        -:  220:        if( flags_ == 1 )
+        -:  221:        {
+        -:  222:            std::error_code const& ec = *reinterpret_cast<std::error_code const*>( d2_ );
+        -:  223:            return ec.value() != 0;
+        -:  224:        }
+        -:  225:        else
+        -:  226:
+        -:  227:#endif
+        -:  228:        {
+        -:  229:            return (flags_ & 1) != 0;
+        -:  230:        }
+        -:  231:    }
+        -:  232:
+        -:  233:#if !defined(BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS)
+        -:  234:
+        -:  235:    BOOST_SYSTEM_CONSTEXPR explicit operator bool() const BOOST_NOEXCEPT  // true if error
+        -:  236:    {
+        -:  237:        return failed();
+        -:  238:    }
+        -:  239:
+        -:  240:#else
+        -:  241:
+        -:  242:    typedef void (*unspecified_bool_type)();
+        -:  243:    static void unspecified_bool_true() {}
+        -:  244:
+        -:  245:    BOOST_SYSTEM_CONSTEXPR operator unspecified_bool_type() const  BOOST_NOEXCEPT // true if error
+        -:  246:    {
+        -:  247:        return failed()? unspecified_bool_true: 0;
+        -:  248:    }
+        -:  249:
+        -:  250:    BOOST_SYSTEM_CONSTEXPR bool operator!() const BOOST_NOEXCEPT // true if no error
+        -:  251:    {
+        -:  252:        return !failed();
+        -:  253:    }
+        -:  254:
+        -:  255:#endif
+        -:  256:
+        -:  257:    // relationals:
+        -:  258:
+        -:  259:    //  the more symmetrical non-member syntax allows enum
+        -:  260:    //  conversions work for both rhs and lhs.
+        -:  261:
+        -:  262:    BOOST_SYSTEM_CONSTEXPR inline friend bool operator==( const error_code & lhs, const error_code & rhs ) BOOST_NOEXCEPT
+        -:  263:    {
+        -:  264:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:  265:
+        -:  266:        if( lhs.flags_ == 1 && rhs.flags_ == 1 )
+        -:  267:        {
+        -:  268:            std::error_code const& e1 = *reinterpret_cast<std::error_code const*>( lhs.d2_ );
+        -:  269:            std::error_code const& e2 = *reinterpret_cast<std::error_code const*>( rhs.d2_ );
+        -:  270:
+        -:  271:            return e1 == e2;
+        -:  272:        }
+        -:  273:        else
+        -:  274:#endif
+        -:  275:        {
+        -:  276:            return lhs.value() == rhs.value() && lhs.category() == rhs.category();
+        -:  277:        }
+        -:  278:    }
+        -:  279:
+        -:  280:    BOOST_SYSTEM_CONSTEXPR inline friend bool operator<( const error_code & lhs, const error_code & rhs ) BOOST_NOEXCEPT
+        -:  281:    {
+        -:  282:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:  283:
+        -:  284:        if( lhs.flags_ == 1 && rhs.flags_ == 1 )
+        -:  285:        {
+        -:  286:            std::error_code const& e1 = *reinterpret_cast<std::error_code const*>( lhs.d2_ );
+        -:  287:            std::error_code const& e2 = *reinterpret_cast<std::error_code const*>( rhs.d2_ );
+        -:  288:
+        -:  289:            return e1 < e2;
+        -:  290:        }
+        -:  291:        else
+        -:  292:#endif
+        -:  293:        {
+        -:  294:            return lhs.category() < rhs.category() || (lhs.category() == rhs.category() && lhs.value() < rhs.value());
+        -:  295:        }
+        -:  296:    }
+        -:  297:
+        -:  298:    BOOST_SYSTEM_CONSTEXPR inline friend bool operator!=( const error_code & lhs, const error_code & rhs ) BOOST_NOEXCEPT
+        -:  299:    {
+        -:  300:        return !( lhs == rhs );
+        -:  301:    }
+        -:  302:
+        -:  303:    inline friend bool operator==( const error_code & code, const error_condition & condition ) BOOST_NOEXCEPT
+        -:  304:    {
+        -:  305:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:  306:
+        -:  307:        if( code.flags_ == 1 )
+        -:  308:        {
+        -:  309:            return static_cast<std::error_code>( code ) == static_cast<std::error_condition>( condition );
+        -:  310:        }
+        -:  311:        else
+        -:  312:
+        -:  313:#endif
+        -:  314:        {
+        -:  315:            return code.category().equivalent( code.value(), condition ) || condition.category().equivalent( code, condition.value() );
+        -:  316:        }
+        -:  317:    }
+        -:  318:
+        -:  319:    inline friend bool operator==( const error_condition & condition, const error_code & code ) BOOST_NOEXCEPT
+        -:  320:    {
+        -:  321:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:  322:
+        -:  323:        if( code.flags_ == 1 )
+        -:  324:        {
+        -:  325:            return static_cast<std::error_code>( code ) == static_cast<std::error_condition>( condition );
+        -:  326:        }
+        -:  327:        else
+        -:  328:
+        -:  329:#endif
+        -:  330:        {
+        -:  331:            return code.category().equivalent( code.value(), condition ) || condition.category().equivalent( code, condition.value() );
+        -:  332:        }
+        -:  333:    }
+        -:  334:
+        -:  335:    inline friend bool operator!=( const error_code & lhs, const error_condition & rhs ) BOOST_NOEXCEPT
+        -:  336:    {
+        -:  337:        return !( lhs == rhs );
+        -:  338:    }
+        -:  339:
+        -:  340:    inline friend bool operator!=( const error_condition & lhs, const error_code & rhs ) BOOST_NOEXCEPT
+        -:  341:    {
+        -:  342:        return !( lhs == rhs );
+        -:  343:    }
+        -:  344:
+        -:  345:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:  346:
+        -:  347:    inline friend bool operator==( std::error_code const & lhs, error_code const & rhs ) BOOST_NOEXCEPT
+        -:  348:    {
+        -:  349:        return lhs == static_cast< std::error_code >( rhs );
+        -:  350:    }
+        -:  351:
+        -:  352:    inline friend bool operator==( error_code const & lhs, std::error_code const & rhs ) BOOST_NOEXCEPT
+        -:  353:    {
+        -:  354:        return static_cast< std::error_code >( lhs ) == rhs;
+        -:  355:    }
+        -:  356:
+        -:  357:    inline friend bool operator!=( std::error_code const & lhs, error_code const & rhs ) BOOST_NOEXCEPT
+        -:  358:    {
+        -:  359:        return !( lhs == rhs );
+        -:  360:    }
+        -:  361:
+        -:  362:    inline friend bool operator!=( error_code const & lhs, std::error_code const & rhs ) BOOST_NOEXCEPT
+        -:  363:    {
+        -:  364:        return !( lhs == rhs );
+        -:  365:    }
+        -:  366:
+        -:  367:    //
+        -:  368:
+        -:  369:    template<class E, class N = typename detail::enable_if<std::is_error_condition_enum<E>::value>::type>
+        -:  370:    inline friend bool operator==( error_code const & lhs, E rhs ) BOOST_NOEXCEPT
+        -:  371:    {
+        -:  372:        return lhs == make_error_condition( rhs );
+        -:  373:    }
+        -:  374:
+        -:  375:    template<class E, class N = typename detail::enable_if<std::is_error_condition_enum<E>::value>::type>
+        -:  376:    inline friend bool operator==( E lhs, error_code const & rhs ) BOOST_NOEXCEPT
+        -:  377:    {
+        -:  378:        return make_error_condition( lhs ) == rhs;
+        -:  379:    }
+        -:  380:
+        -:  381:    template<class E, class N = typename detail::enable_if<std::is_error_condition_enum<E>::value>::type>
+        -:  382:    inline friend bool operator!=( error_code const & lhs, E rhs ) BOOST_NOEXCEPT
+        -:  383:    {
+        -:  384:        return !( lhs == rhs );
+        -:  385:    }
+        -:  386:
+        -:  387:    template<class E, class N = typename detail::enable_if<std::is_error_condition_enum<E>::value>::type>
+        -:  388:    inline friend bool operator!=( E lhs, error_code const & rhs ) BOOST_NOEXCEPT
+        -:  389:    {
+        -:  390:        return !( lhs == rhs );
+        -:  391:    }
+        -:  392:
+        -:  393:    //
+        -:  394:
+        -:  395:    template<class E, class N1 = void, class N2 = typename detail::enable_if<std::is_error_code_enum<E>::value>::type>
+        -:  396:    BOOST_SYSTEM_CONSTEXPR inline friend bool operator==( error_code const & lhs, E rhs ) BOOST_NOEXCEPT
+        -:  397:    {
+        -:  398:        return lhs == make_error_code( rhs );
+        -:  399:    }
+        -:  400:
+        -:  401:    template<class E, class N1 = void, class N2 = typename detail::enable_if<std::is_error_code_enum<E>::value>::type>
+        -:  402:    BOOST_SYSTEM_CONSTEXPR inline friend bool operator==( E lhs, error_code const & rhs ) BOOST_NOEXCEPT
+        -:  403:    {
+        -:  404:        return make_error_code( lhs ) == rhs;
+        -:  405:    }
+        -:  406:
+        -:  407:    template<class E, class N1 = void, class N2 = typename detail::enable_if<std::is_error_code_enum<E>::value>::type>
+        -:  408:    BOOST_SYSTEM_CONSTEXPR inline friend bool operator!=( error_code const & lhs, E rhs ) BOOST_NOEXCEPT
+        -:  409:    {
+        -:  410:        return !( lhs == rhs );
+        -:  411:    }
+        -:  412:
+        -:  413:    template<class E, class N1 = void, class N2 = typename detail::enable_if<std::is_error_code_enum<E>::value>::type>
+        -:  414:    BOOST_SYSTEM_CONSTEXPR inline friend bool operator!=( E lhs, error_code const & rhs ) BOOST_NOEXCEPT
+        -:  415:    {
+        -:  416:        return !( lhs == rhs );
+        -:  417:    }
+        -:  418:
+        -:  419:#if defined(BOOST_SYSTEM_CLANG_6)
+        -:  420:
+        -:  421:    inline friend bool operator==( error_code const & lhs, std::error_condition const & rhs ) BOOST_NOEXCEPT
+        -:  422:    {
+        -:  423:        return static_cast< std::error_code >( lhs ) == rhs;
+        -:  424:    }
+        -:  425:
+        -:  426:    inline friend bool operator==( std::error_condition const & lhs, error_code const & rhs ) BOOST_NOEXCEPT
+        -:  427:    {
+        -:  428:        return lhs == static_cast< std::error_code >( rhs );
+        -:  429:    }
+        -:  430:
+        -:  431:    inline friend bool operator!=( error_code const & lhs, std::error_condition const & rhs ) BOOST_NOEXCEPT
+        -:  432:    {
+        -:  433:        return !( lhs == rhs );
+        -:  434:    }
+        -:  435:
+        -:  436:    inline friend bool operator!=( std::error_condition const & lhs, error_code const & rhs ) BOOST_NOEXCEPT
+        -:  437:    {
+        -:  438:        return !( lhs == rhs );
+        -:  439:    }
+        -:  440:
+        -:  441:#endif
+        -:  442:
+        -:  443:    // conversions
+        -:  444:
+        -:  445:    operator std::error_code () const
+        -:  446:    {
+        -:  447:        if( flags_ == 1 )
+        -:  448:        {
+        -:  449:            return *reinterpret_cast<std::error_code const*>( d2_ );
+        -:  450:        }
+        -:  451:        else if( flags_ == 0 )
+        -:  452:        {
+        -:  453:            //return std::error_code();
+        -:  454:            return std::error_code( 0, boost::system::system_category() );
+        -:  455:        }
+        -:  456:        else
+        -:  457:        {
+        -:  458:            return std::error_code( d1_.val_, *d1_.cat_ );
+        -:  459:        }
+        -:  460:    }
+        -:  461:
+        -:  462:    operator std::error_code ()
+        -:  463:    {
+        -:  464:        return const_cast<error_code const&>( *this );
+        -:  465:    }
+        -:  466:
+        -:  467:    template<class T,
+        -:  468:      class E = typename detail::enable_if<detail::is_same<T, std::error_code>::value>::type>
+        -:  469:      operator T& ()
+        -:  470:    {
+        -:  471:        if( flags_ != 1 )
+        -:  472:        {
+        -:  473:            std::error_code e2( *this );
+        -:  474:            ::new( d2_ ) std::error_code( e2 );
+        -:  475:            flags_ = 1;
+        -:  476:        }
+        -:  477:
+        -:  478:        return *reinterpret_cast<std::error_code*>( d2_ );
+        -:  479:    }
+        -:  480:
+        -:  481:#if defined(BOOST_SYSTEM_CLANG_6)
+        -:  482:
+        -:  483:    template<class T,
+        -:  484:      class E = typename std::enable_if<std::is_same<T, std::error_code>::value>::type>
+        -:  485:      operator T const& () = delete;
+        -:  486:
+        -:  487:#endif
+        -:  488:
+        -:  489:#endif
+        -:  490:
+        -:  491:    template<class Ch, class Tr>
+        -:  492:        inline friend std::basic_ostream<Ch, Tr>&
+        -:  493:        operator<< (std::basic_ostream<Ch, Tr>& os, error_code const & ec)
+        -:  494:    {
+        -:  495:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:  496:
+        -:  497:        if( ec.flags_ == 1 )
+        -:  498:        {
+        -:  499:            std::error_code const& e2 = *reinterpret_cast<std::error_code const*>( ec.d2_ );
+        -:  500:            os << "std:" << e2.category().name() << ':' << e2.value();
+        -:  501:        }
+        -:  502:        else
+        -:  503:#endif
+        -:  504:        {
+        -:  505:            os << ec.category().name() << ':' << ec.value();
+        -:  506:        }
+        -:  507:
+        -:  508:        return os;
+        -:  509:    }
+        -:  510:};
+        -:  511:
+        -:  512:inline std::size_t hash_value( error_code const & ec )
+        -:  513:{
+        -:  514:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:  515:
+        -:  516:    if( ec.flags_ == 1 )
+        -:  517:    {
+        -:  518:        std::error_code const& e2 = *reinterpret_cast<std::error_code const*>( ec.d2_ );
+        -:  519:        return std::hash<std::error_code>()( e2 );
+        -:  520:    }
+        -:  521:
+        -:  522:#endif
+        -:  523:
+        -:  524:    error_category const & cat = ec.category();
+        -:  525:
+        -:  526:    boost::ulong_long_type id_ = cat.id_;
+        -:  527:
+        -:  528:    if( id_ == 0 )
+        -:  529:    {
+        -:  530:        id_ = reinterpret_cast<boost::uintptr_t>( &cat );
+        -:  531:    }
+        -:  532:
+        -:  533:    boost::ulong_long_type hv = ( boost::ulong_long_type( 0xCBF29CE4 ) << 32 ) + 0x84222325;
+        -:  534:    boost::ulong_long_type const prime = ( boost::ulong_long_type( 0x00000100 ) << 32 ) + 0x000001B3;
+        -:  535:
+        -:  536:    // id
+        -:  537:
+        -:  538:    hv ^= id_;
+        -:  539:    hv *= prime;
+        -:  540:
+        -:  541:    // value
+        -:  542:
+        -:  543:    hv ^= static_cast<unsigned>( ec.value() );
+        -:  544:    hv *= prime;
+        -:  545:
+        -:  546:    return static_cast<std::size_t>( hv );
+        -:  547:}
+        -:  548:
+        -:  549:} // namespace system
+        -:  550:
+        -:  551:} // namespace boost
+        -:  552:
+        -:  553:#if defined(BOOST_GCC) && BOOST_GCC >= 40600 && BOOST_GCC < 70000
+        -:  554:# pragma GCC diagnostic pop
+        -:  555:#endif
+        -:  556:
+        -:  557:#endif // #ifndef BOOST_SYSTEM_DETAIL_ERROR_CODE_HPP_INCLUDED

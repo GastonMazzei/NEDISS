@@ -1,0 +1,254 @@
+        -:    0:Source:/usr/include/boost/serialization/split_free.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_SERIALIZATION_SPLIT_FREE_HPP
+        -:    2:#define BOOST_SERIALIZATION_SPLIT_FREE_HPP
+        -:    3:
+        -:    4:// MS compatible compilers support #pragma once
+        -:    5:#if defined(_MSC_VER)
+        -:    6:# pragma once
+        -:    7:#endif
+        -:    8:
+        -:    9://///////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
+        -:   10:// split_free.hpp:
+        -:   11:
+        -:   12:// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com .
+        -:   13:// Use, modification and distribution is subject to the Boost Software
+        -:   14:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:   15:// http://www.boost.org/LICENSE_1_0.txt)
+        -:   16:
+        -:   17://  See http://www.boost.org for updates, documentation, and revision history.
+        -:   18:
+        -:   19:#include <boost/config.hpp>
+        -:   20:#include <boost/mpl/eval_if.hpp>
+        -:   21:#include <boost/mpl/identity.hpp>
+        -:   22:#include <boost/serialization/serialization.hpp>
+        -:   23:
+        -:   24:namespace boost {
+        -:   25:namespace archive {
+        -:   26:    namespace detail {
+        -:   27:        template<class Archive> class interface_oarchive;
+        -:   28:        template<class Archive> class interface_iarchive;
+        -:   29:    } // namespace detail
+        -:   30:} // namespace archive
+        -:   31:
+        -:   32:namespace serialization {
+        -:   33:
+        -:   34://namespace detail {
+        -:   35:template<class Archive, class T>
+        -:   36:struct free_saver {
+function _ZN5boost13serialization10free_saverINS_3mpi6detail21mpi_datatype_oarchiveENS0_3nvpIbEEE6invokeERS4_RKS6_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10free_saverINS_3mpi6detail21mpi_datatype_oarchiveENS0_3nvpINS_6detail8parallel15edge_descriptorINS6_14edge_desc_implINS_12directed_tagEmEEEEEEE6invokeERS4_RKSD_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10free_saverINS_3mpi6detail21mpi_datatype_oarchiveENS0_3nvpINS_6detail8parallel17msg_add_edge_dataINS7_17global_descriptorImEEmEEEEE6invokeERS4_RKSC_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10free_saverINS_3mpi6detail21mpi_datatype_oarchiveENS0_3nvpIiEEE6invokeERS4_RKS6_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10free_saverINS_3mpi15packed_oarchiveENS0_3nvpINS_6detail8parallel31msg_add_edge_with_property_dataINS6_17global_descriptorImEEm11DynamicEdgeEEEEE6invokeERS3_RKSC_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10free_saverINS_3mpi15packed_oarchiveENS0_3nvpIiEEE6invokeERS3_RKS5_j called 0 returned 0% blocks executed 0%
+    #####:   37:    static void invoke(
+    $$$$$:   37-block  0
+    $$$$$:   37-block  1
+    $$$$$:   37-block  2
+    $$$$$:   37-block  3
+    $$$$$:   37-block  4
+    $$$$$:   37-block  5
+        -:   38:        Archive & ar,
+        -:   39:        const  T & t,
+        -:   40:        const unsigned int file_version
+        -:   41:    ){
+        -:   42:        // use function overload (version_type) to workaround
+        -:   43:        // two-phase lookup issue
+    #####:   44:        const version_type v(file_version);
+    $$$$$:   44-block  0
+call    0 never executed
+    $$$$$:   44-block  1
+call    1 never executed
+    $$$$$:   44-block  2
+call    2 never executed
+    $$$$$:   44-block  3
+call    3 never executed
+    $$$$$:   44-block  4
+call    4 never executed
+    $$$$$:   44-block  5
+call    5 never executed
+    #####:   45:        save(ar, t, v);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+    #####:   46:    }
+    $$$$$:   46-block  0
+    $$$$$:   46-block  1
+    $$$$$:   46-block  2
+    $$$$$:   46-block  3
+    $$$$$:   46-block  4
+    $$$$$:   46-block  5
+        -:   47:};
+        -:   48:template<class Archive, class T>
+        -:   49:struct free_loader {
+function _ZN5boost13serialization11free_loaderINS_3mpi15packed_iarchiveENS0_3nvpIjEEE6invokeERS3_RS5_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization11free_loaderINS_3mpi15packed_iarchiveENS0_3nvpINS0_20collection_size_typeEEEE6invokeERS3_RS6_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization11free_loaderINS_3mpi15packed_iarchiveESt6vectorIdSaIdEEE6invokeERS3_RS6_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization11free_loaderINS_3mpi15packed_iarchiveENS0_3nvpI11DynamicNodeEEE6invokeERS3_RS6_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization11free_loaderINS_3mpi15packed_iarchiveENS0_3nvpINS_6detail8parallel31msg_add_edge_with_property_dataINS6_17global_descriptorImEEm11DynamicEdgeEEEEE6invokeERS3_RSC_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization11free_loaderINS_3mpi15packed_iarchiveENS0_3nvpIiEEE6invokeERS3_RS5_j called 0 returned 0% blocks executed 0%
+    #####:   50:    static void invoke(
+    $$$$$:   50-block  0
+    $$$$$:   50-block  1
+    $$$$$:   50-block  2
+    $$$$$:   50-block  3
+    $$$$$:   50-block  4
+    $$$$$:   50-block  5
+        -:   51:        Archive & ar,
+        -:   52:        T & t,
+        -:   53:        const unsigned int file_version
+        -:   54:    ){
+        -:   55:        // use function overload (version_type) to workaround
+        -:   56:        // two-phase lookup issue
+    #####:   57:        const version_type v(file_version);
+    $$$$$:   57-block  0
+call    0 never executed
+    $$$$$:   57-block  1
+call    1 never executed
+    $$$$$:   57-block  2
+call    2 never executed
+    $$$$$:   57-block  3
+call    3 never executed
+    $$$$$:   57-block  4
+call    4 never executed
+    $$$$$:   57-block  5
+call    5 never executed
+    #####:   58:        load(ar, t, v);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+    #####:   59:    }
+    $$$$$:   59-block  0
+    $$$$$:   59-block  1
+    $$$$$:   59-block  2
+    $$$$$:   59-block  3
+    $$$$$:   59-block  4
+    $$$$$:   59-block  5
+        -:   60:};
+        -:   61://} // namespace detail
+        -:   62:
+        -:   63:template<class Archive, class T>
+function _ZN5boost13serialization10split_freeINS_3mpi15packed_iarchiveENS0_3nvpIjEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10split_freeINS_3mpi15packed_iarchiveENS0_3nvpINS0_20collection_size_typeEEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10split_freeINS_3mpi15packed_iarchiveESt6vectorIdSaIdEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10split_freeINS_3mpi15packed_iarchiveENS0_3nvpI11DynamicNodeEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10split_freeINS_3mpi15packed_iarchiveENS0_3nvpINS_6detail8parallel31msg_add_edge_with_property_dataINS6_17global_descriptorImEEm11DynamicEdgeEEEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10split_freeINS_3mpi15packed_iarchiveENS0_3nvpIiEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10split_freeINS_3mpi6detail21mpi_datatype_oarchiveENS0_3nvpIbEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10split_freeINS_3mpi6detail21mpi_datatype_oarchiveENS0_3nvpINS_6detail8parallel15edge_descriptorINS6_14edge_desc_implINS_12directed_tagEmEEEEEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10split_freeINS_3mpi6detail21mpi_datatype_oarchiveENS0_3nvpINS_6detail8parallel17msg_add_edge_dataINS7_17global_descriptorImEEmEEEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10split_freeINS_3mpi6detail21mpi_datatype_oarchiveENS0_3nvpIiEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10split_freeINS_3mpi15packed_oarchiveENS0_3nvpINS_6detail8parallel31msg_add_edge_with_property_dataINS6_17global_descriptorImEEm11DynamicEdgeEEEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization10split_freeINS_3mpi15packed_oarchiveENS0_3nvpIiEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+    #####:   64:inline void split_free(
+    $$$$$:   64-block  0
+    $$$$$:   64-block  1
+    $$$$$:   64-block  2
+    $$$$$:   64-block  3
+    $$$$$:   64-block  4
+    $$$$$:   64-block  5
+    $$$$$:   64-block  6
+    $$$$$:   64-block  7
+    $$$$$:   64-block  8
+    $$$$$:   64-block  9
+    $$$$$:   64-block 10
+    $$$$$:   64-block 11
+        -:   65:    Archive & ar,
+        -:   66:    T & t,
+        -:   67:    const unsigned int file_version
+        -:   68:){
+        -:   69:    typedef typename mpl::eval_if<
+        -:   70:        typename Archive::is_saving,
+        -:   71:        mpl::identity</* detail:: */ free_saver<Archive, T> >,
+        -:   72:        mpl::identity</* detail:: */ free_loader<Archive, T> >
+        -:   73:    >::type typex;
+    #####:   74:    typex::invoke(ar, t, file_version);
+    $$$$$:   74-block  0
+call    0 never executed
+    $$$$$:   74-block  1
+call    1 never executed
+    $$$$$:   74-block  2
+call    2 never executed
+    $$$$$:   74-block  3
+call    3 never executed
+    $$$$$:   74-block  4
+call    4 never executed
+    $$$$$:   74-block  5
+call    5 never executed
+    $$$$$:   74-block  6
+call    6 never executed
+    $$$$$:   74-block  7
+call    7 never executed
+    $$$$$:   74-block  8
+call    8 never executed
+    $$$$$:   74-block  9
+call    9 never executed
+    $$$$$:   74-block 10
+call   10 never executed
+    $$$$$:   74-block 11
+call   11 never executed
+    #####:   75:}
+        -:   76:
+        -:   77:} // namespace serialization
+        -:   78:} // namespace boost
+        -:   79:
+        -:   80:#define BOOST_SERIALIZATION_SPLIT_FREE(T)       \
+        -:   81:namespace boost { namespace serialization {     \
+        -:   82:template<class Archive>                         \
+        -:   83:inline void serialize(                          \
+        -:   84:        Archive & ar,                               \
+        -:   85:        T & t,                                      \
+        -:   86:        const unsigned int file_version             \
+        -:   87:){                                              \
+        -:   88:        split_free(ar, t, file_version);            \
+        -:   89:}                                               \
+        -:   90:}}
+        -:   91:/**/
+        -:   92:
+        -:   93:#endif // BOOST_SERIALIZATION_SPLIT_FREE_HPP

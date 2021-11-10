@@ -1,0 +1,186 @@
+        -:    0:Source:/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/ompi/mpi/cxx/op_inln.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// -*- c++ -*-
+        -:    2://
+        -:    3:// Copyright (c) 2004-2005 The Trustees of Indiana University and Indiana
+        -:    4://                         University Research and Technology
+        -:    5://                         Corporation.  All rights reserved.
+        -:    6:// Copyright (c) 2004-2005 The University of Tennessee and The University
+        -:    7://                         of Tennessee Research Foundation.  All rights
+        -:    8://                         reserved.
+        -:    9:// Copyright (c) 2004-2005 High Performance Computing Center Stuttgart,
+        -:   10://                         University of Stuttgart.  All rights reserved.
+        -:   11:// Copyright (c) 2004-2005 The Regents of the University of California.
+        -:   12://                         All rights reserved.
+        -:   13:// Copyright (c) 2006-2009 Cisco Systems, Inc.  All rights reserved.
+        -:   14:// $COPYRIGHT$
+        -:   15://
+        -:   16:// Additional copyrights may follow
+        -:   17://
+        -:   18:// $HEADER$
+        -:   19://
+        -:   20:
+        -:   21:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:   22:
+        -:   23:inline
+        -:   24:MPI::Op::Op() { }
+        -:   25:
+        -:   26:inline
+        -:   27:MPI::Op::Op(const MPI::Op& o) : pmpi_op(o.pmpi_op) { }
+        -:   28:
+        -:   29:inline
+        -:   30:MPI::Op::Op(MPI_Op o) : pmpi_op(o) { }
+        -:   31:
+        -:   32:inline
+        -:   33:MPI::Op::~Op() { }
+        -:   34:
+        -:   35:inline
+        -:   36:MPI::Op& MPI::Op::operator=(const MPI::Op& op) {
+        -:   37:    pmpi_op = op.pmpi_op; return *this;
+        -:   38:}
+        -:   39:
+        -:   40:// comparison
+        -:   41:inline bool
+        -:   42:MPI::Op::operator== (const MPI::Op &a) {
+        -:   43:    return (bool)(pmpi_op == a.pmpi_op);
+        -:   44:}
+        -:   45:
+        -:   46:inline bool
+        -:   47:MPI::Op::operator!= (const MPI::Op &a) {
+        -:   48:    return (bool)!(*this == a);
+        -:   49:}
+        -:   50:
+        -:   51:// inter-language operability
+        -:   52:inline MPI::Op&
+        -:   53:MPI::Op::operator= (const MPI_Op &i) { pmpi_op = i; return *this; }
+        -:   54:
+        -:   55:inline
+        -:   56:MPI::Op::operator MPI_Op () const { return pmpi_op; }
+        -:   57:
+        -:   58://inline
+        -:   59://MPI::Op::operator MPI_Op* () { return pmpi_op; }
+        -:   60:
+        -:   61:
+        -:   62:#else  // ============= NO PROFILING ===================================
+        -:   63:
+        -:   64:// construction
+        -:   65:inline
+        -:   66:MPI::Op::Op() : mpi_op(MPI_OP_NULL) { }
+        -:   67:
+        -:   68:inline
+        -:   69:MPI::Op::Op(MPI_Op i) : mpi_op(i) { }
+        -:   70:
+        -:   71:inline
+        -:   72:MPI::Op::Op(const MPI::Op& op)
+        -:   73:  : mpi_op(op.mpi_op) { }
+        -:   74:
+        -:   75:inline
+function _ZN3MPI2OpD0Ev called 0 returned 0% blocks executed 0%
+function _ZN3MPI2OpD2Ev called 0 returned 0% blocks executed 0%
+    #####:   76:MPI::Op::~Op()
+    $$$$$:   76-block  0
+    $$$$$:   76-block  1
+        -:   77:{
+        -:   78:#if 0
+        -:   79:    mpi_op = MPI_OP_NULL;
+        -:   80:    op_user_function = 0;
+        -:   81:#endif
+    #####:   82:}
+    $$$$$:   82-block  0
+call    0 never executed
+call    1 never executed
+        -:   83:
+        -:   84:inline MPI::Op&
+        -:   85:MPI::Op::operator=(const MPI::Op& op) {
+        -:   86:    mpi_op = op.mpi_op;
+        -:   87:    return *this;
+        -:   88:}
+        -:   89:
+        -:   90:// comparison
+        -:   91:inline bool
+        -:   92:MPI::Op::operator== (const MPI::Op &a) { return (bool)(mpi_op == a.mpi_op); }
+        -:   93:
+        -:   94:inline bool
+        -:   95:MPI::Op::operator!= (const MPI::Op &a) { return (bool)!(*this == a); }
+        -:   96:
+        -:   97:// inter-language operability
+        -:   98:inline MPI::Op&
+        -:   99:MPI::Op::operator= (const MPI_Op &i) { mpi_op = i; return *this; }
+        -:  100:
+        -:  101:inline
+function _ZNK3MPI2OpcvP9ompi_op_tEv called 0 returned 0% blocks executed 0%
+    #####:  102:MPI::Op::operator MPI_Op () const { return mpi_op; }
+    $$$$$:  102-block  0
+    $$$$$:  102-block  1
+        -:  103:
+        -:  104://inline
+        -:  105://MPI::Op::operator MPI_Op* () { return &mpi_op; }
+        -:  106:
+        -:  107:#endif
+        -:  108:
+        -:  109:// Extern this function here rather than include an internal Open MPI
+        -:  110:// header file (and therefore force installing the internal Open MPI
+        -:  111:// header file so that user apps can #include it)
+        -:  112:
+        -:  113:extern "C" void ompi_op_set_cxx_callback(MPI_Op op, MPI_User_function*);
+        -:  114:
+        -:  115:// There is a lengthy comment in ompi/mpi/cxx/intercepts.cc explaining
+        -:  116:// what this function is doing.  Please read it before modifying this
+        -:  117:// function.
+        -:  118:inline void
+function _ZN3MPI2Op4InitEPFvPKvPviRKNS_8DatatypeEEb called 0 returned 0% blocks executed 0%
+    #####:  119:MPI::Op::Init(MPI::User_function *func, bool commute)
+    $$$$$:  119-block  0
+        -:  120:{
+    #####:  121:    (void)MPI_Op_create((MPI_User_function*) ompi_mpi_cxx_op_intercept,
+    $$$$$:  121-block  0
+call    0 never executed
+        -:  122:                        (int) commute, &mpi_op);
+    #####:  123:    ompi_op_set_cxx_callback(mpi_op, (MPI_User_function*) func);
+call    0 never executed
+    #####:  124:}
+        -:  125:
+        -:  126:
+        -:  127:inline void
+function _ZN3MPI2Op4FreeEv called 0 returned 0% blocks executed 0%
+    #####:  128:MPI::Op::Free()
+    $$$$$:  128-block  0
+        -:  129:{
+    #####:  130:    (void)MPI_Op_free(&mpi_op);
+    $$$$$:  130-block  0
+call    0 never executed
+    #####:  131:}
+        -:  132:
+        -:  133:
+        -:  134:inline void
+function _ZNK3MPI2Op12Reduce_localEPKvPviRKNS_8DatatypeE called 0 returned 0% blocks executed 0%
+    #####:  135:MPI::Op::Reduce_local(const void *inbuf, void *inoutbuf, int count,
+    $$$$$:  135-block  0
+        -:  136:                      const MPI::Datatype& datatype) const
+        -:  137:{
+    #####:  138:    (void)MPI_Reduce_local(const_cast<void*>(inbuf), inoutbuf, count,
+    $$$$$:  138-block  0
+call    0 never executed
+call    1 never executed
+    #####:  139:                           datatype, mpi_op);
+    #####:  140:}
+        -:  141:
+        -:  142:
+        -:  143:inline bool
+function _ZNK3MPI2Op14Is_commutativeEv called 0 returned 0% blocks executed 0%
+    #####:  144:MPI::Op::Is_commutative(void) const
+    $$$$$:  144-block  0
+        -:  145:{
+        -:  146:    int commute;
+    #####:  147:    (void)MPI_Op_commutative(mpi_op, &commute);
+    $$$$$:  147-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  148:    return (bool) commute;
+    $$$$$:  148-block  0
+    $$$$$:  148-block  1
+        -:  149:}

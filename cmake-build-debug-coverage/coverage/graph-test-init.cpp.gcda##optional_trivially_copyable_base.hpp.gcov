@@ -1,0 +1,522 @@
+        -:    0:Source:/usr/include/boost/optional/detail/optional_trivially_copyable_base.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// trivilally-copyable version of the storage
+        -:    2:
+        -:    3:template<class T>
+        -:    4:class tc_optional_base : public optional_tag
+        -:    5:{
+        -:    6:  private :
+        -:    7:
+        -:    8:    typedef tc_optional_base<T> this_type ;
+        -:    9:
+        -:   10:  protected :
+        -:   11:
+        -:   12:    typedef T value_type ;
+        -:   13:
+        -:   14:  protected:
+        -:   15:    typedef T &       reference_type ;
+        -:   16:    typedef T const&  reference_const_type ;
+        -:   17:#ifndef  BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES
+        -:   18:    typedef T &&  rval_reference_type ;
+        -:   19:    typedef T &&  reference_type_of_temporary_wrapper ;
+        -:   20:#endif
+        -:   21:    typedef T *         pointer_type ;
+        -:   22:    typedef T const*    pointer_const_type ;
+        -:   23:    typedef T const&    argument_type ;
+        -:   24:
+function _ZN5boost15optional_detail16tc_optional_baseIiEC2Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost15optional_detail16tc_optional_baseImEC2Ev called 0 returned 0% blocks executed 0%
+    #####:   25:    tc_optional_base()
+    $$$$$:   25-block  0
+    $$$$$:   25-block  1
+        -:   26:      :
+    #####:   27:      m_initialized(false) {}
+        -:   28:
+        -:   29:    tc_optional_base ( none_t )
+        -:   30:      :
+        -:   31:      m_initialized(false) {}
+        -:   32:
+function _ZN5boost15optional_detail16tc_optional_baseIiEC2ENS0_14init_value_tagERKi called 0 returned 0% blocks executed 0%
+    #####:   33:    tc_optional_base ( init_value_tag, argument_type val )
+    $$$$$:   33-block  0
+        -:   34:      :
+    #####:   35:      m_initialized(true), m_storage(val) {}
+        -:   36:
+        -:   37:    tc_optional_base ( bool cond, argument_type val )
+        -:   38:      :
+        -:   39:      m_initialized(cond), m_storage(val) {}
+        -:   40:
+        -:   41:    // tc_optional_base ( tc_optional_base const& ) = default;
+        -:   42:
+        -:   43:
+        -:   44:#ifndef  BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES
+        -:   45:
+        -:   46:    template<class Expr, class PtrExpr>
+        -:   47:    explicit tc_optional_base ( Expr&& expr, PtrExpr const* tag )
+        -:   48:      :
+        -:   49:      m_initialized(false)
+        -:   50:    {
+        -:   51:      construct(boost::forward<Expr>(expr),tag);
+        -:   52:    }
+        -:   53:
+        -:   54:#else
+        -:   55:    // This is used for both converting and in-place constructions.
+        -:   56:    // Derived classes use the 'tag' to select the appropriate
+        -:   57:    // implementation (the correct 'construct()' overload)
+        -:   58:    template<class Expr>
+        -:   59:    explicit tc_optional_base ( Expr const& expr, Expr const* tag )
+        -:   60:      :
+        -:   61:      m_initialized(false)
+        -:   62:    {
+        -:   63:      construct(expr,tag);
+        -:   64:    }
+        -:   65:
+        -:   66:#endif
+        -:   67:
+        -:   68:    // tc_optional_base& operator= ( tc_optional_base const& ) = default;
+        -:   69:    // ~tc_optional_base() = default;
+        -:   70:
+        -:   71:    // Assigns from another optional<T> (deep-copies the rhs value)
+        -:   72:    void assign ( tc_optional_base const& rhs ) 
+        -:   73:    {
+        -:   74:      *this = rhs;
+        -:   75:    }
+        -:   76:
+        -:   77:    // Assigns from another _convertible_ optional<U> (deep-copies the rhs value)
+        -:   78:    template<class U>
+        -:   79:    void assign ( optional<U> const& rhs )
+        -:   80:    {
+        -:   81:      if ( rhs.is_initialized() )
+        -:   82:#ifndef BOOST_OPTIONAL_CONFIG_RESTORE_ASSIGNMENT_OF_NONCONVERTIBLE_TYPES
+        -:   83:        m_storage = rhs.get();
+        -:   84:#else
+        -:   85:        m_storage = static_cast<value_type>(rhs.get());
+        -:   86:#endif
+        -:   87:          
+        -:   88:      m_initialized = rhs.is_initialized();
+        -:   89:    }
+        -:   90:
+        -:   91:#ifndef BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES
+        -:   92:    // move-assigns from another _convertible_ optional<U> (deep-moves from the rhs value)
+        -:   93:    template<class U>
+        -:   94:    void assign ( optional<U>&& rhs )
+        -:   95:    {
+        -:   96:      typedef BOOST_DEDUCED_TYPENAME optional<U>::rval_reference_type ref_type;
+        -:   97:      if ( rhs.is_initialized() )
+        -:   98:        m_storage = static_cast<ref_type>(rhs.get());
+        -:   99:      m_initialized = rhs.is_initialized();
+        -:  100:    }
+        -:  101:#endif
+        -:  102:    
+        -:  103:    void assign ( argument_type val )
+        -:  104:    {
+        -:  105:      construct(val);
+        -:  106:    }
+        -:  107:
+        -:  108:    void assign ( none_t ) { destroy(); }
+        -:  109:
+        -:  110:#ifndef BOOST_OPTIONAL_NO_INPLACE_FACTORY_SUPPORT
+        -:  111:
+        -:  112:#ifndef BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES
+        -:  113:    template<class Expr, class ExprPtr>
+        -:  114:    void assign_expr ( Expr&& expr, ExprPtr const* tag )
+        -:  115:    {
+        -:  116:       construct(boost::forward<Expr>(expr),tag);
+        -:  117:    }
+        -:  118:#else
+        -:  119:    template<class Expr>
+        -:  120:    void assign_expr ( Expr const& expr, Expr const* tag )
+        -:  121:    {
+        -:  122:      construct(expr,tag);
+        -:  123:    }
+        -:  124:#endif
+        -:  125:
+        -:  126:#endif
+        -:  127:
+        -:  128:  public :
+        -:  129:
+        -:  130:    // Destroys the current value, if any, leaving this UNINITIALIZED
+        -:  131:    // No-throw (assuming T::~T() doesn't)
+        -:  132:    void reset() BOOST_NOEXCEPT { destroy(); }
+        -:  133:
+        -:  134:    // **DEPPRECATED** Replaces the current value -if any- with 'val'
+        -:  135:    void reset ( argument_type val ) BOOST_NOEXCEPT { assign(val); }
+        -:  136:
+        -:  137:    // Returns a pointer to the value if this is initialized, otherwise,
+        -:  138:    // returns NULL.
+        -:  139:    // No-throw
+        -:  140:    pointer_const_type get_ptr() const { return m_initialized ? get_ptr_impl() : 0 ; }
+        -:  141:    pointer_type       get_ptr()       { return m_initialized ? get_ptr_impl() : 0 ; }
+        -:  142:
+function _ZNK5boost15optional_detail16tc_optional_baseIiE14is_initializedEv called 0 returned 0% blocks executed 0%
+function _ZNK5boost15optional_detail16tc_optional_baseImE14is_initializedEv called 0 returned 0% blocks executed 0%
+    #####:  143:    bool is_initialized() const { return m_initialized ; }
+    $$$$$:  143-block  0
+    $$$$$:  143-block  1
+    $$$$$:  143-block  2
+    $$$$$:  143-block  3
+        -:  144:
+        -:  145:  protected :
+        -:  146:
+        -:  147:    void construct ( argument_type val )
+        -:  148:     {
+        -:  149:       m_storage = val ;
+        -:  150:       m_initialized = true ;
+        -:  151:     }
+        -:  152:
+        -:  153:
+        -:  154:#if (!defined BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES) && (!defined BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+        -:  155:    // Constructs in-place
+        -:  156:    // upon exception *this is always uninitialized
+        -:  157:    template<class... Args>
+        -:  158:    void construct ( in_place_init_t, Args&&... args )
+        -:  159:    {
+        -:  160:      m_storage = value_type( boost::forward<Args>(args)... ) ;
+        -:  161:      m_initialized = true ;
+        -:  162:    }
+        -:  163:
+        -:  164:    template<class... Args>
+        -:  165:    void emplace_assign ( Args&&... args )
+        -:  166:    {
+        -:  167:      construct(in_place_init, boost::forward<Args>(args)...);
+        -:  168:    }
+        -:  169:     
+        -:  170:    template<class... Args>
+        -:  171:    explicit tc_optional_base ( in_place_init_t, Args&&... args )
+        -:  172:      :
+        -:  173:      m_initialized(false)
+        -:  174:    {
+        -:  175:      construct(in_place_init, boost::forward<Args>(args)...);
+        -:  176:    }
+        -:  177:    
+        -:  178:    template<class... Args>
+        -:  179:    explicit tc_optional_base ( in_place_init_if_t, bool cond, Args&&... args )
+        -:  180:      :
+        -:  181:      m_initialized(false)
+        -:  182:    {
+        -:  183:      if ( cond )
+        -:  184:        construct(in_place_init, boost::forward<Args>(args)...);
+        -:  185:    }
+        -:  186:#elif (!defined BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES)
+        -:  187:    template<class Arg>
+        -:  188:    void construct ( in_place_init_t, Arg&& arg )
+        -:  189:     {
+        -:  190:       m_storage = value_type( boost::forward<Arg>(arg) );
+        -:  191:       m_initialized = true ;
+        -:  192:     }
+        -:  193:     
+        -:  194:    void construct ( in_place_init_t )
+        -:  195:     {
+        -:  196:       m_storage = value_type();
+        -:  197:       m_initialized = true ;
+        -:  198:     }
+        -:  199:     
+        -:  200:    template<class Arg>
+        -:  201:    void emplace_assign ( Arg&& arg )
+        -:  202:     {
+        -:  203:       construct(in_place_init, boost::forward<Arg>(arg)) ;
+        -:  204:     }
+        -:  205:     
+        -:  206:    void emplace_assign ()
+        -:  207:     {
+        -:  208:       construct(in_place_init) ;
+        -:  209:     }
+        -:  210:     
+        -:  211:    template<class Arg>
+        -:  212:    explicit tc_optional_base ( in_place_init_t, Arg&& arg )
+        -:  213:      :
+        -:  214:      m_initialized(false)
+        -:  215:    {
+        -:  216:      construct(in_place_init, boost::forward<Arg>(arg));
+        -:  217:    }
+        -:  218:    
+        -:  219:    explicit tc_optional_base ( in_place_init_t )
+        -:  220:      :
+        -:  221:      m_initialized(false), m_storage() {}
+        -:  222:    
+        -:  223:    template<class Arg>
+        -:  224:    explicit tc_optional_base ( in_place_init_if_t, bool cond, Arg&& arg )
+        -:  225:      :
+        -:  226:      m_initialized(false)
+        -:  227:    {
+        -:  228:      if ( cond )
+        -:  229:        construct(in_place_init, boost::forward<Arg>(arg));
+        -:  230:    }
+        -:  231:    
+        -:  232:    explicit tc_optional_base ( in_place_init_if_t, bool cond )
+        -:  233:      :
+        -:  234:      m_initialized(false)
+        -:  235:    {
+        -:  236:      if ( cond )
+        -:  237:        construct(in_place_init);
+        -:  238:    }
+        -:  239:
+        -:  240:#else
+        -:  241:     
+        -:  242:    template<class Arg>
+        -:  243:    void construct ( in_place_init_t, const Arg& arg )
+        -:  244:     {
+        -:  245:       m_storage = value_type( arg );
+        -:  246:       m_initialized = true ;
+        -:  247:     }
+        -:  248:     
+        -:  249:    template<class Arg>
+        -:  250:    void construct ( in_place_init_t, Arg& arg )
+        -:  251:     {
+        -:  252:       m_storage = value_type( arg );
+        -:  253:       m_initialized = true ;
+        -:  254:     }
+        -:  255:     
+        -:  256:    void construct ( in_place_init_t )
+        -:  257:     {
+        -:  258:       m_storage = value_type();
+        -:  259:       m_initialized = true ;
+        -:  260:     }
+        -:  261:
+        -:  262:    template<class Arg>
+        -:  263:    void emplace_assign ( const Arg& arg )
+        -:  264:    {
+        -:  265:      construct(in_place_init, arg);
+        -:  266:    }
+        -:  267:     
+        -:  268:    template<class Arg>
+        -:  269:    void emplace_assign ( Arg& arg )
+        -:  270:    {
+        -:  271:      construct(in_place_init, arg);
+        -:  272:    }
+        -:  273:     
+        -:  274:    void emplace_assign ()
+        -:  275:    {
+        -:  276:      construct(in_place_init);
+        -:  277:    }
+        -:  278:    
+        -:  279:    template<class Arg>
+        -:  280:    explicit tc_optional_base ( in_place_init_t, const Arg& arg )
+        -:  281:      : m_initialized(false)
+        -:  282:    {
+        -:  283:      construct(in_place_init, arg);
+        -:  284:    }
+        -:  285:
+        -:  286:    template<class Arg>
+        -:  287:    explicit tc_optional_base ( in_place_init_t, Arg& arg )
+        -:  288:      : m_initialized(false)
+        -:  289:    {
+        -:  290:      construct(in_place_init, arg);
+        -:  291:    }
+        -:  292:    
+        -:  293:    explicit tc_optional_base ( in_place_init_t )
+        -:  294:      : m_initialized(false)
+        -:  295:    {
+        -:  296:      construct(in_place_init);
+        -:  297:    }
+        -:  298:    
+        -:  299:    template<class Arg>
+        -:  300:    explicit tc_optional_base ( in_place_init_if_t, bool cond, const Arg& arg )
+        -:  301:      : m_initialized(false)
+        -:  302:    {
+        -:  303:      if ( cond )
+        -:  304:        construct(in_place_init, arg);
+        -:  305:    }
+        -:  306:    
+        -:  307:    template<class Arg>
+        -:  308:    explicit tc_optional_base ( in_place_init_if_t, bool cond, Arg& arg )
+        -:  309:      : m_initialized(false)
+        -:  310:    {
+        -:  311:      if ( cond )
+        -:  312:        construct(in_place_init, arg);
+        -:  313:    } 
+        -:  314:    
+        -:  315:    explicit tc_optional_base ( in_place_init_if_t, bool cond )
+        -:  316:      : m_initialized(false)
+        -:  317:    {
+        -:  318:      if ( cond )
+        -:  319:        construct(in_place_init);
+        -:  320:    }
+        -:  321:#endif
+        -:  322:
+        -:  323:#ifndef BOOST_OPTIONAL_NO_INPLACE_FACTORY_SUPPORT
+        -:  324:
+        -:  325:#ifndef BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES
+        -:  326:    // Constructs in-place using the given factory
+        -:  327:    template<class Expr>
+        -:  328:    void construct ( Expr&& factory, in_place_factory_base const* )
+        -:  329:     {
+        -:  330:       boost_optional_detail::construct<value_type>(factory, boost::addressof(m_storage));
+        -:  331:       m_initialized = true ;
+        -:  332:     }
+        -:  333:
+        -:  334:    // Constructs in-place using the given typed factory
+        -:  335:    template<class Expr>
+        -:  336:    void construct ( Expr&& factory, typed_in_place_factory_base const* )
+        -:  337:     {
+        -:  338:       factory.apply(boost::addressof(m_storage)) ;
+        -:  339:       m_initialized = true ;
+        -:  340:     }
+        -:  341:
+        -:  342:    template<class Expr>
+        -:  343:    void assign_expr_to_initialized ( Expr&& factory, in_place_factory_base const* tag )
+        -:  344:     {
+        -:  345:       destroy();
+        -:  346:       construct(factory,tag);
+        -:  347:     }
+        -:  348:
+        -:  349:    // Constructs in-place using the given typed factory
+        -:  350:    template<class Expr>
+        -:  351:    void assign_expr_to_initialized ( Expr&& factory, typed_in_place_factory_base const* tag )
+        -:  352:     {
+        -:  353:       destroy();
+        -:  354:       construct(factory,tag);
+        -:  355:     }
+        -:  356:
+        -:  357:#else
+        -:  358:    // Constructs in-place using the given factory
+        -:  359:    template<class Expr>
+        -:  360:    void construct ( Expr const& factory, in_place_factory_base const* )
+        -:  361:     {
+        -:  362:       boost_optional_detail::construct<value_type>(factory, boost::addressof(m_storage));
+        -:  363:       m_initialized = true ;
+        -:  364:     }
+        -:  365:
+        -:  366:    // Constructs in-place using the given typed factory
+        -:  367:    template<class Expr>
+        -:  368:    void construct ( Expr const& factory, typed_in_place_factory_base const* )
+        -:  369:     {
+        -:  370:       factory.apply(boost::addressof(m_storage)) ;
+        -:  371:       m_initialized = true ;
+        -:  372:     }
+        -:  373:
+        -:  374:    template<class Expr>
+        -:  375:    void assign_expr_to_initialized ( Expr const& factory, in_place_factory_base const* tag )
+        -:  376:     {
+        -:  377:       destroy();
+        -:  378:       construct(factory,tag);
+        -:  379:     }
+        -:  380:
+        -:  381:    // Constructs in-place using the given typed factory
+        -:  382:    template<class Expr>
+        -:  383:    void assign_expr_to_initialized ( Expr const& factory, typed_in_place_factory_base const* tag )
+        -:  384:     {
+        -:  385:       destroy();
+        -:  386:       construct(factory,tag);
+        -:  387:     }
+        -:  388:#endif
+        -:  389:
+        -:  390:#endif
+        -:  391:
+        -:  392:#ifndef BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES
+        -:  393:    // Constructs using any expression implicitly convertible to the single argument
+        -:  394:    // of a one-argument T constructor.
+        -:  395:    // Converting constructions of optional<T> from optional<U> uses this function with
+        -:  396:    // 'Expr' being of type 'U' and relying on a converting constructor of T from U.
+        -:  397:    template<class Expr>
+        -:  398:    void construct ( Expr&& expr, void const* )
+        -:  399:    {
+        -:  400:      m_storage = value_type(boost::forward<Expr>(expr)) ;
+        -:  401:      m_initialized = true ;
+        -:  402:    }
+        -:  403:
+        -:  404:    // Assigns using a form any expression implicitly convertible to the single argument
+        -:  405:    // of a T's assignment operator.
+        -:  406:    // Converting assignments of optional<T> from optional<U> uses this function with
+        -:  407:    // 'Expr' being of type 'U' and relying on a converting assignment of T from U.
+        -:  408:    template<class Expr>
+        -:  409:    void assign_expr_to_initialized ( Expr&& expr, void const* )
+        -:  410:    {
+        -:  411:      assign_value( boost::forward<Expr>(expr) );
+        -:  412:    }
+        -:  413:#else
+        -:  414:    // Constructs using any expression implicitly convertible to the single argument
+        -:  415:    // of a one-argument T constructor.
+        -:  416:    // Converting constructions of optional<T> from optional<U> uses this function with
+        -:  417:    // 'Expr' being of type 'U' and relying on a converting constructor of T from U.
+        -:  418:    template<class Expr>
+        -:  419:    void construct ( Expr const& expr, void const* )
+        -:  420:     {
+        -:  421:       m_storage = value_type(expr) ;
+        -:  422:       m_initialized = true ;
+        -:  423:     }
+        -:  424:
+        -:  425:    // Assigns using a form any expression implicitly convertible to the single argument
+        -:  426:    // of a T's assignment operator.
+        -:  427:    // Converting assignments of optional<T> from optional<U> uses this function with
+        -:  428:    // 'Expr' being of type 'U' and relying on a converting assignment of T from U.
+        -:  429:    template<class Expr>
+        -:  430:    void assign_expr_to_initialized ( Expr const& expr, void const* )
+        -:  431:     {
+        -:  432:       assign_value(expr);
+        -:  433:     }
+        -:  434:
+        -:  435:#endif
+        -:  436:
+        -:  437:#ifdef BOOST_OPTIONAL_WEAK_OVERLOAD_RESOLUTION
+        -:  438:    // BCB5.64 (and probably lower versions) workaround.
+        -:  439:    //   The in-place factories are supported by means of catch-all constructors
+        -:  440:    //   and assignment operators (the functions are parameterized in terms of
+        -:  441:    //   an arbitrary 'Expr' type)
+        -:  442:    //   This compiler incorrectly resolves the overload set and sinks optional<T> and optional<U>
+        -:  443:    //   to the 'Expr'-taking functions even though explicit overloads are present for them.
+        -:  444:    //   Thus, the following overload is needed to properly handle the case when the 'lhs'
+        -:  445:    //   is another optional.
+        -:  446:    //
+        -:  447:    // For VC<=70 compilers this workaround dosen't work becasue the comnpiler issues and error
+        -:  448:    // instead of choosing the wrong overload
+        -:  449:    //
+        -:  450:#ifndef  BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES
+        -:  451:    // Notice that 'Expr' will be optional<T> or optional<U> (but not tc_optional_base<..>)
+        -:  452:    template<class Expr>
+        -:  453:    void construct ( Expr&& expr, optional_tag const* )
+        -:  454:     {
+        -:  455:       if ( expr.is_initialized() )
+        -:  456:       {
+        -:  457:         // An exception can be thrown here.
+        -:  458:         // It it happens, THIS will be left uninitialized.
+        -:  459:         m_storage = value_type(boost::move(expr.get())) ;
+        -:  460:         m_initialized = true ;
+        -:  461:       }
+        -:  462:     }
+        -:  463:#else
+        -:  464:    // Notice that 'Expr' will be optional<T> or optional<U> (but not tc_optional_base<..>)
+        -:  465:    template<class Expr>
+        -:  466:    void construct ( Expr const& expr, optional_tag const* )
+        -:  467:     {
+        -:  468:       if ( expr.is_initialized() )
+        -:  469:       {
+        -:  470:         // An exception can be thrown here.
+        -:  471:         // It it happens, THIS will be left uninitialized.
+        -:  472:         m_storage = value_type(expr.get()) ;
+        -:  473:         m_initialized = true ;
+        -:  474:       }
+        -:  475:     }
+        -:  476:#endif
+        -:  477:#endif // defined BOOST_OPTIONAL_WEAK_OVERLOAD_RESOLUTION
+        -:  478:
+        -:  479:    void assign_value ( argument_type val ) { m_storage = val; }
+        -:  480:#ifndef  BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES
+        -:  481:    void assign_value ( rval_reference_type val ) { m_storage = static_cast<rval_reference_type>(val); }
+        -:  482:#endif
+        -:  483:
+        -:  484:    void destroy()
+        -:  485:    {
+        -:  486:      m_initialized = false;
+        -:  487:    }
+        -:  488:
+        -:  489:    reference_const_type get_impl() const { return m_storage ; }
+function _ZN5boost15optional_detail16tc_optional_baseIiE8get_implEv called 0 returned 0% blocks executed 0%
+function _ZN5boost15optional_detail16tc_optional_baseImE8get_implEv called 0 returned 0% blocks executed 0%
+    #####:  490:    reference_type       get_impl()       { return m_storage ; }
+    $$$$$:  490-block  0
+    $$$$$:  490-block  1
+    $$$$$:  490-block  2
+    $$$$$:  490-block  3
+        -:  491:
+        -:  492:    pointer_const_type get_ptr_impl() const { return boost::addressof(m_storage); }
+        -:  493:    pointer_type       get_ptr_impl()       { return boost::addressof(m_storage); }
+        -:  494:
+        -:  495:  private :
+        -:  496:
+        -:  497:    bool m_initialized ;
+        -:  498:    T    m_storage ;
+        -:  499:} ;

@@ -1,0 +1,339 @@
+        -:    0:Source:/usr/include/boost/serialization/extended_type_info_typeid.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_SERIALIZATION_EXTENDED_TYPE_INFO_TYPEID_HPP
+        -:    2:#define BOOST_SERIALIZATION_EXTENDED_TYPE_INFO_TYPEID_HPP
+        -:    3:
+        -:    4://///////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
+        -:    5:// MS compatible compilers support #pragma once
+        -:    6:#if defined(_MSC_VER)
+        -:    7:# pragma once
+        -:    8:#endif
+        -:    9:
+        -:   10:// extended_type_info_typeid.hpp: implementation for version that depends
+        -:   11:// on runtime typing (rtti - typeid) but uses a user specified string
+        -:   12:// as the portable class identifier.
+        -:   13:
+        -:   14:// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com .
+        -:   15:// Use, modification and distribution is subject to the Boost Software
+        -:   16:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:   17:// http://www.boost.org/LICENSE_1_0.txt)
+        -:   18:
+        -:   19://  See http://www.boost.org for updates, documentation, and revision history.
+        -:   20:
+        -:   21:#include <typeinfo>
+        -:   22:#include <cstdarg>
+        -:   23:#include <boost/assert.hpp>
+        -:   24:#include <boost/config.hpp>
+        -:   25:
+        -:   26:#include <boost/static_assert.hpp>
+        -:   27:#include <boost/serialization/static_warning.hpp>
+        -:   28:#include <boost/type_traits/is_polymorphic.hpp>
+        -:   29:#include <boost/type_traits/remove_const.hpp>
+        -:   30:
+        -:   31:#include <boost/serialization/config.hpp>
+        -:   32:#include <boost/serialization/singleton.hpp>
+        -:   33:#include <boost/serialization/extended_type_info.hpp>
+        -:   34:#include <boost/serialization/factory.hpp>
+        -:   35:
+        -:   36:// hijack serialization access
+        -:   37:#include <boost/serialization/access.hpp>
+        -:   38:
+        -:   39:#include <boost/mpl/if.hpp>
+        -:   40:
+        -:   41:#include <boost/config/abi_prefix.hpp> // must be the last header
+        -:   42:
+        -:   43:#ifdef BOOST_MSVC
+        -:   44:#  pragma warning(push)
+        -:   45:#  pragma warning(disable : 4251 4231 4660 4275 4511 4512)
+        -:   46:#endif
+        -:   47:
+        -:   48:namespace boost {
+        -:   49:namespace serialization {
+        -:   50:namespace typeid_system {
+        -:   51:
+        -:   52:class BOOST_SYMBOL_VISIBLE extended_type_info_typeid_0 :
+        -:   53:    public extended_type_info
+        -:   54:{
+function _ZNK5boost13serialization13typeid_system27extended_type_info_typeid_014get_debug_infoEv called 0 returned 0% blocks executed 0%
+    #####:   55:    const char * get_debug_info() const BOOST_OVERRIDE {
+    $$$$$:   55-block  0
+    #####:   56:        if(static_cast<const std::type_info *>(0) == m_ti)
+    $$$$$:   56-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   57:            return static_cast<const char *>(0);
+    $$$$$:   57-block  0
+    #####:   58:        return m_ti->name();
+    $$$$$:   58-block  0
+call    0 never executed
+        -:   59:    }
+        -:   60:protected:
+        -:   61:    const std::type_info * m_ti;
+        -:   62:    BOOST_SERIALIZATION_DECL extended_type_info_typeid_0(const char * key);
+        -:   63:    BOOST_SERIALIZATION_DECL ~extended_type_info_typeid_0() BOOST_OVERRIDE;
+        -:   64:    BOOST_SERIALIZATION_DECL void type_register(const std::type_info & ti);
+        -:   65:    BOOST_SERIALIZATION_DECL void type_unregister();
+        -:   66:    BOOST_SERIALIZATION_DECL const extended_type_info *
+        -:   67:    get_extended_type_info(const std::type_info & ti) const;
+        -:   68:public:
+        -:   69:    BOOST_SERIALIZATION_DECL bool
+        -:   70:    is_less_than(const extended_type_info &rhs) const BOOST_OVERRIDE;
+        -:   71:    BOOST_SERIALIZATION_DECL bool
+        -:   72:    is_equal(const extended_type_info &rhs) const BOOST_OVERRIDE;
+        -:   73:    const std::type_info & get_typeid() const {
+        -:   74:        return *m_ti;
+        -:   75:    }
+        -:   76:};
+        -:   77:
+        -:   78:} // typeid_system
+        -:   79:
+        -:   80:template<class T>
+        -:   81:class extended_type_info_typeid :
+        -:   82:    public typeid_system::extended_type_info_typeid_0,
+        -:   83:    public singleton<extended_type_info_typeid< T > >
+        -:   84:{
+        -:   85:public:
+function _ZN5boost13serialization25extended_type_info_typeidISt6vectorIdSaIdEEEC2Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization25extended_type_info_typeidI11DynamicNodeEC2Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization25extended_type_info_typeidI11DynamicEdgeEC2Ev called 0 returned 0% blocks executed 0%
+    #####:   86:    extended_type_info_typeid() :
+    $$$$$:   86-block  0
+    $$$$$:   86-block  1
+    $$$$$:   86-block  2
+        -:   87:        typeid_system::extended_type_info_typeid_0(
+        -:   88:            boost::serialization::guid< T >()
+    #####:   89:        )
+    $$$$$:   89-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    %%%%%:   89-block  1
+call    3 never executed
+    $$$$$:   89-block  2
+call    4 never executed
+call    5 never executed
+call    6 never executed
+    %%%%%:   89-block  3
+call    7 never executed
+    $$$$$:   89-block  4
+call    8 never executed
+call    9 never executed
+call   10 never executed
+    %%%%%:   89-block  5
+call   11 never executed
+        -:   90:    {
+    #####:   91:        type_register(typeid(T));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    #####:   92:        key_register();
+    $$$$$:   92-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   92-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   92-block  2
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    #####:   93:    }
+    $$$$$:   93-block  0
+    $$$$$:   93-block  1
+    $$$$$:   93-block  2
+function _ZN5boost13serialization25extended_type_info_typeidISt6vectorIdSaIdEEED0Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization25extended_type_info_typeidISt6vectorIdSaIdEEED2Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization25extended_type_info_typeidI11DynamicNodeED0Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization25extended_type_info_typeidI11DynamicNodeED2Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization25extended_type_info_typeidI11DynamicEdgeED0Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization25extended_type_info_typeidI11DynamicEdgeED2Ev called 0 returned 0% blocks executed 0%
+    #####:   94:    ~extended_type_info_typeid() BOOST_OVERRIDE {
+    $$$$$:   94-block  0
+    $$$$$:   94-block  1
+    $$$$$:   94-block  2
+    $$$$$:   94-block  3
+    $$$$$:   94-block  4
+    $$$$$:   94-block  5
+    #####:   95:        key_unregister();
+    $$$$$:   95-block  0
+call    0 never executed
+    $$$$$:   95-block  1
+call    1 never executed
+    $$$$$:   95-block  2
+call    2 never executed
+    #####:   96:        type_unregister();
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   97:    }
+    $$$$$:   97-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    $$$$$:   97-block  1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+    $$$$$:   97-block  2
+call    6 never executed
+call    7 never executed
+call    8 never executed
+        -:   98:    // get the eti record for the true type of this record
+        -:   99:    // relying upon standard type info implemenation (rtti)
+        -:  100:    const extended_type_info *
+        -:  101:    get_derived_extended_type_info(const T & t) const {
+        -:  102:        // note: this implementation - based on usage of typeid (rtti)
+        -:  103:        // only does something if the class has at least one virtual function.
+        -:  104:        BOOST_STATIC_WARNING(boost::is_polymorphic< T >::value);
+        -:  105:        return
+        -:  106:            typeid_system::extended_type_info_typeid_0::get_extended_type_info(
+        -:  107:                typeid(t)
+        -:  108:            );
+        -:  109:    }
+        -:  110:    const char * get_key() const {
+        -:  111:        return boost::serialization::guid< T >();
+        -:  112:    }
+function _ZNK5boost13serialization25extended_type_info_typeidI11DynamicNodeE9constructEjz called 0 returned 0% blocks executed 0%
+function _ZNK5boost13serialization25extended_type_info_typeidISt6vectorIdSaIdEEE9constructEjz called 0 returned 0% blocks executed 0%
+function _ZNK5boost13serialization25extended_type_info_typeidI11DynamicEdgeE9constructEjz called 0 returned 0% blocks executed 0%
+    #####:  113:    void * construct(unsigned int count, ...) const BOOST_OVERRIDE {
+    $$$$$:  113-block  0
+    $$$$$:  113-block  1
+    $$$$$:  113-block  2
+        -:  114:        // count up the arguments
+        -:  115:        std::va_list ap;
+    #####:  116:        va_start(ap, count);
+    #####:  117:        switch(count){
+    $$$$$:  117-block  0
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:  117-block  1
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+branch 11 never executed
+    $$$$$:  117-block  2
+branch 12 never executed
+branch 13 never executed
+branch 14 never executed
+branch 15 never executed
+branch 16 never executed
+branch 17 never executed
+    #####:  118:        case 0:
+    #####:  119:            return factory<typename boost::remove_const< T >::type, 0>(ap);
+    $$$$$:  119-block  0
+call    0 never executed
+    $$$$$:  119-block  1
+call    1 never executed
+    $$$$$:  119-block  2
+call    2 never executed
+    #####:  120:        case 1:
+    #####:  121:            return factory<typename boost::remove_const< T >::type, 1>(ap);
+    $$$$$:  121-block  0
+call    0 never executed
+    $$$$$:  121-block  1
+call    1 never executed
+    $$$$$:  121-block  2
+call    2 never executed
+    #####:  122:        case 2:
+    #####:  123:            return factory<typename boost::remove_const< T >::type, 2>(ap);
+    $$$$$:  123-block  0
+call    0 never executed
+    $$$$$:  123-block  1
+call    1 never executed
+    $$$$$:  123-block  2
+call    2 never executed
+    #####:  124:        case 3:
+    #####:  125:            return factory<typename boost::remove_const< T >::type, 3>(ap);
+    $$$$$:  125-block  0
+call    0 never executed
+    $$$$$:  125-block  1
+call    1 never executed
+    $$$$$:  125-block  2
+call    2 never executed
+    #####:  126:        case 4:
+    #####:  127:            return factory<typename boost::remove_const< T >::type, 4>(ap);
+    $$$$$:  127-block  0
+call    0 never executed
+    $$$$$:  127-block  1
+call    1 never executed
+    $$$$$:  127-block  2
+call    2 never executed
+    #####:  128:        default:
+    #####:  129:            BOOST_ASSERT(false); // too many arguments
+    $$$$$:  129-block  0
+call    0 never executed
+    $$$$$:  129-block  1
+    $$$$$:  129-block  2
+call    1 never executed
+    $$$$$:  129-block  3
+    $$$$$:  129-block  4
+call    2 never executed
+    $$$$$:  129-block  5
+        -:  130:            // throw exception here?
+        -:  131:            return NULL;
+        -:  132:        }
+        -:  133:    }
+function _ZNK5boost13serialization25extended_type_info_typeidI11DynamicNodeE7destroyEPKv called 0 returned 0% blocks executed 0%
+function _ZNK5boost13serialization25extended_type_info_typeidISt6vectorIdSaIdEEE7destroyEPKv called 0 returned 0% blocks executed 0%
+function _ZNK5boost13serialization25extended_type_info_typeidI11DynamicEdgeE7destroyEPKv called 0 returned 0% blocks executed 0%
+    #####:  134:    void destroy(void const * const p) const BOOST_OVERRIDE {
+    $$$$$:  134-block  0
+    $$$$$:  134-block  1
+    $$$$$:  134-block  2
+    #####:  135:        boost::serialization::access::destroy(
+    $$$$$:  135-block  0
+call    0 never executed
+    $$$$$:  135-block  1
+call    1 never executed
+    $$$$$:  135-block  2
+call    2 never executed
+        -:  136:            static_cast<T const *>(p)
+        -:  137:        );
+        -:  138:        //delete static_cast<T const * const>(p);
+    #####:  139:    }
+        -:  140:};
+        -:  141:
+        -:  142:} // namespace serialization
+        -:  143:} // namespace boost
+        -:  144:
+        -:  145:///////////////////////////////////////////////////////////////////////////////
+        -:  146:// If no other implementation has been designated as default,
+        -:  147:// use this one.  To use this implementation as the default, specify it
+        -:  148:// before any of the other headers.
+        -:  149:#ifndef BOOST_SERIALIZATION_DEFAULT_TYPE_INFO
+        -:  150:    #define BOOST_SERIALIZATION_DEFAULT_TYPE_INFO
+        -:  151:    namespace boost {
+        -:  152:    namespace serialization {
+        -:  153:    template<class T>
+        -:  154:    struct extended_type_info_impl {
+        -:  155:        typedef typename
+        -:  156:            boost::serialization::extended_type_info_typeid< T > type;
+        -:  157:    };
+        -:  158:    } // namespace serialization
+        -:  159:    } // namespace boost
+        -:  160:#endif
+        -:  161:
+        -:  162:#ifdef BOOST_MSVC
+        -:  163:#pragma warning(pop)
+        -:  164:#endif
+        -:  165:#include <boost/config/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
+        -:  166:
+        -:  167:#endif // BOOST_SERIALIZATION_EXTENDED_TYPE_INFO_TYPEID_HPP

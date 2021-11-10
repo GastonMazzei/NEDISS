@@ -1,0 +1,74 @@
+        -:    0:Source:/usr/include/boost/serialization/collection_size_type.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_SERIALIZATION_COLLECTION_SIZE_TYPE_HPP
+        -:    2:#define BOOST_SERIALIZATION_COLLECTION_SIZE_TYPE_HPP
+        -:    3:
+        -:    4:// (C) Copyright 2005 Matthias Troyer
+        -:    5:// Use, modification and distribution is subject to the Boost Software
+        -:    6:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:    7:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    8:
+        -:    9:#include <cstddef> // size_t
+        -:   10:#include <boost/serialization/strong_typedef.hpp>
+        -:   11:#include <boost/serialization/level.hpp>
+        -:   12:#include <boost/serialization/split_free.hpp>
+        -:   13:#include <boost/serialization/is_bitwise_serializable.hpp>
+        -:   14:
+        -:   15:namespace boost {
+        -:   16:namespace serialization {
+        -:   17:
+        -:   18://BOOST_STRONG_TYPEDEF(std::size_t, collection_size_type)
+        -:   19:
+        -:   20:class collection_size_type {
+        -:   21:private:
+        -:   22:    typedef std::size_t base_type;
+        -:   23:    base_type t;
+        -:   24:public:
+        -:   25:    collection_size_type(): t(0) {}
+function _ZN5boost13serialization20collection_size_typeC2ERKm called 0 returned 0% blocks executed 0%
+    #####:   26:    explicit collection_size_type(const std::size_t & t_) :
+    $$$$$:   26-block  0
+    #####:   27:        t(t_)
+    #####:   28:    {}
+function _ZN5boost13serialization20collection_size_typeC2ERKS1_ called 0 returned 0% blocks executed 0%
+    #####:   29:    collection_size_type(const collection_size_type & t_) :
+    $$$$$:   29-block  0
+    #####:   30:        t(t_.t)
+    #####:   31:    {}
+        -:   32:    collection_size_type & operator=(const collection_size_type & rhs){
+        -:   33:        t = rhs.t;
+        -:   34:        return *this;
+        -:   35:    }
+        -:   36:    collection_size_type & operator=(const unsigned int & rhs){
+        -:   37:        t = rhs;
+        -:   38:        return *this;
+        -:   39:    }
+        -:   40:    // used for text output
+        -:   41:    operator base_type () const {
+        -:   42:        return t;
+        -:   43:    }
+        -:   44:    // used for text input
+function _ZN5boost13serialization20collection_size_typecvRmEv called 0 returned 0% blocks executed 0%
+    #####:   45:    operator base_type & () {
+    $$$$$:   45-block  0
+    #####:   46:        return t;
+    $$$$$:   46-block  0
+        -:   47:    }
+        -:   48:    bool operator==(const collection_size_type & rhs) const {
+        -:   49:        return t == rhs.t;
+        -:   50:    }
+        -:   51:    bool operator<(const collection_size_type & rhs) const {
+        -:   52:        return t < rhs.t;
+        -:   53:    }
+        -:   54:};
+        -:   55:
+        -:   56:
+        -:   57:} } // end namespace boost::serialization
+        -:   58:
+        -:   59:BOOST_CLASS_IMPLEMENTATION(collection_size_type, primitive_type)
+        -:   60:BOOST_IS_BITWISE_SERIALIZABLE(collection_size_type)
+        -:   61:
+        -:   62:#endif //BOOST_SERIALIZATION_COLLECTION_SIZE_TYPE_HPP

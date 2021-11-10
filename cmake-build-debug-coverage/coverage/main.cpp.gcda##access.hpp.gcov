@@ -1,0 +1,242 @@
+        -:    0:Source:/usr/include/boost/serialization/access.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_SERIALIZATION_ACCESS_HPP
+        -:    2:#define BOOST_SERIALIZATION_ACCESS_HPP
+        -:    3:
+        -:    4:// MS compatible compilers support #pragma once
+        -:    5:#if defined(_MSC_VER)
+        -:    6:# pragma once
+        -:    7:#endif
+        -:    8:
+        -:    9://///////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
+        -:   10:// access.hpp: interface for serialization system.
+        -:   11:
+        -:   12:// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com .
+        -:   13:// Use, modification and distribution is subject to the Boost Software
+        -:   14:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:   15:// http://www.boost.org/LICENSE_1_0.txt)
+        -:   16:
+        -:   17://  See http://www.boost.org for updates, documentation, and revision history.
+        -:   18:
+        -:   19:#include <boost/config.hpp>
+        -:   20:
+        -:   21:namespace boost {
+        -:   22:
+        -:   23:namespace archive {
+        -:   24:namespace detail {
+        -:   25:    template<class Archive, class T>
+        -:   26:    class iserializer;
+        -:   27:    template<class Archive, class T>
+        -:   28:    class oserializer;
+        -:   29:} // namespace detail
+        -:   30:} // namespace archive
+        -:   31:
+        -:   32:namespace serialization {
+        -:   33:
+        -:   34:// forward declarations
+        -:   35:template<class Archive, class T>
+        -:   36:inline void serialize_adl(Archive &, T &, const unsigned int);
+        -:   37:namespace detail {
+        -:   38:    template<class Archive, class T>
+        -:   39:    struct member_saver;
+        -:   40:    template<class Archive, class T>
+        -:   41:    struct member_loader;
+        -:   42:} // namespace detail
+        -:   43:
+        -:   44:// use an "accessor class so that we can use:
+        -:   45:// "friend class boost::serialization::access;"
+        -:   46:// in any serialized class to permit clean, safe access to private class members
+        -:   47:// by the serialization system
+        -:   48:
+        -:   49:class access {
+        -:   50:public:
+        -:   51:    // grant access to "real" serialization defaults
+        -:   52:#ifdef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
+        -:   53:public:
+        -:   54:#else
+        -:   55:    template<class Archive, class T>
+        -:   56:    friend struct detail::member_saver;
+        -:   57:    template<class Archive, class T>
+        -:   58:    friend struct detail::member_loader;
+        -:   59:    template<class Archive, class T>
+        -:   60:    friend class archive::detail::iserializer;
+        -:   61:    template<class Archive, class T>
+        -:   62:    friend class archive::detail::oserializer;
+        -:   63:    template<class Archive, class T>
+        -:   64:    friend inline void serialize(
+        -:   65:        Archive & ar,
+        -:   66:        T & t,
+        -:   67:        const unsigned int file_version
+        -:   68:    );
+        -:   69:    template<class Archive, class T>
+        -:   70:    friend inline void save_construct_data(
+        -:   71:        Archive & ar,
+        -:   72:        const T * t,
+        -:   73:        const unsigned int file_version
+        -:   74:    );
+        -:   75:    template<class Archive, class T>
+        -:   76:    friend inline void load_construct_data(
+        -:   77:        Archive & ar,
+        -:   78:        T * t,
+        -:   79:        const unsigned int file_version
+        -:   80:    );
+        -:   81:#endif
+        -:   82:
+        -:   83:    // pass calls to users's class implementation
+        -:   84:    template<class Archive, class T>
+        -:   85:    static void member_save(
+        -:   86:        Archive & ar,
+        -:   87:        //const T & t,
+        -:   88:        T & t,
+        -:   89:        const unsigned int file_version
+        -:   90:    ){
+        -:   91:        t.save(ar, file_version);
+        -:   92:    }
+        -:   93:    template<class Archive, class T>
+function _ZN5boost13serialization6access11member_loadINS_3mpi15packed_iarchiveENS0_13array_wrapperIdEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+    #####:   94:    static void member_load(
+    $$$$$:   94-block  0
+        -:   95:        Archive & ar,
+        -:   96:        T & t,
+        -:   97:        const unsigned int file_version
+        -:   98:    ){
+    #####:   99:        t.load(ar, file_version);
+    $$$$$:   99-block  0
+call    0 never executed
+    #####:  100:    }
+        -:  101:    template<class Archive, class T>
+function _ZN5boost13serialization6access9serializeINS_3mpi15packed_iarchiveENS0_13array_wrapperIdEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access9serializeINS_3mpi15packed_iarchiveE11DynamicEdgeEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access9serializeINS_3mpi15packed_iarchiveENS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access9serializeINS_3mpi6detail21mpi_datatype_oarchiveENS_6detail8parallel20msg_remove_edge_dataINS7_15edge_descriptorINS6_14edge_desc_implINS_12directed_tagEmEEEEEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access9serializeINS_3mpi15packed_iarchiveE11DynamicNodeEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access9serializeINS_3mpi15packed_iarchiveENS_6detail8parallel31msg_add_edge_with_property_dataINS6_17global_descriptorImEEm11DynamicEdgeEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access9serializeINS_3mpi15packed_iarchiveENS_6detail8parallel22msg_nonlocal_edge_dataI11DynamicEdgeNS5_14edge_desc_implINS_12directed_tagEmEEEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access9serializeINS_3mpi6detail21mpi_datatype_oarchiveENS_6detail8parallel17global_descriptorImEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access9serializeINS_3mpi6detail21mpi_datatype_oarchiveENS_6detail8parallel15edge_descriptorINS6_14edge_desc_implINS_12directed_tagEmEEEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access9serializeINS_3mpi6detail21mpi_datatype_oarchiveENS_6detail8parallel17msg_add_edge_dataINS7_17global_descriptorImEEmEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access9serializeINS_3mpi15packed_oarchiveE11DynamicEdgeEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access9serializeINS_3mpi15packed_oarchiveENS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access9serializeINS_3mpi15packed_oarchiveENS_6detail8parallel31msg_add_edge_with_property_dataINS6_17global_descriptorImEEm11DynamicEdgeEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access9serializeINS_3mpi15packed_oarchiveENS_6detail8parallel22msg_nonlocal_edge_dataI11DynamicEdgeNS5_14edge_desc_implINS_12directed_tagEmEEEEEEvRT_RT0_j called 0 returned 0% blocks executed 0%
+    #####:  102:    static void serialize(
+    $$$$$:  102-block  0
+    $$$$$:  102-block  1
+    $$$$$:  102-block  2
+    $$$$$:  102-block  3
+    $$$$$:  102-block  4
+    $$$$$:  102-block  5
+    $$$$$:  102-block  6
+    $$$$$:  102-block  7
+    $$$$$:  102-block  8
+    $$$$$:  102-block  9
+    $$$$$:  102-block 10
+    $$$$$:  102-block 11
+    $$$$$:  102-block 12
+    $$$$$:  102-block 13
+        -:  103:        Archive & ar,
+        -:  104:        T & t,
+        -:  105:        const unsigned int file_version
+        -:  106:    ){
+        -:  107:        // note: if you get a compile time error here with a
+        -:  108:        // message something like:
+        -:  109:        // cannot convert parameter 1 from <file type 1> to <file type 2 &>
+        -:  110:        // a likely possible cause is that the class T contains a
+        -:  111:        // serialize function - but that serialize function isn't
+        -:  112:        // a template and corresponds to a file type different than
+        -:  113:        // the class Archive.  To resolve this, don't include an
+        -:  114:        // archive type other than that for which the serialization
+        -:  115:        // function is defined!!!
+    #####:  116:        t.serialize(ar, file_version);
+    $$$$$:  116-block  0
+call    0 never executed
+    $$$$$:  116-block  1
+call    1 never executed
+    $$$$$:  116-block  2
+call    2 never executed
+    $$$$$:  116-block  3
+call    3 never executed
+    $$$$$:  116-block  4
+call    4 never executed
+    $$$$$:  116-block  5
+call    5 never executed
+    $$$$$:  116-block  6
+call    6 never executed
+    $$$$$:  116-block  7
+call    7 never executed
+    $$$$$:  116-block  8
+call    8 never executed
+    $$$$$:  116-block  9
+call    9 never executed
+    $$$$$:  116-block 10
+call   10 never executed
+    $$$$$:  116-block 11
+call   11 never executed
+    $$$$$:  116-block 12
+call   12 never executed
+    $$$$$:  116-block 13
+call   13 never executed
+    #####:  117:    }
+        -:  118:    template<class T>
+function _ZN5boost13serialization6access7destroyI11DynamicNodeEEvPKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access7destroyISt6vectorIdSaIdEEEEvPKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access7destroyI11DynamicEdgeEEvPKT_ called 0 returned 0% blocks executed 0%
+    #####:  119:    static void destroy( const T * t) // const appropriate here?
+    $$$$$:  119-block  0
+    $$$$$:  119-block  1
+    $$$$$:  119-block  2
+        -:  120:    {
+        -:  121:        // the const business is an MSVC 6.0 hack that should be
+        -:  122:        // benign on everything else
+    #####:  123:        delete const_cast<T *>(t);
+    $$$$$:  123-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  123-block  1
+call    2 never executed
+call    3 never executed
+    $$$$$:  123-block  2
+branch  4 never executed
+branch  5 never executed
+    $$$$$:  123-block  3
+call    6 never executed
+call    7 never executed
+    $$$$$:  123-block  4
+call    8 never executed
+    #####:  124:    }
+        -:  125:    template<class T>
+        -:  126:    static void construct(T * t){
+        -:  127:        // default is inplace invocation of default constructor
+        -:  128:        // Note the :: before the placement new. Required if the
+        -:  129:        // class doesn't have a class-specific placement new defined.
+        -:  130:        ::new(t)T;
+        -:  131:    }
+        -:  132:    template<class T, class U>
+function _ZN5boost13serialization6access14cast_referenceINS_6detail9edge_baseINS_12directed_tagEmEENS3_14edge_desc_implIS5_mEEEERT_RT0_ called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access14cast_referenceINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEENS4_31msg_add_edge_with_property_dataINS4_17global_descriptorImEEmS6_EEEERT_RT0_ called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access14cast_referenceINS_6detail8parallel17msg_add_edge_dataINS4_17global_descriptorImEEmEENS4_31msg_add_edge_with_property_dataIS7_m11DynamicEdgeEEEERT_RT0_ called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6access14cast_referenceINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEENS4_22msg_nonlocal_edge_dataIS6_NS3_14edge_desc_implINS_12directed_tagEmEEEEEERT_RT0_ called 0 returned 0% blocks executed 0%
+    #####:  133:    static T & cast_reference(U & u){
+    $$$$$:  133-block  0
+    $$$$$:  133-block  1
+    $$$$$:  133-block  2
+    $$$$$:  133-block  3
+    #####:  134:        return static_cast<T &>(u);
+    $$$$$:  134-block  0
+    $$$$$:  134-block  1
+    $$$$$:  134-block  2
+    $$$$$:  134-block  3
+        -:  135:    }
+        -:  136:    template<class T, class U>
+        -:  137:    static T * cast_pointer(U * u){
+        -:  138:        return static_cast<T *>(u);
+        -:  139:    }
+        -:  140:};
+        -:  141:
+        -:  142:} // namespace serialization
+        -:  143:} // namespace boost
+        -:  144:
+        -:  145:#endif // BOOST_SERIALIZATION_ACCESS_HPP

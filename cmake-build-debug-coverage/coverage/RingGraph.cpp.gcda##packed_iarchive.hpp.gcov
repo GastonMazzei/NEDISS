@@ -1,0 +1,247 @@
+        -:    0:Source:/usr/include/boost/mpi/packed_iarchive.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// (C) Copyright 2005 Matthias Troyer
+        -:    2:// (C) Copyright 2006 Douglas Gregor <doug.gregor -at- gmail.com>
+        -:    3:
+        -:    4:// Use, modification and distribution is subject to the Boost Software
+        -:    5:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:    6:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    7:
+        -:    8://  Authors: Matthias Troyer
+        -:    9://           Douglas Gregor
+        -:   10:
+        -:   11:/** @file packed_iarchive.hpp
+        -:   12: *
+        -:   13: *  This header provides the facilities for packing Serializable data
+        -:   14: *  types into a buffer using @c MPI_Pack. The buffers can then be
+        -:   15: *  transmitted via MPI and then be unpacked either via the facilities
+        -:   16: *  in @c packed_oarchive.hpp or @c MPI_Unpack.
+        -:   17: */
+        -:   18:#ifndef BOOST_MPI_PACKED_IARCHIVE_HPP
+        -:   19:#define BOOST_MPI_PACKED_IARCHIVE_HPP
+        -:   20:
+        -:   21:#include <boost/mpi/datatype.hpp>
+        -:   22:#include <boost/archive/detail/auto_link_archive.hpp>
+        -:   23:#include <boost/archive/detail/common_iarchive.hpp>
+        -:   24:#include <boost/archive/basic_archive.hpp>
+        -:   25:#include <boost/mpi/detail/packed_iprimitive.hpp>
+        -:   26:#include <boost/mpi/detail/binary_buffer_iprimitive.hpp>
+        -:   27:#include <boost/serialization/string.hpp>
+        -:   28:#include <boost/serialization/collection_size_type.hpp>
+        -:   29:#include <boost/serialization/item_version_type.hpp>
+        -:   30:#include <boost/assert.hpp>
+        -:   31:
+        -:   32:namespace boost { namespace mpi {
+        -:   33:
+        -:   34:#ifdef BOOST_MPI_HOMOGENEOUS
+        -:   35:  typedef binary_buffer_iprimitive iprimitive;
+        -:   36:#else
+        -:   37:  typedef packed_iprimitive iprimitive;
+        -:   38:#endif
+        -:   39:
+        -:   40:
+        -:   41:/** @brief An archive that unpacks binary data from an MPI buffer.
+        -:   42: *
+        -:   43: *  The @c packed_oarchive class is an Archiver (as in the
+        -:   44: *  Boost.Serialization library) that unpacks binary data from a
+        -:   45: *  buffer received via MPI. It can operate on any Serializable data
+        -:   46: *  type and will use the @c MPI_Unpack function of the underlying MPI
+        -:   47: *  implementation to perform deserialization.
+        -:   48: */
+        -:   49:
+        -:   50:class BOOST_MPI_DECL packed_iarchive
+        -:   51:  : public iprimitive
+        -:   52:  , public archive::detail::common_iarchive<packed_iarchive>
+        -:   53:{
+        -:   54:public:
+        -:   55:  /**
+        -:   56:   *  Construct a @c packed_iarchive to receive data over the given
+        -:   57:   *  MPI communicator and with an initial buffer.
+        -:   58:   *
+        -:   59:   *  @param comm The communicator over which this archive will be
+        -:   60:   *  received.
+        -:   61:   *
+        -:   62:   *  @param b A user-defined buffer that contains the binary
+        -:   63:   *  representation of serialized objects.
+        -:   64:   *
+        -:   65:   *  @param flags Control the serialization of the data types. Refer
+        -:   66:   *  to the Boost.Serialization documentation before changing the
+        -:   67:   *  default flags.
+        -:   68:   */
+        -:   69:
+        -:   70:  packed_iarchive(MPI_Comm const & comm, buffer_type & b, unsigned int flags = boost::archive::no_header, int position = 0)
+        -:   71:        : iprimitive(b,comm,position),
+        -:   72:          archive::detail::common_iarchive<packed_iarchive>(flags)
+        -:   73:        {}
+        -:   74:
+        -:   75:  /**
+        -:   76:   *  Construct a @c packed_iarchive to receive data over the given
+        -:   77:   *  MPI communicator.
+        -:   78:   *
+        -:   79:   *  @param comm The communicator over which this archive will be
+        -:   80:   *  received.
+        -:   81:   *
+        -:   82:   *  @param flags Control the serialization of the data types. Refer
+        -:   83:   *  to the Boost.Serialization documentation before changing the
+        -:   84:   *  default flags.
+        -:   85:   */
+        -:   86:
+        -:   87:  packed_iarchive
+        -:   88:          ( MPI_Comm const & comm , std::size_t s=0,
+        -:   89:           unsigned int flags = boost::archive::no_header)
+        -:   90:         : iprimitive(internal_buffer_,comm)
+        -:   91:         , archive::detail::common_iarchive<packed_iarchive>(flags)
+        -:   92:         , internal_buffer_(s)
+        -:   93:        {}
+        -:   94:
+        -:   95:  // Load everything else in the usual way, forwarding on to the Base class
+        -:   96:  template<class T>
+function _ZN5boost3mpi15packed_iarchive13load_overrideIKNS_13serialization13array_wrapperIdEEEEvRT_N4mpl_5bool_ILb0EEE called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi15packed_iarchive13load_overrideIKNS_13serialization3nvpIjEEEEvRT_N4mpl_5bool_ILb0EEE called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi15packed_iarchive13load_overrideIKNS_13serialization3nvpINS3_20collection_size_typeEEEEEvRT_N4mpl_5bool_ILb0EEE called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi15packed_iarchive13load_overrideISt6vectorIdSaIdEEEEvRT_N4mpl_5bool_ILb0EEE called 0 returned 0% blocks executed 0%
+    #####:   97:  void load_override(T& x, mpl::false_)
+    $$$$$:   97-block  0
+    $$$$$:   97-block  1
+    $$$$$:   97-block  2
+    $$$$$:   97-block  3
+        -:   98:  {
+    #####:   99:    archive::detail::common_iarchive<packed_iarchive>::load_override(x);
+    $$$$$:   99-block  0
+call    0 never executed
+    $$$$$:   99-block  1
+call    1 never executed
+    $$$$$:   99-block  2
+call    2 never executed
+    $$$$$:   99-block  3
+call    3 never executed
+    #####:  100:  }
+        -:  101:
+        -:  102:  // Load it directly using the primnivites
+        -:  103:  template<class T>
+function _ZN5boost3mpi15packed_iarchive13load_overrideIjEEvRT_N4mpl_5bool_ILb1EEE called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi15packed_iarchive13load_overrideINS_13serialization20collection_size_typeEEEvRT_N4mpl_5bool_ILb1EEE called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi15packed_iarchive13load_overrideIdEEvRT_N4mpl_5bool_ILb1EEE called 0 returned 0% blocks executed 0%
+    #####:  104:  void load_override(T& x, mpl::true_)
+    $$$$$:  104-block  0
+    $$$$$:  104-block  1
+    $$$$$:  104-block  2
+        -:  105:  {
+    #####:  106:    iprimitive::load(x);
+    $$$$$:  106-block  0
+call    0 never executed
+    $$$$$:  106-block  1
+call    1 never executed
+    $$$$$:  106-block  2
+call    2 never executed
+    #####:  107:  }
+        -:  108:
+        -:  109:  // Load all supported datatypes directly
+        -:  110:  template<class T>
+function _ZN5boost3mpi15packed_iarchive13load_overrideIjEEvRT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi15packed_iarchive13load_overrideINS_13serialization20collection_size_typeEEEvRT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi15packed_iarchive13load_overrideIKNS_13serialization13array_wrapperIdEEEEvRT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi15packed_iarchive13load_overrideIKNS_13serialization3nvpIjEEEEvRT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi15packed_iarchive13load_overrideIKNS_13serialization3nvpINS3_20collection_size_typeEEEEEvRT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi15packed_iarchive13load_overrideISt6vectorIdSaIdEEEEvRT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi15packed_iarchive13load_overrideIdEEvRT_ called 0 returned 0% blocks executed 0%
+    #####:  111:  void load_override(T& x)
+    $$$$$:  111-block  0
+    $$$$$:  111-block  1
+    $$$$$:  111-block  2
+    $$$$$:  111-block  3
+    $$$$$:  111-block  4
+    $$$$$:  111-block  5
+    $$$$$:  111-block  6
+        -:  112:  {
+        -:  113:    typedef typename mpl::apply1<use_array_optimization
+        -:  114:      , BOOST_DEDUCED_TYPENAME remove_const<T>::type
+        -:  115:    >::type use_optimized;
+    #####:  116:    load_override(x, use_optimized());
+    $$$$$:  116-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:  116-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    $$$$$:  116-block  2
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    $$$$$:  116-block  3
+call   11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+    $$$$$:  116-block  4
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+    $$$$$:  116-block  5
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+    $$$$$:  116-block  6
+call   23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+    #####:  117:  }
+    $$$$$:  117-block  0
+    $$$$$:  117-block  1
+    $$$$$:  117-block  2
+    $$$$$:  117-block  3
+    $$$$$:  117-block  4
+    $$$$$:  117-block  5
+    $$$$$:  117-block  6
+        -:  118:
+        -:  119:  // input archives need to ignore  the optional information
+        -:  120:  void load_override(archive::class_id_optional_type & /*t*/){}
+        -:  121:
+        -:  122:  void load_override(archive::class_id_type & t){
+        -:  123:    int_least16_t x=0;
+        -:  124:    * this->This() >> x;
+        -:  125:    t = boost::archive::class_id_type(x);
+        -:  126:  }
+        -:  127:
+        -:  128:  void load_override(archive::version_type & t){
+        -:  129:    int_least8_t x=0;
+        -:  130:    * this->This() >> x;
+        -:  131:    t = boost::archive::version_type(x);
+        -:  132:  }
+        -:  133:
+        -:  134:  void load_override(archive::class_id_reference_type & t){
+        -:  135:    load_override(static_cast<archive::class_id_type &>(t));
+        -:  136:  }
+        -:  137:
+        -:  138:  void load_override(archive::class_name_type & t)
+        -:  139:  {
+        -:  140:    std::string cn;
+        -:  141:    cn.reserve(BOOST_SERIALIZATION_MAX_KEY_SIZE);
+        -:  142:    * this->This() >> cn;
+        -:  143:    std::memcpy(t, cn.data(), cn.size());
+        -:  144:    // borland tweak
+        -:  145:    t.t[cn.size()] = '\0';
+        -:  146:  }
+        -:  147:
+        -:  148:private:
+        -:  149:  /// An internal buffer to be used when the user does not supply his
+        -:  150:  /// own buffer.
+        -:  151:  buffer_type internal_buffer_;
+        -:  152:};
+        -:  153:
+        -:  154:} } // end namespace boost::mpi
+        -:  155:
+        -:  156:BOOST_SERIALIZATION_REGISTER_ARCHIVE(boost::mpi::packed_iarchive)
+        -:  157:BOOST_SERIALIZATION_USE_ARRAY_OPTIMIZATION(boost::mpi::packed_iarchive)
+        -:  158:
+        -:  159:#endif // BOOST_MPI_PACKED_IARCHIVE_HPP

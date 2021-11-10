@@ -1,0 +1,80 @@
+        -:    0:Source:/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/ompi/mpi/cxx/errhandler.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// -*- c++ -*-
+        -:    2://
+        -:    3:// Copyright (c) 2004-2005 The Trustees of Indiana University and Indiana
+        -:    4://                         University Research and Technology
+        -:    5://                         Corporation.  All rights reserved.
+        -:    6:// Copyright (c) 2004-2005 The University of Tennessee and The University
+        -:    7://                         of Tennessee Research Foundation.  All rights
+        -:    8://                         reserved.
+        -:    9:// Copyright (c) 2004-2005 High Performance Computing Center Stuttgart,
+        -:   10://                         University of Stuttgart.  All rights reserved.
+        -:   11:// Copyright (c) 2004-2005 The Regents of the University of California.
+        -:   12://                         All rights reserved.
+        -:   13:// Copyright (c) 2006-2008 Cisco Systems, Inc.  All rights reserved.
+        -:   14:// $COPYRIGHT$
+        -:   15://
+        -:   16:// Additional copyrights may follow
+        -:   17://
+        -:   18:// $HEADER$
+        -:   19://
+        -:   20:
+        -:   21:class Errhandler {
+        -:   22:public:
+        -:   23:  // construction / destruction
+        -:   24:  inline Errhandler()
+        -:   25:    : mpi_errhandler(MPI_ERRHANDLER_NULL) {}
+        -:   26:
+function _ZN3MPI10ErrhandlerD0Ev called 0 returned 0% blocks executed 0%
+function _ZN3MPI10ErrhandlerD2Ev called 0 returned 0% blocks executed 0%
+    #####:   27:  inline virtual ~Errhandler() { }
+    $$$$$:   27-block  0
+    $$$$$:   27-block  1
+call    0 never executed
+call    1 never executed
+    $$$$$:   27-block  2
+        -:   28:
+function _ZN3MPI10ErrhandlerC2EP17ompi_errhandler_t called 0 returned 0% blocks executed 0%
+    #####:   29:  inline Errhandler(MPI_Errhandler i)
+    $$$$$:   29-block  0
+    #####:   30:    : mpi_errhandler(i) {}
+        -:   31:
+        -:   32: // copy / assignment
+        -:   33:  inline Errhandler(const Errhandler& e) : mpi_errhandler(e.mpi_errhandler) { }
+        -:   34:
+        -:   35:  inline Errhandler& operator=(const Errhandler& e) {
+        -:   36:    mpi_errhandler = e.mpi_errhandler;
+        -:   37:    return *this;
+        -:   38:  }
+        -:   39:
+        -:   40:  // comparison
+        -:   41:  inline bool operator==(const Errhandler &a) {
+        -:   42:    return (bool)(mpi_errhandler == a.mpi_errhandler); }
+        -:   43:
+        -:   44:  inline bool operator!=(const Errhandler &a) {
+        -:   45:    return (bool)!(*this == a); }
+        -:   46:
+        -:   47:  // inter-language operability
+        -:   48:  inline Errhandler& operator= (const MPI_Errhandler &i) {
+        -:   49:    mpi_errhandler = i; return *this; }
+        -:   50:
+function _ZNK3MPI10ErrhandlercvP17ompi_errhandler_tEv called 0 returned 0% blocks executed 0%
+    #####:   51:  inline operator MPI_Errhandler() const { return mpi_errhandler; }
+    $$$$$:   51-block  0
+    $$$$$:   51-block  1
+        -:   52:
+        -:   53:  //  inline operator MPI_Errhandler*() { return &mpi_errhandler; }
+        -:   54:
+        -:   55:  //
+        -:   56:  // Errhandler access functions
+        -:   57:  //
+        -:   58:
+        -:   59:  virtual void Free();
+        -:   60:
+        -:   61:private:
+        -:   62:  MPI_Errhandler mpi_errhandler;
+        -:   63:};

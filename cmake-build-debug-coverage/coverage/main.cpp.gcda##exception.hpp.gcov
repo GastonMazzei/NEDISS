@@ -1,0 +1,126 @@
+        -:    0:Source:/usr/include/boost/mpi/exception.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Copyright (C) 2005-2006 Douglas Gregor <doug.gregor -at- gmail.com>.
+        -:    2:
+        -:    3:// Use, modification and distribution is subject to the Boost Software
+        -:    4:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:    5:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    6:
+        -:    7:/** @file exception.hpp
+        -:    8: *
+        -:    9: *  This header provides exception classes that report MPI errors to
+        -:   10: *  the user and macros that translate MPI error codes into Boost.MPI
+        -:   11: *  exceptions.
+        -:   12: */
+        -:   13:#ifndef BOOST_MPI_EXCEPTION_HPP
+        -:   14:#define BOOST_MPI_EXCEPTION_HPP
+        -:   15:
+        -:   16:#include <boost/mpi/config.hpp>
+        -:   17:#include <exception>
+        -:   18:#include <cassert>
+        -:   19:#include <string>
+        -:   20:#include <boost/config.hpp>
+        -:   21:#include <boost/throw_exception.hpp>
+        -:   22:
+        -:   23:namespace boost { namespace mpi {
+        -:   24:
+        -:   25:/** @brief Catch-all exception class for MPI errors.
+        -:   26: *
+        -:   27: * Instances of this class will be thrown when an MPI error
+        -:   28: * occurs. MPI failures that trigger these exceptions may or may not
+        -:   29: * be recoverable, depending on the underlying MPI
+        -:   30: * implementation. Consult the documentation for your MPI
+        -:   31: * implementation to determine the effect of MPI errors.
+        -:   32: */
+function _ZN5boost3mpi9exceptionC2ERKS1_ called 0 returned 0% blocks executed 0%
+    #####:   33:class BOOST_MPI_DECL exception : public std::exception
+    $$$$$:   33-block  0
+    $$$$$:   33-block  1
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   33-block  2
+    %%%%%:   33-block  3
+call    4 never executed
+        -:   34:{
+        -:   35: public:
+        -:   36:  /**
+        -:   37:   * Build a new @c exception exception.
+        -:   38:   *
+        -:   39:   *   @param routine The MPI routine in which the error
+        -:   40:   *   occurred. This should be a pointer to a string constant: it
+        -:   41:   *   will not be copied.
+        -:   42:   *
+        -:   43:   *   @param result_code The result code returned from the MPI
+        -:   44:   *   routine that aborted with an error.
+        -:   45:   */
+        -:   46:  exception(const char* routine, int result_code);
+        -:   47:
+        -:   48:  virtual ~exception() throw();
+        -:   49:
+        -:   50:  /**
+        -:   51:   * A description of the error that occurred. 
+        -:   52:   */
+function _ZNK5boost3mpi9exception4whatEv called 0 returned 0% blocks executed 0%
+    #####:   53:  virtual const char * what () const throw ()
+    $$$$$:   53-block  0
+        -:   54:  {
+    #####:   55:    return this->message.c_str();
+    $$$$$:   55-block  0
+call    0 never executed
+        -:   56:  }
+        -:   57:
+        -:   58:  /** Retrieve the name of the MPI routine that reported the error. */
+        -:   59:  const char* routine() const { return routine_; }
+        -:   60:
+        -:   61:  /**
+        -:   62:   * @brief Retrieve the result code returned from the MPI routine
+        -:   63:   * that reported the error.
+        -:   64:   */
+        -:   65:  int result_code() const { return result_code_; }
+        -:   66:
+        -:   67:  /**
+        -:   68:   * @brief Returns the MPI error class associated with the error that
+        -:   69:   * triggered this exception.
+        -:   70:   */
+        -:   71:  int error_class() const 
+        -:   72:  { 
+        -:   73:    int result;
+        -:   74:    MPI_Error_class(result_code_, &result);
+        -:   75:    return result;
+        -:   76:  }
+        -:   77:
+        -:   78: protected:
+        -:   79:  /// The MPI routine that triggered the error
+        -:   80:  const char* routine_;
+        -:   81:
+        -:   82:  /// The failed result code reported by the MPI implementation.
+        -:   83:  int result_code_;
+        -:   84:
+        -:   85:  /// The formatted error message
+        -:   86:  std::string message;
+        -:   87:};
+        -:   88:
+        -:   89:/**
+        -:   90: * Call the MPI routine MPIFunc with arguments Args (surrounded by
+        -:   91: * parentheses). If the result is not MPI_SUCCESS, use
+        -:   92: * boost::throw_exception to throw an exception or abort, depending on
+        -:   93: * BOOST_NO_EXCEPTIONS.
+        -:   94: */
+        -:   95:#define BOOST_MPI_CHECK_RESULT( MPIFunc, Args )                         \
+        -:   96: {                                                                      \
+        -:   97:   int _check_result = MPIFunc Args;                                    \
+        -:   98:   assert(_check_result == MPI_SUCCESS);                                \
+        -:   99:   if (_check_result != MPI_SUCCESS)                                    \
+        -:  100:     boost::throw_exception(boost::mpi::exception(#MPIFunc,   \
+        -:  101:                                                             _check_result)); \
+        -:  102: }
+        -:  103:
+        -:  104:} } // end namespace boost::mpi
+        -:  105:
+        -:  106:#endif // BOOST_MPI_EXCEPTION_HPP
+        -:  107:

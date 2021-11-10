@@ -10,6 +10,7 @@
 #include <string>
 #include "../Utils/error.h"
 
+#include "../macros/macros.h"
 
 #include <omp.h>
 #include <vector>

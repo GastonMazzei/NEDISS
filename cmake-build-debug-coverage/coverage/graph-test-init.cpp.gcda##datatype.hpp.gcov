@@ -1,0 +1,448 @@
+        -:    0:Source:/usr/include/boost/mpi/datatype.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Copyright 2004 The Trustees of Indiana University.
+        -:    2:// Copyright 2005 Matthias Troyer.
+        -:    3:// Copyright 2006 Douglas Gregor <doug.gregor -at- gmail.com>.
+        -:    4:
+        -:    5:// Use, modification and distribution is subject to the Boost Software
+        -:    6:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:    7:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    8:
+        -:    9://  Authors: Douglas Gregor
+        -:   10://           Andrew Lumsdaine
+        -:   11://           Matthias Troyer
+        -:   12:
+        -:   13:/** @file datatype.hpp
+        -:   14: *
+        -:   15: *  This header provides the mapping from C++ types to MPI data types.
+        -:   16: */
+        -:   17:#ifndef BOOST_MPI_DATATYPE_HPP
+        -:   18:#define BOOST_MPI_DATATYPE_HPP
+        -:   19:
+        -:   20:#include <boost/mpi/config.hpp>
+        -:   21:#include <boost/mpi/datatype_fwd.hpp>
+        -:   22:#include <mpi.h>
+        -:   23:#include <boost/config.hpp>
+        -:   24:#include <boost/mpl/bool.hpp>
+        -:   25:#include <boost/mpl/or.hpp>
+        -:   26:#include <boost/mpl/and.hpp>
+        -:   27:#include <boost/mpi/detail/mpi_datatype_cache.hpp>
+        -:   28:#include <boost/mpl/assert.hpp>
+        -:   29:#include <boost/archive/basic_archive.hpp>
+        -:   30:#include <boost/serialization/item_version_type.hpp>
+        -:   31:#include <utility> // for std::pair
+        -:   32:
+        -:   33:#if defined(__cplusplus) && (201103L <= __cplusplus) 
+        -:   34:#include <array>
+        -:   35:#endif
+        -:   36:
+        -:   37:namespace boost { namespace mpi {
+        -:   38:
+        -:   39:/**
+        -:   40: *  @brief Type trait that determines if there exists a built-in
+        -:   41: *  integer MPI data type for a given C++ type.
+        -:   42: *
+        -:   43: *  This type trait determines when there is a direct mapping from a
+        -:   44: *  C++ type to an MPI data type that is classified as an integer data
+        -:   45: *  type. See @c is_mpi_builtin_datatype for general information about
+        -:   46: *  built-in MPI data types.
+        -:   47: */
+        -:   48:template<typename T>
+        -:   49:struct is_mpi_integer_datatype
+        -:   50:  : public boost::mpl::false_ { };
+        -:   51:
+        -:   52:/**
+        -:   53: *  @brief Type trait that determines if there exists a built-in
+        -:   54: *  floating point MPI data type for a given C++ type.
+        -:   55: *
+        -:   56: *  This type trait determines when there is a direct mapping from a
+        -:   57: *  C++ type to an MPI data type that is classified as a floating
+        -:   58: *  point data type. See @c is_mpi_builtin_datatype for general
+        -:   59: *  information about built-in MPI data types.
+        -:   60: */
+        -:   61:template<typename T>
+        -:   62:struct is_mpi_floating_point_datatype
+        -:   63:  : public boost::mpl::false_ { };
+        -:   64:
+        -:   65:/**
+        -:   66: *  @brief Type trait that determines if there exists a built-in
+        -:   67: *  logical MPI data type for a given C++ type.
+        -:   68: *
+        -:   69: *  This type trait determines when there is a direct mapping from a
+        -:   70: *  C++ type to an MPI data type that is classified as an logical data
+        -:   71: *  type. See @c is_mpi_builtin_datatype for general information about
+        -:   72: *  built-in MPI data types.
+        -:   73: */
+        -:   74:template<typename T>
+        -:   75:struct is_mpi_logical_datatype
+        -:   76:  : public boost::mpl::false_ { };
+        -:   77:
+        -:   78:/**
+        -:   79: *  @brief Type trait that determines if there exists a built-in
+        -:   80: *  complex MPI data type for a given C++ type.
+        -:   81: *
+        -:   82: *  This type trait determines when there is a direct mapping from a
+        -:   83: *  C++ type to an MPI data type that is classified as a complex data
+        -:   84: *  type. See @c is_mpi_builtin_datatype for general information about
+        -:   85: *  built-in MPI data types.
+        -:   86: */
+        -:   87:template<typename T>
+        -:   88:struct is_mpi_complex_datatype
+        -:   89:  : public boost::mpl::false_ { };
+        -:   90:
+        -:   91:/**
+        -:   92: *  @brief Type trait that determines if there exists a built-in
+        -:   93: *  byte MPI data type for a given C++ type.
+        -:   94: *
+        -:   95: *  This type trait determines when there is a direct mapping from a
+        -:   96: *  C++ type to an MPI data type that is classified as an byte data
+        -:   97: *  type. See @c is_mpi_builtin_datatype for general information about
+        -:   98: *  built-in MPI data types.
+        -:   99: */
+        -:  100:template<typename T>
+        -:  101:struct is_mpi_byte_datatype
+        -:  102:  : public boost::mpl::false_ { };
+        -:  103:
+        -:  104:/** @brief Type trait that determines if there exists a built-in MPI
+        -:  105: *  data type for a given C++ type.
+        -:  106: *
+        -:  107: *  This type trait determines when there is a direct mapping from a
+        -:  108: *  C++ type to an MPI type. For instance, the C++ @c int type maps
+        -:  109: *  directly to the MPI type @c MPI_INT. When there is a direct
+        -:  110: *  mapping from the type @c T to an MPI type, @c
+        -:  111: *  is_mpi_builtin_datatype will derive from @c mpl::true_ and the MPI
+        -:  112: *  data type will be accessible via @c get_mpi_datatype. 
+        -:  113: *
+        -:  114: *  In general, users should not need to specialize this
+        -:  115: *  trait. However, if you have an additional C++ type that can map
+        -:  116: *  directly to only of MPI's built-in types, specialize either this
+        -:  117: *  trait or one of the traits corresponding to categories of MPI data
+        -:  118: *  types (@c is_mpi_integer_datatype, @c
+        -:  119: *  is_mpi_floating_point_datatype, @c is_mpi_logical_datatype, @c
+        -:  120: *  is_mpi_complex_datatype, or @c is_mpi_builtin_datatype). @c
+        -:  121: *  is_mpi_builtin_datatype derives @c mpl::true_ if any of the traits
+        -:  122: *  corresponding to MPI data type categories derived @c mpl::true_.
+        -:  123: */
+        -:  124:template<typename T>
+        -:  125:struct is_mpi_builtin_datatype
+        -:  126:  : boost::mpl::or_<is_mpi_integer_datatype<T>,
+        -:  127:                    is_mpi_floating_point_datatype<T>,
+        -:  128:                    is_mpi_logical_datatype<T>,
+        -:  129:                    is_mpi_complex_datatype<T>,
+        -:  130:                    is_mpi_byte_datatype<T> >
+        -:  131:{
+        -:  132:};
+        -:  133:
+        -:  134:/** @brief Type trait that determines if a C++ type can be mapped to
+        -:  135: *  an MPI data type.
+        -:  136: *
+        -:  137: *  This type trait determines if it is possible to build an MPI data
+        -:  138: *  type that represents a C++ data type. When this is the case, @c
+        -:  139: *  is_mpi_datatype derives @c mpl::true_ and the MPI data type will
+        -:  140: *  be accessible via @c get_mpi_datatype.
+        -:  141:
+        -:  142: *  For any C++ type that maps to a built-in MPI data type (see @c
+        -:  143: *  is_mpi_builtin_datatype), @c is_mpi_data_type is trivially
+        -:  144: *  true. However, any POD ("Plain Old Data") type containing types
+        -:  145: *  that themselves can be represented by MPI data types can itself be
+        -:  146: *  represented as an MPI data type. For instance, a @c point3d class
+        -:  147: *  containing three @c double values can be represented as an MPI
+        -:  148: *  data type. To do so, first make the data type Serializable (using
+        -:  149: *  the Boost.Serialization library); then, specialize the @c
+        -:  150: *  is_mpi_datatype trait for the point type so that it will derive @c
+        -:  151: *  mpl::true_:
+        -:  152: *
+        -:  153: *    @code
+        -:  154: *    namespace boost { namespace mpi {
+        -:  155: *      template<> struct is_mpi_datatype<point>
+        -:  156: *        : public mpl::true_ { };
+        -:  157: *    } }
+        -:  158: *    @endcode
+        -:  159: */
+        -:  160:template<typename T>
+        -:  161:struct is_mpi_datatype
+        -:  162: : public is_mpi_builtin_datatype<T>
+        -:  163:{
+        -:  164:};
+        -:  165:
+        -:  166:/** @brief Returns an MPI data type for a C++ type.
+        -:  167: *
+        -:  168: *  The function creates an MPI data type for the given object @c
+        -:  169: *  x. The first time it is called for a class @c T, the MPI data type
+        -:  170: *  is created and cached. Subsequent calls for objects of the same
+        -:  171: *  type @c T return the cached MPI data type.  The type @c T must
+        -:  172: *  allow creation of an MPI data type. That is, it must be
+        -:  173: *  Serializable and @c is_mpi_datatype<T> must derive @c mpl::true_.
+        -:  174: *
+        -:  175: *  For fundamental MPI types, a copy of the MPI data type of the MPI
+        -:  176: *  library is returned.
+        -:  177: *
+        -:  178: *  Note that since the data types are cached, the caller should never
+        -:  179: *  call @c MPI_Type_free() for the MPI data type returned by this
+        -:  180: *  call.
+        -:  181: *
+        -:  182: *  @param x for an optimized call, a constructed object of the type
+        -:  183: *  should be passed; otherwise, an object will be
+        -:  184: *  default-constructed.
+        -:  185: *
+        -:  186: *  @returns The MPI data type corresponding to type @c T.
+        -:  187: */
+function _ZN5boost3mpi16get_mpi_datatypeINS_6detail8parallel17msg_add_edge_dataINS3_17global_descriptorImEEmEEEEP15ompi_datatype_tRKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi16get_mpi_datatypeINS_6detail8parallel20msg_remove_edge_dataINS3_15edge_descriptorINS2_14edge_desc_implINS_12directed_tagEmEEEEEEEEP15ompi_datatype_tRKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi16get_mpi_datatypeINS_8parallel6detail14untracked_pairINS_6detail8parallel15edge_descriptorINS5_14edge_desc_implINS_12directed_tagEmEEEEbEEEEP15ompi_datatype_tRKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi16get_mpi_datatypeINS_8parallel6detail14untracked_pairIiNS_6detail8parallel17msg_add_edge_dataINS6_17global_descriptorImEEmEEEEEEP15ompi_datatype_tRKT_ called 0 returned 0% blocks executed 0%
+    #####:  188:template<typename T> MPI_Datatype get_mpi_datatype(const T& x)
+    $$$$$:  188-block  0
+    $$$$$:  188-block  1
+    $$$$$:  188-block  2
+    $$$$$:  188-block  3
+        -:  189:{
+        -:  190:  BOOST_MPL_ASSERT((is_mpi_datatype<T>));
+    #####:  191:  return detail::mpi_datatype_cache().datatype(x);
+    $$$$$:  191-block  0
+call    0 never executed
+call    1 never executed
+    $$$$$:  191-block  1
+call    2 never executed
+call    3 never executed
+    $$$$$:  191-block  2
+call    4 never executed
+call    5 never executed
+    $$$$$:  191-block  3
+call    6 never executed
+call    7 never executed
+        -:  192:}
+        -:  193:
+        -:  194:// Don't parse this part when we're generating Doxygen documentation.
+        -:  195:#ifndef BOOST_MPI_DOXYGEN
+        -:  196:
+        -:  197:/// INTERNAL ONLY
+        -:  198:#define BOOST_MPI_DATATYPE(CppType, MPIType, Kind)                      \
+        -:  199:template<>                                                              \
+        -:  200:inline MPI_Datatype                                                     \
+        -:  201:get_mpi_datatype< CppType >(const CppType&) { return MPIType; }         \
+        -:  202:                                                                        \
+        -:  203:template<>                                                              \
+        -:  204: struct BOOST_JOIN(is_mpi_,BOOST_JOIN(Kind,_datatype))< CppType >       \
+        -:  205:: boost::mpl::true_                                                     \
+        -:  206:{}
+        -:  207:
+        -:  208:/// INTERNAL ONLY
+function _ZN5boost3mpi16get_mpi_datatypeINS0_6packedEEEP15ompi_datatype_tRKT_ called 0 returned 0% blocks executed 0%
+    #####:  209:BOOST_MPI_DATATYPE(packed, MPI_PACKED, builtin);
+    $$$$$:  209-block  0
+    $$$$$:  209-block  1
+        -:  210:
+        -:  211:/// INTERNAL ONLY
+        -:  212:BOOST_MPI_DATATYPE(char, MPI_CHAR, builtin);
+        -:  213:
+        -:  214:/// INTERNAL ONLY
+function _ZN5boost3mpi16get_mpi_datatypeIsEEP15ompi_datatype_tRKT_ called 0 returned 0% blocks executed 0%
+    #####:  215:BOOST_MPI_DATATYPE(short, MPI_SHORT, integer);
+    $$$$$:  215-block  0
+    $$$$$:  215-block  1
+        -:  216:
+        -:  217:/// INTERNAL ONLY
+function _ZN5boost3mpi16get_mpi_datatypeIiEEP15ompi_datatype_tRKT_ called 0 returned 0% blocks executed 0%
+    #####:  218:BOOST_MPI_DATATYPE(int, MPI_INT, integer);
+    $$$$$:  218-block  0
+    $$$$$:  218-block  1
+        -:  219:
+        -:  220:/// INTERNAL ONLY
+function _ZN5boost3mpi16get_mpi_datatypeIlEEP15ompi_datatype_tRKT_ called 0 returned 0% blocks executed 0%
+    #####:  221:BOOST_MPI_DATATYPE(long, MPI_LONG, integer);
+    $$$$$:  221-block  0
+    $$$$$:  221-block  1
+        -:  222:
+        -:  223:/// INTERNAL ONLY
+        -:  224:BOOST_MPI_DATATYPE(float, MPI_FLOAT, floating_point);
+        -:  225:
+        -:  226:/// INTERNAL ONLY
+        -:  227:BOOST_MPI_DATATYPE(double, MPI_DOUBLE, floating_point);
+        -:  228:
+        -:  229:/// INTERNAL ONLY
+        -:  230:BOOST_MPI_DATATYPE(long double, MPI_LONG_DOUBLE, floating_point);
+        -:  231:
+        -:  232:/// INTERNAL ONLY
+        -:  233:BOOST_MPI_DATATYPE(unsigned char, MPI_UNSIGNED_CHAR, builtin);
+        -:  234:
+        -:  235:/// INTERNAL ONLY
+        -:  236:BOOST_MPI_DATATYPE(unsigned short, MPI_UNSIGNED_SHORT, integer);
+        -:  237:
+        -:  238:/// INTERNAL ONLY
+        -:  239:BOOST_MPI_DATATYPE(unsigned, MPI_UNSIGNED, integer);
+        -:  240:
+        -:  241:/// INTERNAL ONLY
+function _ZN5boost3mpi16get_mpi_datatypeImEEP15ompi_datatype_tRKT_ called 0 returned 0% blocks executed 0%
+    #####:  242:BOOST_MPI_DATATYPE(unsigned long, MPI_UNSIGNED_LONG, integer);
+    $$$$$:  242-block  0
+    $$$$$:  242-block  1
+        -:  243:
+        -:  244:/// INTERNAL ONLY
+        -:  245:#define BOOST_MPI_LIST2(A, B) A, B
+        -:  246:/// INTERNAL ONLY
+        -:  247:BOOST_MPI_DATATYPE(std::pair<BOOST_MPI_LIST2(float, int)>, MPI_FLOAT_INT, 
+        -:  248:                   builtin);
+        -:  249:/// INTERNAL ONLY
+        -:  250:BOOST_MPI_DATATYPE(std::pair<BOOST_MPI_LIST2(double, int)>, MPI_DOUBLE_INT, 
+        -:  251:                   builtin);
+        -:  252:/// INTERNAL ONLY
+        -:  253:BOOST_MPI_DATATYPE(std::pair<BOOST_MPI_LIST2(long double, int)>,
+        -:  254:                   MPI_LONG_DOUBLE_INT, builtin);
+        -:  255:/// INTERNAL ONLY
+        -:  256:BOOST_MPI_DATATYPE(std::pair<BOOST_MPI_LIST2(long, int>), MPI_LONG_INT, 
+        -:  257:                   builtin);
+        -:  258:/// INTERNAL ONLY
+        -:  259:BOOST_MPI_DATATYPE(std::pair<BOOST_MPI_LIST2(short, int>), MPI_SHORT_INT, 
+        -:  260:                   builtin);
+        -:  261:/// INTERNAL ONLY
+        -:  262:BOOST_MPI_DATATYPE(std::pair<BOOST_MPI_LIST2(int, int>), MPI_2INT, builtin);
+        -:  263:#undef BOOST_MPI_LIST2
+        -:  264:
+        -:  265:/// specialization of is_mpi_datatype for pairs
+        -:  266:template <class T, class U>
+        -:  267:struct is_mpi_datatype<std::pair<T,U> >
+        -:  268: : public mpl::and_<is_mpi_datatype<T>,is_mpi_datatype<U> >
+        -:  269:{
+        -:  270:};
+        -:  271:
+        -:  272:/// specialization of is_mpi_datatype for arrays
+        -:  273:#if defined(__cplusplus) && (201103L <= __cplusplus)
+        -:  274:template<class T, std::size_t N>
+        -:  275:struct is_mpi_datatype<std::array<T, N> >
+        -:  276: : public is_mpi_datatype<T>
+        -:  277:{
+        -:  278:};
+        -:  279:#endif
+        -:  280:
+        -:  281:// Define wchar_t specialization of is_mpi_datatype, if possible.
+        -:  282:#if !defined(BOOST_NO_INTRINSIC_WCHAR_T) && \
+        -:  283:  (defined(MPI_WCHAR) || (BOOST_MPI_VERSION >= 2))
+        -:  284:BOOST_MPI_DATATYPE(wchar_t, MPI_WCHAR, builtin);
+        -:  285:#endif
+        -:  286:
+        -:  287:// Define long long or __int64 specialization of is_mpi_datatype, if possible.
+        -:  288:#if defined(BOOST_HAS_LONG_LONG) && \
+        -:  289:  (defined(MPI_LONG_LONG_INT) || (BOOST_MPI_VERSION >= 2))
+        -:  290:BOOST_MPI_DATATYPE(long long, MPI_LONG_LONG_INT, builtin);
+        -:  291:#elif defined(BOOST_HAS_MS_INT64) && \
+        -:  292:  (defined(MPI_LONG_LONG_INT) || (BOOST_MPI_VERSION >= 2))
+        -:  293:BOOST_MPI_DATATYPE(__int64, MPI_LONG_LONG_INT, builtin); 
+        -:  294:#endif
+        -:  295:
+        -:  296:// Define unsigned long long or unsigned __int64 specialization of
+        -:  297:// is_mpi_datatype, if possible. We separate this from the check for
+        -:  298:// the (signed) long long/__int64 because some MPI implementations
+        -:  299:// (e.g., MPICH-MX) have MPI_LONG_LONG_INT but not
+        -:  300:// MPI_UNSIGNED_LONG_LONG.
+        -:  301:#if defined(BOOST_HAS_LONG_LONG) && \
+        -:  302:  (defined(MPI_UNSIGNED_LONG_LONG) \
+        -:  303:   || (BOOST_MPI_VERSION >= 2))
+        -:  304:BOOST_MPI_DATATYPE(unsigned long long, MPI_UNSIGNED_LONG_LONG, builtin);
+        -:  305:#elif defined(BOOST_HAS_MS_INT64) && \
+        -:  306:  (defined(MPI_UNSIGNED_LONG_LONG) \
+        -:  307:   || (BOOST_MPI_VERSION >= 2))
+        -:  308:BOOST_MPI_DATATYPE(unsigned __int64, MPI_UNSIGNED_LONG_LONG, builtin); 
+        -:  309:#endif
+        -:  310:
+        -:  311:// Define signed char specialization of is_mpi_datatype, if possible.
+        -:  312:#if defined(MPI_SIGNED_CHAR) || (BOOST_MPI_VERSION >= 2)
+        -:  313:BOOST_MPI_DATATYPE(signed char, MPI_SIGNED_CHAR, builtin);
+        -:  314:#endif
+        -:  315:
+        -:  316:
+        -:  317:#endif // Doxygen
+        -:  318:
+        -:  319:namespace detail {
+function _ZN5boost3mpi6detail27build_mpi_datatype_for_boolEv called 0 returned 0% blocks executed 0%
+    #####:  320:  inline MPI_Datatype build_mpi_datatype_for_bool()
+    $$$$$:  320-block  0
+        -:  321:  {
+        -:  322:    MPI_Datatype type;
+    #####:  323:    MPI_Type_contiguous(sizeof(bool), MPI_BYTE, &type);
+    $$$$$:  323-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  324:    MPI_Type_commit(&type);
+    $$$$$:  324-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  325:    return type;
+    $$$$$:  325-block  0
+    $$$$$:  325-block  1
+        -:  326:  }
+        -:  327:}
+        -:  328:
+        -:  329:/// Support for bool. There is no corresponding MPI_BOOL.
+        -:  330:/// INTERNAL ONLY
+        -:  331:template<>
+function _ZN5boost3mpi16get_mpi_datatypeIbEEP15ompi_datatype_tRKT_ called 0 returned 0% blocks executed 0%
+    #####:  332:inline MPI_Datatype get_mpi_datatype<bool>(const bool&)
+    $$$$$:  332-block  0
+        -:  333:{
+    #####:  334:  static MPI_Datatype type = detail::build_mpi_datatype_for_bool();
+    $$$$$:  334-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  334-block  1
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    $$$$$:  334-block  2
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    $$$$$:  334-block  3
+call    8 never executed
+    %%%%%:  334-block  4
+branch  9 never executed
+branch 10 never executed
+    %%%%%:  334-block  5
+call   11 never executed
+    #####:  335:  return type;
+    $$$$$:  335-block  0
+    $$$$$:  335-block  1
+        -:  336:}
+        -:  337:
+        -:  338:/// INTERNAL ONLY
+        -:  339:template<>
+        -:  340:struct is_mpi_datatype<bool>
+        -:  341:  : boost::mpl::bool_<true>
+        -:  342:{};
+        -:  343:
+        -:  344:
+        -:  345:#ifndef BOOST_MPI_DOXYGEN
+        -:  346:// direct support for special primitive data types of the serialization library
+        -:  347:BOOST_MPI_DATATYPE(boost::archive::library_version_type, get_mpi_datatype(uint_least16_t()), integer);
+        -:  348:BOOST_MPI_DATATYPE(boost::archive::version_type, get_mpi_datatype(uint_least8_t()), integer);
+        -:  349:BOOST_MPI_DATATYPE(boost::archive::class_id_type, get_mpi_datatype(int_least16_t()), integer);
+        -:  350:BOOST_MPI_DATATYPE(boost::archive::class_id_reference_type, get_mpi_datatype(int_least16_t()), integer);
+        -:  351:BOOST_MPI_DATATYPE(boost::archive::class_id_optional_type, get_mpi_datatype(int_least16_t()), integer);
+        -:  352:BOOST_MPI_DATATYPE(boost::archive::object_id_type, get_mpi_datatype(uint_least32_t()), integer);
+        -:  353:BOOST_MPI_DATATYPE(boost::archive::object_reference_type, get_mpi_datatype(uint_least32_t()), integer);
+        -:  354:BOOST_MPI_DATATYPE(boost::archive::tracking_type, get_mpi_datatype(bool()), builtin);
+        -:  355:BOOST_MPI_DATATYPE(boost::serialization::collection_size_type, get_mpi_datatype(std::size_t()), integer);
+        -:  356:BOOST_MPI_DATATYPE(boost::serialization::item_version_type, get_mpi_datatype(uint_least8_t()), integer);
+        -:  357:#endif // Doxygen
+        -:  358:
+        -:  359:
+        -:  360:} } // end namespace boost::mpi
+        -:  361:
+        -:  362:// direct support for special primitive data types of the serialization library
+        -:  363:// in the case of homogeneous systems
+        -:  364:// define a macro to make explicit designation of this more transparent
+        -:  365:#define BOOST_IS_MPI_DATATYPE(T)              \
+        -:  366:namespace boost {                             \
+        -:  367:namespace mpi {                               \
+        -:  368:template<>                                    \
+        -:  369:struct is_mpi_datatype< T > : mpl::true_ {};  \
+        -:  370:}}                                            \
+        -:  371:/**/
+        -:  372:
+        -:  373:
+        -:  374:#endif // BOOST_MPI_MPI_DATATYPE_HPP

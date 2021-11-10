@@ -1,0 +1,137 @@
+        -:    0:Source:/usr/include/boost/serialization/factory.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_SERIALIZATION_FACTORY_HPP
+        -:    2:#define BOOST_SERIALIZATION_FACTORY_HPP
+        -:    3:
+        -:    4://///////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
+        -:    5:// MS compatible compilers support #pragma once
+        -:    6:#if defined(_MSC_VER)
+        -:    7:# pragma once
+        -:    8:#endif
+        -:    9:
+        -:   10:// factory.hpp: create an instance from an extended_type_info instance.
+        -:   11:
+        -:   12:// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com .
+        -:   13:// Use, modification and distribution is subject to the Boost Software
+        -:   14:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:   15:// http://www.boost.org/LICENSE_1_0.txt)
+        -:   16:
+        -:   17://  See http://www.boost.org for updates, documentation, and revision history.
+        -:   18:
+        -:   19:#include <cstdarg> // valist
+        -:   20:#include <cstddef> // NULL
+        -:   21:
+        -:   22:#include <boost/preprocessor/control/if.hpp>
+        -:   23:#include <boost/preprocessor/comparison/greater.hpp>
+        -:   24:#include <boost/assert.hpp>
+        -:   25:
+        -:   26:namespace std{
+        -:   27:    #if defined(__LIBCOMO__)
+        -:   28:        using ::va_list;
+        -:   29:    #endif
+        -:   30:} // namespace std
+        -:   31:
+        -:   32:namespace boost {
+        -:   33:namespace serialization {
+        -:   34:
+        -:   35:// default implementation does nothing.
+        -:   36:template<class T, int N>
+function _ZN5boost13serialization7factoryI11DynamicNodeLi4EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryI11DynamicNodeLi3EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryI11DynamicNodeLi2EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryI11DynamicNodeLi1EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryI11DynamicNodeLi0EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryISt6vectorIdSaIdEELi4EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryISt6vectorIdSaIdEELi3EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryISt6vectorIdSaIdEELi2EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryISt6vectorIdSaIdEELi1EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryISt6vectorIdSaIdEELi0EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryI11DynamicEdgeLi4EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryI11DynamicEdgeLi3EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryI11DynamicEdgeLi2EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryI11DynamicEdgeLi1EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization7factoryI11DynamicEdgeLi0EEEPT_P13__va_list_tag called 0 returned 0% blocks executed 0%
+    #####:   37:T * factory(std::va_list){
+    $$$$$:   37-block  0
+    $$$$$:   37-block  1
+    $$$$$:   37-block  2
+    $$$$$:   37-block  3
+    $$$$$:   37-block  4
+    $$$$$:   37-block  5
+    $$$$$:   37-block  6
+    $$$$$:   37-block  7
+    $$$$$:   37-block  8
+    $$$$$:   37-block  9
+    $$$$$:   37-block 10
+    $$$$$:   37-block 11
+    $$$$$:   37-block 12
+    $$$$$:   37-block 13
+    $$$$$:   37-block 14
+    #####:   38:    BOOST_ASSERT(false);
+        -:   39:    // throw exception here?
+        -:   40:    return NULL;
+        -:   41:}
+        -:   42:
+        -:   43:} // namespace serialization
+        -:   44:} // namespace boost
+        -:   45:
+        -:   46:#define BOOST_SERIALIZATION_FACTORY(N, T, A0, A1, A2, A3) \
+        -:   47:namespace boost {                                         \
+        -:   48:namespace serialization {                                 \
+        -:   49:    template<>                                            \
+        -:   50:    T * factory<T, N>(std::va_list ap){                   \
+        -:   51:        BOOST_PP_IF(BOOST_PP_GREATER(N, 0)                \
+        -:   52:            , A0 a0 = va_arg(ap, A0);, BOOST_PP_EMPTY())  \
+        -:   53:        BOOST_PP_IF(BOOST_PP_GREATER(N, 1)                \
+        -:   54:            , A1 a1 = va_arg(ap, A1);, BOOST_PP_EMPTY())  \
+        -:   55:        BOOST_PP_IF(BOOST_PP_GREATER(N, 2)                \
+        -:   56:            , A2 a2 = va_arg(ap, A2);, BOOST_PP_EMPTY())  \
+        -:   57:        BOOST_PP_IF(BOOST_PP_GREATER(N, 3)                \
+        -:   58:            , A3 a3 = va_arg(ap, A3);, BOOST_PP_EMPTY())  \
+        -:   59:        return new T(                                     \
+        -:   60:            BOOST_PP_IF(BOOST_PP_GREATER(N, 0)            \
+        -:   61:                , a0, BOOST_PP_EMPTY())                   \
+        -:   62:            BOOST_PP_IF(BOOST_PP_GREATER(N, 1))           \
+        -:   63:                , BOOST_PP_COMMA, BOOST_PP_EMPTY)()       \
+        -:   64:            BOOST_PP_IF(BOOST_PP_GREATER(N, 1)            \
+        -:   65:                , a1, BOOST_PP_EMPTY())                   \
+        -:   66:            BOOST_PP_IF(BOOST_PP_GREATER(N, 2))           \
+        -:   67:                , BOOST_PP_COMMA, BOOST_PP_EMPTY)()       \
+        -:   68:            BOOST_PP_IF(BOOST_PP_GREATER(N, 2)            \
+        -:   69:                , a2, BOOST_PP_EMPTY())                   \
+        -:   70:            BOOST_PP_IF(BOOST_PP_GREATER(N, 3))           \
+        -:   71:                , BOOST_PP_COMMA, BOOST_PP_EMPTY)()       \
+        -:   72:            BOOST_PP_IF(BOOST_PP_GREATER(N, 3)            \
+        -:   73:                , a3, BOOST_PP_EMPTY())                   \
+        -:   74:        );                                                \
+        -:   75:    }                                                     \
+        -:   76:}                                                         \
+        -:   77:}   /**/
+        -:   78:
+        -:   79:#define BOOST_SERIALIZATION_FACTORY_4(T, A0, A1, A2, A3) \
+        -:   80:    BOOST_SERIALIZATION_FACTORY(4, T, A0, A1, A2, A3)
+        -:   81:
+        -:   82:#define BOOST_SERIALIZATION_FACTORY_3(T, A0, A1, A2)     \
+        -:   83:    BOOST_SERIALIZATION_FACTORY(3, T, A0, A1, A2, 0)
+        -:   84:
+        -:   85:#define BOOST_SERIALIZATION_FACTORY_2(T, A0, A1)         \
+        -:   86:    BOOST_SERIALIZATION_FACTORY(2, T, A0, A1, 0, 0)
+        -:   87:
+        -:   88:#define BOOST_SERIALIZATION_FACTORY_1(T, A0)             \
+        -:   89:    BOOST_SERIALIZATION_FACTORY(1, T, A0, 0, 0, 0)
+        -:   90:
+        -:   91:#define BOOST_SERIALIZATION_FACTORY_0(T)                 \
+        -:   92:namespace boost {                                        \
+        -:   93:namespace serialization {                                \
+        -:   94:    template<>                                           \
+        -:   95:    T * factory<T, 0>(std::va_list){                     \
+        -:   96:        return new T();                                  \
+        -:   97:    }                                                    \
+        -:   98:}                                                        \
+        -:   99:}                                                        \
+        -:  100:/**/
+        -:  101:
+        -:  102:#endif // BOOST_SERIALIZATION_FACTORY_HPP

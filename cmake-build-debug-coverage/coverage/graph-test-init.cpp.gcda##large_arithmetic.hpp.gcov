@@ -1,0 +1,177 @@
+        -:    0:Source:/usr/include/boost/random/detail/large_arithmetic.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* boost random/detail/large_arithmetic.hpp header file
+        -:    2: *
+        -:    3: * Copyright Steven Watanabe 2011
+        -:    4: * Distributed under the Boost Software License, Version 1.0. (See
+        -:    5: * accompanying file LICENSE_1_0.txt or copy at
+        -:    6: * http://www.boost.org/LICENSE_1_0.txt)
+        -:    7: *
+        -:    8: * See http://www.boost.org for most recent version including documentation.
+        -:    9: *
+        -:   10: * $Id$
+        -:   11: */
+        -:   12:
+        -:   13:#ifndef BOOST_RANDOM_DETAIL_LARGE_ARITHMETIC_HPP
+        -:   14:#define BOOST_RANDOM_DETAIL_LARGE_ARITHMETIC_HPP
+        -:   15:
+        -:   16:#include <boost/cstdint.hpp>
+        -:   17:#include <boost/integer.hpp>
+        -:   18:#include <boost/limits.hpp>
+        -:   19:#include <boost/random/detail/integer_log2.hpp>
+        -:   20:
+        -:   21:#include <boost/random/detail/disable_warnings.hpp>
+        -:   22:
+        -:   23:namespace boost {
+        -:   24:namespace random {
+        -:   25:namespace detail {
+        -:   26:
+        -:   27:struct div_t {
+        -:   28:    boost::uintmax_t quotient;
+        -:   29:    boost::uintmax_t remainder;
+        -:   30:};
+        -:   31:
+function _ZN5boost6random6detail9muldivmodEmmm called 0 returned 0% blocks executed 0%
+    #####:   32:inline div_t muldivmod(boost::uintmax_t a, boost::uintmax_t b, boost::uintmax_t m)
+    $$$$$:   32-block  0
+        -:   33:{
+    #####:   34:    const int bits =
+        -:   35:        ::std::numeric_limits< ::boost::uintmax_t>::digits / 2;
+    #####:   36:    const ::boost::uintmax_t mask = (::boost::uintmax_t(1) << bits) - 1;
+        -:   37:    typedef ::boost::uint_t<bits>::fast digit_t;
+        -:   38:
+        -:   39:    int shift = std::numeric_limits< ::boost::uintmax_t>::digits - 1
+    #####:   40:        - detail::integer_log2(m);
+    $$$$$:   40-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   41:
+    #####:   42:    a <<= shift;
+    #####:   43:    m <<= shift;
+        -:   44:
+    #####:   45:    digit_t product[4] = { 0, 0, 0, 0 };
+    #####:   46:    digit_t a_[2] = { digit_t(a & mask), digit_t((a >> bits) & mask) };
+    #####:   47:    digit_t b_[2] = { digit_t(b & mask), digit_t((b >> bits) & mask) };
+    #####:   48:    digit_t m_[2] = { digit_t(m & mask), digit_t((m >> bits) & mask) };
+        -:   49:
+        -:   50:    // multiply a * b
+    #####:   51:    for(int i = 0; i < 2; ++i) {
+    $$$$$:   51-block  0
+    $$$$$:   51-block  1
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   51-block  2
+    #####:   52:        digit_t carry = 0;
+    #####:   53:        for(int j = 0; j < 2; ++j) {
+    $$$$$:   53-block  0
+    $$$$$:   53-block  1
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   53-block  2
+    #####:   54:            ::boost::uint64_t temp = ::boost::uintmax_t(a_[i]) * b_[j] +
+    #####:   55:                carry + product[i + j];
+    #####:   56:            product[i + j] = digit_t(temp & mask);
+    #####:   57:            carry = digit_t(temp >> bits);
+        -:   58:        }
+    #####:   59:        if(carry != 0) {
+    $$$$$:   59-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   60:            product[i + 2] += carry;
+    $$$$$:   60-block  0
+        -:   61:        }
+        -:   62:    }
+        -:   63:
+        -:   64:    digit_t quotient[2];
+        -:   65:
+    #####:   66:    if(m == 0) {
+    $$$$$:   66-block  0
+branch  0 never executed
+branch  1 never executed
+        -:   67:        div_t result = {
+    #####:   68:            ((::boost::uintmax_t(product[3]) << bits) | product[2]),
+    #####:   69:            ((::boost::uintmax_t(product[1]) << bits) | product[0]) >> shift,
+    #####:   70:        };
+    #####:   71:        return result;
+    $$$$$:   71-block  0
+        -:   72:    }
+        -:   73:
+        -:   74:    // divide product / m
+    #####:   75:    for(int i = 3; i >= 2; --i) {
+    $$$$$:   75-block  0
+    $$$$$:   75-block  1
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   75-block  2
+    #####:   76:        ::boost::uintmax_t temp =
+    #####:   77:            ::boost::uintmax_t(product[i]) << bits | product[i - 1];
+        -:   78:
+    #####:   79:        digit_t q = digit_t((product[i] == m_[1]) ? mask : temp / m_[1]);
+    $$$$$:   79-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   79-block  1
+    $$$$$:   79-block  2
+        -:   80:
+    #####:   81:        ::boost::uintmax_t rem =
+    #####:   82:            ((temp - ::boost::uintmax_t(q) * m_[1]) << bits) + product[i - 2];
+        -:   83:
+    #####:   84:        ::boost::uintmax_t diff = m_[0] * ::boost::uintmax_t(q);
+        -:   85:
+    #####:   86:        int error = 0;
+    #####:   87:        if(diff > rem) {
+    $$$$$:   87-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   88:            if(diff - rem > m) {
+    $$$$$:   88-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   89:                error = 2;
+    $$$$$:   89-block  0
+        -:   90:            } else {
+    #####:   91:                error = 1;
+    $$$$$:   91-block  0
+    $$$$$:   91-block  1
+        -:   92:            }
+        -:   93:        }
+    #####:   94:        q -= error;
+    #####:   95:        rem = rem + error * m - diff;
+        -:   96:
+    #####:   97:        quotient[i - 2] = q;
+    #####:   98:        product[i] = 0;
+    #####:   99:        product[i-1] = static_cast<digit_t>((rem >> bits) & mask);
+    #####:  100:        product[i-2] = static_cast<digit_t>(rem & mask);
+        -:  101:    }
+        -:  102:
+        -:  103:    div_t result = {
+    #####:  104:        ((::boost::uintmax_t(quotient[1]) << bits) | quotient[0]),
+    #####:  105:        ((::boost::uintmax_t(product[1]) << bits) | product[0]) >> shift,
+    #####:  106:    };
+    #####:  107:    return result;
+    $$$$$:  107-block  0
+    $$$$$:  107-block  1
+    $$$$$:  107-block  2
+        -:  108:}
+        -:  109:
+        -:  110:inline boost::uintmax_t muldiv(boost::uintmax_t a, boost::uintmax_t b, boost::uintmax_t m)
+        -:  111:{ return detail::muldivmod(a, b, m).quotient; }
+        -:  112:
+function _ZN5boost6random6detail6mulmodEmmm called 0 returned 0% blocks executed 0%
+    #####:  113:inline boost::uintmax_t mulmod(boost::uintmax_t a, boost::uintmax_t b, boost::uintmax_t m)
+    $$$$$:  113-block  0
+    #####:  114:{ return detail::muldivmod(a, b, m).remainder; }
+    $$$$$:  114-block  0
+call    0 never executed
+        -:  115:
+        -:  116:} // namespace detail
+        -:  117:} // namespace random
+        -:  118:} // namespace boost
+        -:  119:
+        -:  120:#include <boost/random/detail/enable_warnings.hpp>
+        -:  121:
+        -:  122:#endif // BOOST_RANDOM_DETAIL_LARGE_ARITHMETIC_HPP

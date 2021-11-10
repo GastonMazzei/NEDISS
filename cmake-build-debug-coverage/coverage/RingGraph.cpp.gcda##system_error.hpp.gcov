@@ -1,0 +1,139 @@
+        -:    0:Source:/usr/include/boost/system/system_error.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://  Boost system_error.hpp  --------------------------------------------------//
+        -:    2:
+        -:    3://  Copyright Beman Dawes 2006
+        -:    4:
+        -:    5://  Distributed under the Boost Software License, Version 1.0. (See accompanying
+        -:    6://  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+        -:    7:
+        -:    8:#ifndef BOOST_SYSTEM_SYSTEM_ERROR_HPP
+        -:    9:#define BOOST_SYSTEM_SYSTEM_ERROR_HPP
+        -:   10:
+        -:   11:#include <boost/system/error_code.hpp>
+        -:   12:#include <string>
+        -:   13:#include <stdexcept>
+        -:   14:#include <cassert>
+        -:   15:
+        -:   16:namespace boost
+        -:   17:{
+        -:   18:  namespace system
+        -:   19:  {
+        -:   20:    //  class system_error  ------------------------------------------------------------//
+        -:   21:
+        -:   22:    class BOOST_SYMBOL_VISIBLE system_error : public std::runtime_error
+        -:   23:    // BOOST_SYMBOL_VISIBLE is needed by GCC to ensure system_error thrown from a shared
+        -:   24:    // library can be caught. See svn.boost.org/trac/boost/ticket/3697
+        -:   25:    {
+        -:   26:    public:
+        -:   27:      explicit system_error( error_code ec )
+        -:   28:          : std::runtime_error(""), m_error_code(ec) {}
+        -:   29:
+        -:   30:      system_error( error_code ec, const std::string & what_arg )
+        -:   31:          : std::runtime_error(what_arg), m_error_code(ec) {}
+        -:   32:
+        -:   33:      system_error( error_code ec, const char* what_arg )
+        -:   34:          : std::runtime_error(what_arg), m_error_code(ec) {}
+        -:   35:
+        -:   36:      system_error( int ev, const error_category & ecat )
+        -:   37:          : std::runtime_error(""), m_error_code(ev,ecat) {}
+        -:   38:
+        -:   39:      system_error( int ev, const error_category & ecat,
+        -:   40:        const std::string & what_arg )
+        -:   41:          : std::runtime_error(what_arg), m_error_code(ev,ecat) {}
+        -:   42:
+        -:   43:      system_error( int ev, const error_category & ecat,
+        -:   44:        const char * what_arg )
+        -:   45:          : std::runtime_error(what_arg), m_error_code(ev,ecat) {}
+        -:   46:
+function _ZN5boost6system12system_errorD0Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost6system12system_errorD2Ev called 0 returned 0% blocks executed 0%
+    #####:   47:      virtual ~system_error() BOOST_NOEXCEPT_OR_NOTHROW {}
+    $$$$$:   47-block  0
+    $$$$$:   47-block  1
+call    0 never executed
+call    1 never executed
+    $$$$$:   47-block  2
+    $$$$$:   47-block  3
+call    2 never executed
+call    3 never executed
+        -:   48:
+        -:   49:      error_code code() const BOOST_NOEXCEPT { return m_error_code; }
+        -:   50:      const char * what() const BOOST_NOEXCEPT_OR_NOTHROW BOOST_OVERRIDE;
+        -:   51:
+        -:   52:    private:
+        -:   53:      error_code           m_error_code;
+        -:   54:      mutable std::string  m_what;
+        -:   55:    };
+        -:   56:
+        -:   57:    //  implementation  ------------------------------------------------------//
+        -:   58:
+function _ZNK5boost6system12system_error4whatEv called 0 returned 0% blocks executed 0%
+    #####:   59:    inline const char * system_error::what() const BOOST_NOEXCEPT_OR_NOTHROW
+    $$$$$:   59-block  0
+        -:   60:    // see http://www.boost.org/more/error_handling.html for lazy build rationale
+        -:   61:    {
+    #####:   62:      if ( m_what.empty() )
+    $$$$$:   62-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   63:      {
+        -:   64:#ifndef BOOST_NO_EXCEPTIONS
+        -:   65:        try
+        -:   66:#endif
+        -:   67:        {
+    #####:   68:          m_what = this->std::runtime_error::what();
+    $$$$$:   68-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:   69:          if ( !m_what.empty() ) m_what += ": ";
+    $$$$$:   69-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   69-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   69-block  2
+    #####:   70:          m_what += m_error_code.message();
+    $$$$$:   70-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   70-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   70-block  2
+call    6 never executed
+    %%%%%:   70-block  3
+call    7 never executed
+    %%%%%:   70-block  4
+    %%%%%:   70-block  5
+        -:   71:        }
+        -:   72:#ifndef BOOST_NO_EXCEPTIONS
+    =====:   73:        catch (...) { return std::runtime_error::what(); }
+    %%%%%:   73-block  0
+call    0 never executed
+call    1 never executed
+        -:   74:#endif
+        -:   75:      }
+    #####:   76:      return m_what.c_str();
+    $$$$$:   76-block  0
+call    0 never executed
+    $$$$$:   76-block  1
+        -:   77:    }
+        -:   78:
+        -:   79:  } // namespace system
+        -:   80:} // namespace boost
+        -:   81:
+        -:   82:#endif // BOOST_SYSTEM_SYSTEM_ERROR_HPP
+        -:   83:
+        -:   84:

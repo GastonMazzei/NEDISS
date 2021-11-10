@@ -1,0 +1,54 @@
+        -:    0:Source:/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2:// Created by m4zz31 on 26/10/21.
+        -:    3://
+        -:    4:#ifndef CPPPROJCT_ERDOSRENYIGRAPH_H
+        -:    5:#define CPPPROJCT_ERDOSRENYIGRAPH_H
+        -:    6:#include "GeneralGraph.h"
+        -:    7:
+        -:    8:class ErdosRenyiGraphObject : public CommonGraphObjectClass {
+        -:    9:public:
+        -:   10:    // WE SHOULD CHANGE PROBABILITY FOR NUMBER OF EDGES!
+        -:   11:    typedef boost::sorted_erdos_renyi_iterator<boost::minstd_rand, Graph> ERGen;
+        -:   12:    boost::minstd_rand gen;
+        -:   13:    unsigned long N;
+        -:   14:    unsigned long E;
+        -:   15:    double Proba;
+        -:   16:    Graph g;
+        -:   17:    unsigned long Procs = num_processes(boost::graph::distributed::mpi_process_group());
+        -:   18:
+        -:   19:    ErdosRenyiGraphObject(unsigned long num_nodes, double probability) :
+        -:   20:            E((unsigned long) (probability * (double) num_nodes)), // THIS IS WRONG!
+        -:   21:            N(num_nodes),
+        -:   22:            Proba(probability),
+        -:   23:            g(ERGen(gen, num_nodes, probability, false), ERGen(), num_nodes) {};
+        -:   24:
+        -:   25:    void build(){}; // empty function for inter-class compatibility :-)
+function _GLOBAL__sub_I_ErdosRenyiGraph.cpp called 1 returned 100% blocks executed 100%
+function _Z41__static_initialization_and_destruction_1ii called 1 returned 100% blocks executed 44%
+function _Z41__static_initialization_and_destruction_0ii called 1 returned 100% blocks executed 80%
+        6:   26:};
+        1:   26-block  0
+        1:   26-block  1
+call    0 returned 1
+call    1 returned 1
+        1:   26-block  2
+        1:   26-block  3
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+        1:   26-block  4
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0
+        1:   26-block  5
+        1:   26-block  6
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0
+        1:   26-block  7
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0
+        1:   26-block  8
+        -:   27:#endif //CPPPROJCT_ERDOSRENYIGRAPH_H

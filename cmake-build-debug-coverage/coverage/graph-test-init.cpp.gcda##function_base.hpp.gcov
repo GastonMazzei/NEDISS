@@ -1,0 +1,908 @@
+        -:    0:Source:/usr/include/boost/function/function_base.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Boost.Function library
+        -:    2:
+        -:    3://  Copyright Douglas Gregor 2001-2006
+        -:    4://  Copyright Emil Dotchevski 2007
+        -:    5://  Use, modification and distribution is subject to the Boost Software License, Version 1.0.
+        -:    6://  (See accompanying file LICENSE_1_0.txt or copy at
+        -:    7://  http://www.boost.org/LICENSE_1_0.txt)
+        -:    8:
+        -:    9:// For more information, see http://www.boost.org
+        -:   10:
+        -:   11:#ifndef BOOST_FUNCTION_BASE_HEADER
+        -:   12:#define BOOST_FUNCTION_BASE_HEADER
+        -:   13:
+        -:   14:#include <stdexcept>
+        -:   15:#include <string>
+        -:   16:#include <memory>
+        -:   17:#include <new>
+        -:   18:#include <boost/config.hpp>
+        -:   19:#include <boost/assert.hpp>
+        -:   20:#include <boost/integer.hpp>
+        -:   21:#include <boost/type_index.hpp>
+        -:   22:#include <boost/type_traits/has_trivial_copy.hpp>
+        -:   23:#include <boost/type_traits/has_trivial_destructor.hpp>
+        -:   24:#include <boost/type_traits/is_const.hpp>
+        -:   25:#include <boost/type_traits/is_integral.hpp>
+        -:   26:#include <boost/type_traits/is_volatile.hpp>
+        -:   27:#include <boost/type_traits/composite_traits.hpp>
+        -:   28:#include <boost/ref.hpp>
+        -:   29:#include <boost/type_traits/conditional.hpp>
+        -:   30:#include <boost/config/workaround.hpp>
+        -:   31:#include <boost/type_traits/alignment_of.hpp>
+        -:   32:#ifndef BOOST_NO_SFINAE
+        -:   33:#include <boost/type_traits/enable_if.hpp>
+        -:   34:#else
+        -:   35:#include <boost/type_traits/integral_constant.hpp>
+        -:   36:#endif
+        -:   37:#include <boost/function_equal.hpp>
+        -:   38:#include <boost/function/function_fwd.hpp>
+        -:   39:
+        -:   40:#if defined(BOOST_MSVC)
+        -:   41:#   pragma warning( push )
+        -:   42:#   pragma warning( disable : 4793 ) // complaint about native code generation
+        -:   43:#   pragma warning( disable : 4127 ) // "conditional expression is constant"
+        -:   44:#endif
+        -:   45:
+        -:   46:#if defined(__ICL) && __ICL <= 600 || defined(__MWERKS__) && __MWERKS__ < 0x2406 && !defined(BOOST_STRICT_CONFIG)
+        -:   47:#  define BOOST_FUNCTION_TARGET_FIX(x) x
+        -:   48:#else
+        -:   49:#  define BOOST_FUNCTION_TARGET_FIX(x)
+        -:   50:#endif // __ICL etc
+        -:   51:
+        -:   52:#  define BOOST_FUNCTION_ENABLE_IF_NOT_INTEGRAL(Functor,Type)              \
+        -:   53:      typename ::boost::enable_if_<          \
+        -:   54:                           !(::boost::is_integral<Functor>::value), \
+        -:   55:                           Type>::type
+        -:   56:
+        -:   57:namespace boost {
+        -:   58:  namespace detail {
+        -:   59:    namespace function {
+        -:   60:      class X;
+        -:   61:
+        -:   62:      /**
+        -:   63:       * A buffer used to store small function objects in
+        -:   64:       * boost::function. It is a union containing function pointers,
+        -:   65:       * object pointers, and a structure that resembles a bound
+        -:   66:       * member function pointer.
+        -:   67:       */
+        -:   68:      union function_buffer_members
+        -:   69:      {
+        -:   70:        // For pointers to function objects
+        -:   71:        typedef void* obj_ptr_t;
+        -:   72:        mutable obj_ptr_t obj_ptr;
+        -:   73:
+        -:   74:        // For pointers to std::type_info objects
+        -:   75:        struct type_t {
+        -:   76:          // (get_functor_type_tag, check_functor_type_tag).
+        -:   77:          const boost::typeindex::type_info* type;
+        -:   78:
+        -:   79:          // Whether the type is const-qualified.
+        -:   80:          bool const_qualified;
+        -:   81:          // Whether the type is volatile-qualified.
+        -:   82:          bool volatile_qualified;
+        -:   83:        } type;
+        -:   84:
+        -:   85:        // For function pointers of all kinds
+        -:   86:        typedef void (*func_ptr_t)();
+        -:   87:        mutable func_ptr_t func_ptr;
+        -:   88:
+        -:   89:        // For bound member pointers
+        -:   90:        struct bound_memfunc_ptr_t {
+        -:   91:          void (X::*memfunc_ptr)(int);
+        -:   92:          void* obj_ptr;
+        -:   93:        } bound_memfunc_ptr;
+        -:   94:
+        -:   95:        // For references to function objects. We explicitly keep
+        -:   96:        // track of the cv-qualifiers on the object referenced.
+        -:   97:        struct obj_ref_t {
+        -:   98:          mutable void* obj_ptr;
+        -:   99:          bool is_const_qualified;
+        -:  100:          bool is_volatile_qualified;
+        -:  101:        } obj_ref;
+        -:  102:      };
+        -:  103:
+        -:  104:      union BOOST_SYMBOL_VISIBLE function_buffer
+        -:  105:      {
+        -:  106:        // Type-specific union members
+        -:  107:        mutable function_buffer_members members;
+        -:  108:
+        -:  109:        // To relax aliasing constraints
+        -:  110:        mutable char data[sizeof(function_buffer_members)];
+        -:  111:      };
+        -:  112:
+        -:  113:      /**
+        -:  114:       * The unusable class is a placeholder for unused function arguments
+        -:  115:       * It is also completely unusable except that it constructable from
+        -:  116:       * anything. This helps compilers without partial specialization to
+        -:  117:       * handle Boost.Function objects returning void.
+        -:  118:       */
+        -:  119:      struct unusable
+        -:  120:      {
+        -:  121:        unusable() {}
+        -:  122:        template<typename T> unusable(const T&) {}
+        -:  123:      };
+        -:  124:
+        -:  125:      /* Determine the return type. This supports compilers that do not support
+        -:  126:       * void returns or partial specialization by silently changing the return
+        -:  127:       * type to "unusable".
+        -:  128:       */
+        -:  129:      template<typename T> struct function_return_type { typedef T type; };
+        -:  130:
+        -:  131:      template<>
+        -:  132:      struct function_return_type<void>
+        -:  133:      {
+        -:  134:        typedef unusable type;
+        -:  135:      };
+        -:  136:
+        -:  137:      // The operation type to perform on the given functor/function pointer
+        -:  138:      enum functor_manager_operation_type {
+        -:  139:        clone_functor_tag,
+        -:  140:        move_functor_tag,
+        -:  141:        destroy_functor_tag,
+        -:  142:        check_functor_type_tag,
+        -:  143:        get_functor_type_tag
+        -:  144:      };
+        -:  145:
+        -:  146:      // Tags used to decide between different types of functions
+        -:  147:      struct function_ptr_tag {};
+        -:  148:      struct function_obj_tag {};
+        -:  149:      struct member_ptr_tag {};
+        -:  150:      struct function_obj_ref_tag {};
+        -:  151:
+        -:  152:      template<typename F>
+        -:  153:      class get_function_tag
+        -:  154:      {
+        -:  155:        typedef typename conditional<(is_pointer<F>::value),
+        -:  156:                                   function_ptr_tag,
+        -:  157:                                   function_obj_tag>::type ptr_or_obj_tag;
+        -:  158:
+        -:  159:        typedef typename conditional<(is_member_pointer<F>::value),
+        -:  160:                                   member_ptr_tag,
+        -:  161:                                   ptr_or_obj_tag>::type ptr_or_obj_or_mem_tag;
+        -:  162:
+        -:  163:        typedef typename conditional<(is_reference_wrapper<F>::value),
+        -:  164:                                   function_obj_ref_tag,
+        -:  165:                                   ptr_or_obj_or_mem_tag>::type or_ref_tag;
+        -:  166:
+        -:  167:      public:
+        -:  168:        typedef or_ref_tag type;
+        -:  169:      };
+        -:  170:
+        -:  171:      // The trivial manager does nothing but return the same pointer (if we
+        -:  172:      // are cloning) or return the null pointer (if we are deleting).
+        -:  173:      template<typename F>
+        -:  174:      struct reference_manager
+        -:  175:      {
+        -:  176:        static inline void
+        -:  177:        manage(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  178:               functor_manager_operation_type op)
+        -:  179:        {
+        -:  180:          switch (op) {
+        -:  181:          case clone_functor_tag:
+        -:  182:            out_buffer.members.obj_ref = in_buffer.members.obj_ref;
+        -:  183:            return;
+        -:  184:
+        -:  185:          case move_functor_tag:
+        -:  186:            out_buffer.members.obj_ref = in_buffer.members.obj_ref;
+        -:  187:            in_buffer.members.obj_ref.obj_ptr = 0;
+        -:  188:            return;
+        -:  189:
+        -:  190:          case destroy_functor_tag:
+        -:  191:            out_buffer.members.obj_ref.obj_ptr = 0;
+        -:  192:            return;
+        -:  193:
+        -:  194:          case check_functor_type_tag:
+        -:  195:            {
+        -:  196:              // Check whether we have the same type. We can add
+        -:  197:              // cv-qualifiers, but we can't take them away.
+        -:  198:              if (*out_buffer.members.type.type == boost::typeindex::type_id<F>()
+        -:  199:                  && (!in_buffer.members.obj_ref.is_const_qualified
+        -:  200:                      || out_buffer.members.type.const_qualified)
+        -:  201:                  && (!in_buffer.members.obj_ref.is_volatile_qualified
+        -:  202:                      || out_buffer.members.type.volatile_qualified))
+        -:  203:                out_buffer.members.obj_ptr = in_buffer.members.obj_ref.obj_ptr;
+        -:  204:              else
+        -:  205:                out_buffer.members.obj_ptr = 0;
+        -:  206:            }
+        -:  207:            return;
+        -:  208:
+        -:  209:          case get_functor_type_tag:
+        -:  210:            out_buffer.members.type.type = &boost::typeindex::type_id<F>().type_info();
+        -:  211:            out_buffer.members.type.const_qualified = in_buffer.members.obj_ref.is_const_qualified;
+        -:  212:            out_buffer.members.type.volatile_qualified = in_buffer.members.obj_ref.is_volatile_qualified;
+        -:  213:            return;
+        -:  214:          }
+        -:  215:        }
+        -:  216:      };
+        -:  217:
+        -:  218:      /**
+        -:  219:       * Determine if boost::function can use the small-object
+        -:  220:       * optimization with the function object type F.
+        -:  221:       */
+        -:  222:      template<typename F>
+        -:  223:      struct function_allows_small_object_optimization
+        -:  224:      {
+        -:  225:        BOOST_STATIC_CONSTANT
+        -:  226:          (bool,
+        -:  227:           value = ((sizeof(F) <= sizeof(function_buffer) &&
+        -:  228:                     (alignment_of<function_buffer>::value
+        -:  229:                      % alignment_of<F>::value == 0))));
+        -:  230:      };
+        -:  231:
+        -:  232:      template <typename F,typename A>
+        -:  233:      struct functor_wrapper: public F, public A
+        -:  234:      {
+        -:  235:        functor_wrapper( F f, A a ):
+        -:  236:          F(f),
+        -:  237:          A(a)
+        -:  238:        {
+        -:  239:        }
+        -:  240:
+        -:  241:        functor_wrapper(const functor_wrapper& f) :
+        -:  242:          F(static_cast<const F&>(f)),
+        -:  243:          A(static_cast<const A&>(f))
+        -:  244:        {
+        -:  245:        }
+        -:  246:      };
+        -:  247:
+        -:  248:      /**
+        -:  249:       * The functor_manager class contains a static function "manage" which
+        -:  250:       * can clone or destroy the given function/function object pointer.
+        -:  251:       */
+        -:  252:      template<typename Functor>
+        -:  253:      struct functor_manager_common
+        -:  254:      {
+        -:  255:        typedef Functor functor_type;
+        -:  256:
+        -:  257:        // Function pointers
+        -:  258:        static inline void
+        -:  259:        manage_ptr(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  260:                functor_manager_operation_type op)
+        -:  261:        {
+        -:  262:          if (op == clone_functor_tag)
+        -:  263:            out_buffer.members.func_ptr = in_buffer.members.func_ptr;
+        -:  264:          else if (op == move_functor_tag) {
+        -:  265:            out_buffer.members.func_ptr = in_buffer.members.func_ptr;
+        -:  266:            in_buffer.members.func_ptr = 0;
+        -:  267:          } else if (op == destroy_functor_tag)
+        -:  268:            out_buffer.members.func_ptr = 0;
+        -:  269:          else if (op == check_functor_type_tag) {
+        -:  270:            if (*out_buffer.members.type.type == boost::typeindex::type_id<Functor>())
+        -:  271:              out_buffer.members.obj_ptr = &in_buffer.members.func_ptr;
+        -:  272:            else
+        -:  273:              out_buffer.members.obj_ptr = 0;
+        -:  274:          } else /* op == get_functor_type_tag */ {
+        -:  275:            out_buffer.members.type.type = &boost::typeindex::type_id<Functor>().type_info();
+        -:  276:            out_buffer.members.type.const_qualified = false;
+        -:  277:            out_buffer.members.type.volatile_qualified = false;
+        -:  278:          }
+        -:  279:        }
+        -:  280:
+        -:  281:        // Function objects that fit in the small-object buffer.
+        -:  282:        static inline void
+        -:  283:        manage_small(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  284:                functor_manager_operation_type op)
+        -:  285:        {
+        -:  286:          if (op == clone_functor_tag || op == move_functor_tag) {
+        -:  287:            const functor_type* in_functor =
+        -:  288:              reinterpret_cast<const functor_type*>(in_buffer.data);
+        -:  289:            new (reinterpret_cast<void*>(out_buffer.data)) functor_type(*in_functor);
+        -:  290:
+        -:  291:            if (op == move_functor_tag) {
+        -:  292:              functor_type* f = reinterpret_cast<functor_type*>(in_buffer.data);
+        -:  293:              (void)f; // suppress warning about the value of f not being used (MSVC)
+        -:  294:              f->~Functor();
+        -:  295:            }
+        -:  296:          } else if (op == destroy_functor_tag) {
+        -:  297:            // Some compilers (Borland, vc6, ...) are unhappy with ~functor_type.
+        -:  298:             functor_type* f = reinterpret_cast<functor_type*>(out_buffer.data);
+        -:  299:             (void)f; // suppress warning about the value of f not being used (MSVC)
+        -:  300:             f->~Functor();
+        -:  301:          } else if (op == check_functor_type_tag) {
+        -:  302:             if (*out_buffer.members.type.type == boost::typeindex::type_id<Functor>())
+        -:  303:              out_buffer.members.obj_ptr = in_buffer.data;
+        -:  304:            else
+        -:  305:              out_buffer.members.obj_ptr = 0;
+        -:  306:          } else /* op == get_functor_type_tag */ {
+        -:  307:            out_buffer.members.type.type = &boost::typeindex::type_id<Functor>().type_info();
+        -:  308:            out_buffer.members.type.const_qualified = false;
+        -:  309:            out_buffer.members.type.volatile_qualified = false;
+        -:  310:          }
+        -:  311:        }
+        -:  312:      };
+        -:  313:
+        -:  314:      template<typename Functor>
+        -:  315:      struct functor_manager
+        -:  316:      {
+        -:  317:      private:
+        -:  318:        typedef Functor functor_type;
+        -:  319:
+        -:  320:        // Function pointers
+        -:  321:        static inline void
+        -:  322:        manager(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  323:                functor_manager_operation_type op, function_ptr_tag)
+        -:  324:        {
+        -:  325:          functor_manager_common<Functor>::manage_ptr(in_buffer,out_buffer,op);
+        -:  326:        }
+        -:  327:
+        -:  328:        // Function objects that fit in the small-object buffer.
+        -:  329:        static inline void
+        -:  330:        manager(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  331:                functor_manager_operation_type op, true_type)
+        -:  332:        {
+        -:  333:          functor_manager_common<Functor>::manage_small(in_buffer,out_buffer,op);
+        -:  334:        }
+        -:  335:
+        -:  336:        // Function objects that require heap allocation
+        -:  337:        static inline void
+        -:  338:        manager(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  339:                functor_manager_operation_type op, false_type)
+        -:  340:        {
+        -:  341:          if (op == clone_functor_tag) {
+        -:  342:            // Clone the functor
+        -:  343:            // GCC 2.95.3 gets the CV qualifiers wrong here, so we
+        -:  344:            // can't do the static_cast that we should do.
+        -:  345:            // jewillco: Changing this to static_cast because GCC 2.95.3 is
+        -:  346:            // obsolete.
+        -:  347:            const functor_type* f =
+        -:  348:              static_cast<const functor_type*>(in_buffer.members.obj_ptr);
+        -:  349:            functor_type* new_f = new functor_type(*f);
+        -:  350:            out_buffer.members.obj_ptr = new_f;
+        -:  351:          } else if (op == move_functor_tag) {
+        -:  352:            out_buffer.members.obj_ptr = in_buffer.members.obj_ptr;
+        -:  353:            in_buffer.members.obj_ptr = 0;
+        -:  354:          } else if (op == destroy_functor_tag) {
+        -:  355:            /* Cast from the void pointer to the functor pointer type */
+        -:  356:            functor_type* f =
+        -:  357:              static_cast<functor_type*>(out_buffer.members.obj_ptr);
+        -:  358:            delete f;
+        -:  359:            out_buffer.members.obj_ptr = 0;
+        -:  360:          } else if (op == check_functor_type_tag) {
+        -:  361:            if (*out_buffer.members.type.type == boost::typeindex::type_id<Functor>())
+        -:  362:              out_buffer.members.obj_ptr = in_buffer.members.obj_ptr;
+        -:  363:            else
+        -:  364:              out_buffer.members.obj_ptr = 0;
+        -:  365:          } else /* op == get_functor_type_tag */ {
+        -:  366:            out_buffer.members.type.type = &boost::typeindex::type_id<Functor>().type_info();
+        -:  367:            out_buffer.members.type.const_qualified = false;
+        -:  368:            out_buffer.members.type.volatile_qualified = false;
+        -:  369:          }
+        -:  370:        }
+        -:  371:
+        -:  372:        // For function objects, we determine whether the function
+        -:  373:        // object can use the small-object optimization buffer or
+        -:  374:        // whether we need to allocate it on the heap.
+        -:  375:        static inline void
+        -:  376:        manager(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  377:                functor_manager_operation_type op, function_obj_tag)
+        -:  378:        {
+        -:  379:          manager(in_buffer, out_buffer, op,
+        -:  380:                  integral_constant<bool, (function_allows_small_object_optimization<functor_type>::value)>());
+        -:  381:        }
+        -:  382:
+        -:  383:        // For member pointers, we use the small-object optimization buffer.
+        -:  384:        static inline void
+        -:  385:        manager(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  386:                functor_manager_operation_type op, member_ptr_tag)
+        -:  387:        {
+        -:  388:          manager(in_buffer, out_buffer, op, true_type());
+        -:  389:        }
+        -:  390:
+        -:  391:      public:
+        -:  392:        /* Dispatch to an appropriate manager based on whether we have a
+        -:  393:           function pointer or a function object pointer. */
+        -:  394:        static inline void
+        -:  395:        manage(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  396:               functor_manager_operation_type op)
+        -:  397:        {
+        -:  398:          typedef typename get_function_tag<functor_type>::type tag_type;
+        -:  399:          if (op == get_functor_type_tag) {
+        -:  400:            out_buffer.members.type.type = &boost::typeindex::type_id<functor_type>().type_info();
+        -:  401:            out_buffer.members.type.const_qualified = false;
+        -:  402:            out_buffer.members.type.volatile_qualified = false;
+        -:  403:          } else {
+        -:  404:            manager(in_buffer, out_buffer, op, tag_type());
+        -:  405:          }
+        -:  406:        }
+        -:  407:      };
+        -:  408:
+        -:  409:      template<typename Functor, typename Allocator>
+        -:  410:      struct functor_manager_a
+        -:  411:      {
+        -:  412:      private:
+        -:  413:        typedef Functor functor_type;
+        -:  414:
+        -:  415:        // Function pointers
+        -:  416:        static inline void
+        -:  417:        manager(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  418:                functor_manager_operation_type op, function_ptr_tag)
+        -:  419:        {
+        -:  420:          functor_manager_common<Functor>::manage_ptr(in_buffer,out_buffer,op);
+        -:  421:        }
+        -:  422:
+        -:  423:        // Function objects that fit in the small-object buffer.
+        -:  424:        static inline void
+        -:  425:        manager(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  426:                functor_manager_operation_type op, true_type)
+        -:  427:        {
+        -:  428:          functor_manager_common<Functor>::manage_small(in_buffer,out_buffer,op);
+        -:  429:        }
+        -:  430:
+        -:  431:        // Function objects that require heap allocation
+        -:  432:        static inline void
+        -:  433:        manager(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  434:                functor_manager_operation_type op, false_type)
+        -:  435:        {
+        -:  436:          typedef functor_wrapper<Functor,Allocator> functor_wrapper_type;
+        -:  437:#if defined(BOOST_NO_CXX11_ALLOCATOR)
+        -:  438:          typedef typename Allocator::template rebind<functor_wrapper_type>::other
+        -:  439:            wrapper_allocator_type;
+        -:  440:          typedef typename wrapper_allocator_type::pointer wrapper_allocator_pointer_type;
+        -:  441:#else
+        -:  442:          using wrapper_allocator_type = typename std::allocator_traits<Allocator>::template rebind_alloc<functor_wrapper_type>;
+        -:  443:          using wrapper_allocator_pointer_type = typename std::allocator_traits<wrapper_allocator_type>::pointer;
+        -:  444:#endif
+        -:  445:
+        -:  446:          if (op == clone_functor_tag) {
+        -:  447:            // Clone the functor
+        -:  448:            // GCC 2.95.3 gets the CV qualifiers wrong here, so we
+        -:  449:            // can't do the static_cast that we should do.
+        -:  450:            const functor_wrapper_type* f =
+        -:  451:              static_cast<const functor_wrapper_type*>(in_buffer.members.obj_ptr);
+        -:  452:            wrapper_allocator_type wrapper_allocator(static_cast<Allocator const &>(*f));
+        -:  453:            wrapper_allocator_pointer_type copy = wrapper_allocator.allocate(1);
+        -:  454:#if defined(BOOST_NO_CXX11_ALLOCATOR)
+        -:  455:            wrapper_allocator.construct(copy, *f);
+        -:  456:#else
+        -:  457:            std::allocator_traits<wrapper_allocator_type>::construct(wrapper_allocator, copy, *f);
+        -:  458:#endif
+        -:  459:
+        -:  460:            // Get back to the original pointer type
+        -:  461:            functor_wrapper_type* new_f = static_cast<functor_wrapper_type*>(copy);
+        -:  462:            out_buffer.members.obj_ptr = new_f;
+        -:  463:          } else if (op == move_functor_tag) {
+        -:  464:            out_buffer.members.obj_ptr = in_buffer.members.obj_ptr;
+        -:  465:            in_buffer.members.obj_ptr = 0;
+        -:  466:          } else if (op == destroy_functor_tag) {
+        -:  467:            /* Cast from the void pointer to the functor_wrapper_type */
+        -:  468:            functor_wrapper_type* victim =
+        -:  469:              static_cast<functor_wrapper_type*>(in_buffer.members.obj_ptr);
+        -:  470:            wrapper_allocator_type wrapper_allocator(static_cast<Allocator const &>(*victim));
+        -:  471:#if defined(BOOST_NO_CXX11_ALLOCATOR)
+        -:  472:            wrapper_allocator.destroy(victim);
+        -:  473:#else
+        -:  474:            std::allocator_traits<wrapper_allocator_type>::destroy(wrapper_allocator, victim);
+        -:  475:#endif
+        -:  476:            wrapper_allocator.deallocate(victim,1);
+        -:  477:            out_buffer.members.obj_ptr = 0;
+        -:  478:          } else if (op == check_functor_type_tag) {
+        -:  479:            if (*out_buffer.members.type.type == boost::typeindex::type_id<Functor>())
+        -:  480:              out_buffer.members.obj_ptr = in_buffer.members.obj_ptr;
+        -:  481:            else
+        -:  482:              out_buffer.members.obj_ptr = 0;
+        -:  483:          } else /* op == get_functor_type_tag */ {
+        -:  484:            out_buffer.members.type.type = &boost::typeindex::type_id<Functor>().type_info();
+        -:  485:            out_buffer.members.type.const_qualified = false;
+        -:  486:            out_buffer.members.type.volatile_qualified = false;
+        -:  487:          }
+        -:  488:        }
+        -:  489:
+        -:  490:        // For function objects, we determine whether the function
+        -:  491:        // object can use the small-object optimization buffer or
+        -:  492:        // whether we need to allocate it on the heap.
+        -:  493:        static inline void
+        -:  494:        manager(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  495:                functor_manager_operation_type op, function_obj_tag)
+        -:  496:        {
+        -:  497:          manager(in_buffer, out_buffer, op,
+        -:  498:                  integral_constant<bool, (function_allows_small_object_optimization<functor_type>::value)>());
+        -:  499:        }
+        -:  500:
+        -:  501:      public:
+        -:  502:        /* Dispatch to an appropriate manager based on whether we have a
+        -:  503:           function pointer or a function object pointer. */
+        -:  504:        static inline void
+        -:  505:        manage(const function_buffer& in_buffer, function_buffer& out_buffer,
+        -:  506:               functor_manager_operation_type op)
+        -:  507:        {
+        -:  508:          typedef typename get_function_tag<functor_type>::type tag_type;
+        -:  509:          if (op == get_functor_type_tag) {
+        -:  510:            out_buffer.members.type.type = &boost::typeindex::type_id<functor_type>().type_info();
+        -:  511:            out_buffer.members.type.const_qualified = false;
+        -:  512:            out_buffer.members.type.volatile_qualified = false;
+        -:  513:          } else {
+        -:  514:            manager(in_buffer, out_buffer, op, tag_type());
+        -:  515:          }
+        -:  516:        }
+        -:  517:      };
+        -:  518:
+        -:  519:      // A type that is only used for comparisons against zero
+        -:  520:      struct useless_clear_type {};
+        -:  521:
+        -:  522:#ifdef BOOST_NO_SFINAE
+        -:  523:      // These routines perform comparisons between a Boost.Function
+        -:  524:      // object and an arbitrary function object (when the last
+        -:  525:      // parameter is false_type) or against zero (when the
+        -:  526:      // last parameter is true_type). They are only necessary
+        -:  527:      // for compilers that don't support SFINAE.
+        -:  528:      template<typename Function, typename Functor>
+        -:  529:        bool
+        -:  530:        compare_equal(const Function& f, const Functor&, int, true_type)
+        -:  531:        { return f.empty(); }
+        -:  532:
+        -:  533:      template<typename Function, typename Functor>
+        -:  534:        bool
+        -:  535:        compare_not_equal(const Function& f, const Functor&, int,
+        -:  536:                          true_type)
+        -:  537:        { return !f.empty(); }
+        -:  538:
+        -:  539:      template<typename Function, typename Functor>
+        -:  540:        bool
+        -:  541:        compare_equal(const Function& f, const Functor& g, long,
+        -:  542:                      false_type)
+        -:  543:        {
+        -:  544:          if (const Functor* fp = f.template target<Functor>())
+        -:  545:            return function_equal(*fp, g);
+        -:  546:          else return false;
+        -:  547:        }
+        -:  548:
+        -:  549:      template<typename Function, typename Functor>
+        -:  550:        bool
+        -:  551:        compare_equal(const Function& f, const reference_wrapper<Functor>& g,
+        -:  552:                      int, false_type)
+        -:  553:        {
+        -:  554:          if (const Functor* fp = f.template target<Functor>())
+        -:  555:            return fp == g.get_pointer();
+        -:  556:          else return false;
+        -:  557:        }
+        -:  558:
+        -:  559:      template<typename Function, typename Functor>
+        -:  560:        bool
+        -:  561:        compare_not_equal(const Function& f, const Functor& g, long,
+        -:  562:                          false_type)
+        -:  563:        {
+        -:  564:          if (const Functor* fp = f.template target<Functor>())
+        -:  565:            return !function_equal(*fp, g);
+        -:  566:          else return true;
+        -:  567:        }
+        -:  568:
+        -:  569:      template<typename Function, typename Functor>
+        -:  570:        bool
+        -:  571:        compare_not_equal(const Function& f,
+        -:  572:                          const reference_wrapper<Functor>& g, int,
+        -:  573:                          false_type)
+        -:  574:        {
+        -:  575:          if (const Functor* fp = f.template target<Functor>())
+        -:  576:            return fp != g.get_pointer();
+        -:  577:          else return true;
+        -:  578:        }
+        -:  579:#endif // BOOST_NO_SFINAE
+        -:  580:
+        -:  581:      /**
+        -:  582:       * Stores the "manager" portion of the vtable for a
+        -:  583:       * boost::function object.
+        -:  584:       */
+        -:  585:      struct vtable_base
+        -:  586:      {
+        -:  587:        void (*manager)(const function_buffer& in_buffer,
+        -:  588:                        function_buffer& out_buffer,
+        -:  589:                        functor_manager_operation_type op);
+        -:  590:      };
+        -:  591:    } // end namespace function
+        -:  592:  } // end namespace detail
+        -:  593:
+        -:  594:/**
+        -:  595: * The function_base class contains the basic elements needed for the
+        -:  596: * function1, function2, function3, etc. classes. It is common to all
+        -:  597: * functions (and as such can be used to tell if we have one of the
+        -:  598: * functionN objects).
+        -:  599: */
+        -:  600:class function_base
+        -:  601:{
+        -:  602:public:
+function _ZN5boost13function_baseC2Ev called 0 returned 0% blocks executed 0%
+    #####:  603:  function_base() : vtable(0) { }
+    $$$$$:  603-block  0
+        -:  604:
+        -:  605:  /** Determine if the function is empty (i.e., has no target). */
+function _ZNK5boost13function_base5emptyEv called 0 returned 0% blocks executed 0%
+    #####:  606:  bool empty() const { return !vtable; }
+    $$$$$:  606-block  0
+    $$$$$:  606-block  1
+        -:  607:
+        -:  608:  /** Retrieve the type of the stored function object, or type_id<void>()
+        -:  609:      if this is empty. */
+        -:  610:  const boost::typeindex::type_info& target_type() const
+        -:  611:  {
+        -:  612:    if (!vtable) return boost::typeindex::type_id<void>().type_info();
+        -:  613:
+        -:  614:    detail::function::function_buffer type;
+        -:  615:    get_vtable()->manager(functor, type, detail::function::get_functor_type_tag);
+        -:  616:    return *type.members.type.type;
+        -:  617:  }
+        -:  618:
+        -:  619:  template<typename Functor>
+        -:  620:    Functor* target()
+        -:  621:    {
+        -:  622:      if (!vtable) return 0;
+        -:  623:
+        -:  624:      detail::function::function_buffer type_result;
+        -:  625:      type_result.members.type.type = &boost::typeindex::type_id<Functor>().type_info();
+        -:  626:      type_result.members.type.const_qualified = is_const<Functor>::value;
+        -:  627:      type_result.members.type.volatile_qualified = is_volatile<Functor>::value;
+        -:  628:      get_vtable()->manager(functor, type_result,
+        -:  629:                      detail::function::check_functor_type_tag);
+        -:  630:      return static_cast<Functor*>(type_result.members.obj_ptr);
+        -:  631:    }
+        -:  632:
+        -:  633:  template<typename Functor>
+        -:  634:    const Functor* target() const
+        -:  635:    {
+        -:  636:      if (!vtable) return 0;
+        -:  637:
+        -:  638:      detail::function::function_buffer type_result;
+        -:  639:      type_result.members.type.type = &boost::typeindex::type_id<Functor>().type_info();
+        -:  640:      type_result.members.type.const_qualified = true;
+        -:  641:      type_result.members.type.volatile_qualified = is_volatile<Functor>::value;
+        -:  642:      get_vtable()->manager(functor, type_result,
+        -:  643:                      detail::function::check_functor_type_tag);
+        -:  644:      // GCC 2.95.3 gets the CV qualifiers wrong here, so we
+        -:  645:      // can't do the static_cast that we should do.
+        -:  646:      return static_cast<const Functor*>(type_result.members.obj_ptr);
+        -:  647:    }
+        -:  648:
+        -:  649:  template<typename F>
+        -:  650:    bool contains(const F& f) const
+        -:  651:    {
+        -:  652:      if (const F* fp = this->template target<F>())
+        -:  653:      {
+        -:  654:        return function_equal(*fp, f);
+        -:  655:      } else {
+        -:  656:        return false;
+        -:  657:      }
+        -:  658:    }
+        -:  659:
+        -:  660:#if defined(__GNUC__) && __GNUC__ == 3 && __GNUC_MINOR__ <= 3
+        -:  661:  // GCC 3.3 and newer cannot copy with the global operator==, due to
+        -:  662:  // problems with instantiation of function return types before it
+        -:  663:  // has been verified that the argument types match up.
+        -:  664:  template<typename Functor>
+        -:  665:    BOOST_FUNCTION_ENABLE_IF_NOT_INTEGRAL(Functor, bool)
+        -:  666:    operator==(Functor g) const
+        -:  667:    {
+        -:  668:      if (const Functor* fp = target<Functor>())
+        -:  669:        return function_equal(*fp, g);
+        -:  670:      else return false;
+        -:  671:    }
+        -:  672:
+        -:  673:  template<typename Functor>
+        -:  674:    BOOST_FUNCTION_ENABLE_IF_NOT_INTEGRAL(Functor, bool)
+        -:  675:    operator!=(Functor g) const
+        -:  676:    {
+        -:  677:      if (const Functor* fp = target<Functor>())
+        -:  678:        return !function_equal(*fp, g);
+        -:  679:      else return true;
+        -:  680:    }
+        -:  681:#endif
+        -:  682:
+        -:  683:public: // should be protected, but GCC 2.95.3 will fail to allow access
+        -:  684:  detail::function::vtable_base* get_vtable() const {
+        -:  685:    return reinterpret_cast<detail::function::vtable_base*>(
+        -:  686:             reinterpret_cast<std::size_t>(vtable) & ~static_cast<std::size_t>(0x01));
+        -:  687:  }
+        -:  688:
+function _ZNK5boost13function_base28has_trivial_copy_and_destroyEv called 0 returned 0% blocks executed 0%
+    #####:  689:  bool has_trivial_copy_and_destroy() const {
+    $$$$$:  689-block  0
+    #####:  690:    return reinterpret_cast<std::size_t>(vtable) & 0x01;
+    $$$$$:  690-block  0
+        -:  691:  }
+        -:  692:
+        -:  693:  detail::function::vtable_base* vtable;
+        -:  694:  mutable detail::function::function_buffer functor;
+        -:  695:};
+        -:  696:
+        -:  697:#if defined(BOOST_CLANG)
+        -:  698:#   pragma clang diagnostic push
+        -:  699:#   pragma clang diagnostic ignored "-Wweak-vtables"
+        -:  700:#endif
+        -:  701:/**
+        -:  702: * The bad_function_call exception class is thrown when a boost::function
+        -:  703: * object is invoked
+        -:  704: */
+function _ZN5boost17bad_function_callC2ERKS0_ called 0 returned 0% blocks executed 0%
+function _ZN5boost17bad_function_callD0Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost17bad_function_callD2Ev called 0 returned 0% blocks executed 0%
+    #####:  705:class BOOST_SYMBOL_VISIBLE bad_function_call : public std::runtime_error
+    $$$$$:  705-block  0
+    $$$$$:  705-block  1
+call    0 never executed
+    $$$$$:  705-block  2
+    $$$$$:  705-block  3
+call    1 never executed
+call    2 never executed
+    $$$$$:  705-block  4
+    $$$$$:  705-block  5
+call    3 never executed
+        -:  706:{
+        -:  707:public:
+function _ZN5boost17bad_function_callC2Ev called 0 returned 0% blocks executed 0%
+    #####:  708:  bad_function_call() : std::runtime_error("call to empty boost::function") {}
+    $$$$$:  708-block  0
+    $$$$$:  708-block  1
+call    0 never executed
+        -:  709:};
+        -:  710:#if defined(BOOST_CLANG)
+        -:  711:#   pragma clang diagnostic pop
+        -:  712:#endif
+        -:  713:
+        -:  714:#ifndef BOOST_NO_SFINAE
+        -:  715:inline bool operator==(const function_base& f,
+        -:  716:                       detail::function::useless_clear_type*)
+        -:  717:{
+        -:  718:  return f.empty();
+        -:  719:}
+        -:  720:
+        -:  721:inline bool operator!=(const function_base& f,
+        -:  722:                       detail::function::useless_clear_type*)
+        -:  723:{
+        -:  724:  return !f.empty();
+        -:  725:}
+        -:  726:
+        -:  727:inline bool operator==(detail::function::useless_clear_type*,
+        -:  728:                       const function_base& f)
+        -:  729:{
+        -:  730:  return f.empty();
+        -:  731:}
+        -:  732:
+        -:  733:inline bool operator!=(detail::function::useless_clear_type*,
+        -:  734:                       const function_base& f)
+        -:  735:{
+        -:  736:  return !f.empty();
+        -:  737:}
+        -:  738:#endif
+        -:  739:
+        -:  740:#ifdef BOOST_NO_SFINAE
+        -:  741:// Comparisons between boost::function objects and arbitrary function objects
+        -:  742:template<typename Functor>
+        -:  743:  inline bool operator==(const function_base& f, Functor g)
+        -:  744:  {
+        -:  745:    typedef integral_constant<bool, (is_integral<Functor>::value)> integral;
+        -:  746:    return detail::function::compare_equal(f, g, 0, integral());
+        -:  747:  }
+        -:  748:
+        -:  749:template<typename Functor>
+        -:  750:  inline bool operator==(Functor g, const function_base& f)
+        -:  751:  {
+        -:  752:    typedef integral_constant<bool, (is_integral<Functor>::value)> integral;
+        -:  753:    return detail::function::compare_equal(f, g, 0, integral());
+        -:  754:  }
+        -:  755:
+        -:  756:template<typename Functor>
+        -:  757:  inline bool operator!=(const function_base& f, Functor g)
+        -:  758:  {
+        -:  759:    typedef integral_constant<bool, (is_integral<Functor>::value)> integral;
+        -:  760:    return detail::function::compare_not_equal(f, g, 0, integral());
+        -:  761:  }
+        -:  762:
+        -:  763:template<typename Functor>
+        -:  764:  inline bool operator!=(Functor g, const function_base& f)
+        -:  765:  {
+        -:  766:    typedef integral_constant<bool, (is_integral<Functor>::value)> integral;
+        -:  767:    return detail::function::compare_not_equal(f, g, 0, integral());
+        -:  768:  }
+        -:  769:#else
+        -:  770:
+        -:  771:#  if !(defined(__GNUC__) && __GNUC__ == 3 && __GNUC_MINOR__ <= 3)
+        -:  772:// Comparisons between boost::function objects and arbitrary function
+        -:  773:// objects. GCC 3.3 and before has an obnoxious bug that prevents this
+        -:  774:// from working.
+        -:  775:template<typename Functor>
+        -:  776:  BOOST_FUNCTION_ENABLE_IF_NOT_INTEGRAL(Functor, bool)
+        -:  777:  operator==(const function_base& f, Functor g)
+        -:  778:  {
+        -:  779:    if (const Functor* fp = f.template target<Functor>())
+        -:  780:      return function_equal(*fp, g);
+        -:  781:    else return false;
+        -:  782:  }
+        -:  783:
+        -:  784:template<typename Functor>
+        -:  785:  BOOST_FUNCTION_ENABLE_IF_NOT_INTEGRAL(Functor, bool)
+        -:  786:  operator==(Functor g, const function_base& f)
+        -:  787:  {
+        -:  788:    if (const Functor* fp = f.template target<Functor>())
+        -:  789:      return function_equal(g, *fp);
+        -:  790:    else return false;
+        -:  791:  }
+        -:  792:
+        -:  793:template<typename Functor>
+        -:  794:  BOOST_FUNCTION_ENABLE_IF_NOT_INTEGRAL(Functor, bool)
+        -:  795:  operator!=(const function_base& f, Functor g)
+        -:  796:  {
+        -:  797:    if (const Functor* fp = f.template target<Functor>())
+        -:  798:      return !function_equal(*fp, g);
+        -:  799:    else return true;
+        -:  800:  }
+        -:  801:
+        -:  802:template<typename Functor>
+        -:  803:  BOOST_FUNCTION_ENABLE_IF_NOT_INTEGRAL(Functor, bool)
+        -:  804:  operator!=(Functor g, const function_base& f)
+        -:  805:  {
+        -:  806:    if (const Functor* fp = f.template target<Functor>())
+        -:  807:      return !function_equal(g, *fp);
+        -:  808:    else return true;
+        -:  809:  }
+        -:  810:#  endif
+        -:  811:
+        -:  812:template<typename Functor>
+        -:  813:  BOOST_FUNCTION_ENABLE_IF_NOT_INTEGRAL(Functor, bool)
+        -:  814:  operator==(const function_base& f, reference_wrapper<Functor> g)
+        -:  815:  {
+        -:  816:    if (const Functor* fp = f.template target<Functor>())
+        -:  817:      return fp == g.get_pointer();
+        -:  818:    else return false;
+        -:  819:  }
+        -:  820:
+        -:  821:template<typename Functor>
+        -:  822:  BOOST_FUNCTION_ENABLE_IF_NOT_INTEGRAL(Functor, bool)
+        -:  823:  operator==(reference_wrapper<Functor> g, const function_base& f)
+        -:  824:  {
+        -:  825:    if (const Functor* fp = f.template target<Functor>())
+        -:  826:      return g.get_pointer() == fp;
+        -:  827:    else return false;
+        -:  828:  }
+        -:  829:
+        -:  830:template<typename Functor>
+        -:  831:  BOOST_FUNCTION_ENABLE_IF_NOT_INTEGRAL(Functor, bool)
+        -:  832:  operator!=(const function_base& f, reference_wrapper<Functor> g)
+        -:  833:  {
+        -:  834:    if (const Functor* fp = f.template target<Functor>())
+        -:  835:      return fp != g.get_pointer();
+        -:  836:    else return true;
+        -:  837:  }
+        -:  838:
+        -:  839:template<typename Functor>
+        -:  840:  BOOST_FUNCTION_ENABLE_IF_NOT_INTEGRAL(Functor, bool)
+        -:  841:  operator!=(reference_wrapper<Functor> g, const function_base& f)
+        -:  842:  {
+        -:  843:    if (const Functor* fp = f.template target<Functor>())
+        -:  844:      return g.get_pointer() != fp;
+        -:  845:    else return true;
+        -:  846:  }
+        -:  847:
+        -:  848:#endif // Compiler supporting SFINAE
+        -:  849:
+        -:  850:namespace detail {
+        -:  851:  namespace function {
+        -:  852:    inline bool has_empty_target(const function_base* f)
+        -:  853:    {
+        -:  854:      return f->empty();
+        -:  855:    }
+        -:  856:
+        -:  857:#if BOOST_WORKAROUND(BOOST_MSVC, <= 1310)
+        -:  858:    inline bool has_empty_target(const void*)
+        -:  859:    {
+        -:  860:      return false;
+        -:  861:    }
+        -:  862:#else
+        -:  863:    inline bool has_empty_target(...)
+        -:  864:    {
+        -:  865:      return false;
+        -:  866:    }
+        -:  867:#endif
+        -:  868:  } // end namespace function
+        -:  869:} // end namespace detail
+        -:  870:} // end namespace boost
+        -:  871:
+        -:  872:#undef BOOST_FUNCTION_ENABLE_IF_NOT_INTEGRAL
+        -:  873:
+        -:  874:#if defined(BOOST_MSVC)
+        -:  875:#   pragma warning( pop )
+        -:  876:#endif
+        -:  877:
+        -:  878:#endif // BOOST_FUNCTION_BASE_HEADER

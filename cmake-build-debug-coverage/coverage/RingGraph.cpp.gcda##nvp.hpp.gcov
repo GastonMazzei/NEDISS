@@ -1,0 +1,156 @@
+        -:    0:Source:/usr/include/boost/serialization/nvp.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_SERIALIZATION_NVP_HPP
+        -:    2:#define BOOST_SERIALIZATION_NVP_HPP
+        -:    3:
+        -:    4:// MS compatible compilers support #pragma once
+        -:    5:#if defined(_MSC_VER)
+        -:    6:# pragma once
+        -:    7:#endif
+        -:    8:
+        -:    9://///////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
+        -:   10:// nvp.hpp: interface for serialization system.
+        -:   11:
+        -:   12:// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com .
+        -:   13:// Use, modification and distribution is subject to the Boost Software
+        -:   14:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:   15:// http://www.boost.org/LICENSE_1_0.txt)
+        -:   16:
+        -:   17://  See http://www.boost.org for updates, documentation, and revision history.
+        -:   18:
+        -:   19:#include <boost/core/nvp.hpp>
+        -:   20:#include <boost/preprocessor/stringize.hpp>
+        -:   21:
+        -:   22:#define BOOST_SERIALIZATION_NVP(name)                       \
+        -:   23:    boost::serialization::make_nvp(BOOST_PP_STRINGIZE(name), name)
+        -:   24:/**/
+        -:   25:
+        -:   26:#define BOOST_SERIALIZATION_BASE_OBJECT_NVP(name)           \
+        -:   27:    boost::serialization::make_nvp(                         \
+        -:   28:        BOOST_PP_STRINGIZE(name),                           \
+        -:   29:        boost::serialization::base_object<name >(*this)     \
+        -:   30:    )
+        -:   31:/**/
+        -:   32:
+        -:   33:#include <boost/serialization/level.hpp>
+        -:   34:#include <boost/serialization/tracking.hpp>
+        -:   35:#include <boost/serialization/split_free.hpp>
+        -:   36:#include <boost/serialization/wrapper.hpp>
+        -:   37:#include <boost/serialization/base_object.hpp>
+        -:   38:
+        -:   39:namespace boost {
+        -:   40:namespace serialization {
+        -:   41:
+        -:   42:template<class Archive, class T>
+        -:   43:void save(
+        -:   44:    Archive & ar,
+        -:   45:    const nvp<T> & t,
+        -:   46:    const unsigned int /* file_version */
+        -:   47:){
+        -:   48:    ar << t.const_value();
+        -:   49:}
+        -:   50:template<class Archive, class T>
+function _ZN5boost13serialization4loadINS_3mpi15packed_iarchiveEjEEvRT_RNS0_3nvpIT0_EEj called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization4loadINS_3mpi15packed_iarchiveENS0_20collection_size_typeEEEvRT_RNS0_3nvpIT0_EEj called 0 returned 0% blocks executed 0%
+    #####:   51:void load(
+    $$$$$:   51-block  0
+    $$$$$:   51-block  1
+        -:   52:    Archive & ar,
+        -:   53:    nvp<T> & t ,
+        -:   54:    const unsigned int /* file_version */
+        -:   55:){
+    #####:   56:    ar >> t.value();
+    $$$$$:   56-block  0
+call    0 never executed
+call    1 never executed
+    $$$$$:   56-block  1
+call    2 never executed
+call    3 never executed
+    #####:   57:}
+        -:   58:
+        -:   59:template<class Archive, class T>
+function _ZN5boost13serialization9serializeINS_3mpi15packed_iarchiveEjEEvRT_RNS0_3nvpIT0_EEj called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization9serializeINS_3mpi15packed_iarchiveENS0_20collection_size_typeEEEvRT_RNS0_3nvpIT0_EEj called 0 returned 0% blocks executed 0%
+    #####:   60:inline void serialize(
+    $$$$$:   60-block  0
+    $$$$$:   60-block  1
+        -:   61:    Archive & ar,
+        -:   62:    nvp<T> & t,
+        -:   63:    const unsigned int file_version
+        -:   64:){
+    #####:   65:    split_free(ar, t, file_version);
+    $$$$$:   65-block  0
+call    0 never executed
+    $$$$$:   65-block  1
+call    1 never executed
+    #####:   66:}
+        -:   67:
+        -:   68:template <class T>
+        -:   69:struct implementation_level<nvp< T > >
+        -:   70:{
+        -:   71:    typedef mpl::integral_c_tag tag;
+        -:   72:    typedef mpl::int_<object_serializable> type;
+        -:   73:    BOOST_STATIC_CONSTANT(int, value = implementation_level::type::value);
+        -:   74:};
+        -:   75:template <class T>
+        -:   76:struct implementation_level<const nvp< T > >
+        -:   77:{
+        -:   78:    typedef mpl::integral_c_tag tag;
+        -:   79:    typedef mpl::int_<object_serializable> type;
+        -:   80:    BOOST_STATIC_CONSTANT(int, value = implementation_level::type::value);
+        -:   81:};
+        -:   82:
+        -:   83:// nvp objects are generally created on the stack and are never tracked
+        -:   84:template<class T>
+        -:   85:struct tracking_level<nvp< T > >
+        -:   86:{
+        -:   87:    typedef mpl::integral_c_tag tag;
+        -:   88:    typedef mpl::int_<track_never> type;
+        -:   89:    BOOST_STATIC_CONSTANT(int, value = tracking_level::type::value);
+        -:   90:};
+        -:   91:template<class T>
+        -:   92:struct tracking_level<const nvp< T > >
+        -:   93:{
+        -:   94:    typedef mpl::integral_c_tag tag;
+        -:   95:    typedef mpl::int_<track_never> type;
+        -:   96:    BOOST_STATIC_CONSTANT(int, value = tracking_level::type::value);
+        -:   97:};
+        -:   98:
+        -:   99:// these traits aren't used by nvp so they don't need to be defined
+        -:  100:#if 0
+        -:  101:template<class T>
+        -:  102:struct version<const nvp< T > > {
+        -:  103:    typedef mpl::integral_c_tag tag;
+        -:  104:    typedef mpl::int_<0> type;
+        -:  105:    BOOST_STATIC_CONSTANT(int, value = 0);
+        -:  106:};
+        -:  107:struct version<const nvp< T > > {
+        -:  108:    typedef mpl::integral_c_tag tag;
+        -:  109:    typedef mpl::int_<0> type;
+        -:  110:    BOOST_STATIC_CONSTANT(int, value = 0);
+        -:  111:};
+        -:  112:
+        -:  113:template<class T>
+        -:  114:struct extended_type_info_impl<const nvp< T > > {
+        -:  115:    typedef extended_type_info_impl< T > type;
+        -:  116:};
+        -:  117:#endif
+        -:  118:
+        -:  119:template<class T>
+        -:  120:struct is_wrapper<const nvp<T> > {
+        -:  121:    typedef boost::mpl::true_ type;
+        -:  122:};
+        -:  123:template<class T>
+        -:  124:struct is_wrapper<nvp<T> > {
+        -:  125:    typedef boost::mpl::true_ type;
+        -:  126:};
+        -:  127:
+        -:  128:
+        -:  129:} // seralization
+        -:  130:} // boost
+        -:  131:
+        -:  132:
+        -:  133:#endif // BOOST_SERIALIZATION_NVP_HPP

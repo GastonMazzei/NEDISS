@@ -1,0 +1,483 @@
+        -:    0:Source:/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/ompi/mpi/cxx/intracomm_inln.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// -*- c++ -*-
+        -:    2://
+        -:    3:// Copyright (c) 2004-2005 The Trustees of Indiana University and Indiana
+        -:    4://                         University Research and Technology
+        -:    5://                         Corporation.  All rights reserved.
+        -:    6:// Copyright (c) 2004-2005 The University of Tennessee and The University
+        -:    7://                         of Tennessee Research Foundation.  All rights
+        -:    8://                         reserved.
+        -:    9:// Copyright (c) 2004-2005 High Performance Computing Center Stuttgart,
+        -:   10://                         University of Stuttgart.  All rights reserved.
+        -:   11:// Copyright (c) 2004-2005 The Regents of the University of California.
+        -:   12://                         All rights reserved.
+        -:   13:// Copyright (c) 2006      Cisco Systems, Inc.  All rights reserved.
+        -:   14:// Copyright (c) 2007      Sun Microsystems, Inc.  All rights reserved.
+        -:   15:// $COPYRIGHT$
+        -:   16://
+        -:   17:// Additional copyrights may follow
+        -:   18://
+        -:   19:// $HEADER$
+        -:   20://
+        -:   21:
+        -:   22:inline
+function _ZN3MPI9IntracommC2EP19ompi_communicator_t called 0 returned 0% blocks executed 0%
+    #####:   23:MPI::Intracomm::Intracomm(MPI_Comm data) {
+    $$$$$:   23-block  0
+    $$$$$:   23-block  1
+call    0 never executed
+    %%%%%:   23-block  2
+call    1 never executed
+    #####:   24:  int flag = 0;
+    #####:   25:  if (MPI::Is_initialized() && (data != MPI_COMM_NULL)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   25-block  0
+branch  3 never executed
+branch  4 never executed
+    $$$$$:   25-block  1
+branch  5 never executed
+branch  6 never executed
+    $$$$$:   25-block  2
+    $$$$$:   25-block  3
+    $$$$$:   25-block  4
+branch  7 never executed
+branch  8 never executed
+    #####:   26:    (void)MPI_Comm_test_inter(data, &flag);
+    $$$$$:   26-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   27:    if (flag) {
+    $$$$$:   27-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   28:      mpi_comm = MPI_COMM_NULL;
+    $$$$$:   28-block  0
+        -:   29:    } else {
+    #####:   30:      mpi_comm = data;
+    $$$$$:   30-block  0
+    $$$$$:   30-block  1
+        -:   31:    }
+        -:   32:  }
+        -:   33:  else {
+    #####:   34:    mpi_comm = data;
+    $$$$$:   34-block  0
+        -:   35:  }
+    #####:   36:}
+    $$$$$:   36-block  0
+    %%%%%:   36-block  1
+        -:   37:
+        -:   38:inline void
+function _ZNK3MPI9Intracomm4ScanEPKvPviRKNS_8DatatypeERKNS_2OpE called 0 returned 0% blocks executed 0%
+    #####:   39:MPI::Intracomm::Scan(const void *sendbuf, void *recvbuf, int count,
+    $$$$$:   39-block  0
+        -:   40:     const MPI::Datatype & datatype, const MPI::Op& op) const
+        -:   41:{
+    #####:   42:  (void)MPI_Scan(const_cast<void *>(sendbuf), recvbuf, count, datatype, op, mpi_comm);
+    $$$$$:   42-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   43:}
+        -:   44:
+        -:   45:inline void
+function _ZNK3MPI9Intracomm6ExscanEPKvPviRKNS_8DatatypeERKNS_2OpE called 0 returned 0% blocks executed 0%
+    #####:   46:MPI::Intracomm::Exscan(const void *sendbuf, void *recvbuf, int count,
+    $$$$$:   46-block  0
+        -:   47:			      const MPI::Datatype & datatype,
+        -:   48:			      const MPI::Op& op) const
+        -:   49:{
+    #####:   50:  (void)MPI_Exscan(const_cast<void *>(sendbuf), recvbuf, count, datatype, op, mpi_comm);
+    $$$$$:   50-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   51:}
+        -:   52:
+        -:   53:inline MPI::Intracomm
+        -:   54:MPI::Intracomm::Dup() const
+        -:   55:{
+        -:   56:  MPI_Comm newcomm;
+        -:   57:  (void)MPI_Comm_dup(mpi_comm, &newcomm);
+        -:   58:  return newcomm;
+        -:   59:}
+        -:   60:
+        -:   61:inline MPI::Intracomm&
+function _ZNK3MPI9Intracomm5CloneEv called 0 returned 0% blocks executed 0%
+    #####:   62:MPI::Intracomm::Clone() const
+    $$$$$:   62-block  0
+        -:   63:{
+        -:   64:  MPI_Comm newcomm;
+    #####:   65:  (void)MPI_Comm_dup(mpi_comm, &newcomm);
+    $$$$$:   65-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   66:  MPI::Intracomm* dup = new MPI::Intracomm(newcomm);
+    $$$$$:   66-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   66-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:   66-block  2
+call    6 never executed
+    #####:   67:  return *dup;
+    $$$$$:   67-block  0
+    $$$$$:   67-block  1
+        -:   68:}
+        -:   69:
+        -:   70:inline MPI::Intracomm
+function _ZNK3MPI9Intracomm6CreateERKNS_5GroupE called 0 returned 0% blocks executed 0%
+    #####:   71:MPI::Intracomm::Create(const MPI::Group& group) const
+    $$$$$:   71-block  0
+        -:   72:{
+        -:   73:  MPI_Comm newcomm;
+    #####:   74:  (void)MPI_Comm_create(mpi_comm, group, &newcomm);
+    $$$$$:   74-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:   75:  return newcomm;
+    $$$$$:   75-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   75-block  1
+    $$$$$:   75-block  2
+    $$$$$:   75-block  3
+        -:   76:}
+        -:   77:
+        -:   78:inline MPI::Intracomm
+function _ZNK3MPI9Intracomm5SplitEii called 0 returned 0% blocks executed 0%
+    #####:   79:MPI::Intracomm::Split(int color, int key) const
+    $$$$$:   79-block  0
+        -:   80:{
+        -:   81:  MPI_Comm newcomm;
+    #####:   82:  (void)MPI_Comm_split(mpi_comm, color, key, &newcomm);
+    $$$$$:   82-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   83:  return newcomm;
+    $$$$$:   83-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   83-block  1
+    $$$$$:   83-block  2
+    $$$$$:   83-block  3
+        -:   84:}
+        -:   85:
+        -:   86:
+        -:   87:
+        -:   88:inline MPI::Intercomm
+function _ZNK3MPI9Intracomm16Create_intercommEiRKNS_4CommEii called 0 returned 0% blocks executed 0%
+    #####:   89:MPI::Intracomm::Create_intercomm(int local_leader,
+    $$$$$:   89-block  0
+        -:   90:					const MPI::Comm& peer_comm,
+        -:   91:					int remote_leader, int tag) const
+        -:   92:{
+        -:   93:  MPI_Comm newintercomm;
+    #####:   94:  (void)MPI_Intercomm_create(mpi_comm, local_leader, peer_comm,
+    $$$$$:   94-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:   95:			     remote_leader, tag, &newintercomm);
+    #####:   96:  return newintercomm;
+    $$$$$:   96-block  0
+call    0 never executed
+    $$$$$:   96-block  1
+        -:   97:}
+        -:   98:
+        -:   99:inline MPI::Cartcomm
+function _ZNK3MPI9Intracomm11Create_cartEiPKiPKbb called 0 returned 0% blocks executed 0%
+    #####:  100:MPI::Intracomm::Create_cart(int ndims, const int dims[],
+    $$$$$:  100-block  0
+        -:  101:				   const bool periods[], bool reorder) const
+        -:  102:{
+    #####:  103:  int *int_periods = new int [ndims];
+    $$$$$:  103-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  103-block  1
+    $$$$$:  103-block  2
+call    2 never executed
+    $$$$$:  103-block  3
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  104:  for (int i=0; i<ndims; i++)
+    $$$$$:  104-block  0
+    $$$$$:  104-block  1
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  104-block  2
+    #####:  105:    int_periods[i] = (int) periods[i];
+        -:  106:
+        -:  107:  MPI_Comm newcomm;
+    #####:  108:  (void)MPI_Cart_create(mpi_comm, ndims, const_cast<int *>(dims),
+    $$$$$:  108-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  109:		      int_periods, (int)reorder, &newcomm);
+    #####:  110:  delete [] int_periods;
+    $$$$$:  110-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  110-block  1
+call    2 never executed
+    #####:  111:  return newcomm;
+    $$$$$:  111-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:  111-block  1
+    $$$$$:  111-block  2
+    $$$$$:  111-block  3
+        -:  112:}
+        -:  113:
+        -:  114:inline MPI::Graphcomm
+function _ZNK3MPI9Intracomm12Create_graphEiPKiS2_b called 0 returned 0% blocks executed 0%
+    #####:  115:MPI::Intracomm::Create_graph(int nnodes, const int index[],
+    $$$$$:  115-block  0
+        -:  116:				    const int edges[], bool reorder) const
+        -:  117:{
+        -:  118:  MPI_Comm newcomm;
+    #####:  119:  (void)MPI_Graph_create(mpi_comm, nnodes, const_cast<int *>(index),
+    $$$$$:  119-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  120:                         const_cast<int *>(edges), (int)reorder, &newcomm);
+    #####:  121:  return newcomm;
+    $$$$$:  121-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:  121-block  1
+    $$$$$:  121-block  2
+    $$$$$:  121-block  3
+        -:  122:}
+        -:  123:
+        -:  124:
+        -:  125://
+        -:  126:// Process Creation and Management
+        -:  127://
+        -:  128:
+        -:  129:inline MPI::Intercomm
+function _ZNK3MPI9Intracomm6AcceptEPKcRKNS_4InfoEi called 0 returned 0% blocks executed 0%
+    #####:  130:MPI::Intracomm::Accept(const char* port_name,
+    $$$$$:  130-block  0
+        -:  131:			      const MPI::Info& info,
+        -:  132:			      int root) const
+        -:  133:{
+        -:  134:  MPI_Comm newcomm;
+    #####:  135:  (void) MPI_Comm_accept(const_cast<char *>(port_name), info, root, mpi_comm,
+    $$$$$:  135-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  136:			 &newcomm);
+    #####:  137:  return newcomm;
+    $$$$$:  137-block  0
+call    0 never executed
+    $$$$$:  137-block  1
+        -:  138:}
+        -:  139:
+        -:  140:
+        -:  141:inline MPI::Intercomm
+function _ZNK3MPI9Intracomm7ConnectEPKcRKNS_4InfoEi called 0 returned 0% blocks executed 0%
+    #####:  142:MPI::Intracomm::Connect(const char* port_name,
+    $$$$$:  142-block  0
+        -:  143:			       const MPI::Info& info,
+        -:  144:			       int root) const
+        -:  145:{
+        -:  146:  MPI_Comm newcomm;
+    #####:  147:  (void) MPI_Comm_connect(const_cast<char *>(port_name), info, root, mpi_comm,
+    $$$$$:  147-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  148:			  &newcomm);
+    #####:  149:  return newcomm;
+    $$$$$:  149-block  0
+call    0 never executed
+    $$$$$:  149-block  1
+        -:  150:}
+        -:  151:
+        -:  152:
+        -:  153:inline MPI::Intercomm
+function _ZNK3MPI9Intracomm5SpawnEPKcPS2_iRKNS_4InfoEi called 0 returned 0% blocks executed 0%
+    #####:  154:MPI::Intracomm::Spawn(const char* command, const char* argv[],
+    $$$$$:  154-block  0
+        -:  155:			     int maxprocs, const MPI::Info& info,
+        -:  156:			     int root) const
+        -:  157:{
+        -:  158:  MPI_Comm newcomm;
+    #####:  159:  (void) MPI_Comm_spawn(const_cast<char *>(command), const_cast<char **>(argv), maxprocs,
+    $$$$$:  159-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  160:			info, root, mpi_comm, &newcomm,
+        -:  161:			(int *)MPI_ERRCODES_IGNORE);
+    #####:  162:  return newcomm;
+    $$$$$:  162-block  0
+call    0 never executed
+    $$$$$:  162-block  1
+        -:  163:}
+        -:  164:
+        -:  165:
+        -:  166:inline MPI::Intercomm
+function _ZNK3MPI9Intracomm5SpawnEPKcPS2_iRKNS_4InfoEiPi called 0 returned 0% blocks executed 0%
+    #####:  167:MPI::Intracomm::Spawn(const char* command, const char* argv[],
+    $$$$$:  167-block  0
+        -:  168:                             int maxprocs, const MPI::Info& info,
+        -:  169:                             int root, int array_of_errcodes[]) const
+        -:  170:{
+        -:  171:  MPI_Comm newcomm;
+    #####:  172:  (void) MPI_Comm_spawn(const_cast<char *>(command), const_cast<char **>(argv), maxprocs,
+    $$$$$:  172-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  173:                        info, root, mpi_comm, &newcomm,
+        -:  174:			array_of_errcodes);
+    #####:  175:  return newcomm;
+    $$$$$:  175-block  0
+call    0 never executed
+    $$$$$:  175-block  1
+        -:  176:}
+        -:  177:
+        -:  178:
+        -:  179:inline MPI::Intercomm
+function _ZN3MPI9Intracomm14Spawn_multipleEiPPKcPS3_PKiPKNS_4InfoEi called 0 returned 0% blocks executed 0%
+    #####:  180:MPI::Intracomm::Spawn_multiple(int count,
+    $$$$$:  180-block  0
+        -:  181:				      const char* array_of_commands[],
+        -:  182:				      const char** array_of_argv[],
+        -:  183:				      const int array_of_maxprocs[],
+        -:  184:				      const Info array_of_info[], int root)
+        -:  185:{
+        -:  186:  MPI_Comm newcomm;
+        -:  187:  MPI_Info *const array_of_mpi_info =
+    #####:  188:      convert_info_to_mpi_info(count, array_of_info);
+    $$$$$:  188-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  189:
+    #####:  190:  MPI_Comm_spawn_multiple(count, const_cast<char **>(array_of_commands),
+    $$$$$:  190-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  191:			  const_cast<char ***>(array_of_argv),
+        -:  192:                          const_cast<int *>(array_of_maxprocs),
+        -:  193:			  array_of_mpi_info, root,
+        -:  194:			  mpi_comm, &newcomm, (int *)MPI_ERRCODES_IGNORE);
+    #####:  195:  delete[] array_of_mpi_info;
+    $$$$$:  195-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  195-block  1
+call    2 never executed
+    #####:  196:  return newcomm;
+    $$$$$:  196-block  0
+call    0 never executed
+    $$$$$:  196-block  1
+        -:  197:}
+        -:  198:
+        -:  199:inline MPI_Info *
+function _ZN3MPI9Intracomm24convert_info_to_mpi_infoEiPKNS_4InfoE called 0 returned 0% blocks executed 0%
+    #####:  200:MPI::Intracomm::convert_info_to_mpi_info(int p_nbr, const Info p_info_tbl[])
+    $$$$$:  200-block  0
+        -:  201:{
+    #####:  202:   MPI_Info *const mpi_info_tbl = new MPI_Info [p_nbr];
+    $$$$$:  202-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  202-block  1
+    $$$$$:  202-block  2
+call    2 never executed
+    $$$$$:  202-block  3
+call    3 never executed
+        -:  203:
+    #####:  204:   for (int i_tbl=0; i_tbl < p_nbr; i_tbl++) {
+    $$$$$:  204-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  205:       mpi_info_tbl[i_tbl] = p_info_tbl[i_tbl];
+    $$$$$:  205-block  0
+call    0 never executed
+        -:  206:   }
+        -:  207:
+    #####:  208:   return mpi_info_tbl;
+    $$$$$:  208-block  0
+        -:  209:}
+        -:  210:
+        -:  211:inline MPI::Intercomm
+function _ZN3MPI9Intracomm14Spawn_multipleEiPPKcPS3_PKiPKNS_4InfoEiPi called 0 returned 0% blocks executed 0%
+    #####:  212:MPI::Intracomm::Spawn_multiple(int count,
+    $$$$$:  212-block  0
+        -:  213:                                      const char* array_of_commands[],
+        -:  214:                                      const char** array_of_argv[],
+        -:  215:                                      const int array_of_maxprocs[],
+        -:  216:                                      const Info array_of_info[], int root,
+        -:  217:				      int array_of_errcodes[])
+        -:  218:{
+        -:  219:  MPI_Comm newcomm;
+        -:  220:  MPI_Info *const array_of_mpi_info =
+    #####:  221:      convert_info_to_mpi_info(count, array_of_info);
+    $$$$$:  221-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  222:
+    #####:  223:  MPI_Comm_spawn_multiple(count, const_cast<char **>(array_of_commands),
+    $$$$$:  223-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  224:                          const_cast<char ***>(array_of_argv),
+        -:  225:                          const_cast<int *>(array_of_maxprocs),
+        -:  226:                          array_of_mpi_info, root,
+        -:  227:                          mpi_comm, &newcomm, array_of_errcodes);
+    #####:  228:  delete[] array_of_mpi_info;
+    $$$$$:  228-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  228-block  1
+call    2 never executed
+    #####:  229:  return newcomm;
+    $$$$$:  229-block  0
+call    0 never executed
+    $$$$$:  229-block  1
+        -:  230:}
+        -:  231:
+        -:  232:
+        -:  233:
+        -:  234:
+        -:  235:
+        -:  236:
+        -:  237:
+        -:  238:
+        -:  239:
+        -:  240:

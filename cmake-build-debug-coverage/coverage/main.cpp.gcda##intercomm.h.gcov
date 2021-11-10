@@ -1,0 +1,105 @@
+        -:    0:Source:/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/ompi/mpi/cxx/intercomm.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// -*- c++ -*-
+        -:    2://
+        -:    3:// Copyright (c) 2004-2005 The Trustees of Indiana University and Indiana
+        -:    4://                         University Research and Technology
+        -:    5://                         Corporation.  All rights reserved.
+        -:    6:// Copyright (c) 2004-2005 The University of Tennessee and The University
+        -:    7://                         of Tennessee Research Foundation.  All rights
+        -:    8://                         reserved.
+        -:    9:// Copyright (c) 2004-2005 High Performance Computing Center Stuttgart,
+        -:   10://                         University of Stuttgart.  All rights reserved.
+        -:   11:// Copyright (c) 2004-2005 The Regents of the University of California.
+        -:   12://                         All rights reserved.
+        -:   13:// Copyright (c) 2006      Cisco Systems, Inc.  All rights reserved.
+        -:   14:// Copyright (c) 2011      FUJITSU LIMITED.  All rights reserved.
+        -:   15:// $COPYRIGHT$
+        -:   16://
+        -:   17:// Additional copyrights may follow
+        -:   18://
+        -:   19:// $HEADER$
+        -:   20://
+        -:   21:
+        -:   22:
+function _ZN3MPI9IntercommD0Ev called 0 returned 0% blocks executed 0%
+function _ZN3MPI9IntercommD2Ev called 0 returned 0% blocks executed 0%
+    #####:   23:class Intercomm : public Comm {
+    $$$$$:   23-block  0
+    $$$$$:   23-block  1
+call    0 never executed
+call    1 never executed
+    $$$$$:   23-block  2
+    $$$$$:   23-block  3
+call    2 never executed
+        -:   24:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:   25:  //  friend class PMPI::Intercomm;
+        -:   26:#endif
+        -:   27:public:
+        -:   28:
+        -:   29:  // construction
+        -:   30:  Intercomm() : Comm(MPI_COMM_NULL) { }
+        -:   31:  // copy
+        -:   32:  Intercomm(const Comm_Null& data) : Comm(data) { }
+        -:   33:  // inter-language operability
+function _ZN3MPI9IntercommC2EP19ompi_communicator_t called 0 returned 0% blocks executed 0%
+    #####:   34:  Intercomm(MPI_Comm data) : Comm(data) { }
+    $$$$$:   34-block  0
+    $$$$$:   34-block  1
+call    0 never executed
+        -:   35:
+        -:   36:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:   37:  // copy
+        -:   38:  Intercomm(const Intercomm& data) : Comm(data), pmpi_comm(data.pmpi_comm) { }
+        -:   39:  Intercomm(const PMPI::Intercomm& d) :
+        -:   40:    Comm((const PMPI::Comm&)d), pmpi_comm(d) { }
+        -:   41:
+        -:   42:  // assignment
+        -:   43:  Intercomm& operator=(const Intercomm& data) {
+        -:   44:    Comm::operator=(data);
+        -:   45:    pmpi_comm = data.pmpi_comm; return *this; }
+        -:   46:  Intercomm& operator=(const Comm_Null& data) {
+        -:   47:    Comm::operator=(data);
+        -:   48:    Intercomm& ic = (Intercomm&)data;
+        -:   49:    pmpi_comm = ic.pmpi_comm; return *this; }
+        -:   50:  // inter-language operability
+        -:   51:  Intercomm& operator=(const MPI_Comm& data) {
+        -:   52:    Comm::operator=(data);
+        -:   53:    pmpi_comm = PMPI::Intercomm(data); return *this; }
+        -:   54:#else
+        -:   55:  // copy
+        -:   56:  Intercomm(const Intercomm& data) : Comm(data.mpi_comm) { }
+        -:   57:  // assignment
+        -:   58:  Intercomm& operator=(const Intercomm& data) {
+        -:   59:    mpi_comm = data.mpi_comm; return *this; }
+        -:   60:  Intercomm& operator=(const Comm_Null& data) {
+        -:   61:    mpi_comm = data; return *this; }
+        -:   62:  // inter-language operability
+        -:   63:  Intercomm& operator=(const MPI_Comm& data) {
+        -:   64:    mpi_comm = data; return *this; }
+        -:   65:
+        -:   66:#endif
+        -:   67:
+        -:   68:
+        -:   69:  //
+        -:   70:  // Groups, Contexts, and Communicators
+        -:   71:  //
+        -:   72:
+        -:   73:  Intercomm Dup() const;
+        -:   74:
+        -:   75:  virtual Intercomm& Clone() const;
+        -:   76:
+        -:   77:  virtual int Get_remote_size() const;
+        -:   78:
+        -:   79:  virtual Group Get_remote_group() const;
+        -:   80:
+        -:   81:  virtual Intracomm Merge(bool high) const;
+        -:   82:
+        -:   83:  virtual Intercomm Create(const Group& group) const;
+        -:   84:
+        -:   85:  virtual Intercomm Split(int color, int key) const;
+        -:   86:
+        -:   87:};

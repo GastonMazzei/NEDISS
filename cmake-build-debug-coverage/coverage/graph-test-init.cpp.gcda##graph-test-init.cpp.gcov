@@ -1,0 +1,146 @@
+        -:    0:Source:/home/m4zz31/cppprojct/Tests/graph-test-init.cpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2:// Created by m4zz31 on 29/10/21.
+        -:    3://
+        -:    4:#include "graph-test-init.h"
+        -:    5:#include "../GraphClasses/ErdosRenyiGraph.h"
+        -:    6:#include "../GraphClasses/CliqueGraph.h"
+        -:    7:#include "../GraphClasses/RingGraph.h"
+        -:    8:
+        -:    9:
+        -:   10:#include "../Utils/reproductibility.h"
+        -:   11:
+        -:   12:
+        -:   13:
+function _Z16graph_tests_initjid called 0 returned 0% blocks executed 0%
+    #####:   14:void graph_tests_init(unsigned int SEED, int N, double p){
+    $$$$$:   14-block  0
+        -:   15:    // ---CONSTRUCTOR AND INITIALIZATION DEBUGGING---
+        -:   16:
+        -:   17:    // Clique Network
+    #####:   18:    reproductibility_lock(SEED);
+    $$$$$:   18-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   19:    CliqueGraphObject G1(N);
+    $$$$$:   19-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+    %%%%%:   19-block  1
+call    4 never executed
+    #####:   20:    test_graph_init<200, CliqueGraphObject>(G1, "Clique");
+    $$$$$:   20-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   20-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    $$$$$:   20-block  2
+call    7 never executed
+call    8 never executed
+    %%%%%:   20-block  3
+call    9 never executed
+    %%%%%:   20-block  4
+    %%%%%:   20-block  5
+call   10 never executed
+    %%%%%:   20-block  6
+        -:   21:
+        -:   22:    // Ring Network
+    #####:   23:    reproductibility_lock(SEED);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   24:    RingGraphObject G2(N);
+    $$$$$:   24-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+    %%%%%:   24-block  1
+call    4 never executed
+    #####:   25:    test_graph_init<200, RingGraphObject>(G2, "Ring");
+    $$$$$:   25-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   25-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    $$$$$:   25-block  2
+call    7 never executed
+call    8 never executed
+    %%%%%:   25-block  3
+call    9 never executed
+    %%%%%:   25-block  4
+    %%%%%:   25-block  5
+call   10 never executed
+    %%%%%:   25-block  6
+        -:   26:
+        -:   27:
+        -:   28:    // Erdos Renyi Network
+    #####:   29:    reproductibility_lock(SEED);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   30:    ErdosRenyiGraphObject G3(N, p);
+    $$$$$:   30-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+    %%%%%:   30-block  1
+call    4 never executed
+    #####:   31:    test_graph_init<200, ErdosRenyiGraphObject>(G3, "ErdosRenyi");
+    $$$$$:   31-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   31-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    $$$$$:   31-block  2
+call    7 never executed
+call    8 never executed
+    %%%%%:   31-block  3
+call    9 never executed
+    %%%%%:   31-block  4
+    %%%%%:   31-block  5
+call   10 never executed
+    %%%%%:   31-block  6
+function _GLOBAL__sub_I__Z16graph_tests_initjid called 1 returned 100% blocks executed 100%
+function _Z41__static_initialization_and_destruction_1ii called 1 returned 100% blocks executed 44%
+function _Z41__static_initialization_and_destruction_0ii called 1 returned 100% blocks executed 62%
+        6:   32:}
+        1:   32-block  0
+        1:   32-block  1
+call    0 returned 1
+call    1 returned 1
+        1:   32-block  2
+        1:   32-block  3
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+        1:   32-block  4
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0
+        1:   32-block  5
+        1:   32-block  6
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0
+        1:   32-block  7
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0
+        1:   32-block  8

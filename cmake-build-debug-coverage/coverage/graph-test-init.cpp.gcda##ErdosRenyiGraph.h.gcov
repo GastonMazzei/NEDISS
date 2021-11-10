@@ -1,0 +1,96 @@
+        -:    0:Source:/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2:// Created by m4zz31 on 26/10/21.
+        -:    3://
+        -:    4:#ifndef CPPPROJCT_ERDOSRENYIGRAPH_H
+        -:    5:#define CPPPROJCT_ERDOSRENYIGRAPH_H
+        -:    6:#include "GeneralGraph.h"
+        -:    7:
+function _ZN21ErdosRenyiGraphObjectD2Ev called 0 returned 0% blocks executed 0%
+    #####:    8:class ErdosRenyiGraphObject : public CommonGraphObjectClass {
+    $$$$$:    8-block  0
+    $$$$$:    8-block  1
+call    0 never executed
+        -:    9:public:
+        -:   10:    // WE SHOULD CHANGE PROBABILITY FOR NUMBER OF EDGES!
+        -:   11:    typedef boost::sorted_erdos_renyi_iterator<boost::minstd_rand, Graph> ERGen;
+        -:   12:    boost::minstd_rand gen;
+        -:   13:    unsigned long N;
+        -:   14:    unsigned long E;
+        -:   15:    double Proba;
+        -:   16:    Graph g;
+    #####:   17:    unsigned long Procs = num_processes(boost::graph::distributed::mpi_process_group());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   17-block  0
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   17-block  1
+call    6 never executed
+call    7 never executed
+call    8 never executed
+    %%%%%:   17-block  2
+call    9 never executed
+    %%%%%:   17-block  3
+        -:   18:
+function _ZN21ErdosRenyiGraphObjectC2Emd called 0 returned 0% blocks executed 0%
+    #####:   19:    ErdosRenyiGraphObject(unsigned long num_nodes, double probability) :
+    $$$$$:   19-block  0
+    #####:   20:            E((unsigned long) (probability * (double) num_nodes)), // THIS IS WRONG!
+        -:   21:            N(num_nodes),
+        -:   22:            Proba(probability),
+    #####:   23:            g(ERGen(gen, num_nodes, probability, false), ERGen(), num_nodes) {};
+    $$$$$:   23-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   23-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    $$$$$:   23-block  2
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+    $$$$$:   23-block  3
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+    $$$$$:   23-block  4
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    $$$$$:   23-block  5
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+    %%%%%:   23-block  6
+call   20 never executed
+    %%%%%:   23-block  7
+    %%%%%:   23-block  8
+call   21 never executed
+    %%%%%:   23-block  9
+    %%%%%:   23-block 10
+call   22 never executed
+    %%%%%:   23-block 11
+    %%%%%:   23-block 12
+call   23 never executed
+    %%%%%:   23-block 13
+    %%%%%:   23-block 14
+call   24 never executed
+    %%%%%:   23-block 15
+call   25 never executed
+        -:   24:
+function _ZN21ErdosRenyiGraphObject5buildEv called 0 returned 0% blocks executed 0%
+    #####:   25:    void build(){}; // empty function for inter-class compatibility :-)
+    $$$$$:   25-block  0
+        -:   26:};
+        -:   27:#endif //CPPPROJCT_ERDOSRENYIGRAPH_H

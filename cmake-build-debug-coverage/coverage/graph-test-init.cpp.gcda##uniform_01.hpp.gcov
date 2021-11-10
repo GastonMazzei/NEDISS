@@ -1,0 +1,307 @@
+        -:    0:Source:/usr/include/boost/random/uniform_01.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/* boost random/uniform_01.hpp header file
+        -:    2: *
+        -:    3: * Copyright Jens Maurer 2000-2001
+        -:    4: * Distributed under the Boost Software License, Version 1.0. (See
+        -:    5: * accompanying file LICENSE_1_0.txt or copy at
+        -:    6: * http://www.boost.org/LICENSE_1_0.txt)
+        -:    7: *
+        -:    8: * See http://www.boost.org for most recent version including documentation.
+        -:    9: *
+        -:   10: * $Id$
+        -:   11: *
+        -:   12: * Revision history
+        -:   13: *  2001-02-18  moved to individual header files
+        -:   14: */
+        -:   15:
+        -:   16:#ifndef BOOST_RANDOM_UNIFORM_01_HPP
+        -:   17:#define BOOST_RANDOM_UNIFORM_01_HPP
+        -:   18:
+        -:   19:#include <iostream>
+        -:   20:#include <boost/config.hpp>
+        -:   21:#include <boost/limits.hpp>
+        -:   22:#include <boost/static_assert.hpp>
+        -:   23:#include <boost/random/detail/config.hpp>
+        -:   24:#include <boost/random/detail/ptr_helper.hpp>
+        -:   25:
+        -:   26:#include <boost/random/detail/disable_warnings.hpp>
+        -:   27:
+        -:   28:namespace boost {
+        -:   29:namespace random {
+        -:   30:
+        -:   31:#ifdef BOOST_RANDOM_DOXYGEN
+        -:   32:
+        -:   33:/**
+        -:   34: * The distribution function uniform_01 models a \random_distribution.
+        -:   35: * On each invocation, it returns a random floating-point value
+        -:   36: * uniformly distributed in the range [0..1).
+        -:   37: *
+        -:   38: * The template parameter RealType shall denote a float-like value type
+        -:   39: * with support for binary operators +, -, and /.
+        -:   40: *
+        -:   41: * Note: The current implementation is buggy, because it may not fill
+        -:   42: * all of the mantissa with random bits. I'm unsure how to fill a
+        -:   43: * (to-be-invented) @c boost::bigfloat class with random bits efficiently.
+        -:   44: * It's probably time for a traits class.
+        -:   45: */
+        -:   46:template<class RealType = double>
+        -:   47:class uniform_01
+        -:   48:{
+        -:   49:public:
+        -:   50:  typedef RealType input_type;
+        -:   51:  typedef RealType result_type;
+        -:   52:  result_type min BOOST_PREVENT_MACRO_SUBSTITUTION () const;
+        -:   53:  result_type max BOOST_PREVENT_MACRO_SUBSTITUTION () const;
+        -:   54:  void reset();
+        -:   55:
+        -:   56:  template<class Engine>
+        -:   57:  result_type operator()(Engine& eng);
+        -:   58:
+        -:   59:#ifndef BOOST_RANDOM_NO_STREAM_OPERATORS
+        -:   60:  template<class CharT, class Traits>
+        -:   61:  friend std::basic_ostream<CharT,Traits>&
+        -:   62:  operator<<(std::basic_ostream<CharT,Traits>& os, const new_uniform_01&)
+        -:   63:  {
+        -:   64:    return os;
+        -:   65:  }
+        -:   66:
+        -:   67:  template<class CharT, class Traits>
+        -:   68:  friend std::basic_istream<CharT,Traits>&
+        -:   69:  operator>>(std::basic_istream<CharT,Traits>& is, new_uniform_01&)
+        -:   70:  {
+        -:   71:    return is;
+        -:   72:  }
+        -:   73:#endif
+        -:   74:};
+        -:   75:
+        -:   76:#else
+        -:   77:
+        -:   78:namespace detail {
+        -:   79:
+        -:   80:template<class RealType>
+        -:   81:class new_uniform_01
+        -:   82:{
+        -:   83:public:
+        -:   84:  typedef RealType input_type;
+        -:   85:  typedef RealType result_type;
+        -:   86:  // compiler-generated copy ctor and copy assignment are fine
+        -:   87:  result_type min BOOST_PREVENT_MACRO_SUBSTITUTION () const { return result_type(0); }
+        -:   88:  result_type max BOOST_PREVENT_MACRO_SUBSTITUTION () const { return result_type(1); }
+        -:   89:  void reset() { }
+        -:   90:
+        -:   91:  template<class Engine>
+function _ZN5boost6random6detail14new_uniform_01IdEclINS0_10uniform_01IPNS0_26linear_congruential_engineIjLj48271ELj0ELj2147483647EEEdEEEEdRT_ called 0 returned 0% blocks executed 0%
+    #####:   92:  result_type operator()(Engine& eng) {
+    $$$$$:   92-block  0
+    #####:   93:    for (;;) {
+    $$$$$:   93-block  0
+        -:   94:      typedef typename Engine::result_type base_result;
+    #####:   95:      result_type factor = result_type(1) /
+    #####:   96:              (result_type(base_result((eng.max)()-(eng.min)())) +
+    $$$$$:   96-block  0
+call    0 never executed
+call    1 never executed
+        -:   97:               result_type(std::numeric_limits<base_result>::is_integer ? 1 : 0));
+    #####:   98:      result_type result = result_type(base_result(eng() - (eng.min)())) * factor;
+call    0 never executed
+call    1 never executed
+    #####:   99:      if (result < result_type(1))
+branch  0 never executed
+branch  1 never executed
+    #####:  100:        return result;
+    $$$$$:  100-block  0
+        -:  101:    }
+        -:  102:  }
+        -:  103:
+        -:  104:#ifndef BOOST_RANDOM_NO_STREAM_OPERATORS
+        -:  105:  template<class CharT, class Traits>
+        -:  106:  friend std::basic_ostream<CharT,Traits>&
+        -:  107:  operator<<(std::basic_ostream<CharT,Traits>& os, const new_uniform_01&)
+        -:  108:  {
+        -:  109:    return os;
+        -:  110:  }
+        -:  111:
+        -:  112:  template<class CharT, class Traits>
+        -:  113:  friend std::basic_istream<CharT,Traits>&
+        -:  114:  operator>>(std::basic_istream<CharT,Traits>& is, new_uniform_01&)
+        -:  115:  {
+        -:  116:    return is;
+        -:  117:  }
+        -:  118:#endif
+        -:  119:};
+        -:  120:
+        -:  121:template<class UniformRandomNumberGenerator, class RealType>
+        -:  122:class backward_compatible_uniform_01
+        -:  123:{
+        -:  124:  typedef boost::random::detail::ptr_helper<UniformRandomNumberGenerator> traits;
+        -:  125:public:
+        -:  126:  typedef UniformRandomNumberGenerator base_type;
+        -:  127:  typedef RealType result_type;
+        -:  128:
+        -:  129:  BOOST_STATIC_CONSTANT(bool, has_fixed_range = false);
+        -:  130:
+        -:  131:#if !defined(BOOST_NO_LIMITS_COMPILE_TIME_CONSTANTS)
+        -:  132:  BOOST_STATIC_ASSERT(!std::numeric_limits<RealType>::is_integer);
+        -:  133:#endif
+        -:  134:
+function _ZN5boost6random6detail30backward_compatible_uniform_01IPNS0_26linear_congruential_engineIjLj48271ELj0ELj2147483647EEEdEC2ES5_ called 0 returned 0% blocks executed 0%
+    #####:  135:  explicit backward_compatible_uniform_01(typename traits::rvalue_type rng)
+    $$$$$:  135-block  0
+        -:  136:    : _rng(rng),
+    #####:  137:      _factor(result_type(1) /
+    #####:  138:              (result_type((base().max)()-(base().min)()) +
+    $$$$$:  138-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  139:               result_type(std::numeric_limits<base_result>::is_integer ? 1 : 0)))
+        -:  140:  {
+    #####:  141:  }
+        -:  142:  // compiler-generated copy ctor and copy assignment are fine
+        -:  143:
+function _ZNK5boost6random6detail30backward_compatible_uniform_01IPNS0_26linear_congruential_engineIjLj48271ELj0ELj2147483647EEEdE3minEv called 0 returned 0% blocks executed 0%
+    #####:  144:  result_type min BOOST_PREVENT_MACRO_SUBSTITUTION () const { return result_type(0); }
+    $$$$$:  144-block  0
+    $$$$$:  144-block  1
+function _ZNK5boost6random6detail30backward_compatible_uniform_01IPNS0_26linear_congruential_engineIjLj48271ELj0ELj2147483647EEEdE3maxEv called 0 returned 0% blocks executed 0%
+    #####:  145:  result_type max BOOST_PREVENT_MACRO_SUBSTITUTION () const { return result_type(1); }
+    $$$$$:  145-block  0
+    $$$$$:  145-block  1
+function _ZN5boost6random6detail30backward_compatible_uniform_01IPNS0_26linear_congruential_engineIjLj48271ELj0ELj2147483647EEEdE4baseEv called 0 returned 0% blocks executed 0%
+    #####:  146:  typename traits::value_type& base() { return traits::ref(_rng); }
+    $$$$$:  146-block  0
+    $$$$$:  146-block  1
+call    0 never executed
+        -:  147:  const typename traits::value_type& base() const { return traits::ref(_rng); }
+        -:  148:  void reset() { }
+        -:  149:
+function _ZN5boost6random6detail30backward_compatible_uniform_01IPNS0_26linear_congruential_engineIjLj48271ELj0ELj2147483647EEEdEclEv called 0 returned 0% blocks executed 0%
+    #####:  150:  result_type operator()() {
+    $$$$$:  150-block  0
+    #####:  151:    for (;;) {
+    $$$$$:  151-block  0
+    #####:  152:      result_type result = result_type(base()() - (base().min)()) * _factor;
+    $$$$$:  152-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  153:      if (result < result_type(1))
+branch  0 never executed
+branch  1 never executed
+    #####:  154:        return result;
+    $$$$$:  154-block  0
+        -:  155:    }
+        -:  156:  }
+        -:  157:
+        -:  158:#if !defined(BOOST_NO_OPERATORS_IN_NAMESPACE) && !defined(BOOST_NO_MEMBER_TEMPLATE_FRIENDS)
+        -:  159:  template<class CharT, class Traits>
+        -:  160:  friend std::basic_ostream<CharT,Traits>&
+        -:  161:  operator<<(std::basic_ostream<CharT,Traits>& os, const backward_compatible_uniform_01& u)
+        -:  162:  {
+        -:  163:    os << u._rng;
+        -:  164:    return os;
+        -:  165:  }
+        -:  166:
+        -:  167:  template<class CharT, class Traits>
+        -:  168:  friend std::basic_istream<CharT,Traits>&
+        -:  169:  operator>>(std::basic_istream<CharT,Traits>& is, backward_compatible_uniform_01& u)
+        -:  170:  {
+        -:  171:    is >> u._rng;
+        -:  172:    return is;
+        -:  173:  }
+        -:  174:#endif
+        -:  175:
+        -:  176:private:
+        -:  177:  typedef typename traits::value_type::result_type base_result;
+        -:  178:  UniformRandomNumberGenerator _rng;
+        -:  179:  result_type _factor;
+        -:  180:};
+        -:  181:
+        -:  182:#ifndef BOOST_NO_INCLASS_MEMBER_INITIALIZATION
+        -:  183://  A definition is required even for integral static constants
+        -:  184:template<class UniformRandomNumberGenerator, class RealType>
+        -:  185:const bool backward_compatible_uniform_01<UniformRandomNumberGenerator, RealType>::has_fixed_range;
+        -:  186:#endif
+        -:  187:
+        -:  188:template<class UniformRandomNumberGenerator, bool is_number = std::numeric_limits<UniformRandomNumberGenerator>::is_specialized>
+        -:  189:struct select_uniform_01
+        -:  190:{
+        -:  191:  template<class RealType>
+        -:  192:  struct apply
+        -:  193:  {
+        -:  194:    typedef backward_compatible_uniform_01<UniformRandomNumberGenerator, RealType> type;
+        -:  195:  };
+        -:  196:};
+        -:  197:
+        -:  198:template<class Num>
+        -:  199:struct select_uniform_01<Num, true>
+        -:  200:{
+        -:  201:  template<class RealType>
+        -:  202:  struct apply
+        -:  203:  {
+        -:  204:    typedef new_uniform_01<Num> type;
+        -:  205:  };
+        -:  206:};
+        -:  207:
+        -:  208:}
+        -:  209:
+        -:  210:// Because it is so commonly used: uniform distribution on the real [0..1)
+        -:  211:// range.  This allows for specializations to avoid a costly int -> float
+        -:  212:// conversion plus float multiplication
+        -:  213:template<class UniformRandomNumberGenerator = double, class RealType = double>
+        -:  214:class uniform_01
+        -:  215:  : public detail::select_uniform_01<UniformRandomNumberGenerator>::BOOST_NESTED_TEMPLATE apply<RealType>::type
+        -:  216:{
+        -:  217:  typedef typename detail::select_uniform_01<UniformRandomNumberGenerator>::BOOST_NESTED_TEMPLATE apply<RealType>::type impl_type;
+        -:  218:  typedef boost::random::detail::ptr_helper<UniformRandomNumberGenerator> traits;
+        -:  219:public:
+        -:  220:
+function _ZN5boost6random10uniform_01IddEC2Ev called 0 returned 0% blocks executed 0%
+    #####:  221:  uniform_01() {}
+    $$$$$:  221-block  0
+        -:  222:
+function _ZN5boost6random10uniform_01IPNS0_26linear_congruential_engineIjLj48271ELj0ELj2147483647EEEdEC2ES4_ called 0 returned 0% blocks executed 0%
+    #####:  223:  explicit uniform_01(typename traits::rvalue_type rng)
+    $$$$$:  223-block  0
+    #####:  224:    : impl_type(rng)
+    $$$$$:  224-block  0
+call    0 never executed
+        -:  225:  {
+    #####:  226:  }
+        -:  227:
+        -:  228:#if !defined(BOOST_NO_OPERATORS_IN_NAMESPACE) && !defined(BOOST_NO_MEMBER_TEMPLATE_FRIENDS)
+        -:  229:  template<class CharT, class Traits>
+        -:  230:  friend std::basic_ostream<CharT,Traits>&
+        -:  231:  operator<<(std::basic_ostream<CharT,Traits>& os, const uniform_01& u)
+        -:  232:  {
+        -:  233:    os << static_cast<const impl_type&>(u);
+        -:  234:    return os;
+        -:  235:  }
+        -:  236:
+        -:  237:  template<class CharT, class Traits>
+        -:  238:  friend std::basic_istream<CharT,Traits>&
+        -:  239:  operator>>(std::basic_istream<CharT,Traits>& is, uniform_01& u)
+        -:  240:  {
+        -:  241:    is >> static_cast<impl_type&>(u);
+        -:  242:    return is;
+        -:  243:  }
+        -:  244:#endif
+        -:  245:};
+        -:  246:
+        -:  247:#endif
+        -:  248:
+        -:  249:} // namespace random
+        -:  250:
+        -:  251:using random::uniform_01;
+        -:  252:
+        -:  253:} // namespace boost
+        -:  254:
+        -:  255:#include <boost/random/detail/enable_warnings.hpp>
+        -:  256:
+        -:  257:#endif // BOOST_RANDOM_UNIFORM_01_HPP

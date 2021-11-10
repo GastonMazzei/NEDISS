@@ -1,0 +1,132 @@
+        -:    0:Source:/home/m4zz31/cppprojct/Utils/timers.cpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Utils/timers.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Utils/timers.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <iostream>
+        -:    2:#include <vector>
+        -:    3:#include <iostream>
+        -:    4:#include <random>
+        -:    5:#include <omp.h>
+        -:    6:#include <algorithm>
+        -:    7:#include <iterator>
+        -:    8:#include <chrono>
+        -:    9:
+function _Z17time_L_executionsi called 0 returned 0% blocks executed 0%
+    #####:   10:void time_L_executions(int L){
+    $$$$$:   10-block  0
+    #####:   11:    auto t1 = std::chrono::high_resolution_clock::now();
+    $$$$$:   11-block  0
+call    0 never executed
+    #####:   12:    for (int j=0; j<100000; j++) {
+    $$$$$:   12-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   12-block  1
+    #####:   13:        for (int i = 0; i < L; i++) {
+    $$$$$:   13-block  0
+    $$$$$:   13-block  1
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   13-block  2
+        -:   14:            //std::cout << "Hello, World!" << std::endl;
+        -:   15:        }
+        -:   16:    }
+    #####:   17:    auto t2 = std::chrono::high_resolution_clock::now();
+    $$$$$:   17-block  0
+call    0 never executed
+    #####:   18:    std::chrono::duration<double, std::milli> ms_double = t2 - t1;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   18-block  0
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:   18-block  1
+    #####:   19:    std::cout << ms_double.count()/100000 << std::endl;
+    $$$$$:   19-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   19-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    #####:   20:}
+    $$$$$:   20-block  0
+        -:   21:
+function _Z26parallel_time_L_executionsi called 0 returned 0% blocks executed 0%
+    #####:   22:void parallel_time_L_executions(int L){
+    $$$$$:   22-block  0
+    #####:   23:    auto t1 = std::chrono::high_resolution_clock::now();
+    $$$$$:   23-block  0
+call    0 never executed
+    #####:   24:    for (int j=0; j<100000; j++) {
+    $$$$$:   24-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   24-block  1
+function _Z26parallel_time_L_executionsi._omp_fn.0 called 0 returned 0% blocks executed 0%
+    #####:   25:# pragma omp parallel for
+    $$$$$:   25-block  0
+    #####:   26:        for (int i = 0; i < L; i++) {
+    $$$$$:   26-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   26-block  1
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   26-block  2
+    $$$$$:   26-block  3
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   26-block  4
+        -:   27:            //std::cout << "Hello, World!" << std::endl;
+        -:   28:        }
+        -:   29:    }
+    #####:   30:    auto t2 = std::chrono::high_resolution_clock::now();
+    $$$$$:   30-block  0
+call    0 never executed
+    #####:   31:    std::chrono::duration<double, std::milli> ms_double = t2 - t1;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   31-block  0
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:   31-block  1
+    #####:   32:    std::cout << ms_double.count()/100000 << std::endl;
+    $$$$$:   32-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   32-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+function _GLOBAL__sub_I__Z17time_L_executionsi called 1 returned 100% blocks executed 100%
+function _Z41__static_initialization_and_destruction_0ii called 1 returned 100% blocks executed 100%
+        4:   33:}
+        1:   33-block  0
+        1:   33-block  1
+call    0 returned 1
+        1:   33-block  2
+        1:   33-block  3
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   33-block  4
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+    $$$$$:   33-block  5
+        -:   34:
+        -:   35:// TO JOIN TIMERS ITERATING OVER THEM:
+        -:   36://
+        -:   37://for (int L=0.5e2; L < 2.5e3; L = L + 1e2) {
+        -:   38://std::cout << L << std::endl;
+        -:   39://time_L_executions(L);
+        -:   40://parallel_time_L_executions(L);
+        -:   41://}

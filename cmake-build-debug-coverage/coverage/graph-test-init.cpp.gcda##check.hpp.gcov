@@ -1,0 +1,302 @@
+        -:    0:Source:/usr/include/boost/archive/detail/check.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_ARCHIVE_DETAIL_CHECK_HPP
+        -:    2:#define BOOST_ARCHIVE_DETAIL_CHECK_HPP
+        -:    3:
+        -:    4:// MS compatible compilers support #pragma once
+        -:    5:#if defined(_MSC_VER)
+        -:    6:# pragma once
+        -:    7:#if !defined(__clang__)
+        -:    8:#pragma inline_depth(255)
+        -:    9:#pragma inline_recursion(on)
+        -:   10:#endif
+        -:   11:#endif
+        -:   12:
+        -:   13:#if defined(__MWERKS__)
+        -:   14:#pragma inline_depth(255)
+        -:   15:#endif
+        -:   16:
+        -:   17://///////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
+        -:   18:// check.hpp: interface for serialization system.
+        -:   19:
+        -:   20:// (C) Copyright 2009 Robert Ramey - http://www.rrsd.com .
+        -:   21:// Use, modification and distribution is subject to the Boost Software
+        -:   22:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:   23:// http://www.boost.org/LICENSE_1_0.txt)
+        -:   24:
+        -:   25://  See http://www.boost.org for updates, documentation, and revision history.
+        -:   26:
+        -:   27:#include <boost/config.hpp>
+        -:   28:
+        -:   29:#include <boost/static_assert.hpp>
+        -:   30:#include <boost/type_traits/is_const.hpp>
+        -:   31:
+        -:   32:#include <boost/mpl/eval_if.hpp>
+        -:   33:#include <boost/mpl/or.hpp>
+        -:   34:#include <boost/mpl/equal_to.hpp>
+        -:   35:#include <boost/mpl/int.hpp>
+        -:   36:#include <boost/mpl/not.hpp>
+        -:   37:#include <boost/mpl/greater.hpp>
+        -:   38:#include <boost/mpl/assert.hpp>
+        -:   39:
+        -:   40:#include <boost/serialization/static_warning.hpp>
+        -:   41:#include <boost/serialization/version.hpp>
+        -:   42:#include <boost/serialization/level.hpp>
+        -:   43:#include <boost/serialization/tracking.hpp>
+        -:   44:#include <boost/serialization/wrapper.hpp>
+        -:   45:
+        -:   46:namespace boost {
+        -:   47:namespace archive {
+        -:   48:namespace detail {
+        -:   49:
+        -:   50:// checks for objects
+        -:   51:
+        -:   52:template<class T>
+function _ZN5boost7archive6detail18check_object_levelIKNS_13serialization13array_wrapperIdEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelIKNS_13serialization3nvpIjEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelIKNS_13serialization3nvpINS3_20collection_size_typeEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelI11DynamicEdgeEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelISt6vectorIdSaIdEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelIKNS_13serialization3nvpI11DynamicNodeEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelIKNS_13serialization3nvpINS_6detail8parallel31msg_add_edge_with_property_dataINS6_17global_descriptorImEEm11DynamicEdgeEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelIKNS_13serialization3nvpIiEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelI11DynamicNodeEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelINS_8parallel6detail14untracked_pairIi11DynamicNodeEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelINS_6detail8parallel31msg_add_edge_with_property_dataINS4_17global_descriptorImEEm11DynamicEdgeEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelINS_8parallel6detail14untracked_pairIiNS_6detail8parallel31msg_add_edge_with_property_dataINS7_17global_descriptorImEEm11DynamicEdgeEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelINS_6detail8parallel22msg_nonlocal_edge_dataI11DynamicEdgeNS3_14edge_desc_implINS_12directed_tagEmEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18check_object_levelINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvv called 0 returned 0% blocks executed 0%
+    #####:   53:inline void check_object_level(){
+    $$$$$:   53-block  0
+    $$$$$:   53-block  1
+    $$$$$:   53-block  2
+    $$$$$:   53-block  3
+    $$$$$:   53-block  4
+    $$$$$:   53-block  5
+    $$$$$:   53-block  6
+    $$$$$:   53-block  7
+    $$$$$:   53-block  8
+    $$$$$:   53-block  9
+    $$$$$:   53-block 10
+    $$$$$:   53-block 11
+    $$$$$:   53-block 12
+    $$$$$:   53-block 13
+    $$$$$:   53-block 14
+        -:   54:    typedef
+        -:   55:        typename mpl::greater_equal<
+        -:   56:            serialization::implementation_level< T >,
+        -:   57:            mpl::int_<serialization::primitive_type>
+        -:   58:        >::type typex;
+        -:   59:
+        -:   60:    // trap attempts to serialize objects marked
+        -:   61:    // not_serializable
+        -:   62:    BOOST_STATIC_ASSERT(typex::value);
+    #####:   63:}
+        -:   64:
+        -:   65:template<class T>
+function _ZN5boost7archive6detail23check_object_versioningIKNS_13serialization13array_wrapperIdEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningIKNS_13serialization3nvpIjEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningIKNS_13serialization3nvpINS3_20collection_size_typeEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningISt6vectorIdSaIdEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningIKNS_13serialization3nvpI11DynamicNodeEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningIKNS_13serialization3nvpINS_6detail8parallel31msg_add_edge_with_property_dataINS6_17global_descriptorImEEm11DynamicEdgeEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningIKNS_13serialization3nvpIiEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_6detail8parallel20msg_remove_edge_dataINS4_15edge_descriptorINS3_14edge_desc_implINS_12directed_tagEmEEEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningI11DynamicNodeEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_8parallel6detail14untracked_pairIi11DynamicNodeEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningIlEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_6detail9edge_baseINS_12directed_tagEmEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_6detail14edge_desc_implINS_12directed_tagEmEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningIsEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_6detail8parallel17global_descriptorImEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningImEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningIbEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_6detail8parallel15edge_descriptorINS3_14edge_desc_implINS_12directed_tagEmEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_6detail8parallel17msg_add_edge_dataINS4_17global_descriptorImEEmEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningIiEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningI11DynamicEdgeEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_13serialization3nvpIbEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_13serialization3nvpINS_6detail8parallel15edge_descriptorINS5_14edge_desc_implINS_12directed_tagEmEEEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_13serialization3nvpINS_6detail8parallel17msg_add_edge_dataINS6_17global_descriptorImEEmEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_13serialization3nvpINS_6detail8parallel31msg_add_edge_with_property_dataINS6_17global_descriptorImEEm11DynamicEdgeEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_13serialization3nvpIiEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_8parallel6detail14untracked_pairINS_6detail8parallel15edge_descriptorINS6_14edge_desc_implINS_12directed_tagEmEEEEbEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_8parallel6detail14untracked_pairIiNS_6detail8parallel17msg_add_edge_dataINS7_17global_descriptorImEEmEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_8parallel6detail14untracked_pairIiNS_6detail8parallel31msg_add_edge_with_property_dataINS7_17global_descriptorImEEm11DynamicEdgeEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_6detail8parallel31msg_add_edge_with_property_dataINS4_17global_descriptorImEEm11DynamicEdgeEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINS_6detail8parallel22msg_nonlocal_edge_dataI11DynamicEdgeNS3_14edge_desc_implINS_12directed_tagEmEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail23check_object_versioningINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvv called 0 returned 0% blocks executed 0%
+    #####:   66:inline void check_object_versioning(){
+    $$$$$:   66-block  0
+    $$$$$:   66-block  1
+    $$$$$:   66-block  2
+    $$$$$:   66-block  3
+    $$$$$:   66-block  4
+    $$$$$:   66-block  5
+    $$$$$:   66-block  6
+    $$$$$:   66-block  7
+    $$$$$:   66-block  8
+    $$$$$:   66-block  9
+    $$$$$:   66-block 10
+    $$$$$:   66-block 11
+    $$$$$:   66-block 12
+    $$$$$:   66-block 13
+    $$$$$:   66-block 14
+    $$$$$:   66-block 15
+    $$$$$:   66-block 16
+    $$$$$:   66-block 17
+    $$$$$:   66-block 18
+    $$$$$:   66-block 19
+    $$$$$:   66-block 20
+    $$$$$:   66-block 21
+    $$$$$:   66-block 22
+    $$$$$:   66-block 23
+    $$$$$:   66-block 24
+    $$$$$:   66-block 25
+    $$$$$:   66-block 26
+    $$$$$:   66-block 27
+    $$$$$:   66-block 28
+    $$$$$:   66-block 29
+    $$$$$:   66-block 30
+    $$$$$:   66-block 31
+    $$$$$:   66-block 32
+        -:   67:    typedef
+        -:   68:        typename mpl::or_<
+        -:   69:            typename mpl::greater<
+        -:   70:                serialization::implementation_level< T >,
+        -:   71:                mpl::int_<serialization::object_serializable>
+        -:   72:            >,
+        -:   73:            typename mpl::equal_to<
+        -:   74:                serialization::version< T >,
+        -:   75:                mpl::int_<0>
+        -:   76:            >
+        -:   77:        > typex;
+        -:   78:    // trap attempts to serialize with objects that don't
+        -:   79:    // save class information in the archive with versioning.
+        -:   80:    BOOST_STATIC_ASSERT(typex::value);
+    #####:   81:}
+        -:   82:
+        -:   83:template<class T>
+        -:   84:inline void check_object_tracking(){
+        -:   85:    // presume it has already been determined that
+        -:   86:    // T is not a const
+        -:   87:    BOOST_STATIC_ASSERT(! boost::is_const< T >::value);
+        -:   88:    typedef typename mpl::equal_to<
+        -:   89:        serialization::tracking_level< T >,
+        -:   90:        mpl::int_<serialization::track_never>
+        -:   91:    >::type typex;
+        -:   92:    // saving an non-const object of a type not marked "track_never)
+        -:   93:
+        -:   94:    // may be an indicator of an error usage of the
+        -:   95:    // serialization library and should be double checked.
+        -:   96:    // See documentation on object tracking.  Also, see the
+        -:   97:    // "rationale" section of the documenation
+        -:   98:    // for motivation for this checking.
+        -:   99:
+        -:  100:    BOOST_STATIC_WARNING(typex::value);
+        -:  101:}
+        -:  102:
+        -:  103:// checks for pointers
+        -:  104:
+        -:  105:template<class T>
+        -:  106:inline void check_pointer_level(){
+        -:  107:    // we should only invoke this once we KNOW that T
+        -:  108:    // has been used as a pointer!!
+        -:  109:    typedef
+        -:  110:        typename mpl::or_<
+        -:  111:            typename mpl::greater<
+        -:  112:                serialization::implementation_level< T >,
+        -:  113:                mpl::int_<serialization::object_serializable>
+        -:  114:            >,
+        -:  115:            typename mpl::not_<
+        -:  116:                typename mpl::equal_to<
+        -:  117:                    serialization::tracking_level< T >,
+        -:  118:                    mpl::int_<serialization::track_selectively>
+        -:  119:                >
+        -:  120:            >
+        -:  121:        > typex;
+        -:  122:    // Address the following when serializing to a pointer:
+        -:  123:
+        -:  124:    // a) This type doesn't save class information in the
+        -:  125:    // archive. That is, the serialization trait implementation
+        -:  126:    // level <= object_serializable.
+        -:  127:    // b) Tracking for this type is set to "track selectively"
+        -:  128:
+        -:  129:    // in this case, indication that an object is tracked is
+        -:  130:    // not stored in the archive itself - see level == object_serializable
+        -:  131:    // but rather the existence of the operation ar >> T * is used to
+        -:  132:    // infer that an object of this type should be tracked.  So, if
+        -:  133:    // you save via a pointer but don't load via a pointer the operation
+        -:  134:    // will fail on load without given any valid reason for the failure.
+        -:  135:
+        -:  136:    // So if your program traps here, consider changing the
+        -:  137:    // tracking or implementation level traits - or not
+        -:  138:    // serializing via a pointer.
+        -:  139:    BOOST_STATIC_WARNING(typex::value);
+        -:  140:}
+        -:  141:
+        -:  142:template<class T>
+        -:  143:void inline check_pointer_tracking(){
+        -:  144:    typedef typename mpl::greater<
+        -:  145:        serialization::tracking_level< T >,
+        -:  146:        mpl::int_<serialization::track_never>
+        -:  147:    >::type typex;
+        -:  148:    // serializing an object of a type marked "track_never" through a pointer
+        -:  149:    // could result in creating more objects than were saved!
+        -:  150:    BOOST_STATIC_WARNING(typex::value);
+        -:  151:}
+        -:  152:
+        -:  153:template<class T>
+function _ZN5boost7archive6detail19check_const_loadingIKNS_13serialization13array_wrapperIdEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingIKNS_13serialization3nvpIjEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingIKNS_13serialization3nvpINS3_20collection_size_typeEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingI11DynamicEdgeEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingISt6vectorIdSaIdEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingIKNS_13serialization3nvpI11DynamicNodeEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingIKNS_13serialization3nvpINS_6detail8parallel31msg_add_edge_with_property_dataINS6_17global_descriptorImEEm11DynamicEdgeEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingIKNS_13serialization3nvpIiEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingI11DynamicNodeEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingINS_8parallel6detail14untracked_pairIi11DynamicNodeEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingINS_6detail8parallel31msg_add_edge_with_property_dataINS4_17global_descriptorImEEm11DynamicEdgeEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingINS_8parallel6detail14untracked_pairIiNS_6detail8parallel31msg_add_edge_with_property_dataINS7_17global_descriptorImEEm11DynamicEdgeEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingINS_6detail8parallel22msg_nonlocal_edge_dataI11DynamicEdgeNS3_14edge_desc_implINS_12directed_tagEmEEEEEEvv called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail19check_const_loadingINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvv called 0 returned 0% blocks executed 0%
+    #####:  154:inline void check_const_loading(){
+    $$$$$:  154-block  0
+    $$$$$:  154-block  1
+    $$$$$:  154-block  2
+    $$$$$:  154-block  3
+    $$$$$:  154-block  4
+    $$$$$:  154-block  5
+    $$$$$:  154-block  6
+    $$$$$:  154-block  7
+    $$$$$:  154-block  8
+    $$$$$:  154-block  9
+    $$$$$:  154-block 10
+    $$$$$:  154-block 11
+    $$$$$:  154-block 12
+    $$$$$:  154-block 13
+    $$$$$:  154-block 14
+        -:  155:    typedef
+        -:  156:        typename mpl::or_<
+        -:  157:            typename boost::serialization::is_wrapper< T >,
+        -:  158:            typename mpl::not_<
+        -:  159:                typename boost::is_const< T >
+        -:  160:            >
+        -:  161:        >::type typex;
+        -:  162:    // cannot load data into a "const" object unless it's a
+        -:  163:    // wrapper around some other non-const object.
+        -:  164:    BOOST_STATIC_ASSERT(typex::value);
+    #####:  165:}
+        -:  166:
+        -:  167:} // detail
+        -:  168:} // archive
+        -:  169:} // boost
+        -:  170:
+        -:  171:#endif // BOOST_ARCHIVE_DETAIL_CHECK_HPP

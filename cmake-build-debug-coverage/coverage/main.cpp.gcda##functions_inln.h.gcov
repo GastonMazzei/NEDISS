@@ -1,0 +1,308 @@
+        -:    0:Source:/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/ompi/mpi/cxx/functions_inln.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// -*- c++ -*-
+        -:    2://
+        -:    3:// Copyright (c) 2004-2005 The Trustees of Indiana University and Indiana
+        -:    4://                         University Research and Technology
+        -:    5://                         Corporation.  All rights reserved.
+        -:    6:// Copyright (c) 2004-2005 The University of Tennessee and The University
+        -:    7://                         of Tennessee Research Foundation.  All rights
+        -:    8://                         reserved.
+        -:    9:// Copyright (c) 2004-2005 High Performance Computing Center Stuttgart,
+        -:   10://                         University of Stuttgart.  All rights reserved.
+        -:   11:// Copyright (c) 2004-2005 The Regents of the University of California.
+        -:   12://                         All rights reserved.
+        -:   13:// Copyright (c) 2008      Cisco Systems, Inc.  All rights reserved.
+        -:   14:// Copyright (c) 2011      FUJITSU LIMITED.  All rights reserved.
+        -:   15:// $COPYRIGHT$
+        -:   16://
+        -:   17:// Additional copyrights may follow
+        -:   18://
+        -:   19:// $HEADER$
+        -:   20://
+        -:   21:
+        -:   22:#include <string.h>
+        -:   23:
+        -:   24://
+        -:   25:// Point-to-Point Communication
+        -:   26://
+        -:   27:
+        -:   28:inline void
+        -:   29:MPI::Attach_buffer(void* buffer, int size)
+        -:   30:{
+        -:   31:  (void)MPI_Buffer_attach(buffer, size);
+        -:   32:}
+        -:   33:
+        -:   34:inline int
+        -:   35:MPI::Detach_buffer(void*& buffer)
+        -:   36:{
+        -:   37:  int size;
+        -:   38:  (void)MPI_Buffer_detach(&buffer, &size);
+        -:   39:  return size;
+        -:   40:}
+        -:   41:
+        -:   42://
+        -:   43:// Process Topologies
+        -:   44://
+        -:   45:
+        -:   46:inline void
+        -:   47:MPI::Compute_dims(int nnodes, int ndims, int dims[])
+        -:   48:{
+        -:   49:  (void)MPI_Dims_create(nnodes, ndims, dims);
+        -:   50:}
+        -:   51:
+        -:   52:
+        -:   53://
+        -:   54:// Environmental Inquiry
+        -:   55://
+        -:   56:
+        -:   57:inline int
+        -:   58:MPI::Add_error_class()
+        -:   59:{
+        -:   60:    int errcls;
+        -:   61:    (void)MPI_Add_error_class(&errcls);
+        -:   62:    return errcls;
+        -:   63:}
+        -:   64:
+        -:   65:inline int
+        -:   66:MPI::Add_error_code(int errorclass)
+        -:   67:{
+        -:   68:    int errcode;
+        -:   69:    (void)MPI_Add_error_code(errorclass, &errcode);
+        -:   70:    return errcode;
+        -:   71:}
+        -:   72:
+        -:   73:inline void
+        -:   74:MPI::Add_error_string(int errorcode, const char* string)
+        -:   75:{
+        -:   76:    (void)MPI_Add_error_string(errorcode, const_cast<char *>(string));
+        -:   77:}
+        -:   78:
+        -:   79:inline void
+        -:   80:MPI::Get_processor_name(char* name, int& resultlen)
+        -:   81:{
+        -:   82:  (void)MPI_Get_processor_name(name, &resultlen);
+        -:   83:}
+        -:   84:
+        -:   85:inline void
+        -:   86:MPI::Get_error_string(int errorcode, char* string, int& resultlen)
+        -:   87:{
+        -:   88:  (void)MPI_Error_string(errorcode, string, &resultlen);
+        -:   89:}
+        -:   90:
+        -:   91:inline int
+        -:   92:MPI::Get_error_class(int errorcode)
+        -:   93:{
+        -:   94:  int errorclass;
+        -:   95:  (void)MPI_Error_class(errorcode, &errorclass);
+        -:   96:  return errorclass;
+        -:   97:}
+        -:   98:
+        -:   99:inline double
+        -:  100:MPI::Wtime()
+        -:  101:{
+        -:  102:  return (MPI_Wtime());
+        -:  103:}
+        -:  104:
+        -:  105:inline double
+        -:  106:MPI::Wtick()
+        -:  107:{
+        -:  108:  return (MPI_Wtick());
+        -:  109:}
+        -:  110:
+        -:  111:inline void
+        -:  112:MPI::Real_init()
+        -:  113:{
+        -:  114:    MPI::InitializeIntercepts();
+        -:  115:}
+        -:  116:
+        -:  117:
+        -:  118:inline void
+        -:  119:MPI::Init(int& argc, char**& argv)
+        -:  120:{
+        -:  121:  (void)MPI_Init(&argc, &argv);
+        -:  122:  Real_init();
+        -:  123:}
+        -:  124:
+        -:  125:inline void
+        -:  126:MPI::Init()
+        -:  127:{
+        -:  128:  (void)MPI_Init(0, 0);
+        -:  129:  Real_init();
+        -:  130:}
+        -:  131:
+        -:  132:inline void
+        -:  133:MPI::Finalize()
+        -:  134:{
+        -:  135:  (void)MPI_Finalize();
+        -:  136:}
+        -:  137:
+        -:  138:inline bool
+function _ZN3MPI14Is_initializedEv called 0 returned 0% blocks executed 0%
+    #####:  139:MPI::Is_initialized()
+    $$$$$:  139-block  0
+        -:  140:{
+        -:  141:  int t;
+    #####:  142:  (void)MPI_Initialized(&t);
+    $$$$$:  142-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  143:  return OPAL_INT_TO_BOOL(t);
+    $$$$$:  143-block  0
+    $$$$$:  143-block  1
+        -:  144:}
+        -:  145:
+        -:  146:inline bool
+        -:  147:MPI::Is_finalized()
+        -:  148:{
+        -:  149:  int t;
+        -:  150:  (void)MPI_Finalized(&t);
+        -:  151:  return OPAL_INT_TO_BOOL(t);
+        -:  152:}
+        -:  153:
+        -:  154:
+        -:  155://
+        -:  156:// External Interfaces
+        -:  157://
+        -:  158:
+        -:  159:inline int
+        -:  160:MPI::Init_thread(int required)
+        -:  161:{
+        -:  162:  int provided;
+        -:  163:  (void) MPI_Init_thread(0, NULL, required, &provided);
+        -:  164:  Real_init();
+        -:  165:  return provided;
+        -:  166:}
+        -:  167:
+        -:  168:
+        -:  169:inline int
+        -:  170:MPI::Init_thread(int& argc, char**& argv, int required)
+        -:  171:{
+        -:  172:  int provided;
+        -:  173:  (void) MPI_Init_thread(&argc, &argv, required, &provided);
+        -:  174:  Real_init();
+        -:  175:  return provided;
+        -:  176:}
+        -:  177:
+        -:  178:
+        -:  179:inline bool
+        -:  180:MPI::Is_thread_main()
+        -:  181:{
+        -:  182:  int flag;
+        -:  183:  (void) MPI_Is_thread_main(&flag);
+        -:  184:  return OPAL_INT_TO_BOOL(flag == 1);
+        -:  185:}
+        -:  186:
+        -:  187:
+        -:  188:inline int
+        -:  189:MPI::Query_thread()
+        -:  190:{
+        -:  191:  int provided;
+        -:  192:  (void) MPI_Query_thread(&provided);
+        -:  193:  return provided;
+        -:  194:}
+        -:  195:
+        -:  196:
+        -:  197://
+        -:  198:// Miscellany
+        -:  199://
+        -:  200:
+        -:  201:
+        -:  202:inline void*
+        -:  203:MPI::Alloc_mem(MPI::Aint size, const MPI::Info& info)
+        -:  204:{
+        -:  205:  void* baseptr;
+        -:  206:  (void) MPI_Alloc_mem(size, info, &baseptr);
+        -:  207:  return baseptr;
+        -:  208:}
+        -:  209:
+        -:  210:
+        -:  211:inline void
+        -:  212:MPI::Free_mem(void* base)
+        -:  213:{
+        -:  214:  (void) MPI_Free_mem(base);
+        -:  215:}
+        -:  216:
+        -:  217:
+        -:  218://
+        -:  219:// Process Creation
+        -:  220://
+        -:  221:
+        -:  222:
+        -:  223:inline void
+        -:  224:MPI::Close_port(const char* port_name)
+        -:  225:{
+        -:  226:  (void) MPI_Close_port(const_cast<char *>(port_name));
+        -:  227:}
+        -:  228:
+        -:  229:
+        -:  230:inline void
+        -:  231:MPI::Lookup_name(const char * service_name,
+        -:  232:			const MPI::Info& info,
+        -:  233:			char* port_name)
+        -:  234:{
+        -:  235:  (void) MPI_Lookup_name(const_cast<char *>(service_name), info, port_name);
+        -:  236:}
+        -:  237:
+        -:  238:
+        -:  239:inline void
+        -:  240:MPI::Open_port(const MPI::Info& info, char* port_name)
+        -:  241:{
+        -:  242:  (void) MPI_Open_port(info, port_name);
+        -:  243:}
+        -:  244:
+        -:  245:
+        -:  246:inline void
+        -:  247:MPI::Publish_name(const char* service_name,
+        -:  248:			 const MPI::Info& info,
+        -:  249:			 const char* port_name)
+        -:  250:{
+        -:  251:  (void) MPI_Publish_name(const_cast<char *>(service_name), info,
+        -:  252:                          const_cast<char *>(port_name));
+        -:  253:}
+        -:  254:
+        -:  255:
+        -:  256:inline void
+        -:  257:MPI::Unpublish_name(const char* service_name,
+        -:  258:			   const MPI::Info& info,
+        -:  259:			   const char* port_name)
+        -:  260:{
+        -:  261:  (void)MPI_Unpublish_name(const_cast<char *>(service_name), info,
+        -:  262:                           const_cast<char *>(port_name));
+        -:  263:}
+        -:  264:
+        -:  265:
+        -:  266:
+        -:  267://
+        -:  268:// Profiling
+        -:  269://
+        -:  270:
+        -:  271:inline void
+        -:  272:MPI::Pcontrol(const int level, ...)
+        -:  273:{
+        -:  274:  va_list ap;
+        -:  275:  va_start(ap, level);
+        -:  276:
+        -:  277:  (void)MPI_Pcontrol(level, ap);
+        -:  278:  va_end(ap);
+        -:  279:}
+        -:  280:
+        -:  281:
+        -:  282:inline void
+        -:  283:MPI::Get_version(int& version, int& subversion)
+        -:  284:{
+        -:  285:  (void)MPI_Get_version(&version, &subversion);
+        -:  286:}
+        -:  287:
+        -:  288:
+        -:  289:inline MPI::Aint
+        -:  290:MPI::Get_address(void* location)
+        -:  291:{
+        -:  292:  MPI::Aint ret;
+        -:  293:  MPI_Get_address(location, &ret);
+        -:  294:  return ret;
+        -:  295:}

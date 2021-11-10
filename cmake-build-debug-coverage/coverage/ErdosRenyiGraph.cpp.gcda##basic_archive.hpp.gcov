@@ -1,0 +1,284 @@
+        -:    0:Source:/usr/include/boost/archive/basic_archive.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_ARCHIVE_BASIC_ARCHIVE_HPP
+        -:    2:#define BOOST_ARCHIVE_BASIC_ARCHIVE_HPP
+        -:    3:
+        -:    4:// MS compatible compilers support #pragma once
+        -:    5:#if defined(_MSC_VER)
+        -:    6:# pragma once
+        -:    7:#endif
+        -:    8:
+        -:    9://///////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
+        -:   10:// basic_archive.hpp:
+        -:   11:
+        -:   12:// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com .
+        -:   13:// Use, modification and distribution is subject to the Boost Software
+        -:   14:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:   15:// http://www.boost.org/LICENSE_1_0.txt)
+        -:   16:
+        -:   17://  See http://www.boost.org for updates, documentation, and revision history.
+        -:   18:#include <cstring> // count
+        -:   19:#include <boost/assert.hpp>
+        -:   20:#include <boost/config.hpp>
+        -:   21:#include <boost/integer_traits.hpp>
+        -:   22:#include <boost/noncopyable.hpp>
+        -:   23:#include <boost/serialization/library_version_type.hpp>
+        -:   24:
+        -:   25:#include <boost/archive/detail/auto_link_archive.hpp>
+        -:   26:#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
+        -:   27:
+        -:   28:namespace boost {
+        -:   29:namespace archive {
+        -:   30:
+        -:   31:#if defined(_MSC_VER)
+        -:   32:#pragma warning( push )
+        -:   33:#pragma warning( disable : 4244 4267 )
+        -:   34:#endif
+        -:   35:
+        -:   36:BOOST_ARCHIVE_DECL boost::serialization::library_version_type
+        -:   37:BOOST_ARCHIVE_VERSION();
+        -:   38:
+        -:   39:// create alias in boost::archive for older user code.
+        -:   40:typedef boost::serialization::library_version_type library_version_type;
+        -:   41:
+        -:   42:class version_type {
+        -:   43:private:
+        -:   44:    typedef uint_least32_t base_type;
+        -:   45:    base_type t;
+        -:   46:public:
+        -:   47:    // should be private - but MPI fails if it's not!!!
+        -:   48:    version_type(): t(0) {}
+function _ZN5boost7archive12version_typeC2ERKj called 0 returned 0% blocks executed 0%
+    #####:   49:    explicit version_type(const unsigned int & t_) : t(t_){
+    $$$$$:   49-block  0
+        -:   50:        BOOST_ASSERT(t_ <= boost::integer_traits<base_type>::const_max);
+    #####:   51:    }
+        -:   52:    version_type(const version_type & t_) :
+        -:   53:        t(t_.t)
+        -:   54:    {}
+        -:   55:    version_type & operator=(const version_type & rhs){
+        -:   56:        t = rhs.t;
+        -:   57:        return *this;
+        -:   58:    }
+        -:   59:    // used for text output
+        -:   60:    operator base_type () const {
+        -:   61:        return t;
+        -:   62:    }
+        -:   63:    // used for text intput
+function _ZN5boost7archive12version_typecvRjEv called 0 returned 0% blocks executed 0%
+    #####:   64:    operator base_type  & (){
+    $$$$$:   64-block  0
+    #####:   65:        return t;
+    $$$$$:   65-block  0
+        -:   66:    }
+        -:   67:    bool operator==(const version_type & rhs) const {
+        -:   68:        return t == rhs.t;
+        -:   69:    }
+        -:   70:    bool operator<(const version_type & rhs) const {
+        -:   71:        return t < rhs.t;
+        -:   72:    }
+        -:   73:};
+        -:   74:
+        -:   75:class class_id_type {
+        -:   76:private:
+        -:   77:    typedef int_least16_t base_type;
+        -:   78:    base_type t;
+        -:   79:public:
+        -:   80:    // should be private - but then can't use BOOST_STRONG_TYPE below
+        -:   81:    class_id_type() : t(0) {}
+        -:   82:    explicit class_id_type(const int t_) : t(t_){
+        -:   83:        BOOST_ASSERT(t_ <= boost::integer_traits<base_type>::const_max);
+        -:   84:    }
+        -:   85:    explicit class_id_type(const std::size_t t_) : t(t_){
+        -:   86: //       BOOST_ASSERT(t_ <= boost::integer_traits<base_type>::const_max);
+        -:   87:    }
+        -:   88:    class_id_type(const class_id_type & t_) :
+        -:   89:        t(t_.t)
+        -:   90:    {}
+        -:   91:    class_id_type & operator=(const class_id_type & rhs){
+        -:   92:        t = rhs.t;
+        -:   93:        return *this;
+        -:   94:    }
+        -:   95:
+        -:   96:    // used for text output
+        -:   97:    operator base_type () const {
+        -:   98:        return t;
+        -:   99:    }
+        -:  100:    // used for text input
+        -:  101:    operator base_type &() {
+        -:  102:        return t;
+        -:  103:    }
+        -:  104:    bool operator==(const class_id_type & rhs) const {
+        -:  105:        return t == rhs.t;
+        -:  106:    }
+        -:  107:    bool operator<(const class_id_type & rhs) const {
+        -:  108:        return t < rhs.t;
+        -:  109:    }
+        -:  110:};
+        -:  111:
+        -:  112:#define BOOST_SERIALIZATION_NULL_POINTER_TAG boost::archive::class_id_type(-1)
+        -:  113:
+        -:  114:class object_id_type {
+        -:  115:private:
+        -:  116:    typedef uint_least32_t base_type;
+        -:  117:    base_type t;
+        -:  118:public:
+        -:  119:    object_id_type(): t(0) {}
+        -:  120:    // note: presumes that size_t >= unsigned int.
+        -:  121:    // use explicit cast to silence useless warning
+        -:  122:    explicit object_id_type(const std::size_t & t_) : t(static_cast<base_type>(t_)){
+        -:  123:        // make quadruple sure that we haven't lost any real integer
+        -:  124:        // precision
+        -:  125:        BOOST_ASSERT(t_ <= boost::integer_traits<base_type>::const_max);
+        -:  126:    }
+        -:  127:    object_id_type(const object_id_type & t_) :
+        -:  128:        t(t_.t)
+        -:  129:    {}
+        -:  130:    object_id_type & operator=(const object_id_type & rhs){
+        -:  131:        t = rhs.t;
+        -:  132:        return *this;
+        -:  133:    }
+        -:  134:    // used for text output
+        -:  135:    operator base_type () const {
+        -:  136:        return t;
+        -:  137:    }
+        -:  138:    // used for text input
+        -:  139:    operator base_type & () {
+        -:  140:        return t;
+        -:  141:    }
+        -:  142:    bool operator==(const object_id_type & rhs) const {
+        -:  143:        return t == rhs.t;
+        -:  144:    }
+        -:  145:    bool operator<(const object_id_type & rhs) const {
+        -:  146:        return t < rhs.t;
+        -:  147:    }
+        -:  148:};
+        -:  149:
+        -:  150:#if defined(_MSC_VER)
+        -:  151:#pragma warning( pop )
+        -:  152:#endif
+        -:  153:
+        -:  154:struct tracking_type {
+        -:  155:    bool t;
+        -:  156:    explicit tracking_type(const bool t_ = false)
+        -:  157:        : t(t_)
+        -:  158:    {}
+        -:  159:    tracking_type(const tracking_type & t_)
+        -:  160:        : t(t_.t)
+        -:  161:    {}
+        -:  162:    operator bool () const {
+        -:  163:        return t;
+        -:  164:    }
+        -:  165:    operator bool & () {
+        -:  166:        return t;
+        -:  167:    }
+        -:  168:    tracking_type & operator=(const bool t_){
+        -:  169:        t = t_;
+        -:  170:        return *this;
+        -:  171:    }
+        -:  172:    bool operator==(const tracking_type & rhs) const {
+        -:  173:        return t == rhs.t;
+        -:  174:    }
+        -:  175:    bool operator==(const bool & rhs) const {
+        -:  176:        return t == rhs;
+        -:  177:    }
+        -:  178:    tracking_type & operator=(const tracking_type & rhs){
+        -:  179:        t = rhs.t;
+        -:  180:        return *this;
+        -:  181:    }
+        -:  182:};
+        -:  183:
+        -:  184:struct class_name_type :
+        -:  185:    private boost::noncopyable
+        -:  186:{
+        -:  187:    char *t;
+        -:  188:    operator const char * & () const {
+        -:  189:        return const_cast<const char * &>(t);
+        -:  190:    }
+        -:  191:    operator char * () {
+        -:  192:        return t;
+        -:  193:    }
+        -:  194:    std::size_t size() const {
+        -:  195:        return std::strlen(t);
+        -:  196:    }
+        -:  197:    explicit class_name_type(const char *key_)
+        -:  198:    : t(const_cast<char *>(key_)){}
+        -:  199:    explicit class_name_type(char *key_)
+        -:  200:    : t(key_){}
+        -:  201:    class_name_type & operator=(const class_name_type & rhs){
+        -:  202:        t = rhs.t;
+        -:  203:        return *this;
+        -:  204:    }
+        -:  205:};
+        -:  206:
+        -:  207:enum archive_flags {
+        -:  208:    no_header = 1,  // suppress archive header info
+        -:  209:    no_codecvt = 2,  // suppress alteration of codecvt facet
+        -:  210:    no_xml_tag_checking = 4,   // suppress checking of xml tags
+        -:  211:    no_tracking = 8,           // suppress ALL tracking
+        -:  212:    flags_last = 8
+        -:  213:};
+        -:  214:
+        -:  215:BOOST_ARCHIVE_DECL const char *
+        -:  216:BOOST_ARCHIVE_SIGNATURE();
+        -:  217:
+        -:  218:/* NOTE : Warning  : Warning : Warning : Warning : Warning
+        -:  219: * If any of these are changed to different sized types,
+        -:  220: * binary_iarchive won't be able to read older archives
+        -:  221: * unless you rev the library version and include conditional
+        -:  222: * code based on the library version.  There is nothing
+        -:  223: * inherently wrong in doing this - but you have to be super
+        -:  224: * careful because it's easy to get wrong and start breaking
+        -:  225: * old archives !!!
+        -:  226: */
+        -:  227:
+        -:  228:#define BOOST_ARCHIVE_STRONG_TYPEDEF(T, D)         \
+        -:  229:    class D : public T {                           \
+        -:  230:    public:                                        \
+        -:  231:        explicit D(const T tt) : T(tt){}           \
+        -:  232:    };                                             \
+        -:  233:/**/
+        -:  234:
+        -:  235:BOOST_ARCHIVE_STRONG_TYPEDEF(class_id_type, class_id_reference_type)
+        -:  236:BOOST_ARCHIVE_STRONG_TYPEDEF(class_id_type, class_id_optional_type)
+        -:  237:BOOST_ARCHIVE_STRONG_TYPEDEF(object_id_type, object_reference_type)
+        -:  238:
+        -:  239:}// namespace archive
+        -:  240:}// namespace boost
+        -:  241:
+        -:  242:#include <boost/archive/detail/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
+        -:  243:
+        -:  244:#include <boost/serialization/level.hpp>
+        -:  245:
+        -:  246:// set implementation level to primitive for all types
+        -:  247:// used internally by the serialization library
+        -:  248:
+        -:  249:BOOST_CLASS_IMPLEMENTATION(boost::serialization::library_version_type, primitive_type)
+        -:  250:BOOST_CLASS_IMPLEMENTATION(boost::archive::version_type, primitive_type)
+        -:  251:BOOST_CLASS_IMPLEMENTATION(boost::archive::class_id_type, primitive_type)
+        -:  252:BOOST_CLASS_IMPLEMENTATION(boost::archive::class_id_reference_type, primitive_type)
+        -:  253:BOOST_CLASS_IMPLEMENTATION(boost::archive::class_id_optional_type, primitive_type)
+        -:  254:BOOST_CLASS_IMPLEMENTATION(boost::archive::class_name_type, primitive_type)
+        -:  255:BOOST_CLASS_IMPLEMENTATION(boost::archive::object_id_type, primitive_type)
+        -:  256:BOOST_CLASS_IMPLEMENTATION(boost::archive::object_reference_type, primitive_type)
+        -:  257:BOOST_CLASS_IMPLEMENTATION(boost::archive::tracking_type, primitive_type)
+        -:  258:
+        -:  259:#include <boost/serialization/is_bitwise_serializable.hpp>
+        -:  260:
+        -:  261:// set types used internally by the serialization library
+        -:  262:// to be bitwise serializable
+        -:  263:
+        -:  264:BOOST_IS_BITWISE_SERIALIZABLE(boost::serialization::library_version_type)
+        -:  265:BOOST_IS_BITWISE_SERIALIZABLE(boost::archive::version_type)
+        -:  266:BOOST_IS_BITWISE_SERIALIZABLE(boost::archive::class_id_type)
+        -:  267:BOOST_IS_BITWISE_SERIALIZABLE(boost::archive::class_id_reference_type)
+        -:  268:BOOST_IS_BITWISE_SERIALIZABLE(boost::archive::class_id_optional_type)
+        -:  269:BOOST_IS_BITWISE_SERIALIZABLE(boost::archive::class_name_type)
+        -:  270:BOOST_IS_BITWISE_SERIALIZABLE(boost::archive::object_id_type)
+        -:  271:BOOST_IS_BITWISE_SERIALIZABLE(boost::archive::object_reference_type)
+        -:  272:BOOST_IS_BITWISE_SERIALIZABLE(boost::archive::tracking_type)
+        -:  273:
+        -:  274:#endif //BOOST_ARCHIVE_BASIC_ARCHIVE_HPP

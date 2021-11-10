@@ -1,0 +1,97 @@
+        -:    0:Source:/usr/include/boost/archive/detail/basic_oserializer.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_SERIALIZATION_BASIC_OSERIALIZER_HPP
+        -:    2:#define BOOST_SERIALIZATION_BASIC_OSERIALIZER_HPP
+        -:    3:
+        -:    4:// MS compatible compilers support #pragma once
+        -:    5:#if defined(_MSC_VER)
+        -:    6:# pragma once
+        -:    7:#endif
+        -:    8:
+        -:    9://///////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
+        -:   10:// basic_oserializer.hpp: extenstion of type_info required for serialization.
+        -:   11:
+        -:   12:// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com .
+        -:   13:// Use, modification and distribution is subject to the Boost Software
+        -:   14:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:   15:// http://www.boost.org/LICENSE_1_0.txt)
+        -:   16:
+        -:   17://  See http://www.boost.org for updates, documentation, and revision history.
+        -:   18:
+        -:   19:#include <cstddef> // NULL
+        -:   20:#include <boost/config.hpp>
+        -:   21:#include <boost/noncopyable.hpp>
+        -:   22:
+        -:   23:#include <boost/archive/basic_archive.hpp>
+        -:   24:#include <boost/archive/detail/auto_link_archive.hpp>
+        -:   25:#include <boost/archive/detail/basic_serializer.hpp>
+        -:   26:
+        -:   27:#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
+        -:   28:
+        -:   29:#ifdef BOOST_MSVC
+        -:   30:#  pragma warning(push)
+        -:   31:#  pragma warning(disable : 4511 4512)
+        -:   32:#endif
+        -:   33:
+        -:   34:namespace boost {
+        -:   35:namespace serialization {
+        -:   36:    class extended_type_info;
+        -:   37:} // namespace serialization
+        -:   38:
+        -:   39:// forward declarations
+        -:   40:namespace archive {
+        -:   41:namespace detail {
+        -:   42:
+        -:   43:class basic_oarchive;
+        -:   44:class basic_pointer_oserializer;
+        -:   45:
+        -:   46:class BOOST_SYMBOL_VISIBLE basic_oserializer :
+        -:   47:    public basic_serializer
+        -:   48:{
+        -:   49:private:
+        -:   50:    basic_pointer_oserializer *m_bpos;
+        -:   51:protected:
+        -:   52:    explicit BOOST_ARCHIVE_DECL basic_oserializer(
+        -:   53:        const boost::serialization::extended_type_info & type_
+        -:   54:    );
+        -:   55:    virtual BOOST_ARCHIVE_DECL ~basic_oserializer();
+        -:   56:public:
+function _ZNK5boost7archive6detail17basic_oserializer21serialized_as_pointerEv called 0 returned 0% blocks executed 0%
+    #####:   57:    bool serialized_as_pointer() const {
+    $$$$$:   57-block  0
+    #####:   58:        return m_bpos != NULL;
+    $$$$$:   58-block  0
+        -:   59:    }
+        -:   60:    void set_bpos(basic_pointer_oserializer *bpos){
+        -:   61:        m_bpos = bpos;
+        -:   62:    }
+        -:   63:    const basic_pointer_oserializer * get_bpos() const {
+        -:   64:        return m_bpos;
+        -:   65:    }
+        -:   66:    virtual void save_object_data(
+        -:   67:        basic_oarchive & ar, const void * x
+        -:   68:    ) const = 0;
+        -:   69:    // returns true if class_info should be saved
+        -:   70:    virtual bool class_info() const = 0;
+        -:   71:    // returns true if objects should be tracked
+        -:   72:    virtual bool tracking(const unsigned int flags) const = 0;
+        -:   73:    // returns class version
+        -:   74:    virtual version_type version() const = 0;
+        -:   75:    // returns true if this class is polymorphic
+        -:   76:    virtual bool is_polymorphic() const = 0;
+        -:   77:};
+        -:   78:
+        -:   79:} // namespace detail
+        -:   80:} // namespace serialization
+        -:   81:} // namespace boost
+        -:   82:
+        -:   83:#ifdef BOOST_MSVC
+        -:   84:#pragma warning(pop)
+        -:   85:#endif
+        -:   86:
+        -:   87:#include <boost/archive/detail/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
+        -:   88:
+        -:   89:#endif // BOOST_SERIALIZATION_BASIC_OSERIALIZER_HPP

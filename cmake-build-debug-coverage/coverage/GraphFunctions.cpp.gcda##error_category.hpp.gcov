@@ -1,0 +1,222 @@
+        -:    0:Source:/usr/include/boost/system/detail/error_category.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_SYSTEM_DETAIL_ERROR_CATEGORY_HPP_INCLUDED
+        -:    2:#define BOOST_SYSTEM_DETAIL_ERROR_CATEGORY_HPP_INCLUDED
+        -:    3:
+        -:    4://  Copyright Beman Dawes 2006, 2007
+        -:    5://  Copyright Christoper Kohlhoff 2007
+        -:    6://  Copyright Peter Dimov 2017, 2018
+        -:    7://
+        -:    8://  Distributed under the Boost Software License, Version 1.0. (See accompanying
+        -:    9://  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+        -:   10://
+        -:   11://  See library home page at http://www.boost.org/libs/system
+        -:   12:
+        -:   13:#include <boost/system/detail/config.hpp>
+        -:   14:#include <boost/cstdint.hpp>
+        -:   15:#include <boost/config.hpp>
+        -:   16:#include <string>
+        -:   17:#include <functional>
+        -:   18:#include <cstddef>
+        -:   19:
+        -:   20:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:   21:# include <system_error>
+        -:   22:# include <atomic>
+        -:   23:#endif
+        -:   24:
+        -:   25:namespace boost
+        -:   26:{
+        -:   27:
+        -:   28:namespace system
+        -:   29:{
+        -:   30:
+        -:   31:class error_category;
+        -:   32:class error_code;
+        -:   33:class error_condition;
+        -:   34:
+        -:   35:std::size_t hash_value( error_code const & ec );
+        -:   36:
+        -:   37:namespace detail
+        -:   38:{
+        -:   39:
+        -:   40:BOOST_SYSTEM_CONSTEXPR bool failed_impl( int ev, error_category const & cat );
+        -:   41:
+        -:   42:class std_category;
+        -:   43:
+        -:   44:} // namespace detail
+        -:   45:
+        -:   46:#if ( defined( BOOST_GCC ) && BOOST_GCC >= 40600 ) || defined( BOOST_CLANG )
+        -:   47:#pragma GCC diagnostic push
+        -:   48:#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
+        -:   49:#endif
+        -:   50:
+        -:   51:class BOOST_SYMBOL_VISIBLE error_category
+        -:   52:{
+        -:   53:private:
+        -:   54:
+        -:   55:    friend std::size_t hash_value( error_code const & ec );
+        -:   56:    friend BOOST_SYSTEM_CONSTEXPR bool detail::failed_impl( int ev, error_category const & cat );
+        -:   57:
+        -:   58:#if !defined(BOOST_NO_CXX11_DELETED_FUNCTIONS)
+        -:   59:public:
+        -:   60:
+        -:   61:    error_category( error_category const & ) = delete;
+        -:   62:    error_category& operator=( error_category const & ) = delete;
+        -:   63:
+        -:   64:#else
+        -:   65:private:
+        -:   66:
+        -:   67:    error_category( error_category const & );
+        -:   68:    error_category& operator=( error_category const & );
+        -:   69:
+        -:   70:#endif
+        -:   71:
+        -:   72:private:
+        -:   73:
+        -:   74:    boost::ulong_long_type id_;
+        -:   75:
+        -:   76:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:   77:
+        -:   78:    mutable std::atomic< boost::system::detail::std_category* > ps_;
+        -:   79:
+        -:   80:#else
+        -:   81:
+        -:   82:    boost::system::detail::std_category* ps_;
+        -:   83:
+        -:   84:#endif
+        -:   85:
+        -:   86:protected:
+        -:   87:
+        -:   88:#if !defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS) && !defined(BOOST_NO_CXX11_NON_PUBLIC_DEFAULTED_FUNCTIONS)
+        -:   89:
+        -:   90:    ~error_category() = default;
+        -:   91:
+        -:   92:#else
+        -:   93:
+        -:   94:    // We'd like to make the destructor protected, to make code that deletes
+        -:   95:    // an error_category* not compile; unfortunately, doing the below makes
+        -:   96:    // the destructor user-provided and hence breaks use after main, as the
+        -:   97:    // categories may get destroyed before code that uses them
+        -:   98:
+        -:   99:    // ~error_category() {}
+        -:  100:
+        -:  101:#endif
+        -:  102:
+        -:  103:    BOOST_SYSTEM_CONSTEXPR error_category() BOOST_NOEXCEPT: id_( 0 ), ps_()
+        -:  104:    {
+        -:  105:    }
+        -:  106:
+        -:  107:    explicit BOOST_SYSTEM_CONSTEXPR error_category( boost::ulong_long_type id ) BOOST_NOEXCEPT: id_( id ), ps_()
+        -:  108:    {
+        -:  109:    }
+        -:  110:
+        -:  111:public:
+        -:  112:
+        -:  113:    virtual const char * name() const BOOST_NOEXCEPT = 0;
+        -:  114:
+        -:  115:    virtual error_condition default_error_condition( int ev ) const BOOST_NOEXCEPT;
+        -:  116:    virtual bool equivalent( int code, const error_condition & condition ) const BOOST_NOEXCEPT;
+        -:  117:    virtual bool equivalent( const error_code & code, int condition ) const BOOST_NOEXCEPT;
+        -:  118:
+        -:  119:    virtual std::string message( int ev ) const = 0;
+        -:  120:    virtual char const * message( int ev, char * buffer, std::size_t len ) const BOOST_NOEXCEPT;
+        -:  121:
+function _ZNK5boost6system14error_category6failedEi called 0 returned 0% blocks executed 0%
+    #####:  122:    virtual bool failed( int ev ) const BOOST_NOEXCEPT
+    $$$$$:  122-block  0
+        -:  123:    {
+    #####:  124:        return ev != 0;
+    $$$$$:  124-block  0
+        -:  125:    }
+        -:  126:
+function _ZN5boost6systemeqERKNS0_14error_categoryES3_ called 0 returned 0% blocks executed 0%
+    #####:  127:    friend BOOST_SYSTEM_CONSTEXPR bool operator==( error_category const & lhs, error_category const & rhs ) BOOST_NOEXCEPT
+    $$$$$:  127-block  0
+        -:  128:    {
+    #####:  129:        return rhs.id_ == 0? &lhs == &rhs: lhs.id_ == rhs.id_;
+    $$$$$:  129-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  129-block  1
+    $$$$$:  129-block  2
+    $$$$$:  129-block  3
+        -:  130:    }
+        -:  131:
+        -:  132:    friend BOOST_SYSTEM_CONSTEXPR bool operator!=( error_category const & lhs, error_category const & rhs ) BOOST_NOEXCEPT
+        -:  133:    {
+        -:  134:        return !( lhs == rhs );
+        -:  135:    }
+        -:  136:
+        -:  137:    friend BOOST_SYSTEM_CONSTEXPR bool operator<( error_category const & lhs, error_category const & rhs ) BOOST_NOEXCEPT
+        -:  138:    {
+        -:  139:        if( lhs.id_ < rhs.id_ )
+        -:  140:        {
+        -:  141:            return true;
+        -:  142:        }
+        -:  143:
+        -:  144:        if( lhs.id_ > rhs.id_ )
+        -:  145:        {
+        -:  146:            return false;
+        -:  147:        }
+        -:  148:
+        -:  149:        if( rhs.id_ != 0 )
+        -:  150:        {
+        -:  151:            return false; // equal
+        -:  152:        }
+        -:  153:
+        -:  154:        return std::less<error_category const *>()( &lhs, &rhs );
+        -:  155:    }
+        -:  156:
+        -:  157:#if defined(BOOST_SYSTEM_HAS_SYSTEM_ERROR)
+        -:  158:# if defined(__SUNPRO_CC) // trailing __global is not supported
+        -:  159:    operator std::error_category const & () const;
+        -:  160:# else
+        -:  161:    operator std::error_category const & () const BOOST_SYMBOL_VISIBLE;
+        -:  162:# endif
+        -:  163:#endif
+        -:  164:};
+        -:  165:
+        -:  166:#if ( defined( BOOST_GCC ) && BOOST_GCC >= 40600 ) || defined( BOOST_CLANG )
+        -:  167:#pragma GCC diagnostic pop
+        -:  168:#endif
+        -:  169:
+        -:  170:namespace detail
+        -:  171:{
+        -:  172:
+        -:  173:static const boost::ulong_long_type generic_category_id = ( boost::ulong_long_type( 0xB2AB117A ) << 32 ) + 0x257EDF0D;
+        -:  174:static const boost::ulong_long_type system_category_id = ( boost::ulong_long_type( 0x8FAFD21E ) << 32 ) + 0x25C5E09B;
+        -:  175:static const boost::ulong_long_type interop_category_id = ( boost::ulong_long_type( 0x943F2817 ) << 32 ) + 0xFD3A8FAF;
+        -:  176:
+function _ZN5boost6system6detail11failed_implEiRKNS0_14error_categoryE called 0 returned 0% blocks executed 0%
+    #####:  177:BOOST_SYSTEM_CONSTEXPR inline bool failed_impl( int ev, error_category const & cat )
+    $$$$$:  177-block  0
+        -:  178:{
+    #####:  179:    if( cat.id_ == system_category_id || cat.id_ == generic_category_id )
+    $$$$$:  179-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  179-block  1
+branch  2 never executed
+branch  3 never executed
+        -:  180:    {
+    #####:  181:        return ev != 0;
+    $$$$$:  181-block  0
+        -:  182:    }
+        -:  183:    else
+        -:  184:    {
+    #####:  185:        return cat.failed( ev );
+    $$$$$:  185-block  0
+call    0 never executed
+        -:  186:    }
+        -:  187:}
+        -:  188:
+        -:  189:} // namespace detail
+        -:  190:
+        -:  191:} // namespace system
+        -:  192:
+        -:  193:} // namespace boost
+        -:  194:
+        -:  195:#endif // #ifndef BOOST_SYSTEM_DETAIL_ERROR_CATEGORY_HPP_INCLUDED

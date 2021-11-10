@@ -1,0 +1,188 @@
+        -:    0:Source:/usr/include/boost/mpi/detail/binary_buffer_oprimitive.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// (C) Copyright 2005-2007 Matthias Troyer
+        -:    2:
+        -:    3:// Use, modification and distribution is subject to the Boost Software
+        -:    4:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:    5:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    6:
+        -:    7://  Authors: Matthias Troyer
+        -:    8:
+        -:    9:#ifndef BOOST_MPI_BINARY_BUFFER_OPRIMITIVE_HPP
+        -:   10:#define BOOST_MPI_BINARY_BUFFER_OPRIMITIVE_HPP
+        -:   11:
+        -:   12:#include <mpi.h>
+        -:   13:#include <iostream>
+        -:   14:#include <cstddef> // size_t
+        -:   15:#include <boost/config.hpp>
+        -:   16:
+        -:   17:#include <boost/serialization/array.hpp>
+        -:   18:#include <boost/serialization/is_bitwise_serializable.hpp>
+        -:   19:#include <boost/assert.hpp>
+        -:   20:#include <boost/mpl/assert.hpp>
+        -:   21:#include <vector>
+        -:   22:#include <boost/mpi/allocator.hpp>
+        -:   23:#include <boost/mpl/always.hpp>
+        -:   24:#include <boost/type_traits/remove_const.hpp>
+        -:   25:
+        -:   26:namespace boost { namespace mpi {
+        -:   27:
+        -:   28:/// serialization using binary copy into a buffer
+        -:   29:
+        -:   30:class BOOST_MPI_DECL binary_buffer_oprimitive
+        -:   31:{
+        -:   32:public:
+        -:   33:    /// the type of the buffer into which the data is packed upon serialization
+        -:   34:    typedef std::vector<char, allocator<char> > buffer_type;
+        -:   35:
+function _ZN5boost3mpi24binary_buffer_oprimitiveC2ERSt6vectorIcNS0_9allocatorIcEEERKP19ompi_communicator_t called 0 returned 0% blocks executed 0%
+    #####:   36:    binary_buffer_oprimitive(buffer_type & b, MPI_Comm const &)
+    $$$$$:   36-block  0
+    #####:   37:     : buffer_(b)
+        -:   38:    {
+    #####:   39:    }
+        -:   40:
+function _ZNK5boost3mpi24binary_buffer_oprimitive7addressEv called 0 returned 0% blocks executed 0%
+    #####:   41:    void const * address() const
+    $$$$$:   41-block  0
+        -:   42:    {
+    #####:   43:      return detail::c_data(buffer_);
+    $$$$$:   43-block  0
+call    0 never executed
+        -:   44:    }
+        -:   45:
+function _ZNK5boost3mpi24binary_buffer_oprimitive4sizeEv called 0 returned 0% blocks executed 0%
+    #####:   46:    const std::size_t& size() const
+    $$$$$:   46-block  0
+        -:   47:    {
+    #####:   48:      return size_ = buffer_.size();
+    $$$$$:   48-block  0
+call    0 never executed
+        -:   49:    }
+        -:   50:    
+        -:   51:    const std::size_t* size_ptr() const
+        -:   52:    {
+        -:   53:      return &size();
+        -:   54:    }
+        -:   55:    
+        -:   56:    void save_binary(void const *address, std::size_t count)
+        -:   57:    {
+        -:   58:      save_impl(address,count);
+        -:   59:    }
+        -:   60:
+        -:   61:    // fast saving of arrays
+        -:   62:    template<class T>
+        -:   63:    void save_array(serialization::array_wrapper<T> const& x, unsigned int /* file_version */)
+        -:   64:    {
+        -:   65:    
+        -:   66:      BOOST_MPL_ASSERT((serialization::is_bitwise_serializable<BOOST_DEDUCED_TYPENAME remove_const<T>::type>));
+        -:   67:      if (x.count())
+        -:   68:        save_impl(x.address(), x.count()*sizeof(T));
+        -:   69:    }
+        -:   70:
+        -:   71:    template<class T>
+        -:   72:    void save(serialization::array_wrapper<T> const& x)
+        -:   73:    {
+        -:   74:      save_array(x,0u);
+        -:   75:    }
+        -:   76:
+        -:   77:    typedef serialization::is_bitwise_serializable<mpl::_1> use_array_optimization;
+        -:   78:
+        -:   79:    // default saving of primitives.
+        -:   80:    template<class T>
+function _ZN5boost3mpi24binary_buffer_oprimitive4saveINS_7archive13tracking_typeEEEvRKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi24binary_buffer_oprimitive4saveINS_7archive23class_id_reference_typeEEEvRKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi24binary_buffer_oprimitive4saveINS_7archive21object_reference_typeEEEvRKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi24binary_buffer_oprimitive4saveINS_7archive14object_id_typeEEEvRKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi24binary_buffer_oprimitive4saveIdEEvRKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi24binary_buffer_oprimitive4saveINS_6detail14edge_desc_implINS_12directed_tagEmEEEEvRKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi24binary_buffer_oprimitive4saveIjEEvRKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi24binary_buffer_oprimitive4saveINS_6detail8parallel17msg_add_edge_dataINS4_17global_descriptorImEEmEEEEvRKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi24binary_buffer_oprimitive4saveIaEEvRKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi24binary_buffer_oprimitive4saveIsEEvRKT_ called 0 returned 0% blocks executed 0%
+    #####:   81:    void save(const T & t)
+    $$$$$:   81-block  0
+    $$$$$:   81-block  1
+    $$$$$:   81-block  2
+    $$$$$:   81-block  3
+    $$$$$:   81-block  4
+    $$$$$:   81-block  5
+    $$$$$:   81-block  6
+    $$$$$:   81-block  7
+    $$$$$:   81-block  8
+    $$$$$:   81-block  9
+        -:   82:    {
+        -:   83:      BOOST_MPL_ASSERT((serialization::is_bitwise_serializable<BOOST_DEDUCED_TYPENAME remove_const<T>::type>));
+    #####:   84:      save_impl(&t, sizeof(T));
+    $$$$$:   84-block  0
+call    0 never executed
+    $$$$$:   84-block  1
+call    1 never executed
+    $$$$$:   84-block  2
+call    2 never executed
+    $$$$$:   84-block  3
+call    3 never executed
+    $$$$$:   84-block  4
+call    4 never executed
+    $$$$$:   84-block  5
+call    5 never executed
+    $$$$$:   84-block  6
+call    6 never executed
+    $$$$$:   84-block  7
+call    7 never executed
+    $$$$$:   84-block  8
+call    8 never executed
+    $$$$$:   84-block  9
+call    9 never executed
+    #####:   85:    }
+        -:   86:
+        -:   87:    template<class CharType>
+function _ZN5boost3mpi24binary_buffer_oprimitive4saveIcEEvRKNSt7__cxx1112basic_stringIT_St11char_traitsIS5_ESaIS5_EEE called 0 returned 0% blocks executed 0%
+    #####:   88:    void save(const std::basic_string<CharType> &s)
+    $$$$$:   88-block  0
+        -:   89:    {
+    #####:   90:      unsigned int l = static_cast<unsigned int>(s.size());
+    $$$$$:   90-block  0
+call    0 never executed
+    #####:   91:      save(l);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   92:      save_impl(s.data(),s.size());
+    $$$$$:   92-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:   93:    }
+    $$$$$:   93-block  0
+        -:   94:
+        -:   95:private:
+        -:   96:
+function _ZN5boost3mpi24binary_buffer_oprimitive9save_implEPKvi called 0 returned 0% blocks executed 0%
+    #####:   97:    void save_impl(void const * p, int l)
+    $$$$$:   97-block  0
+        -:   98:    {
+    #####:   99:      char const* ptr = reinterpret_cast<char const*>(p);
+    #####:  100:      buffer_.insert(buffer_.end(),ptr,ptr+l);
+    $$$$$:  100-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  100-block  1
+    #####:  101:    }
+    $$$$$:  101-block  0
+        -:  102:
+        -:  103:  buffer_type& buffer_;
+        -:  104:  mutable std::size_t size_;
+        -:  105:};
+        -:  106:
+        -:  107:} } // end namespace boost::mpi
+        -:  108:
+        -:  109:#endif // BOOST_MPI_BINARY_BUFFER_OPRIMITIVE_HPP

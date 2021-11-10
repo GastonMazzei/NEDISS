@@ -4,7 +4,7 @@
 
 #ifndef CPPPROJCT_COMMUNICATIONFUNCTIONS_H
 #define CPPPROJCT_COMMUNICATIONFUNCTIONS_H
-
+#include "../macros/macros.h"
 #include <boost/serialization/string.hpp>
 #include "../GraphClasses/GeneralGraph.h"
 #include "../GraphClasses/GraphFunctions.h"
@@ -194,12 +194,13 @@ void GetAllMsgs(int NNodes,
                 unsigned long N,
                 OpenMPHelper &O) {
 
+
 //    std::cout << "Hi, welcome to 'GetAllMsgs'... " << std::endl;
 //    mssleep(2000);
 
     // template the number of subthreads :-)
     if (MAX_SUBTHR<=0){error_report(min_subthread_msg);} // guard: we need at least 1 subth :-)
-    omp_set_dynamic(0);
+    //omp_set_dynamic(0);
     omp_set_num_threads(MAX_SUBTHR + 1);
     int N_SPAWNED = 0;
     int macro_threadn;
@@ -208,22 +209,21 @@ void GetAllMsgs(int NNodes,
     long ix = - 1; // the index we will get, use and change from the global queue :-)!
     std::list<MPI_Request> REQUESTLIST(10);
     std::list<MPI_Request>::iterator p_REQUESTLIST = REQUESTLIST.begin();
-
+    int DEBUG_CALLS_ANSWER = 0, DEBUG_CALLS_ASK = 0;
 //    std::cout << "Confirm we are at the face of the parallel region..." << std::endl;
 //    mssleep(2000);
 
 #pragma omp parallel firstprivate(REF, macro_threadn, NNodes, N)
 {
-
-    if (omp_get_num_threads()==1){
+    if (omp_get_num_threads()==1) {
+        //PRINTF_DBG("One subthread is not enough; recursive restart.");
 //        std::cout << "There is only one thread, so I will answer some messages and then call again itself hoping that more threads are spawned :o"<< std::endl;
         //answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
-        GetAllMsgs<TIMETOL, DT, MAX_SUBTHR, BATCH>(NNodes,
-                                                   REF,
-                                                   N,
-                                                   O);
+#pragma omp atomical upadte
+        DEBUG_CALLS_ANSWER++;
+        printf("%d,%d,0\n", DEBUG_CALLS_ASK, DEBUG_CALLS_ANSWER);
     }
-
+    //} else if ((omp_get_thread_num() == 0) && (omp_get_num_threads()>1)) {
     if ((omp_get_thread_num() == 0) && (omp_get_num_threads()>1)) {
         bool spawned_max_capacity = true;
         bool isempty = false;
@@ -234,24 +234,17 @@ void GetAllMsgs(int NNodes,
         atomic_helper = *(REF.p_TOT);
         globalstatus = (atomic_helper < NNodes);
         while (globalstatus) {
-//            mssleep(1000);
-            //std::cout << " subworker " << omp_get_thread_num() << " of worker " << macro_threadn << " has completed one lap" << std::endl;
 #pragma omp critical
 {
             isempty = REF.p_CHECKED->empty();
 }
-            //std::cout << "[DEBUG] Finished omp critical  " << std::endl;
 #pragma omp read
             atomic_helper = N_SPAWNED;
-            //std::cout << "[DEBUG] Finished omp atomic  " << std::endl;
             spawned_max_capacity = (atomic_helper == MAX_SUBTHR);
-            //std::cout << "[DEBUG] Finished spawned_max_capacity  " << std::endl;
             if ((spawned_max_capacity) || (isempty)) {
-//                std::cout << "One thread will start answering msgs... " << std::endl;
-//                mssleep(1000);
-                // spend some time answering messages :-0
-                //std::cout << "[DEBUG] calling  answer_messages" << std::endl;
-                answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
+#pragma omp atomical upadte
+                DEBUG_CALLS_ANSWER++;
+                //answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
             } else if (!isempty) { // update our index so
                 // in the elapsed time, it could happen that the only available
                 // thread has just become busy and now you would be overwriting a value
@@ -261,7 +254,10 @@ void GetAllMsgs(int NNodes,
                 //      (3) you could overwrite it before a thread is able to consume it, so instead
                 //          of just using a queue for this we patch this problem by double-checking
                 //          with a (locally) shared set.
-//                std::cout << " MASTER: capacity is not max, and an ix appears available... " <<  std::endl;
+                if (VERBOSE) {
+                    // use PRINTF_DBG()
+                    std::cout << " MASTER: capacity is not max, and an ix appears available... " << std::endl;
+                }
 #pragma omp critical
 {
                     if ((ix==-1) || (covered.count(ix) == 1)) {
@@ -276,9 +272,12 @@ void GetAllMsgs(int NNodes,
                 globalstatus = (atomic_helper < NNodes);
         }
         // Please spend some prudential time answering messages before exiting to join the communal integration :O
-        answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
-    }
-    else {
+        //PRINTF_DBG("Skipped answering messages :-)\n");
+        //answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
+#pragma omp atomical upadte
+        DEBUG_CALLS_ANSWER++;
+        printf("%d,%d,1\n", DEBUG_CALLS_ASK, DEBUG_CALLS_ANSWER);
+    } else if (omp_get_num_threads()>1) {
         bool globalstatus = true;
         int local_ix;
         int old_ix = -1;
@@ -301,7 +300,10 @@ void GetAllMsgs(int NNodes,
 //                std::cout << "The other thread will go try get one msg... " << std::endl;
 //                mssleep(1000);
                 //std::cout << "[DEBUG] about to call GetOneMsg" << std::endl;
-                GetOneMsg<BATCH>(local_ix, REF, N);
+                //GetOneMsg<BATCH>(local_ix, REF, N);
+                //PRINTF_DBG("Skipped sending messages :-)\n");
+#pragma omp atomical upadte
+                DEBUG_CALLS_ASK++;
 #pragma omp atomic update
                 ++ *(REF.p_TOT);
 #pragma omp atomic update
@@ -327,10 +329,13 @@ void GetAllMsgs(int NNodes,
             globalstatus = (atomic_helper < NNodes);
         }
         // Please spend some prudential time answering messages before joining the communal integration :O
-        answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
+        //answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
+        //PRINTF_DBG("Skipped answering messages :-)\n");
+#pragma omp atomical upadte
+        DEBUG_CALLS_ANSWER++;
+        printf("%d,%d,2\n", DEBUG_CALLS_ASK, DEBUG_CALLS_ANSWER);
     } // this was all for the threads!= 0
 } // end of parallel region
-    omp_set_dynamic(1); // make the behaviour dynamic again! :-)
 } // end of function
 
 

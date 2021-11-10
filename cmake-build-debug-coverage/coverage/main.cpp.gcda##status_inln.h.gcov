@@ -1,0 +1,160 @@
+        -:    0:Source:/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/ompi/mpi/cxx/status_inln.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// -*- c++ -*-
+        -:    2://
+        -:    3:// Copyright (c) 2004-2005 The Trustees of Indiana University and Indiana
+        -:    4://                         University Research and Technology
+        -:    5://                         Corporation.  All rights reserved.
+        -:    6:// Copyright (c) 2004-2005 The University of Tennessee and The University
+        -:    7://                         of Tennessee Research Foundation.  All rights
+        -:    8://                         reserved.
+        -:    9:// Copyright (c) 2004-2005 High Performance Computing Center Stuttgart,
+        -:   10://                         University of Stuttgart.  All rights reserved.
+        -:   11:// Copyright (c) 2004-2005 The Regents of the University of California.
+        -:   12://                         All rights reserved.
+        -:   13:// Copyright (c) 2006      Cisco Systems, Inc.  All rights reserved.
+        -:   14:// $COPYRIGHT$
+        -:   15://
+        -:   16:// Additional copyrights may follow
+        -:   17://
+        -:   18:// $HEADER$
+        -:   19://
+        -:   20:
+        -:   21://
+        -:   22:// Point-to-Point Communication
+        -:   23://
+        -:   24:
+        -:   25:inline int
+function _ZNK3MPI6Status9Get_countERKNS_8DatatypeE called 0 returned 0% blocks executed 0%
+    #####:   26:MPI::Status::Get_count(const MPI::Datatype& datatype) const
+    $$$$$:   26-block  0
+        -:   27:{
+        -:   28:  int count;
+    #####:   29:  (void)MPI_Get_count(const_cast<MPI_Status*>(&mpi_status), datatype, &count);
+    $$$$$:   29-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:   30:  return count;
+    $$$$$:   30-block  0
+    $$$$$:   30-block  1
+        -:   31:}
+        -:   32:
+        -:   33:inline bool
+function _ZNK3MPI6Status12Is_cancelledEv called 0 returned 0% blocks executed 0%
+    #####:   34:MPI::Status::Is_cancelled() const
+    $$$$$:   34-block  0
+        -:   35:{
+        -:   36:  int t;
+    #####:   37:  (void)MPI_Test_cancelled(const_cast<MPI_Status*>(&mpi_status), &t);
+    $$$$$:   37-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   38:  return OPAL_INT_TO_BOOL(t);
+    $$$$$:   38-block  0
+    $$$$$:   38-block  1
+        -:   39:}
+        -:   40:
+        -:   41:inline int
+function _ZNK3MPI6Status12Get_elementsERKNS_8DatatypeE called 0 returned 0% blocks executed 0%
+    #####:   42:MPI::Status::Get_elements(const MPI::Datatype& datatype) const
+    $$$$$:   42-block  0
+        -:   43:{
+        -:   44:  int count;
+    #####:   45:  (void)MPI_Get_elements(const_cast<MPI_Status*>(&mpi_status), datatype, &count);
+    $$$$$:   45-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:   46:  return count;
+    $$$$$:   46-block  0
+    $$$$$:   46-block  1
+        -:   47:}
+        -:   48:
+        -:   49://
+        -:   50:// Status Access
+        -:   51://
+        -:   52:inline int
+function _ZNK3MPI6Status10Get_sourceEv called 0 returned 0% blocks executed 0%
+    #####:   53:MPI::Status::Get_source() const
+    $$$$$:   53-block  0
+        -:   54:{
+        -:   55:  int source;
+    #####:   56:  source = mpi_status.MPI_SOURCE;
+    #####:   57:  return source;
+    $$$$$:   57-block  0
+        -:   58:}
+        -:   59:
+        -:   60:inline void
+function _ZN3MPI6Status10Set_sourceEi called 0 returned 0% blocks executed 0%
+    #####:   61:MPI::Status::Set_source(int source)
+    $$$$$:   61-block  0
+        -:   62:{
+    #####:   63:  mpi_status.MPI_SOURCE = source;
+    #####:   64:}
+        -:   65:
+        -:   66:inline int
+function _ZNK3MPI6Status7Get_tagEv called 0 returned 0% blocks executed 0%
+    #####:   67:MPI::Status::Get_tag() const
+    $$$$$:   67-block  0
+        -:   68:{
+        -:   69:  int tag;
+    #####:   70:  tag = mpi_status.MPI_TAG;
+    #####:   71:  return tag;
+    $$$$$:   71-block  0
+        -:   72:}
+        -:   73:
+        -:   74:inline void
+function _ZN3MPI6Status7Set_tagEi called 0 returned 0% blocks executed 0%
+    #####:   75:MPI::Status::Set_tag(int tag)
+    $$$$$:   75-block  0
+        -:   76:{
+    #####:   77:  mpi_status.MPI_TAG = tag;
+    #####:   78:}
+        -:   79:
+        -:   80:inline int
+function _ZNK3MPI6Status9Get_errorEv called 0 returned 0% blocks executed 0%
+    #####:   81:MPI::Status::Get_error() const
+    $$$$$:   81-block  0
+        -:   82:{
+        -:   83:  int error;
+    #####:   84:  error = mpi_status.MPI_ERROR;
+    #####:   85:  return error;
+    $$$$$:   85-block  0
+        -:   86:}
+        -:   87:
+        -:   88:inline void
+function _ZN3MPI6Status9Set_errorEi called 0 returned 0% blocks executed 0%
+    #####:   89:MPI::Status::Set_error(int error)
+    $$$$$:   89-block  0
+        -:   90:{
+    #####:   91:  mpi_status.MPI_ERROR = error;
+    #####:   92:}
+        -:   93:
+        -:   94:inline void
+function _ZN3MPI6Status12Set_elementsERKNS_8DatatypeEi called 0 returned 0% blocks executed 0%
+    #####:   95:MPI::Status::Set_elements(const MPI::Datatype& datatype, int count)
+    $$$$$:   95-block  0
+        -:   96:{
+    #####:   97:    MPI_Status_set_elements(&mpi_status, datatype, count);
+    $$$$$:   97-block  0
+call    0 never executed
+call    1 never executed
+    #####:   98:}
+        -:   99:
+        -:  100:inline void
+function _ZN3MPI6Status13Set_cancelledEb called 0 returned 0% blocks executed 0%
+    #####:  101:MPI::Status::Set_cancelled(bool flag)
+    $$$$$:  101-block  0
+        -:  102:{
+    #####:  103:    MPI_Status_set_cancelled(&mpi_status, (int) flag);
+    $$$$$:  103-block  0
+call    0 never executed
+    #####:  104:}
+        -:  105:

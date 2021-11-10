@@ -1,0 +1,99 @@
+        -:    0:Source:/usr/include/boost/archive/detail/basic_iserializer.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_ARCHIVE_DETAIL_BASIC_ISERIALIZER_HPP
+        -:    2:#define BOOST_ARCHIVE_DETAIL_BASIC_ISERIALIZER_HPP
+        -:    3:
+        -:    4:// MS compatible compilers support #pragma once
+        -:    5:#if defined(_MSC_VER)
+        -:    6:# pragma once
+        -:    7:#endif
+        -:    8:
+        -:    9://///////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
+        -:   10:// basic_iserializer.hpp: extenstion of type_info required for serialization.
+        -:   11:
+        -:   12:// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com .
+        -:   13:// Use, modification and distribution is subject to the Boost Software
+        -:   14:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:   15:// http://www.boost.org/LICENSE_1_0.txt)
+        -:   16:
+        -:   17://  See http://www.boost.org for updates, documentation, and revision history.
+        -:   18:
+        -:   19:#include <cstdlib> // NULL
+        -:   20:#include <boost/config.hpp>
+        -:   21:
+        -:   22:#include <boost/archive/basic_archive.hpp>
+        -:   23:#include <boost/archive/detail/decl.hpp>
+        -:   24:#include <boost/archive/detail/basic_serializer.hpp>
+        -:   25:#include <boost/archive/detail/auto_link_archive.hpp>
+        -:   26:#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
+        -:   27:
+        -:   28:#ifdef BOOST_MSVC
+        -:   29:#  pragma warning(push)
+        -:   30:#  pragma warning(disable : 4511 4512)
+        -:   31:#endif
+        -:   32:
+        -:   33:namespace boost {
+        -:   34:namespace serialization {
+        -:   35:    class extended_type_info;
+        -:   36:} // namespace serialization
+        -:   37:
+        -:   38:// forward declarations
+        -:   39:namespace archive {
+        -:   40:namespace detail {
+        -:   41:
+        -:   42:class basic_iarchive;
+        -:   43:class basic_pointer_iserializer;
+        -:   44:
+        -:   45:class BOOST_SYMBOL_VISIBLE basic_iserializer :
+        -:   46:    public basic_serializer
+        -:   47:{
+        -:   48:private:
+        -:   49:    basic_pointer_iserializer *m_bpis;
+        -:   50:protected:
+        -:   51:    explicit BOOST_ARCHIVE_DECL basic_iserializer(
+        -:   52:        const boost::serialization::extended_type_info & type
+        -:   53:    );
+        -:   54:    virtual BOOST_ARCHIVE_DECL ~basic_iserializer();
+        -:   55:public:
+function _ZNK5boost7archive6detail17basic_iserializer21serialized_as_pointerEv called 0 returned 0% blocks executed 0%
+    #####:   56:    bool serialized_as_pointer() const {
+    $$$$$:   56-block  0
+    #####:   57:        return m_bpis != NULL;
+    $$$$$:   57-block  0
+        -:   58:    }
+        -:   59:    void set_bpis(basic_pointer_iserializer *bpis){
+        -:   60:        m_bpis = bpis;
+        -:   61:    }
+        -:   62:    const basic_pointer_iserializer * get_bpis_ptr() const {
+        -:   63:        return m_bpis;
+        -:   64:    }
+        -:   65:    virtual void load_object_data(
+        -:   66:        basic_iarchive & ar,
+        -:   67:        void *x,
+        -:   68:        const unsigned int file_version
+        -:   69:    ) const = 0;
+        -:   70:    // returns true if class_info should be saved
+        -:   71:    virtual bool class_info() const = 0 ;
+        -:   72:    // returns true if objects should be tracked
+        -:   73:    virtual bool tracking(const unsigned int) const = 0 ;
+        -:   74:    // returns class version
+        -:   75:    virtual version_type version() const = 0 ;
+        -:   76:    // returns true if this class is polymorphic
+        -:   77:    virtual bool is_polymorphic() const = 0;
+        -:   78:    virtual void destroy(/*const*/ void *address) const = 0 ;
+        -:   79:};
+        -:   80:
+        -:   81:} // namespae detail
+        -:   82:} // namespace archive
+        -:   83:} // namespace boost
+        -:   84:
+        -:   85:#ifdef BOOST_MSVC
+        -:   86:#pragma warning(pop)
+        -:   87:#endif
+        -:   88:
+        -:   89:#include <boost/archive/detail/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
+        -:   90:
+        -:   91:#endif // BOOST_ARCHIVE_DETAIL_BASIC_ISERIALIZER_HPP

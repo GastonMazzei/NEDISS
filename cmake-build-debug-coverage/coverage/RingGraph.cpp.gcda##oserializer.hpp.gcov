@@ -1,0 +1,652 @@
+        -:    0:Source:/usr/include/boost/archive/detail/oserializer.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_ARCHIVE_OSERIALIZER_HPP
+        -:    2:#define BOOST_ARCHIVE_OSERIALIZER_HPP
+        -:    3:
+        -:    4:// MS compatible compilers support #pragma once
+        -:    5:#if defined(_MSC_VER)
+        -:    6:# pragma once
+        -:    7:#if !defined(__clang__)
+        -:    8:#pragma inline_depth(255)
+        -:    9:#pragma inline_recursion(on)
+        -:   10:#endif
+        -:   11:#endif
+        -:   12:
+        -:   13:#if defined(__MWERKS__)
+        -:   14:#pragma inline_depth(255)
+        -:   15:#endif
+        -:   16:
+        -:   17://///////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
+        -:   18:// oserializer.hpp: interface for serialization system.
+        -:   19:
+        -:   20:// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com .
+        -:   21:// Use, modification and distribution is subject to the Boost Software
+        -:   22:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:   23:// http://www.boost.org/LICENSE_1_0.txt)
+        -:   24:
+        -:   25://  See http://www.boost.org for updates, documentation, and revision history.
+        -:   26:
+        -:   27:#include <boost/assert.hpp>
+        -:   28:#include <cstddef> // NULL
+        -:   29:
+        -:   30:#include <boost/config.hpp>
+        -:   31:
+        -:   32:#include <boost/static_assert.hpp>
+        -:   33:#include <boost/detail/workaround.hpp>
+        -:   34:
+        -:   35:#include <boost/mpl/eval_if.hpp>
+        -:   36:#include <boost/mpl/equal_to.hpp>
+        -:   37:#include <boost/mpl/greater_equal.hpp>
+        -:   38:#include <boost/mpl/identity.hpp>
+        -:   39:#include <boost/mpl/bool_fwd.hpp>
+        -:   40:
+        -:   41:#ifndef BOOST_SERIALIZATION_DEFAULT_TYPE_INFO
+        -:   42:    #include <boost/serialization/extended_type_info_typeid.hpp>
+        -:   43:#endif
+        -:   44:#include <boost/serialization/throw_exception.hpp>
+        -:   45:#include <boost/serialization/smart_cast.hpp>
+        -:   46:#include <boost/serialization/assume_abstract.hpp>
+        -:   47:#include <boost/serialization/static_warning.hpp>
+        -:   48:
+        -:   49:#include <boost/type_traits/is_pointer.hpp>
+        -:   50:#include <boost/type_traits/is_enum.hpp>
+        -:   51:#include <boost/type_traits/is_const.hpp>
+        -:   52:#include <boost/type_traits/is_polymorphic.hpp>
+        -:   53:#include <boost/type_traits/remove_extent.hpp>
+        -:   54:
+        -:   55:#include <boost/serialization/serialization.hpp>
+        -:   56:#include <boost/serialization/version.hpp>
+        -:   57:#include <boost/serialization/level.hpp>
+        -:   58:#include <boost/serialization/tracking.hpp>
+        -:   59:#include <boost/serialization/type_info_implementation.hpp>
+        -:   60:#include <boost/serialization/nvp.hpp>
+        -:   61:#include <boost/serialization/void_cast.hpp>
+        -:   62:#include <boost/serialization/collection_size_type.hpp>
+        -:   63:#include <boost/serialization/array_wrapper.hpp>
+        -:   64:
+        -:   65:#include <boost/serialization/singleton.hpp>
+        -:   66:
+        -:   67:#include <boost/archive/archive_exception.hpp>
+        -:   68:#include <boost/archive/detail/basic_oarchive.hpp>
+        -:   69:#include <boost/archive/detail/basic_oserializer.hpp>
+        -:   70:#include <boost/archive/detail/basic_pointer_oserializer.hpp>
+        -:   71:#include <boost/archive/detail/archive_serializer_map.hpp>
+        -:   72:#include <boost/archive/detail/check.hpp>
+        -:   73:
+        -:   74:#include <boost/core/addressof.hpp>
+        -:   75:
+        -:   76:namespace boost {
+        -:   77:
+        -:   78:namespace serialization {
+        -:   79:    class extended_type_info;
+        -:   80:} // namespace serialization
+        -:   81:
+        -:   82:namespace archive {
+        -:   83:
+        -:   84:// an accessor to permit friend access to archives.  Needed because
+        -:   85:// some compilers don't handle friend templates completely
+        -:   86:class save_access {
+        -:   87:public:
+        -:   88:    template<class Archive>
+        -:   89:    static void end_preamble(Archive & ar){
+        -:   90:        ar.end_preamble();
+        -:   91:    }
+        -:   92:    template<class Archive, class T>
+function _ZN5boost7archive11save_access14save_primitiveINS_3mpi15packed_oarchiveENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRT_RKT0_ called 0 returned 0% blocks executed 0%
+    #####:   93:    static void save_primitive(Archive & ar, const  T & t){
+    $$$$$:   93-block  0
+    #####:   94:        ar.end_preamble();
+    $$$$$:   94-block  0
+call    0 never executed
+    #####:   95:        ar.save(t);
+call    0 never executed
+    #####:   96:    }
+        -:   97:};
+        -:   98:
+        -:   99:namespace detail {
+        -:  100:
+        -:  101:#ifdef BOOST_MSVC
+        -:  102:#  pragma warning(push)
+        -:  103:#  pragma warning(disable : 4511 4512)
+        -:  104:#endif
+        -:  105:
+        -:  106:template<class Archive, class T>
+        -:  107:class oserializer : public basic_oserializer
+        -:  108:{
+        -:  109:private:
+        -:  110:    // private constructor to inhibit any existence other than the
+        -:  111:    // static one
+        -:  112:public:
+function _ZN5boost7archive6detail11oserializerINS_3mpi15packed_oarchiveE11DynamicEdgeEC2Ev called 0 returned 0% blocks executed 0%
+    #####:  113:    explicit BOOST_DLLEXPORT oserializer() :
+    $$$$$:  113-block  0
+        -:  114:        basic_oserializer(
+        -:  115:            boost::serialization::singleton<
+        -:  116:                typename
+        -:  117:                boost::serialization::type_info_implementation< T >::type
+    #####:  118:            >::get_const_instance()
+    $$$$$:  118-block  0
+call    0 never executed
+    #####:  119:        )
+call    0 never executed
+    #####:  120:    {}
+        -:  121:    BOOST_DLLEXPORT void save_object_data(
+        -:  122:        basic_oarchive & ar,
+        -:  123:        const void *x
+        -:  124:    ) const BOOST_OVERRIDE BOOST_USED;
+function _ZNK5boost7archive6detail11oserializerINS_3mpi15packed_oarchiveE11DynamicEdgeE10class_infoEv called 0 returned 0% blocks executed 0%
+    #####:  125:    bool class_info() const BOOST_OVERRIDE {
+    $$$$$:  125-block  0
+        -:  126:        return boost::serialization::implementation_level< T >::value
+    #####:  127:            >= boost::serialization::object_class_info;
+    $$$$$:  127-block  0
+        -:  128:    }
+function _ZNK5boost7archive6detail11oserializerINS_3mpi15packed_oarchiveE11DynamicEdgeE8trackingEj called 0 returned 0% blocks executed 0%
+    #####:  129:    bool tracking(const unsigned int /* flags */) const BOOST_OVERRIDE {
+    $$$$$:  129-block  0
+        -:  130:        return boost::serialization::tracking_level< T >::value == boost::serialization::track_always
+        -:  131:            || (boost::serialization::tracking_level< T >::value == boost::serialization::track_selectively
+    #####:  132:                && serialized_as_pointer());
+    $$$$$:  132-block  0
+call    0 never executed
+        -:  133:    }
+function _ZNK5boost7archive6detail11oserializerINS_3mpi15packed_oarchiveE11DynamicEdgeE7versionEv called 0 returned 0% blocks executed 0%
+    #####:  134:    version_type version() const BOOST_OVERRIDE {
+    $$$$$:  134-block  0
+    #####:  135:        return version_type(::boost::serialization::version< T >::value);
+    $$$$$:  135-block  0
+call    0 never executed
+        -:  136:    }
+function _ZNK5boost7archive6detail11oserializerINS_3mpi15packed_oarchiveE11DynamicEdgeE14is_polymorphicEv called 0 returned 0% blocks executed 0%
+    #####:  137:    bool is_polymorphic() const BOOST_OVERRIDE {
+    $$$$$:  137-block  0
+    #####:  138:        return boost::is_polymorphic< T >::value;
+    $$$$$:  138-block  0
+        -:  139:    }
+function _ZN5boost7archive6detail11oserializerINS_3mpi15packed_oarchiveE11DynamicEdgeED0Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail11oserializerINS_3mpi15packed_oarchiveE11DynamicEdgeED2Ev called 0 returned 0% blocks executed 0%
+    #####:  140:    ~oserializer() BOOST_OVERRIDE {}
+    $$$$$:  140-block  0
+    $$$$$:  140-block  1
+call    0 never executed
+call    1 never executed
+    $$$$$:  140-block  2
+    $$$$$:  140-block  3
+call    2 never executed
+        -:  141:};
+        -:  142:
+        -:  143:#ifdef BOOST_MSVC
+        -:  144:#  pragma warning(pop)
+        -:  145:#endif
+        -:  146:
+        -:  147:template<class Archive, class T>
+function _ZNK5boost7archive6detail11oserializerINS_3mpi15packed_oarchiveE11DynamicEdgeE16save_object_dataERNS1_14basic_oarchiveEPKv called 0 returned 0% blocks executed 0%
+    #####:  148:BOOST_DLLEXPORT void oserializer<Archive, T>::save_object_data(
+    $$$$$:  148-block  0
+        -:  149:    basic_oarchive & ar,
+        -:  150:    const void *x
+        -:  151:) const {
+        -:  152:    // make sure call is routed through the highest interface that might
+        -:  153:    // be specialized by the user.
+        -:  154:    BOOST_STATIC_ASSERT(boost::is_const< T >::value == false);
+    #####:  155:    boost::serialization::serialize_adl(
+    $$$$$:  155-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    $$$$$:  155-block  1
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+        -:  156:        boost::serialization::smart_cast_reference<Archive &>(ar),
+        -:  157:        * static_cast<T *>(const_cast<void *>(x)),
+    #####:  158:        version()
+        -:  159:    );
+    #####:  160:}
+    $$$$$:  160-block  0
+        -:  161:
+        -:  162:#ifdef BOOST_MSVC
+        -:  163:#  pragma warning(push)
+        -:  164:#  pragma warning(disable : 4511 4512)
+        -:  165:#endif
+        -:  166:
+        -:  167:template<class Archive, class T>
+        -:  168:class pointer_oserializer :
+        -:  169:    public basic_pointer_oserializer
+        -:  170:{
+        -:  171:private:
+        -:  172:    const basic_oserializer &
+        -:  173:    get_basic_serializer() const BOOST_OVERRIDE {
+        -:  174:        return boost::serialization::singleton<
+        -:  175:            oserializer<Archive, T>
+        -:  176:        >::get_const_instance();
+        -:  177:    }
+        -:  178:    BOOST_DLLEXPORT void save_object_ptr(
+        -:  179:        basic_oarchive & ar,
+        -:  180:        const void * x
+        -:  181:    ) const BOOST_OVERRIDE BOOST_USED;
+        -:  182:public:
+        -:  183:    pointer_oserializer();
+        -:  184:    ~pointer_oserializer() BOOST_OVERRIDE;
+        -:  185:};
+        -:  186:
+        -:  187:#ifdef BOOST_MSVC
+        -:  188:#  pragma warning(pop)
+        -:  189:#endif
+        -:  190:
+        -:  191:template<class Archive, class T>
+        -:  192:BOOST_DLLEXPORT void pointer_oserializer<Archive, T>::save_object_ptr(
+        -:  193:    basic_oarchive & ar,
+        -:  194:    const void * x
+        -:  195:) const {
+        -:  196:    BOOST_ASSERT(NULL != x);
+        -:  197:    // make sure call is routed through the highest interface that might
+        -:  198:    // be specialized by the user.
+        -:  199:    T * t = static_cast<T *>(const_cast<void *>(x));
+        -:  200:    const unsigned int file_version = boost::serialization::version< T >::value;
+        -:  201:    Archive & ar_impl
+        -:  202:        = boost::serialization::smart_cast_reference<Archive &>(ar);
+        -:  203:    boost::serialization::save_construct_data_adl<Archive, T>(
+        -:  204:        ar_impl,
+        -:  205:        t,
+        -:  206:        file_version
+        -:  207:    );
+        -:  208:    ar_impl << boost::serialization::make_nvp(NULL, * t);
+        -:  209:}
+        -:  210:
+        -:  211:template<class Archive, class T>
+        -:  212:pointer_oserializer<Archive, T>::pointer_oserializer() :
+        -:  213:    basic_pointer_oserializer(
+        -:  214:        boost::serialization::singleton<
+        -:  215:            typename
+        -:  216:            boost::serialization::type_info_implementation< T >::type
+        -:  217:        >::get_const_instance()
+        -:  218:    )
+        -:  219:{
+        -:  220:    // make sure appropriate member function is instantiated
+        -:  221:    boost::serialization::singleton<
+        -:  222:        oserializer<Archive, T>
+        -:  223:    >::get_mutable_instance().set_bpos(this);
+        -:  224:    archive_serializer_map<Archive>::insert(this);
+        -:  225:}
+        -:  226:
+        -:  227:template<class Archive, class T>
+        -:  228:pointer_oserializer<Archive, T>::~pointer_oserializer(){
+        -:  229:    archive_serializer_map<Archive>::erase(this);
+        -:  230:}
+        -:  231:
+        -:  232:template<class Archive>
+        -:  233:struct save_non_pointer_type {
+        -:  234:    // note this bounces the call right back to the archive
+        -:  235:    // with no runtime overhead
+        -:  236:    struct save_primitive {
+        -:  237:        template<class T>
+function _ZN5boost7archive6detail21save_non_pointer_typeINS_3mpi15packed_oarchiveEE14save_primitive6invokeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRS4_RKT_ called 0 returned 0% blocks executed 0%
+    #####:  238:        static void invoke(Archive & ar, const T & t){
+    $$$$$:  238-block  0
+    #####:  239:            save_access::save_primitive(ar, t);
+    $$$$$:  239-block  0
+call    0 never executed
+    #####:  240:        }
+        -:  241:    };
+        -:  242:    // same as above but passes through serialization
+        -:  243:    struct save_only {
+        -:  244:        template<class T>
+function _ZN5boost7archive6detail21save_non_pointer_typeINS_3mpi15packed_oarchiveEE9save_only6invokeINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEEEEvRS4_RKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail21save_non_pointer_typeINS_3mpi15packed_oarchiveEE9save_only6invokeINS_6detail8parallel22msg_nonlocal_edge_dataI11DynamicEdgeNS8_14edge_desc_implINS_12directed_tagEmEEEEEEvRS4_RKT_ called 0 returned 0% blocks executed 0%
+    #####:  245:        static void invoke(Archive & ar, const T & t){
+    $$$$$:  245-block  0
+    $$$$$:  245-block  1
+        -:  246:            // make sure call is routed through the highest interface that might
+        -:  247:            // be specialized by the user.
+    #####:  248:            boost::serialization::serialize_adl(
+    $$$$$:  248-block  0
+call    0 never executed
+    $$$$$:  248-block  1
+call    1 never executed
+        -:  249:                ar,
+        -:  250:                const_cast<T &>(t),
+        -:  251:                ::boost::serialization::version< T >::value
+        -:  252:            );
+    #####:  253:        }
+        -:  254:    };
+        -:  255:    // adds class information to the archive. This includes
+        -:  256:    // serialization level and class version
+        -:  257:    struct save_standard {
+        -:  258:        template<class T>
+function _ZN5boost7archive6detail21save_non_pointer_typeINS_3mpi15packed_oarchiveEE13save_standard6invokeI11DynamicEdgeEEvRS4_RKT_ called 0 returned 0% blocks executed 0%
+    #####:  259:        static void invoke(Archive &ar, const T & t){
+    $$$$$:  259-block  0
+    #####:  260:            ar.save_object(
+call    0 never executed
+    #####:  261:                boost::addressof(t),
+call    0 never executed
+        -:  262:                boost::serialization::singleton<
+        -:  263:                    oserializer<Archive, T>
+    #####:  264:                >::get_const_instance()
+    $$$$$:  264-block  0
+call    0 never executed
+        -:  265:            );
+    #####:  266:        }
+        -:  267:    };
+        -:  268:
+        -:  269:
+        -:  270:
+        -:  271:    // adds class information to the archive. This includes
+        -:  272:    // serialization level and class version
+        -:  273:    struct save_conditional {
+        -:  274:        template<class T>
+        -:  275:        static void invoke(Archive &ar, const T &t){
+        -:  276:            //if(0 == (ar.get_flags() & no_tracking))
+        -:  277:                save_standard::invoke(ar, t);
+        -:  278:            //else
+        -:  279:            //   save_only::invoke(ar, t);
+        -:  280:        }
+        -:  281:    };
+        -:  282:
+        -:  283:
+        -:  284:    template<class T>
+function _ZN5boost7archive6detail21save_non_pointer_typeINS_3mpi15packed_oarchiveEE6invokeI11DynamicEdgeEEvRS4_RKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail21save_non_pointer_typeINS_3mpi15packed_oarchiveEE6invokeINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEEEEvRS4_RKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail21save_non_pointer_typeINS_3mpi15packed_oarchiveEE6invokeINS_6detail8parallel22msg_nonlocal_edge_dataI11DynamicEdgeNS7_14edge_desc_implINS_12directed_tagEmEEEEEEvRS4_RKT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail21save_non_pointer_typeINS_3mpi15packed_oarchiveEE6invokeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRS4_RKT_ called 0 returned 0% blocks executed 0%
+    #####:  285:    static void invoke(Archive & ar, const T & t){
+    $$$$$:  285-block  0
+    $$$$$:  285-block  1
+    $$$$$:  285-block  2
+    $$$$$:  285-block  3
+        -:  286:        typedef
+        -:  287:            typename mpl::eval_if<
+        -:  288:            // if its primitive
+        -:  289:                mpl::equal_to<
+        -:  290:                    boost::serialization::implementation_level< T >,
+        -:  291:                    mpl::int_<boost::serialization::primitive_type>
+        -:  292:                >,
+        -:  293:                mpl::identity<save_primitive>,
+        -:  294:            // else
+        -:  295:            typename mpl::eval_if<
+        -:  296:                // class info / version
+        -:  297:                mpl::greater_equal<
+        -:  298:                    boost::serialization::implementation_level< T >,
+        -:  299:                    mpl::int_<boost::serialization::object_class_info>
+        -:  300:                >,
+        -:  301:                // do standard save
+        -:  302:                mpl::identity<save_standard>,
+        -:  303:            // else
+        -:  304:            typename mpl::eval_if<
+        -:  305:                    // no tracking
+        -:  306:                mpl::equal_to<
+        -:  307:                    boost::serialization::tracking_level< T >,
+        -:  308:                    mpl::int_<boost::serialization::track_never>
+        -:  309:                >,
+        -:  310:                // do a fast save
+        -:  311:                mpl::identity<save_only>,
+        -:  312:            // else
+        -:  313:                // do a fast save only tracking is turned off
+        -:  314:                mpl::identity<save_conditional>
+        -:  315:            > > >::type typex;
+    #####:  316:        check_object_versioning< T >();
+    $$$$$:  316-block  0
+call    0 never executed
+    $$$$$:  316-block  1
+call    1 never executed
+    $$$$$:  316-block  2
+call    2 never executed
+    $$$$$:  316-block  3
+call    3 never executed
+    #####:  317:        typex::invoke(ar, t);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  318:    }
+        -:  319:    template<class T>
+        -:  320:    static void invoke(Archive & ar, T & t){
+        -:  321:        check_object_level< T >();
+        -:  322:        check_object_tracking< T >();
+        -:  323:        invoke(ar, const_cast<const T &>(t));
+        -:  324:    }
+        -:  325:};
+        -:  326:
+        -:  327:template<class Archive>
+        -:  328:struct save_pointer_type {
+        -:  329:    struct abstract
+        -:  330:    {
+        -:  331:        template<class T>
+        -:  332:        static const basic_pointer_oserializer * register_type(Archive & /* ar */){
+        -:  333:            // it has? to be polymorphic
+        -:  334:            BOOST_STATIC_ASSERT(boost::is_polymorphic< T >::value);
+        -:  335:            return NULL;
+        -:  336:        }
+        -:  337:    };
+        -:  338:
+        -:  339:    struct non_abstract
+        -:  340:    {
+        -:  341:        template<class T>
+        -:  342:        static const basic_pointer_oserializer * register_type(Archive & ar){
+        -:  343:            return ar.register_type(static_cast<T *>(NULL));
+        -:  344:        }
+        -:  345:    };
+        -:  346:
+        -:  347:    template<class T>
+        -:  348:    static const basic_pointer_oserializer * register_type(Archive &ar, T* const /*t*/){
+        -:  349:        // there should never be any need to save an abstract polymorphic
+        -:  350:        // class pointer.  Inhibiting code generation for this
+        -:  351:        // permits abstract base classes to be used - note: exception
+        -:  352:        // virtual serialize functions used for plug-ins
+        -:  353:        typedef
+        -:  354:            typename mpl::eval_if<
+        -:  355:                boost::serialization::is_abstract< T >,
+        -:  356:                mpl::identity<abstract>,
+        -:  357:                mpl::identity<non_abstract>
+        -:  358:            >::type typex;
+        -:  359:        return typex::template register_type< T >(ar);
+        -:  360:    }
+        -:  361:
+        -:  362:    struct non_polymorphic
+        -:  363:    {
+        -:  364:        template<class T>
+        -:  365:        static void save(
+        -:  366:            Archive &ar,
+        -:  367:            T & t
+        -:  368:        ){
+        -:  369:            const basic_pointer_oserializer & bpos =
+        -:  370:                boost::serialization::singleton<
+        -:  371:                    pointer_oserializer<Archive, T>
+        -:  372:                >::get_const_instance();
+        -:  373:            // save the requested pointer type
+        -:  374:            ar.save_pointer(& t, & bpos);
+        -:  375:        }
+        -:  376:    };
+        -:  377:
+        -:  378:    struct polymorphic
+        -:  379:    {
+        -:  380:        template<class T>
+        -:  381:        static void save(
+        -:  382:            Archive &ar,
+        -:  383:            T & t
+        -:  384:        ){
+        -:  385:            typename
+        -:  386:            boost::serialization::type_info_implementation< T >::type const
+        -:  387:            & i = boost::serialization::singleton<
+        -:  388:                typename
+        -:  389:                boost::serialization::type_info_implementation< T >::type
+        -:  390:            >::get_const_instance();
+        -:  391:
+        -:  392:            boost::serialization::extended_type_info const * const this_type = & i;
+        -:  393:
+        -:  394:            // retrieve the true type of the object pointed to
+        -:  395:            // if this assertion fails its an error in this library
+        -:  396:            BOOST_ASSERT(NULL != this_type);
+        -:  397:
+        -:  398:            const boost::serialization::extended_type_info * true_type =
+        -:  399:                i.get_derived_extended_type_info(t);
+        -:  400:
+        -:  401:            // note:if this exception is thrown, be sure that derived pointer
+        -:  402:            // is either registered or exported.
+        -:  403:            if(NULL == true_type){
+        -:  404:                boost::serialization::throw_exception(
+        -:  405:                    archive_exception(
+        -:  406:                        archive_exception::unregistered_class,
+        -:  407:                        "derived class not registered or exported"
+        -:  408:                    )
+        -:  409:                );
+        -:  410:            }
+        -:  411:
+        -:  412:            // if its not a pointer to a more derived type
+        -:  413:            const void *vp = static_cast<const void *>(&t);
+        -:  414:            if(*this_type == *true_type){
+        -:  415:                const basic_pointer_oserializer * bpos = register_type(ar, &t);
+        -:  416:                ar.save_pointer(vp, bpos);
+        -:  417:                return;
+        -:  418:            }
+        -:  419:            // convert pointer to more derived type. if this is thrown
+        -:  420:            // it means that the base/derived relationship hasn't be registered
+        -:  421:            vp = serialization::void_downcast(
+        -:  422:                *true_type,
+        -:  423:                *this_type,
+        -:  424:                static_cast<const void *>(&t)
+        -:  425:            );
+        -:  426:            if(NULL == vp){
+        -:  427:                boost::serialization::throw_exception(
+        -:  428:                    archive_exception(
+        -:  429:                        archive_exception::unregistered_cast,
+        -:  430:                        true_type->get_debug_info(),
+        -:  431:                        this_type->get_debug_info()
+        -:  432:                    )
+        -:  433:                );
+        -:  434:            }
+        -:  435:
+        -:  436:            // since true_type is valid, and this only gets made if the
+        -:  437:            // pointer oserializer object has been created, this should never
+        -:  438:            // fail
+        -:  439:            const basic_pointer_oserializer * bpos
+        -:  440:                = static_cast<const basic_pointer_oserializer *>(
+        -:  441:                    boost::serialization::singleton<
+        -:  442:                        archive_serializer_map<Archive>
+        -:  443:                    >::get_const_instance().find(*true_type)
+        -:  444:                );
+        -:  445:            BOOST_ASSERT(NULL != bpos);
+        -:  446:            if(NULL == bpos)
+        -:  447:                boost::serialization::throw_exception(
+        -:  448:                    archive_exception(
+        -:  449:                        archive_exception::unregistered_class,
+        -:  450:                        "derived class not registered or exported"
+        -:  451:                    )
+        -:  452:                );
+        -:  453:            ar.save_pointer(vp, bpos);
+        -:  454:        }
+        -:  455:    };
+        -:  456:
+        -:  457:    template<class T>
+        -:  458:    static void save(
+        -:  459:        Archive & ar,
+        -:  460:        const T & t
+        -:  461:    ){
+        -:  462:        check_pointer_level< T >();
+        -:  463:        check_pointer_tracking< T >();
+        -:  464:        typedef typename mpl::eval_if<
+        -:  465:            is_polymorphic< T >,
+        -:  466:            mpl::identity<polymorphic>,
+        -:  467:            mpl::identity<non_polymorphic>
+        -:  468:        >::type type;
+        -:  469:        type::save(ar, const_cast<T &>(t));
+        -:  470:    }
+        -:  471:
+        -:  472:    template<class TPtr>
+        -:  473:    static void invoke(Archive &ar, const TPtr t){
+        -:  474:        register_type(ar, t);
+        -:  475:        if(NULL == t){
+        -:  476:            basic_oarchive & boa
+        -:  477:                = boost::serialization::smart_cast_reference<basic_oarchive &>(ar);
+        -:  478:            boa.save_null_pointer();
+        -:  479:            save_access::end_preamble(ar);
+        -:  480:            return;
+        -:  481:        }
+        -:  482:        save(ar, * t);
+        -:  483:    }
+        -:  484:};
+        -:  485:
+        -:  486:template<class Archive>
+        -:  487:struct save_enum_type
+        -:  488:{
+        -:  489:    template<class T>
+        -:  490:    static void invoke(Archive &ar, const T &t){
+        -:  491:        // convert enum to integers on save
+        -:  492:        const int i = static_cast<int>(t);
+        -:  493:        ar << boost::serialization::make_nvp(NULL, i);
+        -:  494:    }
+        -:  495:};
+        -:  496:
+        -:  497:template<class Archive>
+        -:  498:struct save_array_type
+        -:  499:{
+        -:  500:    template<class T>
+        -:  501:    static void invoke(Archive &ar, const T &t){
+        -:  502:        typedef typename boost::remove_extent< T >::type value_type;
+        -:  503:
+        -:  504:        save_access::end_preamble(ar);
+        -:  505:        // consider alignment
+        -:  506:        std::size_t c = sizeof(t) / (
+        -:  507:            static_cast<const char *>(static_cast<const void *>(&t[1]))
+        -:  508:            - static_cast<const char *>(static_cast<const void *>(&t[0]))
+        -:  509:        );
+        -:  510:        boost::serialization::collection_size_type count(c);
+        -:  511:        ar << BOOST_SERIALIZATION_NVP(count);
+        -:  512:        // explict template arguments to pass intel C++ compiler
+        -:  513:        ar << serialization::make_array<
+        -:  514:            const value_type,
+        -:  515:            boost::serialization::collection_size_type
+        -:  516:        >(
+        -:  517:            static_cast<const value_type *>(&t[0]),
+        -:  518:            count
+        -:  519:        );
+        -:  520:    }
+        -:  521:};
+        -:  522:
+        -:  523:} // detail
+        -:  524:
+        -:  525:template<class Archive, class T>
+function _ZN5boost7archive4saveINS_3mpi15packed_oarchiveEK11DynamicEdgeEEvRT_RT0_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive4saveINS_3mpi15packed_oarchiveEKNS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEEEEvRT_RT0_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive4saveINS_3mpi15packed_oarchiveEKNS_6detail8parallel22msg_nonlocal_edge_dataI11DynamicEdgeNS4_14edge_desc_implINS_12directed_tagEmEEEEEEvRT_RT0_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive4saveINS_3mpi15packed_oarchiveEKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRT_RT0_ called 0 returned 0% blocks executed 0%
+    #####:  526:inline void save(Archive & ar, /*const*/ T &t){
+    $$$$$:  526-block  0
+    $$$$$:  526-block  1
+    $$$$$:  526-block  2
+    $$$$$:  526-block  3
+        -:  527:    typedef
+        -:  528:        typename mpl::eval_if<is_pointer< T >,
+        -:  529:            mpl::identity<detail::save_pointer_type<Archive> >,
+        -:  530:        //else
+        -:  531:        typename mpl::eval_if<is_enum< T >,
+        -:  532:            mpl::identity<detail::save_enum_type<Archive> >,
+        -:  533:        //else
+        -:  534:        typename mpl::eval_if<is_array< T >,
+        -:  535:            mpl::identity<detail::save_array_type<Archive> >,
+        -:  536:        //else
+        -:  537:            mpl::identity<detail::save_non_pointer_type<Archive> >
+        -:  538:        >
+        -:  539:        >
+        -:  540:        >::type typex;
+    #####:  541:    typex::invoke(ar, t);
+    $$$$$:  541-block  0
+call    0 never executed
+    $$$$$:  541-block  1
+call    1 never executed
+    $$$$$:  541-block  2
+call    2 never executed
+    $$$$$:  541-block  3
+call    3 never executed
+    #####:  542:}
+        -:  543:
+        -:  544:} // namespace archive
+        -:  545:} // namespace boost
+        -:  546:
+        -:  547:#endif // BOOST_ARCHIVE_OSERIALIZER_HPP

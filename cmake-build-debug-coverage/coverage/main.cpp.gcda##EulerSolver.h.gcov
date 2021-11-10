@@ -1,0 +1,46 @@
+        -:    0:Source:/home/m4zz31/cppprojct/Solvers/EulerSolver.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2:// Created by m4zz31 on 2/11/21.
+        -:    3://
+        -:    4:
+        -:    5:#ifndef CPPPROJCT_EULERSOLVER_H
+        -:    6:#define CPPPROJCT_EULERSOLVER_H
+        -:    7:
+        -:    8:#include "GeneralSolver.h"
+        -:    9:
+        -:   10:template <typename Equation>
+        -:   11:class EulerSolver {
+        -:   12:public:
+function _ZN11EulerSolverI17NoiselessKuramotoEC2Ev called 1 returned 100% blocks executed 100%
+        1:   13:    EulerSolver(){};
+        1:   13-block  0
+        -:   14:    double evolve(double t,
+        -:   15:                  double h,
+        -:   16:                  double a,
+        -:   17:                  std::vector<double> &b,
+        -:   18:                  std::vector<double> &c,
+        -:   19:                  std::vector<double> &d,
+        -:   20:                  Equation &E,//auto F,// ScalarFlow &F,
+        -:   21:                  FlowSpecs &Specs);
+        -:   22:};
+        -:   23:
+        -:   24:
+        -:   25:
+        -:   26:template <typename Equation>
+        -:   27:double EulerSolver<Equation>::evolve(double t,
+        -:   28:                           double h,
+        -:   29:                           double a,
+        -:   30:                           std::vector<double> &b,
+        -:   31:                           std::vector<double> &c,
+        -:   32:                           std::vector<double> &d,
+        -:   33:                           Equation &E,//ScalarFlow &F,
+        -:   34:                           FlowSpecs &Specs){
+        -:   35:
+        -:   36:    return 1.0;
+        -:   37:}
+        -:   38:
+        -:   39:#endif //CPPPROJCT_EULERSOLVER_H

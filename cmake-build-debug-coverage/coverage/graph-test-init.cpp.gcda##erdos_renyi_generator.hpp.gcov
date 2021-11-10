@@ -1,0 +1,339 @@
+        -:    0:Source:/usr/include/boost/graph/erdos_renyi_generator.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Copyright 2004, 2005 The Trustees of Indiana University.
+        -:    2:
+        -:    3:// Distributed under the Boost Software License, Version 1.0.
+        -:    4:// (See accompanying file LICENSE_1_0.txt or copy at
+        -:    5:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    6:
+        -:    7://  Authors: Jeremiah Willcock
+        -:    8://           Douglas Gregor
+        -:    9://           Andrew Lumsdaine
+        -:   10:#ifndef BOOST_GRAPH_ERDOS_RENYI_GENERATOR_HPP
+        -:   11:#define BOOST_GRAPH_ERDOS_RENYI_GENERATOR_HPP
+        -:   12:
+        -:   13:#include <boost/assert.hpp>
+        -:   14:#include <iterator>
+        -:   15:#include <utility>
+        -:   16:#include <boost/shared_ptr.hpp>
+        -:   17:#include <boost/random/uniform_int.hpp>
+        -:   18:#include <boost/graph/graph_traits.hpp>
+        -:   19:#include <boost/random/geometric_distribution.hpp>
+        -:   20:#include <boost/type_traits/is_base_of.hpp>
+        -:   21:#include <boost/type_traits/is_same.hpp>
+        -:   22:#include <boost/config/no_tr1/cmath.hpp>
+        -:   23:#include <boost/iterator/iterator_facade.hpp>
+        -:   24:
+        -:   25:namespace boost
+        -:   26:{
+        -:   27:
+        -:   28:template < typename RandomGenerator, typename Graph >
+        -:   29:class erdos_renyi_iterator
+        -:   30:: public iterator_facade< erdos_renyi_iterator< RandomGenerator, Graph >,
+        -:   31:      std::pair< typename graph_traits< Graph >::vertices_size_type,
+        -:   32:          typename graph_traits< Graph >::vertices_size_type >,
+        -:   33:      std::input_iterator_tag,
+        -:   34:      const std::pair< typename graph_traits< Graph >::vertices_size_type,
+        -:   35:          typename graph_traits< Graph >::vertices_size_type >& >
+        -:   36:{
+        -:   37:    typedef typename graph_traits< Graph >::directed_category directed_category;
+        -:   38:    typedef
+        -:   39:        typename graph_traits< Graph >::vertices_size_type vertices_size_type;
+        -:   40:    typedef typename graph_traits< Graph >::edges_size_type edges_size_type;
+        -:   41:
+        -:   42:    BOOST_STATIC_CONSTANT(bool,
+        -:   43:        is_undirected
+        -:   44:        = (is_base_of< undirected_tag, directed_category >::value));
+        -:   45:
+        -:   46:public:
+        -:   47:    erdos_renyi_iterator() : gen(), n(0), edges(0), allow_self_loops(false) {}
+        -:   48:    erdos_renyi_iterator(RandomGenerator& gen, vertices_size_type n,
+        -:   49:        double fraction = 0.0, bool allow_self_loops = false)
+        -:   50:    : gen(&gen)
+        -:   51:    , n(n)
+        -:   52:    , edges(edges_size_type(fraction * n * n))
+        -:   53:    , allow_self_loops(allow_self_loops)
+        -:   54:    {
+        -:   55:        if (is_undirected)
+        -:   56:            edges = edges / 2;
+        -:   57:        next();
+        -:   58:    }
+        -:   59:
+        -:   60:    erdos_renyi_iterator(RandomGenerator& gen, vertices_size_type n,
+        -:   61:        edges_size_type m, bool allow_self_loops = false)
+        -:   62:    : gen(&gen), n(n), edges(m), allow_self_loops(allow_self_loops)
+        -:   63:    {
+        -:   64:        next();
+        -:   65:    }
+        -:   66:
+        -:   67:    const std::pair< vertices_size_type, vertices_size_type >&
+        -:   68:    dereference() const
+        -:   69:    {
+        -:   70:        return current;
+        -:   71:    }
+        -:   72:
+        -:   73:    void increment()
+        -:   74:    {
+        -:   75:        --edges;
+        -:   76:        next();
+        -:   77:    }
+        -:   78:
+        -:   79:    bool equal(const erdos_renyi_iterator& other) const
+        -:   80:    {
+        -:   81:        return edges == other.edges;
+        -:   82:    }
+        -:   83:
+        -:   84:private:
+        -:   85:    void next()
+        -:   86:    {
+        -:   87:        uniform_int< vertices_size_type > rand_vertex(0, n - 1);
+        -:   88:        current.first = rand_vertex(*gen);
+        -:   89:        do
+        -:   90:        {
+        -:   91:            current.second = rand_vertex(*gen);
+        -:   92:        } while (current.first == current.second && !allow_self_loops);
+        -:   93:    }
+        -:   94:
+        -:   95:    RandomGenerator* gen;
+        -:   96:    vertices_size_type n;
+        -:   97:    edges_size_type edges;
+        -:   98:    bool allow_self_loops;
+        -:   99:    std::pair< vertices_size_type, vertices_size_type > current;
+        -:  100:};
+        -:  101:
+        -:  102:template < typename RandomGenerator, typename Graph >
+function _ZN5boost27sorted_erdos_renyi_iteratorINS_6random26linear_congruential_engineIjLj48271ELj0ELj2147483647EEENS_14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES5_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEEEEC2ERKSI_ called 0 returned 0% blocks executed 0%
+function _ZN5boost27sorted_erdos_renyi_iteratorINS_6random26linear_congruential_engineIjLj48271ELj0ELj2147483647EEENS_14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES5_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEEEED2Ev called 0 returned 0% blocks executed 0%
+    #####:  103:class sorted_erdos_renyi_iterator
+    $$$$$:  103-block  0
+    $$$$$:  103-block  1
+call    0 never executed
+    $$$$$:  103-block  2
+    $$$$$:  103-block  3
+call    1 never executed
+        -:  104:: public iterator_facade< sorted_erdos_renyi_iterator< RandomGenerator, Graph >,
+        -:  105:      std::pair< typename graph_traits< Graph >::vertices_size_type,
+        -:  106:          typename graph_traits< Graph >::vertices_size_type >,
+        -:  107:      std::input_iterator_tag,
+        -:  108:      const std::pair< typename graph_traits< Graph >::vertices_size_type,
+        -:  109:          typename graph_traits< Graph >::vertices_size_type >& >
+        -:  110:{
+        -:  111:    typedef typename graph_traits< Graph >::directed_category directed_category;
+        -:  112:    typedef
+        -:  113:        typename graph_traits< Graph >::vertices_size_type vertices_size_type;
+        -:  114:    typedef typename graph_traits< Graph >::edges_size_type edges_size_type;
+        -:  115:
+        -:  116:    BOOST_STATIC_CONSTANT(bool,
+        -:  117:        is_undirected
+        -:  118:        = (is_base_of< undirected_tag, directed_category >::value));
+        -:  119:
+        -:  120:public:
+function _ZN5boost27sorted_erdos_renyi_iteratorINS_6random26linear_congruential_engineIjLj48271ELj0ELj2147483647EEENS_14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES5_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEEEEC2Ev called 0 returned 0% blocks executed 0%
+    #####:  121:    sorted_erdos_renyi_iterator()
+    $$$$$:  121-block  0
+        -:  122:    : gen()
+        -:  123:    , rand_vertex(0.5)
+        -:  124:    , n(0)
+        -:  125:    , allow_self_loops(false)
+    #####:  126:    , src((std::numeric_limits< vertices_size_type >::max)())
+    $$$$$:  126-block  0
+call    0 never executed
+        -:  127:    , tgt_index(vertices_size_type(-1))
+    #####:  128:    , prob(.5)
+    $$$$$:  128-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+    %%%%%:  128-block  1
+call    5 never executed
+        -:  129:    {
+    #####:  130:    }
+        -:  131:
+        -:  132:    // NOTE: The default probability has been changed to be the same as that
+        -:  133:    // used by the geometic distribution. It was previously 0.0, which would
+        -:  134:    // cause an assertion.
+function _ZN5boost27sorted_erdos_renyi_iteratorINS_6random26linear_congruential_engineIjLj48271ELj0ELj2147483647EEENS_14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES5_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEEEEC2ERS3_mdb called 0 returned 0% blocks executed 0%
+    #####:  135:    sorted_erdos_renyi_iterator(RandomGenerator& gen, vertices_size_type n,
+    $$$$$:  135-block  0
+        -:  136:        double prob = 0.5, bool loops = false)
+        -:  137:    : gen()
+        -:  138:    , rand_vertex(1. - prob)
+        -:  139:    , n(n)
+        -:  140:    , allow_self_loops(loops)
+        -:  141:    , src(0)
+        -:  142:    , tgt_index(vertices_size_type(-1))
+    #####:  143:    , prob(prob)
+    $$$$$:  143-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:  143-block  1
+call    4 never executed
+    %%%%%:  143-block  2
+call    5 never executed
+        -:  144:    {
+    #####:  145:        this->gen.reset(new uniform_01< RandomGenerator* >(&gen));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:  145-block  0
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:  145-block  1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%:  145-block  2
+call    9 never executed
+        -:  146:
+    #####:  147:        if (prob == 0.0)
+    $$$$$:  147-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  148:        {
+    #####:  149:            src = (std::numeric_limits< vertices_size_type >::max)();
+    $$$$$:  149-block  0
+call    0 never executed
+    #####:  150:            return;
+        -:  151:        }
+    #####:  152:        next();
+    $$$$$:  152-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:  152-block  1
+        -:  153:    }
+        -:  154:
+        -:  155:    const std::pair< vertices_size_type, vertices_size_type >&
+function _ZNK5boost27sorted_erdos_renyi_iteratorINS_6random26linear_congruential_engineIjLj48271ELj0ELj2147483647EEENS_14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES5_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEEEE11dereferenceEv called 0 returned 0% blocks executed 0%
+    #####:  156:    dereference() const
+    $$$$$:  156-block  0
+        -:  157:    {
+    #####:  158:        return current;
+    $$$$$:  158-block  0
+        -:  159:    }
+        -:  160:
+function _ZNK5boost27sorted_erdos_renyi_iteratorINS_6random26linear_congruential_engineIjLj48271ELj0ELj2147483647EEENS_14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES5_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEEEE5equalERKSI_ called 0 returned 0% blocks executed 0%
+    #####:  161:    bool equal(const sorted_erdos_renyi_iterator& o) const
+    $$$$$:  161-block  0
+        -:  162:    {
+    #####:  163:        return src == o.src && tgt_index == o.tgt_index;
+    $$$$$:  163-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  163-block  1
+branch  2 never executed
+branch  3 never executed
+    $$$$$:  163-block  2
+    $$$$$:  163-block  3
+    $$$$$:  163-block  4
+        -:  164:    }
+        -:  165:
+function _ZN5boost27sorted_erdos_renyi_iteratorINS_6random26linear_congruential_engineIjLj48271ELj0ELj2147483647EEENS_14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES5_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEEEE9incrementEv called 0 returned 0% blocks executed 0%
+    #####:  166:    void increment() { next(); }
+    $$$$$:  166-block  0
+    $$$$$:  166-block  1
+call    0 never executed
+        -:  167:
+        -:  168:private:
+function _ZN5boost27sorted_erdos_renyi_iteratorINS_6random26linear_congruential_engineIjLj48271ELj0ELj2147483647EEENS_14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES5_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEEEE4nextEv called 0 returned 0% blocks executed 0%
+    #####:  169:    void next()
+    $$$$$:  169-block  0
+        -:  170:    {
+        -:  171:        // In order to get the edges from the generator in sorted order, one
+        -:  172:        // effective (but slow) procedure would be to use a
+        -:  173:        // bernoulli_distribution for each legal (src, tgt_index) pair.  Because
+        -:  174:        // of the O(|V|^2) cost of that, a geometric distribution is used.  The
+        -:  175:        // geometric distribution tells how many times the
+        -:  176:        // bernoulli_distribution would need to be run until it returns true.
+        -:  177:        // Thus, this distribution can be used to step through the edges
+        -:  178:        // which are actually present.
+    #####:  179:        BOOST_ASSERT(src != (std::numeric_limits< vertices_size_type >::max)()
+    $$$$$:  179-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:  179-block  1
+branch  3 never executed
+branch  4 never executed
+    $$$$$:  179-block  2
+    $$$$$:  179-block  3
+call    5 never executed
+        -:  180:            && src != n);
+    #####:  181:        while (src != n)
+    $$$$$:  181-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  181-block  1
+        -:  182:        {
+    #####:  183:            vertices_size_type increment = rand_vertex(*gen);
+    $$$$$:  183-block  0
+call    0 never executed
+call    1 never executed
+    #####:  184:            size_t tgt_index_limit
+    #####:  185:                = (is_undirected ? src + 1 : n) + (allow_self_loops ? 0 : -1);
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  185-block  0
+    $$$$$:  185-block  1
+    #####:  186:            if (tgt_index + increment >= tgt_index_limit)
+    $$$$$:  186-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  187:            {
+        -:  188:                // Overflowed this source; go to the next one and try again.
+    #####:  189:                ++src;
+        -:  190:                // This bias is because the geometric distribution always
+        -:  191:                // returns values >=1, and we want to allow 0 as a valid target.
+    #####:  192:                tgt_index = vertices_size_type(-1);
+    #####:  193:                continue;
+    $$$$$:  193-block  0
+        -:  194:            }
+        -:  195:            else
+        -:  196:            {
+    #####:  197:                tgt_index += increment;
+    #####:  198:                current.first = src;
+    #####:  199:                current.second = tgt_index
+    #####:  200:                    + (!allow_self_loops && !is_undirected && tgt_index >= src
+    $$$$$:  200-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  201:                            ? 1
+    $$$$$:  201-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  201-block  1
+    $$$$$:  201-block  2
+        -:  202:                            : 0);
+    #####:  203:                break;
+    $$$$$:  203-block  0
+        -:  204:            }
+        -:  205:        }
+    #####:  206:        if (src == n)
+    $$$$$:  206-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  207:            src = (std::numeric_limits< vertices_size_type >::max)();
+    $$$$$:  207-block  0
+call    0 never executed
+    #####:  208:    }
+        -:  209:
+        -:  210:    shared_ptr< uniform_01< RandomGenerator* > > gen;
+        -:  211:    geometric_distribution< vertices_size_type > rand_vertex;
+        -:  212:    vertices_size_type n;
+        -:  213:    bool allow_self_loops;
+        -:  214:    vertices_size_type src, tgt_index;
+        -:  215:    std::pair< vertices_size_type, vertices_size_type > current;
+        -:  216:    double prob;
+        -:  217:};
+        -:  218:
+        -:  219:} // end namespace boost
+        -:  220:
+        -:  221:#endif // BOOST_GRAPH_ERDOS_RENYI_GENERATOR_HPP

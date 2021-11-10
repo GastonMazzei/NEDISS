@@ -10,6 +10,9 @@
 #include "Utils/parallel_sanitizer.h"
 #include "Tests/long-singlestep-run.h"
 
+#include "macros/macros.h"
+
+
 using namespace std;
 
 
@@ -36,7 +39,7 @@ int main(int argc, char** argv)
 
     // Testing Section ;-)
     const int NNodes = 200;
-    const int NRUNS = 2000;
+    const int NRUNS = 500;
     const double ErdosRenyiProba = 0.5;
     //graph_tests_init(SEED, NNodes, ErdosRenyiProba);
     //                  template param is the N of simultaneous requests

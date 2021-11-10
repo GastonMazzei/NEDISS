@@ -1,0 +1,32 @@
+        -:    0:Source:/home/m4zz31/cppprojct/Utils/msleep.cpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Utils/msleep.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Utils/msleep.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2:// Created by m4zz31 on 3/11/21.
+        -:    3://
+        -:    4:
+        -:    5:#include "msleep.h"
+        -:    6:#include <stdio.h>
+        -:    7:#include <time.h>   /* Needed for struct timespec */
+        -:    8:
+        -:    9:
+function _Z7mssleepl called 0 returned 0% blocks executed 0%
+    #####:   10:int mssleep(long miliseconds)
+    $$$$$:   10-block  0
+        -:   11:{
+        -:   12:    struct timespec rem;
+        -:   13:    struct timespec req= {
+    #####:   14:            (int)(miliseconds / 1000),     /* secs (Must be Non-Negative) */
+    #####:   15:            (miliseconds % 1000) * 1000000 /* nano (Must be in range of 0 to 999999999) */
+    #####:   16:    };
+        -:   17:
+    #####:   18:    return nanosleep(&req , &rem);
+    $$$$$:   18-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   18-block  1
+    $$$$$:   18-block  2
+        -:   19:}

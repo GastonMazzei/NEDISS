@@ -1,0 +1,670 @@
+        -:    0:Source:/usr/include/c++/7/ext/new_allocator.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Allocator that wraps operator new -*- C++ -*-
+        -:    2:
+        -:    3:// Copyright (C) 2001-2017 Free Software Foundation, Inc.
+        -:    4://
+        -:    5:// This file is part of the GNU ISO C++ Library.  This library is free
+        -:    6:// software; you can redistribute it and/or modify it under the
+        -:    7:// terms of the GNU General Public License as published by the
+        -:    8:// Free Software Foundation; either version 3, or (at your option)
+        -:    9:// any later version.
+        -:   10:
+        -:   11:// This library is distributed in the hope that it will be useful,
+        -:   12:// but WITHOUT ANY WARRANTY; without even the implied warranty of
+        -:   13:// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        -:   14:// GNU General Public License for more details.
+        -:   15:
+        -:   16:// Under Section 7 of GPL version 3, you are granted additional
+        -:   17:// permissions described in the GCC Runtime Library Exception, version
+        -:   18:// 3.1, as published by the Free Software Foundation.
+        -:   19:
+        -:   20:// You should have received a copy of the GNU General Public License and
+        -:   21:// a copy of the GCC Runtime Library Exception along with this program;
+        -:   22:// see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
+        -:   23:// <http://www.gnu.org/licenses/>.
+        -:   24:
+        -:   25:/** @file ext/new_allocator.h
+        -:   26: *  This file is a GNU extension to the Standard C++ Library.
+        -:   27: */
+        -:   28:
+        -:   29:#ifndef _NEW_ALLOCATOR_H
+        -:   30:#define _NEW_ALLOCATOR_H 1
+        -:   31:
+        -:   32:#include <bits/c++config.h>
+        -:   33:#include <new>
+        -:   34:#include <bits/functexcept.h>
+        -:   35:#include <bits/move.h>
+        -:   36:#if __cplusplus >= 201103L
+        -:   37:#include <type_traits>
+        -:   38:#endif
+        -:   39:
+        -:   40:namespace __gnu_cxx _GLIBCXX_VISIBILITY(default)
+        -:   41:{
+        -:   42:_GLIBCXX_BEGIN_NAMESPACE_VERSION
+        -:   43:
+        -:   44:  using std::size_t;
+        -:   45:  using std::ptrdiff_t;
+        -:   46:
+        -:   47:  /**
+        -:   48:   *  @brief  An allocator that uses global new, as per [20.4].
+        -:   49:   *  @ingroup allocators
+        -:   50:   *
+        -:   51:   *  This is precisely the allocator defined in the C++ Standard.
+        -:   52:   *    - all allocation calls operator new
+        -:   53:   *    - all deallocation calls operator delete
+        -:   54:   *
+        -:   55:   *  @tparam  _Tp  Type of allocated object.
+        -:   56:   */
+        -:   57:  template<typename _Tp>
+        -:   58:    class new_allocator
+        -:   59:    {
+        -:   60:    public:
+        -:   61:      typedef size_t     size_type;
+        -:   62:      typedef ptrdiff_t  difference_type;
+        -:   63:      typedef _Tp*       pointer;
+        -:   64:      typedef const _Tp* const_pointer;
+        -:   65:      typedef _Tp&       reference;
+        -:   66:      typedef const _Tp& const_reference;
+        -:   67:      typedef _Tp        value_type;
+        -:   68:
+        -:   69:      template<typename _Tp1>
+        -:   70:	struct rebind
+        -:   71:	{ typedef new_allocator<_Tp1> other; };
+        -:   72:
+        -:   73:#if __cplusplus >= 201103L
+        -:   74:      // _GLIBCXX_RESOLVE_LIB_DEFECTS
+        -:   75:      // 2103. propagate_on_container_move_assignment
+        -:   76:      typedef std::true_type propagate_on_container_move_assignment;
+        -:   77:#endif
+        -:   78:
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJddmEEEEC2Ev called 1400 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail20stored_edge_propertyImNS1_8propertyINS1_26edge_target_processor_id_tEs11DynamicEdgeEEEEEC2Ev called 200 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost6detail8parallel14stored_in_edgeINS3_14edge_desc_implINS2_12directed_tagEmEEEEEEC2Ev called 200 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIPlEC2Ev called 2000 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost9list_edgeImNS2_8propertyINS2_26edge_target_processor_id_tEs11DynamicEdgeEEEEEEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost6detail8parallel15edge_descriptorINS3_14edge_desc_implINS2_12directed_tagEmEEEEEEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail12adj_list_genINS1_14adjacency_listINS1_4vecSES5_NS1_9directedSENS1_8propertyINS1_17vertex_in_edges_tENSt7__cxx114listINS2_8parallel14stored_in_edgeINS2_14edge_desc_implINS1_12directed_tagEmEEEESaISG_EEE11DynamicNodeEENS7_INS1_26edge_target_processor_id_tEs11DynamicEdgeEENS1_11no_propertyENS1_5listSEEES5_S5_S6_SK_SN_SO_SP_E6config13stored_vertexEEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIdEC2Ev called 808 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIN5boost5graph11distributed17mpi_process_group14message_headerEEC2Ev called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIiEC2Ev called 3 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIP15ompi_datatype_tEC2Ev called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIlEC2Ev called 1000 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt4pairIddEEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorI15IntegrationCellEC2Ev called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorImEC2Ev called 1 returned 100% blocks executed 100%
+     5617:   79:      new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+     1400:   79-block  0
+      200:   79-block  1
+      200:   79-block  2
+     2000:   79-block  3
+        1:   79-block  4
+        1:   79-block  5
+        1:   79-block  6
+      808:   79-block  7
+    $$$$$:   79-block  8
+        3:   79-block  9
+    $$$$$:   79-block 10
+     1000:   79-block 11
+        1:   79-block 12
+        1:   79-block 13
+        1:   79-block 14
+        -:   80:
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail20stored_edge_propertyImNS1_8propertyINS1_26edge_target_processor_id_tEs11DynamicEdgeEEEEEC2ERKS9_ called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost6detail8parallel14stored_in_edgeINS3_14edge_desc_implINS2_12directed_tagEmEEEEEEC2ERKSB_ called 400 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail12adj_list_genINS1_14adjacency_listINS1_4vecSES5_NS1_9directedSENS1_8propertyINS1_17vertex_in_edges_tENSt7__cxx114listINS2_8parallel14stored_in_edgeINS2_14edge_desc_implINS1_12directed_tagEmEEEESaISG_EEE11DynamicNodeEENS7_INS1_26edge_target_processor_id_tEs11DynamicEdgeEENS1_11no_propertyENS1_5listSEEES5_S5_S6_SK_SN_SO_SP_E6config13stored_vertexEEC2ERKSU_ called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt4pairIddEEC2ERKS3_ called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorI15IntegrationCellEC2ERKS2_ called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorImEC2ERKS1_ called 3 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIdEC2ERKS1_ called 0 returned 0% blocks executed 0%
+      406:   81:      new_allocator(const new_allocator&) _GLIBCXX_USE_NOEXCEPT { }
+    $$$$$:   81-block  0
+      400:   81-block  1
+        1:   81-block  2
+        1:   81-block  3
+        1:   81-block  4
+        3:   81-block  5
+    $$$$$:   81-block  6
+        -:   82:
+        -:   83:      template<typename _Tp1>
+        -:   84:	new_allocator(const new_allocator<_Tp1>&) _GLIBCXX_USE_NOEXCEPT { }
+        -:   85:
+function _ZN9__gnu_cxx13new_allocatorIPlED2Ev called 2000 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail20stored_edge_propertyImNS1_8propertyINS1_26edge_target_processor_id_tEs11DynamicEdgeEEEEED2Ev called 200 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJdiiEEEED2Ev called 2400 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJddmEEEED2Ev called 1400 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost6detail8parallel14stored_in_edgeINS3_14edge_desc_implINS2_12directed_tagEmEEEEEED2Ev called 600 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorI12ParallelCellED2Ev called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail12adj_list_genINS1_14adjacency_listINS1_4vecSES5_NS1_9directedSENS1_8propertyINS1_17vertex_in_edges_tENSt7__cxx114listINS2_8parallel14stored_in_edgeINS2_14edge_desc_implINS1_12directed_tagEmEEEESaISG_EEE11DynamicNodeEENS7_INS1_26edge_target_processor_id_tEs11DynamicEdgeEENS1_11no_propertyENS1_5listSEEES5_S5_S6_SK_SN_SO_SP_E6config13stored_vertexEED2Ev called 2 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt4pairIddEED2Ev called 2 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost6detail8parallel15edge_descriptorINS3_14edge_desc_implINS2_12directed_tagEmEEEEEED2Ev called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost9list_edgeImNS2_8propertyINS2_26edge_target_processor_id_tEs11DynamicEdgeEEEEEED2Ev called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorINSt7__cxx114listISt5tupleIJdiiEESaIS4_EEEED2Ev called 400 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorINSt7__cxx114listISt5tupleIJddmEESaIS4_EEEED2Ev called 200 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIdED2Ev called 808 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIN5boost5graph11distributed17mpi_process_group14message_headerEED2Ev called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIiED2Ev called 3 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIP15ompi_datatype_tED2Ev called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIlED2Ev called 1000 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorI15IntegrationCellED2Ev called 2 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorImED2Ev called 4 returned 100% blocks executed 100%
+     9024:   86:      ~new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+     2000:   86-block  0
+      200:   86-block  1
+     2400:   86-block  2
+     1400:   86-block  3
+      600:   86-block  4
+        1:   86-block  5
+        2:   86-block  6
+        2:   86-block  7
+        1:   86-block  8
+        1:   86-block  9
+      400:   86-block 10
+      200:   86-block 11
+      808:   86-block 12
+    $$$$$:   86-block 13
+        3:   86-block 14
+    $$$$$:   86-block 15
+     1000:   86-block 16
+        2:   86-block 17
+        4:   86-block 18
+        -:   87:
+        -:   88:      pointer
+        -:   89:      address(reference __x) const _GLIBCXX_NOEXCEPT
+        -:   90:      { return std::__addressof(__x); }
+        -:   91:
+        -:   92:      const_pointer
+        -:   93:      address(const_reference __x) const _GLIBCXX_NOEXCEPT
+        -:   94:      { return std::__addressof(__x); }
+        -:   95:
+        -:   96:      // NB: __n is permitted to be 0.  The C++ standard says nothing
+        -:   97:      // about what the return value is when __n == 0.
+        -:   98:      pointer
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail20stored_edge_propertyImNS1_8propertyINS1_26edge_target_processor_id_tEs11DynamicEdgeEEEEE8allocateEmPKv called 200 returned 100% blocks executed 86%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost6detail8parallel14stored_in_edgeINS3_14edge_desc_implINS2_12directed_tagEmEEEEEE8allocateEmPKv called 200 returned 100% blocks executed 86%
+function _ZN9__gnu_cxx13new_allocatorIPlE8allocateEmPKv called 1000 returned 100% blocks executed 86%
+function _ZN9__gnu_cxx13new_allocatorIN5boost5graph11distributed17mpi_process_group14message_headerEE8allocateEmPKv called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJdiiEEEE8allocateEmPKv called 199500 returned 100% blocks executed 86%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJddmEEEE8allocateEmPKv called 500 returned 100% blocks executed 86%
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail12adj_list_genINS1_14adjacency_listINS1_4vecSES5_NS1_9directedSENS1_8propertyINS1_17vertex_in_edges_tENSt7__cxx114listINS2_8parallel14stored_in_edgeINS2_14edge_desc_implINS1_12directed_tagEmEEEESaISG_EEE11DynamicNodeEENS7_INS1_26edge_target_processor_id_tEs11DynamicEdgeEENS1_11no_propertyENS1_5listSEEES5_S5_S6_SK_SN_SO_SP_E6config13stored_vertexEE8allocateEmPKv called 1 returned 100% blocks executed 86%
+function _ZN9__gnu_cxx13new_allocatorIdE8allocateEmPKv called 800 returned 100% blocks executed 86%
+function _ZN9__gnu_cxx13new_allocatorISt4pairIddEE8allocateEmPKv called 9 returned 100% blocks executed 86%
+function _ZN9__gnu_cxx13new_allocatorI15IntegrationCellE8allocateEmPKv called 1 returned 100% blocks executed 86%
+function _ZN9__gnu_cxx13new_allocatorIlE8allocateEmPKv called 2500 returned 100% blocks executed 86%
+function _ZN9__gnu_cxx13new_allocatorImE8allocateEmPKv called 2 returned 100% blocks executed 86%
+function _ZN9__gnu_cxx13new_allocatorIiE8allocateEmPKv called 12 returned 100% blocks executed 86%
+function _ZN9__gnu_cxx13new_allocatorIP15ompi_datatype_tE8allocateEmPKv called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIcE8allocateEmPKv called 94 returned 100% blocks executed 86%
+   204819:   99:      allocate(size_type __n, const void* = static_cast<const void*>(0))
+      200:   99-block  0
+      200:   99-block  1
+     1000:   99-block  2
+    $$$$$:   99-block  3
+   199500:   99-block  4
+      500:   99-block  5
+        1:   99-block  6
+      800:   99-block  7
+        9:   99-block  8
+        1:   99-block  9
+     2500:   99-block 10
+        2:   99-block 11
+       12:   99-block 12
+    $$$$$:   99-block 13
+       94:   99-block 14
+        -:  100:      {
+   204819:  101:	if (__n > this->max_size())
+      200:  101-block  0
+call    0 returned 200
+branch  1 taken 0 (fallthrough)
+branch  2 taken 200
+      200:  101-block  1
+call    3 returned 200
+branch  4 taken 0 (fallthrough)
+branch  5 taken 200
+     1000:  101-block  2
+call    6 returned 1000
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1000
+    $$$$$:  101-block  3
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+   199500:  101-block  4
+call   12 returned 199500
+branch 13 taken 0 (fallthrough)
+branch 14 taken 199500
+      500:  101-block  5
+call   15 returned 500
+branch 16 taken 0 (fallthrough)
+branch 17 taken 500
+        1:  101-block  6
+call   18 returned 1
+branch 19 taken 0 (fallthrough)
+branch 20 taken 1
+      800:  101-block  7
+call   21 returned 800
+branch 22 taken 0 (fallthrough)
+branch 23 taken 800
+        9:  101-block  8
+call   24 returned 9
+branch 25 taken 0 (fallthrough)
+branch 26 taken 9
+        1:  101-block  9
+call   27 returned 1
+branch 28 taken 0 (fallthrough)
+branch 29 taken 1
+     2500:  101-block 10
+call   30 returned 2500
+branch 31 taken 0 (fallthrough)
+branch 32 taken 2500
+        2:  101-block 11
+call   33 returned 2
+branch 34 taken 0 (fallthrough)
+branch 35 taken 2
+       12:  101-block 12
+call   36 returned 12
+branch 37 taken 0 (fallthrough)
+branch 38 taken 12
+    $$$$$:  101-block 13
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+       94:  101-block 14
+call   42 returned 94
+branch 43 taken 0 (fallthrough)
+branch 44 taken 94
+   204819:  102:	  std::__throw_bad_alloc();
+    $$$$$:  102-block  0
+call    0 never executed
+      200:  102-block  1
+    $$$$$:  102-block  2
+call    1 never executed
+      200:  102-block  3
+    $$$$$:  102-block  4
+call    2 never executed
+     1000:  102-block  5
+    $$$$$:  102-block  6
+call    3 never executed
+    $$$$$:  102-block  7
+    $$$$$:  102-block  8
+call    4 never executed
+   199500:  102-block  9
+    $$$$$:  102-block 10
+call    5 never executed
+      500:  102-block 11
+    $$$$$:  102-block 12
+call    6 never executed
+        1:  102-block 13
+    $$$$$:  102-block 14
+call    7 never executed
+      800:  102-block 15
+    $$$$$:  102-block 16
+call    8 never executed
+        9:  102-block 17
+    $$$$$:  102-block 18
+call    9 never executed
+        1:  102-block 19
+    $$$$$:  102-block 20
+call   10 never executed
+     2500:  102-block 21
+    $$$$$:  102-block 22
+call   11 never executed
+        2:  102-block 23
+    $$$$$:  102-block 24
+call   12 never executed
+       12:  102-block 25
+    $$$$$:  102-block 26
+call   13 never executed
+    $$$$$:  102-block 27
+    $$$$$:  102-block 28
+call   14 never executed
+       94:  102-block 29
+        -:  103:
+        -:  104:#if __cpp_aligned_new
+        -:  105:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  106:	  {
+        -:  107:	    std::align_val_t __al = std::align_val_t(alignof(_Tp));
+        -:  108:	    return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp), __al));
+        -:  109:	  }
+        -:  110:#endif
+   204819:  111:	return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp)));
+      200:  111-block  0
+call    0 returned 200
+      200:  111-block  1
+call    1 returned 200
+     1000:  111-block  2
+call    2 returned 1000
+    $$$$$:  111-block  3
+call    3 never executed
+   199500:  111-block  4
+call    4 returned 199500
+      500:  111-block  5
+call    5 returned 500
+        1:  111-block  6
+call    6 returned 1
+      800:  111-block  7
+call    7 returned 800
+        9:  111-block  8
+call    8 returned 9
+        1:  111-block  9
+call    9 returned 1
+     2500:  111-block 10
+call   10 returned 2500
+        2:  111-block 11
+call   11 returned 2
+       12:  111-block 12
+call   12 returned 12
+    $$$$$:  111-block 13
+call   13 never executed
+       94:  111-block 14
+call   14 returned 94
+        -:  112:      }
+        -:  113:
+        -:  114:      // __p is not permitted to be a null pointer.
+        -:  115:      void
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJdiiEEEE10deallocateEPS4_m called 199500 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJddmEEEE10deallocateEPS4_m called 500 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail20stored_edge_propertyImNS1_8propertyINS1_26edge_target_processor_id_tEs11DynamicEdgeEEEEE10deallocateEPS8_m called 200 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIPlE10deallocateEPS1_m called 1000 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost6detail8parallel14stored_in_edgeINS3_14edge_desc_implINS2_12directed_tagEmEEEEEE10deallocateEPSA_m called 200 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt4pairIddEE10deallocateEPS2_m called 9 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorI15IntegrationCellE10deallocateEPS1_m called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorI12ParallelCellE10deallocateEPS1_m called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost6detail8parallel15edge_descriptorINS3_14edge_desc_implINS2_12directed_tagEmEEEEEE10deallocateEPSA_m called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail12adj_list_genINS1_14adjacency_listINS1_4vecSES5_NS1_9directedSENS1_8propertyINS1_17vertex_in_edges_tENSt7__cxx114listINS2_8parallel14stored_in_edgeINS2_14edge_desc_implINS1_12directed_tagEmEEEESaISG_EEE11DynamicNodeEENS7_INS1_26edge_target_processor_id_tEs11DynamicEdgeEENS1_11no_propertyENS1_5listSEEES5_S5_S6_SK_SN_SO_SP_E6config13stored_vertexEE10deallocateEPST_m called 1 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost9list_edgeImNS2_8propertyINS2_26edge_target_processor_id_tEs11DynamicEdgeEEEEEE10deallocateEPS9_m called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorImE10deallocateEPmm called 2 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorINSt7__cxx114listISt5tupleIJdiiEESaIS4_EEEE10deallocateEPS6_m called 400 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorINSt7__cxx114listISt5tupleIJddmEESaIS4_EEEE10deallocateEPS6_m called 200 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIdE10deallocateEPdm called 800 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIN5boost5graph11distributed17mpi_process_group14message_headerEE10deallocateEPS5_m called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIiE10deallocateEPim called 12 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIP15ompi_datatype_tE10deallocateEPS2_m called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIlE10deallocateEPlm called 2500 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIcE10deallocateEPcm called 94 returned 100% blocks executed 100%
+   410840:  116:      deallocate(pointer __p, size_type)
+   199500:  116-block  0
+   199500:  116-block  1
+      500:  116-block  2
+      500:  116-block  3
+      200:  116-block  4
+      200:  116-block  5
+     1000:  116-block  6
+     1000:  116-block  7
+      200:  116-block  8
+      200:  116-block  9
+        9:  116-block 10
+        9:  116-block 11
+        1:  116-block 12
+        1:  116-block 13
+        1:  116-block 14
+        1:  116-block 15
+    $$$$$:  116-block 16
+    $$$$$:  116-block 17
+        1:  116-block 18
+        1:  116-block 19
+    $$$$$:  116-block 20
+    $$$$$:  116-block 21
+        2:  116-block 22
+        2:  116-block 23
+      400:  116-block 24
+      400:  116-block 25
+      200:  116-block 26
+      200:  116-block 27
+      800:  116-block 28
+      800:  116-block 29
+    $$$$$:  116-block 30
+    $$$$$:  116-block 31
+       12:  116-block 32
+       12:  116-block 33
+    $$$$$:  116-block 34
+    $$$$$:  116-block 35
+     2500:  116-block 36
+     2500:  116-block 37
+       94:  116-block 38
+       94:  116-block 39
+        -:  117:      {
+        -:  118:#if __cpp_aligned_new
+        -:  119:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  120:	  {
+        -:  121:	    ::operator delete(__p, std::align_val_t(alignof(_Tp)));
+        -:  122:	    return;
+        -:  123:	  }
+        -:  124:#endif
+   205420:  125:	::operator delete(__p);
+   199500:  125-block  0
+call    0 returned 199500
+      500:  125-block  1
+call    1 returned 500
+      200:  125-block  2
+call    2 returned 200
+     1000:  125-block  3
+call    3 returned 1000
+      200:  125-block  4
+call    4 returned 200
+        9:  125-block  5
+call    5 returned 9
+        1:  125-block  6
+call    6 returned 1
+        1:  125-block  7
+call    7 returned 1
+    $$$$$:  125-block  8
+call    8 never executed
+        1:  125-block  9
+call    9 returned 1
+    $$$$$:  125-block 10
+call   10 never executed
+        2:  125-block 11
+call   11 returned 2
+      400:  125-block 12
+call   12 returned 400
+      200:  125-block 13
+call   13 returned 200
+      800:  125-block 14
+call   14 returned 800
+    $$$$$:  125-block 15
+call   15 never executed
+       12:  125-block 16
+call   16 returned 12
+    $$$$$:  125-block 17
+call   17 never executed
+     2500:  125-block 18
+call   18 returned 2500
+       94:  125-block 19
+call   19 returned 94
+        -:  126:      }
+        -:  127:
+        -:  128:      size_type
+function _ZNK9__gnu_cxx13new_allocatorIN5boost6detail20stored_edge_propertyImNS1_8propertyINS1_26edge_target_processor_id_tEs11DynamicEdgeEEEEE8max_sizeEv called 600 returned 100% blocks executed 100%
+function _ZNK9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost6detail8parallel14stored_in_edgeINS3_14edge_desc_implINS2_12directed_tagEmEEEEEE8max_sizeEv called 200 returned 100% blocks executed 100%
+function _ZNK9__gnu_cxx13new_allocatorIPlE8max_sizeEv called 1000 returned 100% blocks executed 100%
+function _ZNK9__gnu_cxx13new_allocatorIN5boost5graph11distributed17mpi_process_group14message_headerEE8max_sizeEv called 0 returned 0% blocks executed 0%
+function _ZNK9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJdiiEEEE8max_sizeEv called 199500 returned 100% blocks executed 100%
+function _ZNK9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJddmEEEE8max_sizeEv called 500 returned 100% blocks executed 100%
+function _ZNK9__gnu_cxx13new_allocatorIN5boost6detail12adj_list_genINS1_14adjacency_listINS1_4vecSES5_NS1_9directedSENS1_8propertyINS1_17vertex_in_edges_tENSt7__cxx114listINS2_8parallel14stored_in_edgeINS2_14edge_desc_implINS1_12directed_tagEmEEEESaISG_EEE11DynamicNodeEENS7_INS1_26edge_target_processor_id_tEs11DynamicEdgeEENS1_11no_propertyENS1_5listSEEES5_S5_S6_SK_SN_SO_SP_E6config13stored_vertexEE8max_sizeEv called 1 returned 100% blocks executed 100%
+function _ZNK9__gnu_cxx13new_allocatorIdE8max_sizeEv called 2000 returned 100% blocks executed 100%
+function _ZNK9__gnu_cxx13new_allocatorISt4pairIddEE8max_sizeEv called 25 returned 100% blocks executed 100%
+function _ZNK9__gnu_cxx13new_allocatorI15IntegrationCellE8max_sizeEv called 1 returned 100% blocks executed 100%
+function _ZNK9__gnu_cxx13new_allocatorIlE8max_sizeEv called 2500 returned 100% blocks executed 100%
+function _ZNK9__gnu_cxx13new_allocatorImE8max_sizeEv called 2 returned 100% blocks executed 100%
+function _ZNK9__gnu_cxx13new_allocatorIiE8max_sizeEv called 36 returned 100% blocks executed 100%
+function _ZNK9__gnu_cxx13new_allocatorIP15ompi_datatype_tE8max_sizeEv called 0 returned 0% blocks executed 0%
+function _ZNK9__gnu_cxx13new_allocatorIcE8max_sizeEv called 218 returned 100% blocks executed 100%
+   206583:  129:      max_size() const _GLIBCXX_USE_NOEXCEPT
+      600:  129-block  0
+      200:  129-block  1
+     1000:  129-block  2
+    $$$$$:  129-block  3
+   199500:  129-block  4
+      500:  129-block  5
+        1:  129-block  6
+     2000:  129-block  7
+       25:  129-block  8
+        1:  129-block  9
+     2500:  129-block 10
+        2:  129-block 11
+       36:  129-block 12
+    $$$$$:  129-block 13
+      218:  129-block 14
+   206583:  130:      { return size_t(-1) / sizeof(_Tp); }
+      600:  130-block  0
+      200:  130-block  1
+     1000:  130-block  2
+    $$$$$:  130-block  3
+   199500:  130-block  4
+      500:  130-block  5
+        1:  130-block  6
+     2000:  130-block  7
+       25:  130-block  8
+        1:  130-block  9
+     2500:  130-block 10
+        2:  130-block 11
+       36:  130-block 12
+    $$$$$:  130-block 13
+      218:  130-block 14
+        -:  131:
+        -:  132:#if __cplusplus >= 201103L
+        -:  133:      template<typename _Up, typename... _Args>
+        -:  134:	void
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail20stored_edge_propertyImNS1_8propertyINS1_26edge_target_processor_id_tEs11DynamicEdgeEEEEE9constructIS8_JS8_EEEvPT_DpOT0_ called 200 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost6detail8parallel14stored_in_edgeINS3_14edge_desc_implINS2_12directed_tagEmEEEEEE9constructIS9_JRKS9_EEEvPT_DpOT0_ called 200 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJdiiEEEE9constructIS3_JdsmEEEvPT_DpOT0_ called 100000 returned 100% blocks executed 88%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJdiiEEEE9constructIS3_JRdsmEEEvPT_DpOT0_ called 99500 returned 100% blocks executed 88%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJddmEEEE9constructIS3_JRdS7_mEEEvPT_DpOT0_ called 500 returned 100% blocks executed 88%
+function _ZN9__gnu_cxx13new_allocatorIN5boost5graph11distributed17mpi_process_group14message_headerEE9constructIS5_JRKS5_EEEvPT_DpOT0_ called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail12adj_list_genINS1_14adjacency_listINS1_4vecSES5_NS1_9directedSENS1_8propertyINS1_17vertex_in_edges_tENSt7__cxx114listINS2_8parallel14stored_in_edgeINS2_14edge_desc_implINS1_12directed_tagEmEEEESaISG_EEE11DynamicNodeEENS7_INS1_26edge_target_processor_id_tEs11DynamicEdgeEENS1_11no_propertyENS1_5listSEEES5_S5_S6_SK_SN_SO_SP_E6config13stored_vertexEE9constructIST_JST_EEEvPT_DpOT0_ called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIlE9constructIlJRKlEEEvPT_DpOT0_ called 100000 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIlE9constructIlJlEEEvPT_DpOT0_ called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIiE9constructIiJRKiEEEvPT_DpOT0_ called 18 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorIP15ompi_datatype_tE9constructIS2_JRKS2_EEEvPT_DpOT0_ called 0 returned 0% blocks executed 0%
+   300418:  135:	construct(_Up* __p, _Args&&... __args)
+      200:  135-block  0
+      200:  135-block  1
+   100000:  135-block  2
+    99500:  135-block  3
+      500:  135-block  4
+    $$$$$:  135-block  5
+    $$$$$:  135-block  6
+   100000:  135-block  7
+    $$$$$:  135-block  8
+       18:  135-block  9
+    $$$$$:  135-block 10
+   300418:  136:	{ ::new((void *)__p) _Up(std::forward<_Args>(__args)...); }
+      200:  136-block  0
+call    0 returned 200
+call    1 returned 200
+call    2 returned 200
+      200:  136-block  1
+call    3 returned 200
+call    4 returned 200
+   100000:  136-block  2
+call    5 returned 100000
+call    6 returned 100000
+call    7 returned 100000
+call    8 returned 100000
+call    9 returned 100000
+branch 10 taken 100000 (fallthrough)
+branch 11 taken 0 (throw)
+   100000:  136-block  3
+    %%%%%:  136-block  4
+call   12 never executed
+    99500:  136-block  5
+call   13 returned 99500
+call   14 returned 99500
+call   15 returned 99500
+call   16 returned 99500
+call   17 returned 99500
+branch 18 taken 99500 (fallthrough)
+branch 19 taken 0 (throw)
+    99500:  136-block  6
+    %%%%%:  136-block  7
+call   20 never executed
+      500:  136-block  8
+call   21 returned 500
+call   22 returned 500
+call   23 returned 500
+call   24 returned 500
+call   25 returned 500
+branch 26 taken 500 (fallthrough)
+branch 27 taken 0 (throw)
+      500:  136-block  9
+    %%%%%:  136-block 10
+call   28 never executed
+    $$$$$:  136-block 11
+call   29 never executed
+call   30 never executed
+    $$$$$:  136-block 12
+call   31 never executed
+call   32 never executed
+call   33 never executed
+   100000:  136-block 13
+call   34 returned 100000
+call   35 returned 100000
+    $$$$$:  136-block 14
+call   36 never executed
+call   37 never executed
+       18:  136-block 15
+call   38 returned 18
+call   39 returned 18
+    $$$$$:  136-block 16
+call   40 never executed
+call   41 never executed
+        -:  137:
+        -:  138:      template<typename _Up>
+        -:  139:	void
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail20stored_edge_propertyImNS1_8propertyINS1_26edge_target_processor_id_tEs11DynamicEdgeEEEEE7destroyIS8_EEvPT_ called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIN5boost5graph11distributed17mpi_process_group14message_headerEE7destroyIS5_EEvPT_ called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIN5boost6detail12adj_list_genINS1_14adjacency_listINS1_4vecSES5_NS1_9directedSENS1_8propertyINS1_17vertex_in_edges_tENSt7__cxx114listINS2_8parallel14stored_in_edgeINS2_14edge_desc_implINS1_12directed_tagEmEEEESaISG_EEE11DynamicNodeEENS7_INS1_26edge_target_processor_id_tEs11DynamicEdgeEENS1_11no_propertyENS1_5listSEEES5_S5_S6_SK_SN_SO_SP_E6config13stored_vertexEE7destroyIST_EEvPT_ called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJdiiEEEE7destroyIS3_EEvPT_ called 199500 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeISt5tupleIJddmEEEE7destroyIS3_EEvPT_ called 500 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost6detail8parallel14stored_in_edgeINS3_14edge_desc_implINS2_12directed_tagEmEEEEEE7destroyIS9_EEvPT_ called 200 returned 100% blocks executed 100%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost6detail8parallel15edge_descriptorINS3_14edge_desc_implINS2_12directed_tagEmEEEEEE7destroyIS9_EEvPT_ called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5boost9list_edgeImNS2_8propertyINS2_26edge_target_processor_id_tEs11DynamicEdgeEEEEEE7destroyIS8_EEvPT_ called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIlE7destroyIlEEvPT_ called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIiE7destroyIiEEvPT_ called 0 returned 0% blocks executed 0%
+function _ZN9__gnu_cxx13new_allocatorIP15ompi_datatype_tE7destroyIS2_EEvPT_ called 0 returned 0% blocks executed 0%
+   200200:  140:	destroy(_Up* __p) { __p->~_Up(); }
+    $$$$$:  140-block  0
+    $$$$$:  140-block  1
+call    0 never executed
+    $$$$$:  140-block  2
+    $$$$$:  140-block  3
+    $$$$$:  140-block  4
+call    1 never executed
+   199500:  140-block  5
+      500:  140-block  6
+      200:  140-block  7
+    $$$$$:  140-block  8
+    $$$$$:  140-block  9
+    $$$$$:  140-block 10
+    $$$$$:  140-block 11
+    $$$$$:  140-block 12
+        -:  141:#else
+        -:  142:      // _GLIBCXX_RESOLVE_LIB_DEFECTS
+        -:  143:      // 402. wrong new expression in [some_] allocator::construct
+        -:  144:      void
+        -:  145:      construct(pointer __p, const _Tp& __val)
+        -:  146:      { ::new((void *)__p) _Tp(__val); }
+        -:  147:
+        -:  148:      void
+        -:  149:      destroy(pointer __p) { __p->~_Tp(); }
+        -:  150:#endif
+        -:  151:    };
+        -:  152:
+        -:  153:  template<typename _Tp>
+        -:  154:    inline bool
+        -:  155:    operator==(const new_allocator<_Tp>&, const new_allocator<_Tp>&)
+        -:  156:    { return true; }
+        -:  157:
+        -:  158:  template<typename _Tp>
+        -:  159:    inline bool
+        -:  160:    operator!=(const new_allocator<_Tp>&, const new_allocator<_Tp>&)
+        -:  161:    { return false; }
+        -:  162:
+        -:  163:_GLIBCXX_END_NAMESPACE_VERSION
+        -:  164:} // namespace
+        -:  165:
+        -:  166:#endif

@@ -4,7 +4,7 @@
 
 #ifndef CPPPROJCT_GRAPHFUNCTIONS_H
 #define CPPPROJCT_GRAPHFUNCTIONS_H
-
+#include "../macros/macros.h"
 #include "../Solvers/GeneralSolver.h"
 #include "../Utils/adequate_synchronization.h"
 #include "../Utils/memory_management.h"
@@ -85,11 +85,16 @@ void single_evolution(Graph &g,
                            TOT,
                            PENDING_INT);
 
-#pragma omp parallel firstprivate(NVtot, vs, NT, N_total_nodes, REF) // Node iterators have random access ;-)
+    const int MAX_SUBTHR = 1;
+
+
+
+#pragma omp parallel firstprivate(NVtot, vs, NT, N_total_nodes, REF, MAX_SUBTHR) // Node iterators have random access ;-)
 {
-    int SplitCoef = omp_get_num_threads()/2;
+    int SplitCoef = omp_get_num_threads()/2; // 3/2
     if (SplitCoef < 2){SplitCoef = 2;}
     OpenMPHelper OmpHelper(NVtot, SplitCoef);
+
 
 
     if (OmpHelper.MY_THREAD_n < SplitCoef){
@@ -98,10 +103,17 @@ void single_evolution(Graph &g,
         // we allow a delay of 5 failed attemps waiting 1ms and using only ONE helper (i.e. subthread)
         // the so-called 'BATCH' is how many requests are handled simultaneously (by each thread)
 //        mssleep(5000);
-        GetAllMsgs<5,1,1,BATCH> (NVtot, REF, N_total_nodes, OmpHelper);
-        // STRONG INTEGRATION OCCURS HERE! just call:
-        //std::cout << " I am thread " << omp_get_thread_num() << " and I have finished doing my job ;-)" << std::endl;
-        contribute_to_integration(REF);
+        if (OmpHelper.MY_THREAD_n % (MAX_SUBTHR + 1) == 0) {
+            GetAllMsgs<5, 1, MAX_SUBTHR, BATCH>(NVtot, REF, N_total_nodes, OmpHelper);
+            GetAllMsgs<5, 1, MAX_SUBTHR, BATCH>(NVtot, REF, N_total_nodes, OmpHelper);
+            // STRONG INTEGRATION OCCURS HERE! just call:
+            if (VERBOSE) {
+                // use PRINTF_DBG()
+                std::cout << " I am thread " << omp_get_thread_num() <<
+                          " and I have finished doing my job ;-)" << std::endl;
+            }
+            //contribute_to_integration(REF);
+        }
     }
     else {
         //*************************************DEBUG!!!**************************************
@@ -139,6 +151,10 @@ void single_evolution(Graph &g,
             } else {
                 ready4int = false;
             };
+
+            // **********LITTLE CHEATING GOING ON HERE TO TEST COMMUNICATION STUFF
+            ready4int = true;
+            //**********************************************************************
 
             auto neighbors = boost::adjacent_vertices(*v, g);
             auto in_edges = boost::in_edges(*v, g);
@@ -211,6 +227,8 @@ void single_evolution(Graph &g,
                 READY_FOR_INTEGRATION.push(i);
 }
 #pragma omp atomic update
+                --PENDING_INT;
+#pragma omp atomic update
                 ++TOT;
             } else {
 #pragma omp critical
@@ -218,14 +236,13 @@ void single_evolution(Graph &g,
                 CHECKED.push(i); // Adding the index to the list of checked indexes ;-)
 }
             }
-
-
-            //std::cout << " I am 'for' worker " << omp_get_thread_num() << " and I have completed one lap" << std::endl;
-        //std::cout << " Completed one lap successfully" << std::endl;
         } // end of the for :-)
+        if (VERBOSE) {
+            // use PRINTF_DBG()
+            std::cout << " I am 'for' worker " << omp_get_thread_num() << " and I have completed my Job :-)" << std::endl;
+        }
         // STRONG INTEGRATION OCCURS HERE! just call:
         contribute_to_integration(REF);
-        //mssleep(50000); // DEBUG: watch what occurs in the MPI section :-0
     }
 } // end of the parallel construct
 
@@ -234,9 +251,24 @@ void single_evolution(Graph &g,
     // for assertion purposes we will produce:
     // wait until the global max of PENDING_INT is  exactly 0
     // use:
-    // MPI_Barrier();
-    // PENDING_INT
-    // MPI_Gather (or similar)
+    if (PENDING_INT == 0) {
+
+        // Define vars
+        bool status = true;
+        bool recv_status[ComHelper.WORLD_SIZE[0] - 1];
+        int finalstate = MPI_Alltoall(&status,
+                                      1,
+                                      MPI_C_BOOL,
+                                      &recv_status[0],
+                                      ComHelper.WORLD_SIZE[0] - 1,
+                                      MPI_C_BOOL,
+                                      MPI_COMM_WORLD);
+    } else
+    {
+        std::cout << " FAILED! check please" <<std::endl;
+    }
+    std::cout << "Ended one lap!" << std::endl;
+    //mssleep(5000);
 
     // swap (local) node's values with
     // the value at register

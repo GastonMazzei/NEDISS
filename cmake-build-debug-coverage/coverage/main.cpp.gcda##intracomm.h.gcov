@@ -1,0 +1,184 @@
+        -:    0:Source:/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/ompi/mpi/cxx/intracomm.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// -*- c++ -*-
+        -:    2://
+        -:    3:// Copyright (c) 2004-2005 The Trustees of Indiana University and Indiana
+        -:    4://                         University Research and Technology
+        -:    5://                         Corporation.  All rights reserved.
+        -:    6:// Copyright (c) 2004-2005 The University of Tennessee and The University
+        -:    7://                         of Tennessee Research Foundation.  All rights
+        -:    8://                         reserved.
+        -:    9:// Copyright (c) 2004-2005 High Performance Computing Center Stuttgart,
+        -:   10://                         University of Stuttgart.  All rights reserved.
+        -:   11:// Copyright (c) 2004-2005 The Regents of the University of California.
+        -:   12://                         All rights reserved.
+        -:   13:// Copyright (c) 2006      Cisco Systems, Inc.  All rights reserved.
+        -:   14:// $COPYRIGHT$
+        -:   15://
+        -:   16:// Additional copyrights may follow
+        -:   17://
+        -:   18:// $HEADER$
+        -:   19://
+        -:   20:
+function _ZN3MPI9IntracommD0Ev called 0 returned 0% blocks executed 0%
+function _ZN3MPI9IntracommD2Ev called 0 returned 0% blocks executed 0%
+    #####:   21:class Intracomm : public Comm {
+    $$$$$:   21-block  0
+    $$$$$:   21-block  1
+call    0 never executed
+call    1 never executed
+    $$$$$:   21-block  2
+    $$$$$:   21-block  3
+call    2 never executed
+        -:   22:public:
+        -:   23:
+        -:   24:  // construction
+function _ZN3MPI9IntracommC2Ev called 0 returned 0% blocks executed 0%
+    #####:   25:  Intracomm() { }
+    $$$$$:   25-block  0
+    $$$$$:   25-block  1
+call    0 never executed
+        -:   26:  // copy
+        -:   27:  Intracomm(const Comm_Null& data) : Comm(data) { }
+        -:   28:  // inter-language operability
+        -:   29:
+        -:   30:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:   31:  //NOTE: it is extremely important that Comm(data) happens below
+        -:   32:  //  because there is a not only pmpi_comm in this Intracomm but
+        -:   33:  //  there is also a pmpi_comm in the inherited Comm part. Both
+        -:   34:  //  of these pmpi_comm's need to be initialized with the same
+        -:   35:  //  MPI_Comm object. Also the assignment operators must take this
+        -:   36:  //  into account.
+        -:   37:  Intracomm(const Intracomm& data) : Comm(data), pmpi_comm(data) { }
+        -:   38:
+        -:   39:  Intracomm(MPI_Comm data) : Comm(data), pmpi_comm(data) { }
+        -:   40:
+        -:   41:  Intracomm(const PMPI::Intracomm& data)
+        -:   42:    : Comm((const PMPI::Comm&)data), pmpi_comm(data) { }
+        -:   43:
+        -:   44:  // assignment
+        -:   45:  Intracomm& operator=(const Intracomm& data) {
+        -:   46:    Comm::operator=(data);
+        -:   47:    pmpi_comm = data.pmpi_comm;
+        -:   48:    return *this;
+        -:   49:  }
+        -:   50:  Intracomm& operator=(const Comm_Null& data) {
+        -:   51:    Comm::operator=(data);
+        -:   52:    pmpi_comm = (PMPI::Intracomm)data; return *this;
+        -:   53:  }
+        -:   54:  // inter-language operability
+        -:   55:  Intracomm& operator=(const MPI_Comm& data) {
+        -:   56:    Comm::operator=(data);
+        -:   57:    pmpi_comm = data;
+        -:   58:    return *this;
+        -:   59:  }
+        -:   60:
+        -:   61:#else
+        -:   62:  Intracomm(const Intracomm& data) : Comm(data.mpi_comm) { }
+        -:   63:
+        -:   64:  inline Intracomm(MPI_Comm data);
+        -:   65:
+        -:   66:  // assignment
+        -:   67:  Intracomm& operator=(const Intracomm& data) {
+        -:   68:    mpi_comm = data.mpi_comm; return *this;
+        -:   69:  }
+        -:   70:
+        -:   71:  Intracomm& operator=(const Comm_Null& data) {
+        -:   72:    mpi_comm = data; return *this;
+        -:   73:  }
+        -:   74:
+        -:   75:  // inter-language operability
+        -:   76:  Intracomm& operator=(const MPI_Comm& data) {
+        -:   77:    mpi_comm = data; return *this; }
+        -:   78:
+        -:   79:#endif
+        -:   80:
+        -:   81:  //
+        -:   82:  // Collective Communication
+        -:   83:  //
+        -:   84:  // All the rest are up in comm.h -- Scan and Exscan are not defined
+        -:   85:  // in intercomm's, so they're down here in Intracomm.
+        -:   86:  //
+        -:   87:  virtual void
+        -:   88:  Scan(const void *sendbuf, void *recvbuf, int count,
+        -:   89:       const Datatype & datatype, const Op & op) const;
+        -:   90:
+        -:   91:  virtual void
+        -:   92:  Exscan(const void *sendbuf, void *recvbuf, int count,
+        -:   93:	 const Datatype & datatype, const Op & op) const;
+        -:   94:
+        -:   95:  //
+        -:   96:  // Communicator maintenance
+        -:   97:  //
+        -:   98:
+        -:   99:  Intracomm Dup() const;
+        -:  100:
+        -:  101:  virtual Intracomm& Clone() const;
+        -:  102:
+        -:  103:  virtual Intracomm
+        -:  104:  Create(const Group& group) const;
+        -:  105:
+        -:  106:  virtual Intracomm
+        -:  107:  Split(int color, int key) const;
+        -:  108:
+        -:  109:  virtual Intercomm
+        -:  110:  Create_intercomm(int local_leader, const Comm& peer_comm,
+        -:  111:		   int remote_leader, int tag) const;
+        -:  112:
+        -:  113:  virtual Cartcomm
+        -:  114:  Create_cart(int ndims, const int dims[],
+        -:  115:	      const bool periods[], bool reorder) const;
+        -:  116:
+        -:  117:  virtual Graphcomm
+        -:  118:  Create_graph(int nnodes, const int index[],
+        -:  119:	       const int edges[], bool reorder) const;
+        -:  120:
+        -:  121:
+        -:  122:  //
+        -:  123:  // Process Creation and Management
+        -:  124:  //
+        -:  125:
+        -:  126:  virtual Intercomm Accept(const char* port_name, const Info& info, int root)
+        -:  127:    const;
+        -:  128:
+        -:  129:  virtual Intercomm Connect(const char* port_name, const Info& info, int root)
+        -:  130:    const;
+        -:  131:
+        -:  132:  virtual Intercomm Spawn(const char* command, const char* argv[],
+        -:  133:                          int maxprocs, const Info& info, int root) const;
+        -:  134:
+        -:  135:  virtual Intercomm Spawn(const char* command, const char* argv[],
+        -:  136:                          int maxprocs, const Info& info,
+        -:  137:                          int root, int array_of_errcodes[]) const;
+        -:  138:
+        -:  139:  virtual Intercomm Spawn_multiple(int count, const char* array_of_commands[],
+        -:  140:                                   const char** array_of_argv[],
+        -:  141:                                   const int array_of_maxprocs[],
+        -:  142:                                   const Info array_of_info[], int root);
+        -:  143:
+        -:  144:  virtual Intercomm Spawn_multiple(int count, const char* array_of_commands[],
+        -:  145:                                   const char** array_of_argv[],
+        -:  146:                                   const int array_of_maxprocs[],
+        -:  147:                                   const Info array_of_info[], int root,
+        -:  148:                                   int array_of_errcodes[]);
+        -:  149:
+        -:  150:
+        -:  151:  //#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:  152:  //  virtual const PMPI::Comm& get_pmpi_comm() const { return pmpi_comm; }
+        -:  153:  //#endif
+        -:  154:protected:
+        -:  155:
+        -:  156:
+        -:  157:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:  158:  PMPI::Intracomm pmpi_comm;
+        -:  159:#endif
+        -:  160:
+        -:  161:  // Convert an array of p_nbr Info object into an array of MPI_Info.
+        -:  162:  // A pointer to the allocated array is returned and must be
+        -:  163:  // eventually deleted.
+        -:  164:  static inline MPI_Info *convert_info_to_mpi_info(int p_nbr,
+        -:  165:                                                   const Info p_info_tbl[]);
+        -:  166:};

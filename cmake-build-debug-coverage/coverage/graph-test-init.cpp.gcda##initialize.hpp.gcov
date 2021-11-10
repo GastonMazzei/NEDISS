@@ -1,0 +1,373 @@
+        -:    0:Source:/usr/include/boost/graph/distributed/adjlist/initialize.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Copyright (C) 2007 Douglas Gregor 
+        -:    2:
+        -:    3:// Use, modification and distribution is subject to the Boost Software
+        -:    4:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:    5:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    6:
+        -:    7:// This file contains code for the distributed adjacency list's
+        -:    8:// initializations. It should not be included directly by users.
+        -:    9:
+        -:   10:#ifndef BOOST_GRAPH_DISTRIBUTED_ADJLIST_INITIALIZE_HPP
+        -:   11:#define BOOST_GRAPH_DISTRIBUTED_ADJLIST_INITIALIZE_HPP
+        -:   12:
+        -:   13:#ifndef BOOST_GRAPH_USE_MPI
+        -:   14:#error "Parallel BGL files should not be included unless <boost/graph/use_mpi.hpp> has been included"
+        -:   15:#endif
+        -:   16:
+        -:   17:namespace boost { 
+        -:   18:
+        -:   19:template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
+        -:   20:template<typename EdgeIterator>
+        -:   21:void
+function _ZN5boost14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES1_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEE10initializeINS_27sorted_erdos_renyi_iteratorINS_6random26linear_congruential_engineIjLj48271ELj0ELj2147483647EEESD_EEEEvT_SK_mRKNS_8parallel20variant_distributionIS5_mEES1_ called 0 returned 0% blocks executed 0%
+    #####:   22:PBGL_DISTRIB_ADJLIST_TYPE::
+    $$$$$:   22-block  0
+        -:   23:initialize(EdgeIterator first, EdgeIterator last,
+        -:   24:           vertices_size_type, const base_distribution_type& distribution, 
+        -:   25:           vecS)
+        -:   26:{
+    #####:   27:  process_id_type id = process_id(process_group_);
+    $$$$$:   27-block  0
+call    0 never executed
+    #####:   28:  while (first != last) {
+    $$$$$:   28-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   29:    if ((process_id_type)distribution(first->first) == id) {
+    $$$$$:   29-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:   30:      vertex_descriptor source(id, distribution.local(first->first));
+    $$$$$:   30-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   30-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   30-block  2
+call    6 never executed
+    #####:   31:      vertex_descriptor target(distribution(first->second),
+    $$$$$:   31-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   31-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   31-block  2
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    $$$$$:   31-block  3
+call    9 never executed
+    #####:   32:                               distribution.local(first->second));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   33:      add_edge(source, target, *this);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   33-block  0
+call    3 never executed
+        -:   34:    }
+    #####:   35:    ++first;
+    $$$$$:   35-block  0
+call    0 never executed
+        -:   36:  }
+        -:   37:
+    #####:   38:  synchronize(process_group_);
+    $$$$$:   38-block  0
+call    0 never executed
+    #####:   39:}
+        -:   40:
+        -:   41:template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
+        -:   42:template<typename EdgeIterator, typename EdgePropertyIterator>
+        -:   43:void
+        -:   44:PBGL_DISTRIB_ADJLIST_TYPE::
+        -:   45:initialize(EdgeIterator first, EdgeIterator last,
+        -:   46:           EdgePropertyIterator ep_iter,
+        -:   47:           vertices_size_type, const base_distribution_type& distribution, 
+        -:   48:           vecS)
+        -:   49:{
+        -:   50:  process_id_type id = process_id(process_group_);
+        -:   51:  while (first != last) {
+        -:   52:    if (static_cast<process_id_type>(distribution(first->first)) == id) {
+        -:   53:      vertex_descriptor source(id, distribution.local(first->first));
+        -:   54:      vertex_descriptor target(distribution(first->second),
+        -:   55:                               distribution.local(first->second));
+        -:   56:      add_edge(source, target, *ep_iter, *this);
+        -:   57:    }
+        -:   58:    ++first;
+        -:   59:    ++ep_iter;
+        -:   60:  }
+        -:   61:
+        -:   62:  synchronize(process_group_);
+        -:   63:}
+        -:   64:
+        -:   65:template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
+        -:   66:template<typename EdgeIterator, typename EdgePropertyIterator,
+        -:   67:         typename VertexListS>
+        -:   68:void
+        -:   69:PBGL_DISTRIB_ADJLIST_TYPE::
+        -:   70:initialize(EdgeIterator first, EdgeIterator last,
+        -:   71:           EdgePropertyIterator ep_iter,
+        -:   72:           vertices_size_type n, const base_distribution_type& distribution,
+        -:   73:           VertexListS)
+        -:   74:{
+        -:   75:  using boost::parallel::inplace_all_to_all;
+        -:   76:
+        -:   77:  typedef vertices_size_type vertex_number_t;
+        -:   78:  typedef typename std::iterator_traits<EdgePropertyIterator>::value_type
+        -:   79:    edge_property_init_t;
+        -:   80:
+        -:   81:  typedef std::pair<vertex_descriptor, vertex_number_t>
+        -:   82:    st_pair;
+        -:   83:  typedef std::pair<st_pair, edge_property_init_t> delayed_edge_t;
+        -:   84:
+        -:   85:  process_group_type pg = process_group();
+        -:   86:  process_id_type id = process_id(pg);
+        -:   87:
+        -:   88:  // Vertex indices
+        -:   89:  std::vector<local_vertex_descriptor> index_to_vertex;
+        -:   90:  index_to_vertex.reserve(num_vertices(*this));
+        -:   91:  BGL_FORALL_VERTICES_T(v, base(), inherited)
+        -:   92:    index_to_vertex.push_back(v);
+        -:   93:
+        -:   94:  // The list of edges we can't add immediately.
+        -:   95:  std::vector<delayed_edge_t> delayed_edges;
+        -:   96:
+        -:   97:  std::vector<std::vector<vertex_number_t> > descriptor_requests;
+        -:   98:  descriptor_requests.resize(num_processes(pg));
+        -:   99:
+        -:  100:  // Add all of the edges we can, up to the point where we run
+        -:  101:  // into a descriptor we don't know.
+        -:  102:  while (first != last) {
+        -:  103:    if (distribution(first->first) == id) {
+        -:  104:      if (distribution(first->second) != id) break;
+        -:  105:      vertex_descriptor source
+        -:  106:        (id, index_to_vertex[distribution.local(first->first)]);
+        -:  107:      vertex_descriptor target
+        -:  108:        (distribution(first->second),
+        -:  109:         index_to_vertex[distribution.local(first->second)]);
+        -:  110:      add_edge(source, target, *ep_iter, *this);
+        -:  111:    }
+        -:  112:    ++first;
+        -:  113:    ++ep_iter;
+        -:  114:  }
+        -:  115:
+        -:  116:  // Queue all of the remaining edges and determine the set of
+        -:  117:  // descriptors we need to know about.
+        -:  118:  while (first != last) {
+        -:  119:    if (distribution(first->first) == id) {
+        -:  120:      vertex_descriptor source
+        -:  121:        (id, index_to_vertex[distribution.local(first->first)]);
+        -:  122:      process_id_type dest = distribution(first->second);
+        -:  123:      if (dest != id) {
+        -:  124:        descriptor_requests[dest]
+        -:  125:          .push_back(distribution.local(first->second));
+        -:  126:        // Compact request list if we need to
+        -:  127:        if (descriptor_requests[dest].size() >
+        -:  128:              distribution.block_size(dest, n)) {
+        -:  129:          std::sort(descriptor_requests[dest].begin(),
+        -:  130:                    descriptor_requests[dest].end());
+        -:  131:          descriptor_requests[dest].erase(
+        -:  132:            std::unique(descriptor_requests[dest].begin(),
+        -:  133:                        descriptor_requests[dest].end()),
+        -:  134:            descriptor_requests[dest].end());
+        -:  135:        }
+        -:  136:      }
+        -:  137:
+        -:  138:      // Save the edge for later
+        -:  139:      delayed_edges.push_back
+        -:  140:        (delayed_edge_t(st_pair(source, first->second), *ep_iter));
+        -:  141:    }
+        -:  142:    ++first;
+        -:  143:    ++ep_iter;
+        -:  144:  }
+        -:  145:
+        -:  146:  // Compact descriptor requests
+        -:  147:  for (process_id_type dest = 0; dest < num_processes(pg); ++dest) {
+        -:  148:    std::sort(descriptor_requests[dest].begin(),
+        -:  149:              descriptor_requests[dest].end());
+        -:  150:    descriptor_requests[dest].erase(
+        -:  151:      std::unique(descriptor_requests[dest].begin(),
+        -:  152:                  descriptor_requests[dest].end()),
+        -:  153:      descriptor_requests[dest].end());
+        -:  154:  }
+        -:  155:
+        -:  156:  // Send out all of the descriptor requests
+        -:  157:  std::vector<std::vector<vertex_number_t> > in_descriptor_requests;
+        -:  158:  in_descriptor_requests.resize(num_processes(pg));
+        -:  159:  inplace_all_to_all(pg, descriptor_requests, in_descriptor_requests);
+        -:  160:
+        -:  161:  // Reply to all of the descriptor requests
+        -:  162:  std::vector<std::vector<local_vertex_descriptor> >
+        -:  163:    descriptor_responses;
+        -:  164:  descriptor_responses.resize(num_processes(pg));
+        -:  165:  for (process_id_type dest = 0; dest < num_processes(pg); ++dest) {
+        -:  166:    for (std::size_t i = 0; i < in_descriptor_requests[dest].size(); ++i) {
+        -:  167:      local_vertex_descriptor v =
+        -:  168:        index_to_vertex[in_descriptor_requests[dest][i]];
+        -:  169:      descriptor_responses[dest].push_back(v);
+        -:  170:    }
+        -:  171:    in_descriptor_requests[dest].clear();
+        -:  172:  }
+        -:  173:  in_descriptor_requests.clear();
+        -:  174:  inplace_all_to_all(pg, descriptor_responses);
+        -:  175:
+        -:  176:  // Add the queued edges
+        -:  177:  for(typename std::vector<delayed_edge_t>::iterator i
+        -:  178:        = delayed_edges.begin(); i != delayed_edges.end(); ++i) {
+        -:  179:    process_id_type dest = distribution(i->first.second);
+        -:  180:    local_vertex_descriptor tgt_local;
+        -:  181:    if (dest == id) {
+        -:  182:      tgt_local = index_to_vertex[distribution.local(i->first.second)];
+        -:  183:    } else {
+        -:  184:      std::vector<vertex_number_t>& requests = descriptor_requests[dest];
+        -:  185:      typename std::vector<vertex_number_t>::iterator pos =
+        -:  186:        std::lower_bound(requests.begin(), requests.end(),
+        -:  187:                         distribution.local(i->first.second));
+        -:  188:      tgt_local = descriptor_responses[dest][pos - requests.begin()];
+        -:  189:    }
+        -:  190:    add_edge(i->first.first, vertex_descriptor(dest, tgt_local),
+        -:  191:             i->second, *this);
+        -:  192:  }
+        -:  193:  synchronize(process_group_);
+        -:  194:}
+        -:  195:
+        -:  196:template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
+        -:  197:template<typename EdgeIterator, typename VertexListS>
+        -:  198:void
+        -:  199:PBGL_DISTRIB_ADJLIST_TYPE::
+        -:  200:initialize(EdgeIterator first, EdgeIterator last,
+        -:  201:           vertices_size_type n, const base_distribution_type& distribution,
+        -:  202:           VertexListS)
+        -:  203:{
+        -:  204:  using boost::parallel::inplace_all_to_all;
+        -:  205:
+        -:  206:  typedef vertices_size_type vertex_number_t;
+        -:  207:
+        -:  208:  typedef std::pair<vertex_descriptor, vertex_number_t> delayed_edge_t;
+        -:  209:
+        -:  210:  process_group_type pg = process_group();
+        -:  211:  process_id_type id = process_id(pg);
+        -:  212:
+        -:  213:  // Vertex indices
+        -:  214:  std::vector<local_vertex_descriptor> index_to_vertex;
+        -:  215:  index_to_vertex.reserve(num_vertices(*this));
+        -:  216:  BGL_FORALL_VERTICES_T(v, base(), inherited)
+        -:  217:    index_to_vertex.push_back(v);
+        -:  218:
+        -:  219:  // The list of edges we can't add immediately.
+        -:  220:  std::vector<delayed_edge_t> delayed_edges;
+        -:  221:
+        -:  222:  std::vector<std::vector<vertex_number_t> > descriptor_requests;
+        -:  223:  descriptor_requests.resize(num_processes(pg));
+        -:  224:
+        -:  225:  // Add all of the edges we can, up to the point where we run
+        -:  226:  // into a descriptor we don't know.
+        -:  227:  while (first != last) {
+        -:  228:    if (distribution(first->first) == id) {
+        -:  229:      if (distribution(first->second) != id) break;
+        -:  230:      vertex_descriptor source
+        -:  231:        (id, index_to_vertex[distribution.local(first->first)]);
+        -:  232:      vertex_descriptor target
+        -:  233:        (distribution(first->second),
+        -:  234:         index_to_vertex[distribution.local(first->second)]);
+        -:  235:      add_edge(source, target, *this);
+        -:  236:    }
+        -:  237:    ++first;
+        -:  238:  }
+        -:  239:
+        -:  240:  // Queue all of the remaining edges and determine the set of
+        -:  241:  // descriptors we need to know about.
+        -:  242:  while (first != last) {
+        -:  243:    if (distribution(first->first) == id) {
+        -:  244:      vertex_descriptor source
+        -:  245:        (id, index_to_vertex[distribution.local(first->first)]);
+        -:  246:      process_id_type dest = distribution(first->second);
+        -:  247:      if (dest != id) {
+        -:  248:        descriptor_requests[dest]
+        -:  249:          .push_back(distribution.local(first->second));
+        -:  250:        // Compact request list if we need to
+        -:  251:        if (descriptor_requests[dest].size() >
+        -:  252:              distribution.block_size(dest, n)) {
+        -:  253:          std::sort(descriptor_requests[dest].begin(),
+        -:  254:                    descriptor_requests[dest].end());
+        -:  255:          descriptor_requests[dest].erase(
+        -:  256:            std::unique(descriptor_requests[dest].begin(),
+        -:  257:                        descriptor_requests[dest].end()),
+        -:  258:            descriptor_requests[dest].end());
+        -:  259:        }
+        -:  260:      }
+        -:  261:
+        -:  262:      // Save the edge for later
+        -:  263:      delayed_edges.push_back(delayed_edge_t(source, first->second));
+        -:  264:    }
+        -:  265:    ++first;
+        -:  266:  }
+        -:  267:
+        -:  268:  // Compact descriptor requests
+        -:  269:  for (process_id_type dest = 0; dest < num_processes(pg); ++dest) {
+        -:  270:    std::sort(descriptor_requests[dest].begin(),
+        -:  271:              descriptor_requests[dest].end());
+        -:  272:    descriptor_requests[dest].erase(
+        -:  273:      std::unique(descriptor_requests[dest].begin(),
+        -:  274:                  descriptor_requests[dest].end()),
+        -:  275:      descriptor_requests[dest].end());
+        -:  276:  }
+        -:  277:
+        -:  278:  // Send out all of the descriptor requests
+        -:  279:  std::vector<std::vector<vertex_number_t> > in_descriptor_requests;
+        -:  280:  in_descriptor_requests.resize(num_processes(pg));
+        -:  281:  inplace_all_to_all(pg, descriptor_requests, in_descriptor_requests);
+        -:  282:
+        -:  283:  // Reply to all of the descriptor requests
+        -:  284:  std::vector<std::vector<local_vertex_descriptor> >
+        -:  285:    descriptor_responses;
+        -:  286:  descriptor_responses.resize(num_processes(pg));
+        -:  287:  for (process_id_type dest = 0; dest < num_processes(pg); ++dest) {
+        -:  288:    for (std::size_t i = 0; i < in_descriptor_requests[dest].size(); ++i) {
+        -:  289:      local_vertex_descriptor v =
+        -:  290:        index_to_vertex[in_descriptor_requests[dest][i]];
+        -:  291:      descriptor_responses[dest].push_back(v);
+        -:  292:    }
+        -:  293:    in_descriptor_requests[dest].clear();
+        -:  294:  }
+        -:  295:  in_descriptor_requests.clear();
+        -:  296:  inplace_all_to_all(pg, descriptor_responses);
+        -:  297:
+        -:  298:  // Add the queued edges
+        -:  299:  for(typename std::vector<delayed_edge_t>::iterator i
+        -:  300:        = delayed_edges.begin(); i != delayed_edges.end(); ++i) {
+        -:  301:    process_id_type dest = distribution(i->second);
+        -:  302:    local_vertex_descriptor tgt_local;
+        -:  303:    if (dest == id) {
+        -:  304:      tgt_local = index_to_vertex[distribution.local(i->second)];
+        -:  305:    } else {
+        -:  306:      std::vector<vertex_number_t>& requests = descriptor_requests[dest];
+        -:  307:      typename std::vector<vertex_number_t>::iterator pos =
+        -:  308:        std::lower_bound(requests.begin(), requests.end(),
+        -:  309:                         distribution.local(i->second));
+        -:  310:      tgt_local = descriptor_responses[dest][pos - requests.begin()];
+        -:  311:    }
+        -:  312:    add_edge(i->first, vertex_descriptor(dest, tgt_local), *this);
+        -:  313:  }
+        -:  314:  synchronize(process_group_);
+        -:  315:}
+        -:  316:
+        -:  317:}   // end namespace boost
+        -:  318:
+        -:  319:#endif // BOOST_GRAPH_DISTRIBUTED_ADJLIST_INITIALIZE_HPP

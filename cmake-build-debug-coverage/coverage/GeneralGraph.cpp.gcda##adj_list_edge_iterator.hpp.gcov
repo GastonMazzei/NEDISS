@@ -1,0 +1,286 @@
+        -:    0:Source:/usr/include/boost/graph/detail/adj_list_edge_iterator.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2://=======================================================================
+        -:    3:// Copyright 1997, 1998, 1999, 2000 University of Notre Dame.
+        -:    4:// Authors: Andrew Lumsdaine, Lie-Quan Lee, Jeremy G. Siek
+        -:    5://
+        -:    6:// Distributed under the Boost Software License, Version 1.0. (See
+        -:    7:// accompanying file LICENSE_1_0.txt or copy at
+        -:    8:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    9://=======================================================================
+        -:   10://
+        -:   11:#ifndef BOOST_GRAPH_DETAIL_ADJ_LIST_EDGE_ITERATOR_HPP
+        -:   12:#define BOOST_GRAPH_DETAIL_ADJ_LIST_EDGE_ITERATOR_HPP
+        -:   13:
+        -:   14:#include <iterator>
+        -:   15:#include <utility>
+        -:   16:#include <boost/detail/workaround.hpp>
+        -:   17:
+        -:   18:#if BOOST_WORKAROUND(__IBMCPP__, <= 600)
+        -:   19:#define BOOST_GRAPH_NO_OPTIONAL
+        -:   20:#endif
+        -:   21:
+        -:   22:#ifdef BOOST_GRAPH_NO_OPTIONAL
+        -:   23:#define BOOST_GRAPH_MEMBER .
+        -:   24:#else
+        -:   25:#define BOOST_GRAPH_MEMBER ->
+        -:   26:#include <boost/optional.hpp>
+        -:   27:#endif // ndef BOOST_GRAPH_NO_OPTIONAL
+        -:   28:
+        -:   29:namespace boost
+        -:   30:{
+        -:   31:
+        -:   32:namespace detail
+        -:   33:{
+        -:   34:
+        -:   35:    template < class VertexIterator, class OutEdgeIterator, class Graph >
+function _ZN5boost6detail22adj_list_edge_iteratorINS_12range_detail16integer_iteratorImEENS0_13out_edge_iterIN9__gnu_cxx17__normal_iteratorIPNS0_20stored_edge_propertyImNS_8propertyINS_26edge_target_processor_id_tEs11DynamicEdgeEEEESt6vectorISD_SaISD_EEEEmNS0_14edge_desc_implINS_12directed_tagEmEElEENS_14adjacency_listINS_4vecSESO_NS_9directedSENS9_INS_17vertex_in_edges_tENSt7__cxx114listINS0_8parallel14stored_in_edgeISL_EESaISV_EEE11DynamicNodeEESC_NS_11no_propertyENS_5listSEEEEaSERKS13_ called 2 returned 100% blocks executed 100%
+function _ZN5boost6detail22adj_list_edge_iteratorINS_12range_detail16integer_iteratorImEENS0_13out_edge_iterIN9__gnu_cxx17__normal_iteratorIPNS0_20stored_edge_propertyImNS_8propertyINS_26edge_target_processor_id_tEs11DynamicEdgeEEEESt6vectorISD_SaISD_EEEEmNS0_14edge_desc_implINS_12directed_tagEmEElEENS_14adjacency_listINS_4vecSESO_NS_9directedSENS9_INS_17vertex_in_edges_tENSt7__cxx114listINS0_8parallel14stored_in_edgeISL_EESaISV_EEE11DynamicNodeEESC_NS_11no_propertyENS_5listSEEEED2Ev called 16 returned 100% blocks executed 100%
+       36:   36:    class adj_list_edge_iterator
+        2:   36-block  0
+        2:   36-block  1
+call    0 returned 2
+       16:   36-block  2
+       16:   36-block  3
+call    1 returned 16
+        -:   37:    {
+        -:   38:        typedef adj_list_edge_iterator self;
+        -:   39:
+        -:   40:    public:
+        -:   41:        typedef std::forward_iterator_tag iterator_category;
+        -:   42:        typedef typename OutEdgeIterator::value_type value_type;
+        -:   43:        typedef typename OutEdgeIterator::reference reference;
+        -:   44:        typedef typename OutEdgeIterator::pointer pointer;
+        -:   45:        typedef typename OutEdgeIterator::difference_type difference_type;
+        -:   46:        typedef difference_type distance_type;
+        -:   47:
+function _ZN5boost6detail22adj_list_edge_iteratorINS_12range_detail16integer_iteratorImEENS0_13out_edge_iterIN9__gnu_cxx17__normal_iteratorIPNS0_20stored_edge_propertyImNS_8propertyINS_26edge_target_processor_id_tEs11DynamicEdgeEEEESt6vectorISD_SaISD_EEEEmNS0_14edge_desc_implINS_12directed_tagEmEElEENS_14adjacency_listINS_4vecSESO_NS_9directedSENS9_INS_17vertex_in_edges_tENSt7__cxx114listINS0_8parallel14stored_in_edgeISL_EESaISV_EEE11DynamicNodeEESC_NS_11no_propertyENS_5listSEEEEC2Ev called 2 returned 100% blocks executed 100%
+        4:   48:        inline adj_list_edge_iterator() {}
+        2:   48-block  0
+        2:   48-block  1
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+call    3 returned 2
+        -:   49:
+function _ZN5boost6detail22adj_list_edge_iteratorINS_12range_detail16integer_iteratorImEENS0_13out_edge_iterIN9__gnu_cxx17__normal_iteratorIPNS0_20stored_edge_propertyImNS_8propertyINS_26edge_target_processor_id_tEs11DynamicEdgeEEEESt6vectorISD_SaISD_EEEEmNS0_14edge_desc_implINS_12directed_tagEmEElEENS_14adjacency_listINS_4vecSESO_NS_9directedSENS9_INS_17vertex_in_edges_tENSt7__cxx114listINS0_8parallel14stored_in_edgeISL_EESaISV_EEE11DynamicNodeEESC_NS_11no_propertyENS_5listSEEEEC2ERKS13_ called 10 returned 100% blocks executed 100%
+       10:   50:        inline adj_list_edge_iterator(const self& x)
+       10:   50-block  0
+        -:   51:        : vBegin(x.vBegin)
+        -:   52:        , vCurr(x.vCurr)
+        -:   53:        , vEnd(x.vEnd)
+        -:   54:        , edges(x.edges)
+       10:   55:        , m_g(x.m_g)
+       10:   55-block  0
+call    0 returned 10
+        -:   56:        {
+       10:   57:        }
+        -:   58:
+        -:   59:        template < class G >
+function _ZN5boost6detail22adj_list_edge_iteratorINS_12range_detail16integer_iteratorImEENS0_13out_edge_iterIN9__gnu_cxx17__normal_iteratorIPNS0_20stored_edge_propertyImNS_8propertyINS_26edge_target_processor_id_tEs11DynamicEdgeEEEESt6vectorISD_SaISD_EEEEmNS0_14edge_desc_implINS_12directed_tagEmEElEENS_14adjacency_listINS_4vecSESO_NS_9directedSENS9_INS_17vertex_in_edges_tENSt7__cxx114listINS0_8parallel14stored_in_edgeISL_EESaISV_EEE11DynamicNodeEESC_NS_11no_propertyENS_5listSEEEEC2IS12_EES4_S4_S4_RKT_ called 4 returned 100% blocks executed 78%
+        4:   60:        inline adj_list_edge_iterator(
+        4:   60-block  0
+        -:   61:            VertexIterator b, VertexIterator c, VertexIterator e, const G& g)
+        4:   62:        : vBegin(b), vCurr(c), vEnd(e), m_g(&g)
+        4:   62-block  0
+call    0 returned 4
+    %%%%%:   62-block  1
+call    1 never executed
+        -:   63:        {
+        4:   64:            if (vCurr != vEnd)
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+        4:   64-block  0
+branch  3 taken 2 (fallthrough)
+branch  4 taken 2
+        -:   65:            {
+        2:   66:                while (vCurr != vEnd && out_degree(*vCurr, *m_g) == 0)
+        2:   66-block  0
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+        2:   66-block  1
+branch  3 taken 2 (fallthrough)
+branch  4 taken 0
+        2:   66-block  2
+call    5 returned 2
+branch  6 taken 2 (fallthrough)
+branch  7 taken 0 (throw)
+        2:   66-block  3
+call    8 returned 2
+branch  9 taken 2 (fallthrough)
+branch 10 taken 0 (throw)
+        2:   66-block  4
+branch 11 taken 0 (fallthrough)
+branch 12 taken 2
+    $$$$$:   66-block  5
+        2:   66-block  6
+        2:   66-block  7
+branch 13 taken 0 (fallthrough)
+branch 14 taken 2
+    $$$$$:   66-block  8
+    #####:   67:                    ++vCurr;
+    $$$$$:   67-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        2:   68:                if (vCurr != vEnd)
+        2:   68-block  0
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+        2:   68-block  1
+branch  3 taken 2 (fallthrough)
+branch  4 taken 0
+        2:   69:                    edges = out_edges(*vCurr, *m_g);
+        2:   69-block  0
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+        2:   69-block  1
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+        2:   69-block  2
+call    6 returned 2
+branch  7 taken 2 (fallthrough)
+branch  8 taken 0 (throw)
+        2:   69-block  3
+    %%%%%:   69-block  4
+        -:   70:            }
+        4:   71:        }
+        4:   71-block  0
+        -:   72:
+        -:   73:        /*Note:
+        -:   74:          In the directed graph cases, it is fine.
+        -:   75:          For undirected graphs, one edge go through twice.
+        -:   76:        */
+function _ZN5boost6detail22adj_list_edge_iteratorINS_12range_detail16integer_iteratorImEENS0_13out_edge_iterIN9__gnu_cxx17__normal_iteratorIPNS0_20stored_edge_propertyImNS_8propertyINS_26edge_target_processor_id_tEs11DynamicEdgeEEEESt6vectorISD_SaISD_EEEEmNS0_14edge_desc_implINS_12directed_tagEmEElEENS_14adjacency_listINS_4vecSESO_NS_9directedSENS9_INS_17vertex_in_edges_tENSt7__cxx114listINS0_8parallel14stored_in_edgeISL_EESaISV_EEE11DynamicNodeEESC_NS_11no_propertyENS_5listSEEEEppEv called 200 returned 100% blocks executed 100%
+      200:   77:        inline self& operator++()
+      200:   77-block  0
+        -:   78:        {
+      200:   79:            ++edges BOOST_GRAPH_MEMBER first;
+      200:   79-block  0
+call    0 returned 200
+call    1 returned 200
+      400:   80:            if (edges BOOST_GRAPH_MEMBER first
+call    0 returned 200
+branch  1 taken 199 (fallthrough)
+branch  2 taken 1
+      400:   81:                == edges BOOST_GRAPH_MEMBER second)
+call    0 returned 200
+call    1 returned 200
+        -:   82:            {
+      199:   83:                ++vCurr;
+      199:   83-block  0
+call    0 returned 199
+      200:   84:                while (vCurr != vEnd && out_degree(*vCurr, *m_g) == 0)
+      200:   84-block  0
+call    0 returned 200
+branch  1 taken 199 (fallthrough)
+branch  2 taken 1
+      199:   84-block  1
+call    3 returned 199
+call    4 returned 199
+branch  5 taken 1 (fallthrough)
+branch  6 taken 198
+        1:   84-block  2
+      199:   84-block  3
+      200:   84-block  4
+branch  7 taken 1 (fallthrough)
+branch  8 taken 199
+        1:   85:                    ++vCurr;
+        1:   85-block  0
+call    0 returned 1
+      199:   86:                if (vCurr != vEnd)
+      199:   86-block  0
+call    0 returned 199
+branch  1 taken 198 (fallthrough)
+branch  2 taken 1
+      198:   87:                    edges = out_edges(*vCurr, *m_g);
+      198:   87-block  0
+call    0 returned 198
+call    1 returned 198
+call    2 returned 198
+branch  3 taken 198 (fallthrough)
+branch  4 taken 0 (throw)
+      198:   87-block  1
+        -:   88:            }
+      200:   89:            return *this;
+      200:   89-block  0
+      200:   89-block  1
+        -:   90:        }
+        -:   91:        inline self operator++(int)
+        -:   92:        {
+        -:   93:            self tmp = *this;
+        -:   94:            ++(*this);
+        -:   95:            return tmp;
+        -:   96:        }
+function _ZNK5boost6detail22adj_list_edge_iteratorINS_12range_detail16integer_iteratorImEENS0_13out_edge_iterIN9__gnu_cxx17__normal_iteratorIPNS0_20stored_edge_propertyImNS_8propertyINS_26edge_target_processor_id_tEs11DynamicEdgeEEEESt6vectorISD_SaISD_EEEEmNS0_14edge_desc_implINS_12directed_tagEmEElEENS_14adjacency_listINS_4vecSESO_NS_9directedSENS9_INS_17vertex_in_edges_tENSt7__cxx114listINS0_8parallel14stored_in_edgeISL_EESaISV_EEE11DynamicNodeEESC_NS_11no_propertyENS_5listSEEEEdeEv called 200 returned 100% blocks executed 100%
+      200:   97:        inline value_type operator*() const
+      200:   97-block  0
+        -:   98:        {
+      200:   99:            return *edges BOOST_GRAPH_MEMBER first;
+      200:   99-block  0
+call    0 returned 200
+call    1 returned 200
+        -:  100:        }
+function _ZNK5boost6detail22adj_list_edge_iteratorINS_12range_detail16integer_iteratorImEENS0_13out_edge_iterIN9__gnu_cxx17__normal_iteratorIPNS0_20stored_edge_propertyImNS_8propertyINS_26edge_target_processor_id_tEs11DynamicEdgeEEEESt6vectorISD_SaISD_EEEEmNS0_14edge_desc_implINS_12directed_tagEmEElEENS_14adjacency_listINS_4vecSESO_NS_9directedSENS9_INS_17vertex_in_edges_tENSt7__cxx114listINS0_8parallel14stored_in_edgeISL_EESaISV_EEE11DynamicNodeEESC_NS_11no_propertyENS_5listSEEEEeqERKS13_ called 201 returned 100% blocks executed 67%
+      201:  101:        inline bool operator==(const self& x) const
+      201:  101-block  0
+        -:  102:        {
+      201:  103:            return vCurr == x.vCurr
+      201:  103-block  0
+call    0 returned 201
+      201:  104:                && (vCurr == vEnd
+branch  0 taken 1 (fallthrough)
+branch  1 taken 200
+        1:  104-block  0
+call    2 returned 1
+branch  3 taken 0 (fallthrough)
+branch  4 taken 1
+        1:  104-block  1
+      200:  104-block  2
+    #####:  105:                    || edges BOOST_GRAPH_MEMBER first
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+      201:  106:                        == x.edges BOOST_GRAPH_MEMBER first);
+    $$$$$:  106-block  0
+call    0 never executed
+call    1 never executed
+      201:  106-block  1
+        -:  107:        }
+        -:  108:        inline bool operator!=(const self& x) const
+        -:  109:        {
+        -:  110:            return vCurr != x.vCurr
+        -:  111:                || (vCurr != vEnd
+        -:  112:                    && edges BOOST_GRAPH_MEMBER first
+        -:  113:                        != x.edges BOOST_GRAPH_MEMBER first);
+        -:  114:        }
+        -:  115:
+        -:  116:    protected:
+        -:  117:        VertexIterator vBegin;
+        -:  118:        VertexIterator vCurr;
+        -:  119:        VertexIterator vEnd;
+        -:  120:
+        -:  121:#ifdef BOOST_GRAPH_NO_OPTIONAL
+        -:  122:        std::pair< OutEdgeIterator, OutEdgeIterator > edges;
+        -:  123:#else
+        -:  124:        boost::optional< std::pair< OutEdgeIterator, OutEdgeIterator > > edges;
+        -:  125:#endif // ndef BOOST_GRAPH_NO_OPTIONAL
+        -:  126:        const Graph* m_g;
+        -:  127:    };
+        -:  128:
+        -:  129:} // namespace detail
+        -:  130:
+        -:  131:}
+        -:  132:
+        -:  133:#undef BOOST_GRAPH_MEMBER
+        -:  134:
+        -:  135:#endif // BOOST_GRAPH_DETAIL_ADJ_LIST_EDGE_ITERATOR_HPP

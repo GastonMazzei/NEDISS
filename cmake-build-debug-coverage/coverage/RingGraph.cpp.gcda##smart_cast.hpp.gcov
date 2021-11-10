@@ -1,0 +1,322 @@
+        -:    0:Source:/usr/include/boost/serialization/smart_cast.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_SERIALIZATION_SMART_CAST_HPP
+        -:    2:#define BOOST_SERIALIZATION_SMART_CAST_HPP
+        -:    3:
+        -:    4:// MS compatible compilers support #pragma once
+        -:    5:#if defined(_MSC_VER)
+        -:    6:# pragma once
+        -:    7:#endif
+        -:    8:
+        -:    9://///////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
+        -:   10:// smart_cast.hpp:
+        -:   11:
+        -:   12:// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com .
+        -:   13:// Use, modification and distribution is subject to the Boost Software
+        -:   14:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:   15:// http://www.boost.org/LICENSE_1_0.txt)
+        -:   16:
+        -:   17://  See http://www.boost.org/libs/serialization for updates, documentation, and revision history.
+        -:   18:
+        -:   19:// casting of pointers and references.
+        -:   20:
+        -:   21:// In casting between different C++ classes, there are a number of
+        -:   22:// rules that have to be kept in mind in deciding whether to use
+        -:   23:// static_cast or dynamic_cast.
+        -:   24:
+        -:   25:// a) dynamic casting can only be applied when one of the types is polymorphic
+        -:   26:// Otherwise static_cast must be used.
+        -:   27:// b) only dynamic casting can do runtime error checking
+        -:   28:// use of static_cast is generally un checked even when compiled for debug
+        -:   29:// c) static_cast would be considered faster than dynamic_cast.
+        -:   30:
+        -:   31:// If casting is applied to a template parameter, there is no apriori way
+        -:   32:// to know which of the two casting methods will be permitted or convenient.
+        -:   33:
+        -:   34:// smart_cast uses C++ type_traits, and program debug mode to select the
+        -:   35:// most convenient cast to use.
+        -:   36:
+        -:   37:#include <exception>
+        -:   38:#include <typeinfo>
+        -:   39:#include <cstddef> // NULL
+        -:   40:
+        -:   41:#include <boost/config.hpp>
+        -:   42:#include <boost/static_assert.hpp>
+        -:   43:
+        -:   44:#include <boost/type_traits/is_base_and_derived.hpp>
+        -:   45:#include <boost/type_traits/is_polymorphic.hpp>
+        -:   46:#include <boost/type_traits/is_pointer.hpp>
+        -:   47:#include <boost/type_traits/is_reference.hpp>
+        -:   48:#include <boost/type_traits/is_same.hpp>
+        -:   49:#include <boost/type_traits/remove_pointer.hpp>
+        -:   50:#include <boost/type_traits/remove_reference.hpp>
+        -:   51:
+        -:   52:#include <boost/mpl/eval_if.hpp>
+        -:   53:#include <boost/mpl/if.hpp>
+        -:   54:#include <boost/mpl/or.hpp>
+        -:   55:#include <boost/mpl/and.hpp>
+        -:   56:#include <boost/mpl/not.hpp>
+        -:   57:#include <boost/mpl/identity.hpp>
+        -:   58:
+        -:   59:#include <boost/serialization/throw_exception.hpp>
+        -:   60:
+        -:   61:namespace boost {
+        -:   62:namespace serialization {
+        -:   63:namespace smart_cast_impl {
+        -:   64:
+        -:   65:    template<class T>
+        -:   66:    struct reference {
+        -:   67:
+        -:   68:        struct polymorphic {
+        -:   69:
+        -:   70:            struct linear {
+        -:   71:                template<class U>
+        -:   72:                 static T cast(U & u){
+        -:   73:                    return static_cast< T >(u);
+        -:   74:                }
+        -:   75:            };
+        -:   76:
+        -:   77:            struct cross {
+        -:   78:                 template<class U>
+function _ZN5boost13serialization15smart_cast_impl9referenceIRNS_3mpi15packed_iarchiveEE11polymorphic5cross4castINS_7archive6detail14basic_iarchiveEEES5_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization15smart_cast_impl9referenceIRNS_3mpi15packed_oarchiveEE11polymorphic5cross4castINS_7archive6detail14basic_oarchiveEEES5_RT_ called 0 returned 0% blocks executed 0%
+    #####:   79:                static T cast(U & u){
+    $$$$$:   79-block  0
+    $$$$$:   79-block  1
+    #####:   80:                    return dynamic_cast< T >(u);
+    $$$$$:   80-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   80-block  1
+    $$$$$:   80-block  2
+call    2 never executed
+    $$$$$:   80-block  3
+    $$$$$:   80-block  4
+branch  3 never executed
+branch  4 never executed
+    $$$$$:   80-block  5
+    $$$$$:   80-block  6
+call    5 never executed
+    $$$$$:   80-block  7
+        -:   81:                }
+        -:   82:            };
+        -:   83:
+        -:   84:            template<class U>
+function _ZN5boost13serialization15smart_cast_impl9referenceIRNS_3mpi15packed_iarchiveEE11polymorphic4castINS_7archive6detail14basic_iarchiveEEES5_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization15smart_cast_impl9referenceIRNS_3mpi15packed_oarchiveEE11polymorphic4castINS_7archive6detail14basic_oarchiveEEES5_RT_ called 0 returned 0% blocks executed 0%
+    #####:   85:            static T cast(U & u){
+    $$$$$:   85-block  0
+    $$$$$:   85-block  1
+        -:   86:                // if we're in debug mode
+        -:   87:                #if ! defined(NDEBUG)                               \
+        -:   88:                || defined(__MWERKS__)
+        -:   89:                    // do a checked dynamic cast
+    #####:   90:                    return cross::cast(u);
+    $$$$$:   90-block  0
+call    0 never executed
+    $$$$$:   90-block  1
+call    1 never executed
+        -:   91:                #else
+        -:   92:                    // borland 5.51 chokes here so we can't use it
+        -:   93:                    // note: if remove_reference isn't function for these types
+        -:   94:                    // cross casting will be selected this will work but will
+        -:   95:                    // not be the most efficient method. This will conflict with
+        -:   96:                    // the original smart_cast motivation.
+        -:   97:                    typedef typename mpl::eval_if<
+        -:   98:                            typename mpl::and_<
+        -:   99:                                mpl::not_<is_base_and_derived<
+        -:  100:                                    typename remove_reference< T >::type,
+        -:  101:                                    U
+        -:  102:                                > >,
+        -:  103:                                mpl::not_<is_base_and_derived<
+        -:  104:                                    U,
+        -:  105:                                    typename remove_reference< T >::type
+        -:  106:                                > >
+        -:  107:                            >,
+        -:  108:                            // borland chokes w/o full qualification here
+        -:  109:                            mpl::identity<cross>,
+        -:  110:                            mpl::identity<linear>
+        -:  111:                    >::type typex;
+        -:  112:                    // typex works around gcc 2.95 issue
+        -:  113:                    return typex::cast(u);
+        -:  114:                #endif
+        -:  115:            }
+        -:  116:        };
+        -:  117:
+        -:  118:        struct non_polymorphic {
+        -:  119:            template<class U>
+        -:  120:             static T cast(U & u){
+        -:  121:                return static_cast< T >(u);
+        -:  122:            }
+        -:  123:        };
+        -:  124:        template<class U>
+function _ZN5boost13serialization15smart_cast_impl9referenceIRNS_3mpi15packed_iarchiveEE4castINS_7archive6detail14basic_iarchiveEEES5_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization15smart_cast_impl9referenceIRNS_3mpi15packed_oarchiveEE4castINS_7archive6detail14basic_oarchiveEEES5_RT_ called 0 returned 0% blocks executed 0%
+    #####:  125:        static T cast(U & u){
+    $$$$$:  125-block  0
+    $$$$$:  125-block  1
+        -:  126:            typedef typename mpl::eval_if<
+        -:  127:                boost::is_polymorphic<U>,
+        -:  128:                mpl::identity<polymorphic>,
+        -:  129:                mpl::identity<non_polymorphic>
+        -:  130:            >::type typex;
+    #####:  131:            return typex::cast(u);
+    $$$$$:  131-block  0
+call    0 never executed
+    $$$$$:  131-block  1
+call    1 never executed
+        -:  132:        }
+        -:  133:    };
+        -:  134:
+        -:  135:    template<class T>
+        -:  136:    struct pointer {
+        -:  137:
+        -:  138:        struct polymorphic {
+        -:  139:            // unfortunately, this below fails to work for virtual base
+        -:  140:            // classes.  need has_virtual_base to do this.
+        -:  141:            // Subject for further study
+        -:  142:            #if 0
+        -:  143:            struct linear {
+        -:  144:                template<class U>
+        -:  145:                 static T cast(U * u){
+        -:  146:                    return static_cast< T >(u);
+        -:  147:                }
+        -:  148:            };
+        -:  149:
+        -:  150:            struct cross {
+        -:  151:                template<class U>
+        -:  152:                static T cast(U * u){
+        -:  153:                    T tmp = dynamic_cast< T >(u);
+        -:  154:                    #ifndef NDEBUG
+        -:  155:                        if ( tmp == 0 ) throw_exception(std::bad_cast());
+        -:  156:                    #endif
+        -:  157:                    return tmp;
+        -:  158:                }
+        -:  159:            };
+        -:  160:
+        -:  161:            template<class U>
+        -:  162:            static T cast(U * u){
+        -:  163:                typedef
+        -:  164:                    typename mpl::eval_if<
+        -:  165:                        typename mpl::and_<
+        -:  166:                            mpl::not_<is_base_and_derived<
+        -:  167:                                typename remove_pointer< T >::type,
+        -:  168:                                U
+        -:  169:                            > >,
+        -:  170:                            mpl::not_<is_base_and_derived<
+        -:  171:                                U,
+        -:  172:                                typename remove_pointer< T >::type
+        -:  173:                            > >
+        -:  174:                        >,
+        -:  175:                        // borland chokes w/o full qualification here
+        -:  176:                        mpl::identity<cross>,
+        -:  177:                        mpl::identity<linear>
+        -:  178:                    >::type typex;
+        -:  179:                return typex::cast(u);
+        -:  180:            }
+        -:  181:            #else
+        -:  182:            template<class U>
+        -:  183:            static T cast(U * u){
+        -:  184:                T tmp = dynamic_cast< T >(u);
+        -:  185:                #ifndef NDEBUG
+        -:  186:                    if ( tmp == 0 ) throw_exception(std::bad_cast());
+        -:  187:                #endif
+        -:  188:                return tmp;
+        -:  189:            }
+        -:  190:            #endif
+        -:  191:        };
+        -:  192:
+        -:  193:        struct non_polymorphic {
+        -:  194:            template<class U>
+        -:  195:             static T cast(U * u){
+        -:  196:                return static_cast< T >(u);
+        -:  197:            }
+        -:  198:        };
+        -:  199:
+        -:  200:        template<class U>
+        -:  201:        static T cast(U * u){
+        -:  202:            typedef typename mpl::eval_if<
+        -:  203:                boost::is_polymorphic<U>,
+        -:  204:                mpl::identity<polymorphic>,
+        -:  205:                mpl::identity<non_polymorphic>
+        -:  206:            >::type typex;
+        -:  207:            return typex::cast(u);
+        -:  208:        }
+        -:  209:
+        -:  210:    };
+        -:  211:
+        -:  212:    template<class TPtr>
+        -:  213:    struct void_pointer {
+        -:  214:        template<class UPtr>
+        -:  215:        static TPtr cast(UPtr uptr){
+        -:  216:            return static_cast<TPtr>(uptr);
+        -:  217:        }
+        -:  218:    };
+        -:  219:
+        -:  220:    template<class T>
+        -:  221:    struct error {
+        -:  222:        // if we get here, its because we are using one argument in the
+        -:  223:        // cast on a system which doesn't support partial template
+        -:  224:        // specialization
+        -:  225:        template<class U>
+        -:  226:        static T cast(U){
+        -:  227:            BOOST_STATIC_ASSERT(sizeof(T)==0);
+        -:  228:            return * static_cast<T *>(NULL);
+        -:  229:        }
+        -:  230:    };
+        -:  231:
+        -:  232:} // smart_cast_impl
+        -:  233:
+        -:  234:// this implements:
+        -:  235:// smart_cast<Target *, Source *>(Source * s)
+        -:  236:// smart_cast<Target &, Source &>(s)
+        -:  237:// note that it will fail with
+        -:  238:// smart_cast<Target &>(s)
+        -:  239:template<class T, class U>
+        -:  240:T smart_cast(U u) {
+        -:  241:    typedef
+        -:  242:        typename mpl::eval_if<
+        -:  243:            typename mpl::or_<
+        -:  244:                boost::is_same<void *, U>,
+        -:  245:                boost::is_same<void *, T>,
+        -:  246:                boost::is_same<const void *, U>,
+        -:  247:                boost::is_same<const void *, T>
+        -:  248:            >,
+        -:  249:            mpl::identity<smart_cast_impl::void_pointer< T > >,
+        -:  250:        // else
+        -:  251:        typename mpl::eval_if<boost::is_pointer<U>,
+        -:  252:            mpl::identity<smart_cast_impl::pointer< T > >,
+        -:  253:        // else
+        -:  254:        typename mpl::eval_if<boost::is_reference<U>,
+        -:  255:            mpl::identity<smart_cast_impl::reference< T > >,
+        -:  256:        // else
+        -:  257:            mpl::identity<smart_cast_impl::error< T >
+        -:  258:        >
+        -:  259:        >
+        -:  260:        >
+        -:  261:        >::type typex;
+        -:  262:    return typex::cast(u);
+        -:  263:}
+        -:  264:
+        -:  265:// this implements:
+        -:  266:// smart_cast_reference<Target &>(Source & s)
+        -:  267:template<class T, class U>
+function _ZN5boost13serialization20smart_cast_referenceIRNS_3mpi15packed_iarchiveENS_7archive6detail14basic_iarchiveEEET_RT0_ called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization20smart_cast_referenceIRNS_3mpi15packed_oarchiveENS_7archive6detail14basic_oarchiveEEET_RT0_ called 0 returned 0% blocks executed 0%
+    #####:  268:T smart_cast_reference(U & u) {
+    $$$$$:  268-block  0
+    $$$$$:  268-block  1
+    #####:  269:    return smart_cast_impl::reference< T >::cast(u);
+    $$$$$:  269-block  0
+call    0 never executed
+    $$$$$:  269-block  1
+call    1 never executed
+        -:  270:}
+        -:  271:
+        -:  272:} // namespace serialization
+        -:  273:} // namespace boost
+        -:  274:
+        -:  275:#endif // BOOST_SERIALIZATION_SMART_CAST_HPP

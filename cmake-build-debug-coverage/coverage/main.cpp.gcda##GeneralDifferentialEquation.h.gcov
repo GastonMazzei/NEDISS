@@ -1,0 +1,86 @@
+        -:    0:Source:/home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2:// Created by m4zz31 on 2/11/21.
+        -:    3://
+        -:    4:
+        -:    5:#ifndef CPPPROJCT_GENERALDIFFERENTIALEQUATION_H
+        -:    6:#define CPPPROJCT_GENERALDIFFERENTIALEQUATION_H
+        -:    7:
+        -:    8:#include <functional>
+        -:    9:#include <vector>
+        -:   10:#include "../Utils/differential_equations_aux.h"
+        -:   11:
+        -:   12:// Typedef to make things easier in other files
+        -:   13://#ifndef SCALAR_FLOW_TYPE
+        -:   14://#define SCALAR_FLOW_TYPE
+        -:   15://typedef std::function<double(double, double, std::vector<double>, std::vector<double>, std::vector<double>)> ScalarFlow;
+        -:   16://#endif
+        -:   17:
+        -:   18:
+function _ZN9FlowSpecsD2Ev called 2 returned 100% blocks executed 100%
+        4:   19:struct FlowSpecs{
+        2:   19-block  0
+        2:   19-block  1
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+call    3 returned 2
+        -:   20:    std::vector<double> T1;
+        -:   21:    std::vector<double> T2;
+        -:   22:    std::vector<double> T3;
+        -:   23:    std::vector<double> T4;
+        -:   24:    int N, j1, j2, j3, j4;
+        -:   25:    double result;
+function _ZN9FlowSpecsC2Ev called 2 returned 100% blocks executed 100%
+        4:   26:    FlowSpecs(){};
+        2:   26-block  0
+        2:   26-block  1
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+call    3 returned 2
+        -:   27:    FlowSpecs(std::vector<double> T1,
+        -:   28:              std::vector<double> T2,
+        -:   29:              std::vector<double> T3,
+        -:   30:              std::vector<double> T4,
+        -:   31:              int N): T1(std::move(T1)), T2(std::move(T2)), T3(std::move(T3)), T4(std::move(T4)), N(N){};
+        -:   32:};
+        -:   33:
+        -:   34:// SEE THE .CPP FOR A DISCUSSION ON IMPLEMENTING PERTURBATION FACTORIES ;_)
+        -:   35:// or not.. ^.^ we are currently implementing each Diff Eq rather explicitly :p
+        -:   36:
+        -:   37:
+        -:   38:// The purpose of this class is to potentially support dumb-typing
+        -:   39:// PDEs and SDEs and convert them through a general function "BuildForSolver" :-)
+function _ZN27GeneralDifferentialEquationD2Ev called 2 returned 100% blocks executed 100%
+        4:   40:class GeneralDifferentialEquation {
+        2:   40-block  0
+        2:   40-block  1
+call    0 returned 2
+        -:   41:public:
+        -:   42:    int type; // 0 is ODE, 1 is PDE, 2 could be SDE :-)
+        -:   43:    bool RequiresBuilding = false; // true  if it requires building :-)
+        -:   44:    FlowSpecs Specs;
+function _ZN27GeneralDifferentialEquationC2Ei called 2 returned 100% blocks executed 100%
+        4:   45:    GeneralDifferentialEquation(int type): type(type) {};
+        2:   45-block  0
+        2:   45-block  1
+call    0 returned 2
+        -:   46:
+        -:   47:    void UpdateFlowSpecs(std::vector<double> &T1,
+        -:   48:                                 std::vector<double> &T2,
+        -:   49:                                 std::vector<double> &T3,
+        -:   50:                                 std::vector<double> &T4,
+        -:   51:                                 int &N);
+        -:   52:    void Reset(); // reset result to 0
+        -:   53:    void BuildForSolver();
+        -:   54:};
+        -:   55:
+        -:   56:
+        -:   57:
+        -:   58:#endif //CPPPROJCT_GENERALDIFFERENTIALEQUATION_H
+        -:   59:

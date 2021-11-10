@@ -1,0 +1,271 @@
+        -:    0:Source:/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/ompi/mpi/cxx/request.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// -*- c++ -*-
+        -:    2://
+        -:    3:// Copyright (c) 2004-2005 The Trustees of Indiana University and Indiana
+        -:    4://                         University Research and Technology
+        -:    5://                         Corporation.  All rights reserved.
+        -:    6:// Copyright (c) 2004-2005 The University of Tennessee and The University
+        -:    7://                         of Tennessee Research Foundation.  All rights
+        -:    8://                         reserved.
+        -:    9:// Copyright (c) 2004-2005 High Performance Computing Center Stuttgart,
+        -:   10://                         University of Stuttgart.  All rights reserved.
+        -:   11:// Copyright (c) 2004-2005 The Regents of the University of California.
+        -:   12://                         All rights reserved.
+        -:   13:// Copyright (c) 2006-2008 Cisco Systems, Inc.  All rights reserved.
+        -:   14:// $COPYRIGHT$
+        -:   15://
+        -:   16:// Additional copyrights may follow
+        -:   17://
+        -:   18:// $HEADER$
+        -:   19://
+        -:   20:
+        -:   21:
+        -:   22:class Request {
+        -:   23:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:   24:  //    friend class PMPI::Request;
+        -:   25:#endif
+        -:   26:public:
+        -:   27:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:   28:
+        -:   29:  // construction
+        -:   30:  Request() { }
+        -:   31:  Request(MPI_Request i) : pmpi_request(i) { }
+        -:   32:
+        -:   33:  // copy / assignment
+        -:   34:  Request(const Request& r) : pmpi_request(r.pmpi_request) { }
+        -:   35:
+        -:   36:  Request(const PMPI::Request& r) : pmpi_request(r) { }
+        -:   37:
+        -:   38:  virtual ~Request() {}
+        -:   39:
+        -:   40:  Request& operator=(const Request& r) {
+        -:   41:    pmpi_request = r.pmpi_request; return *this; }
+        -:   42:
+        -:   43:  // comparison
+        -:   44:  bool operator== (const Request &a)
+        -:   45:  { return (bool)(pmpi_request == a.pmpi_request); }
+        -:   46:  bool operator!= (const Request &a)
+        -:   47:  { return (bool)!(*this == a); }
+        -:   48:
+        -:   49:  // inter-language operability
+        -:   50:  Request& operator= (const MPI_Request &i) {
+        -:   51:    pmpi_request = i; return *this;  }
+        -:   52:
+        -:   53:  operator MPI_Request () const { return pmpi_request; }
+        -:   54:  //  operator MPI_Request* () const { return pmpi_request; }
+        -:   55:  operator const PMPI::Request&() const { return pmpi_request; }
+        -:   56:
+        -:   57:#else
+        -:   58:
+        -:   59:  // construction / destruction
+        -:   60:  Request() : mpi_request(MPI_REQUEST_NULL) { }
+function _ZN3MPI7RequestD0Ev called 0 returned 0% blocks executed 0%
+function _ZN3MPI7RequestD2Ev called 0 returned 0% blocks executed 0%
+    #####:   61:  virtual ~Request() {}
+    $$$$$:   61-block  0
+    $$$$$:   61-block  1
+call    0 never executed
+call    1 never executed
+    $$$$$:   61-block  2
+function _ZN3MPI7RequestC2EP14ompi_request_t called 0 returned 0% blocks executed 0%
+    #####:   62:  Request(MPI_Request i) : mpi_request(i) { }
+    $$$$$:   62-block  0
+        -:   63:
+        -:   64:  // copy / assignment
+        -:   65:  Request(const Request& r) : mpi_request(r.mpi_request) { }
+        -:   66:
+        -:   67:  Request& operator=(const Request& r) {
+        -:   68:    mpi_request = r.mpi_request; return *this; }
+        -:   69:
+        -:   70:  // comparison
+        -:   71:  bool operator== (const Request &a)
+        -:   72:  { return (bool)(mpi_request == a.mpi_request); }
+        -:   73:  bool operator!= (const Request &a)
+        -:   74:  { return (bool)!(*this == a); }
+        -:   75:
+        -:   76:  // inter-language operability
+        -:   77:  Request& operator= (const MPI_Request &i) {
+        -:   78:    mpi_request = i; return *this; }
+        -:   79:  operator MPI_Request () const { return mpi_request; }
+        -:   80:  //  operator MPI_Request* () const { return (MPI_Request*)&mpi_request; }
+        -:   81:
+        -:   82:#endif
+        -:   83:
+        -:   84:  //
+        -:   85:  // Point-to-Point Communication
+        -:   86:  //
+        -:   87:
+        -:   88:  virtual void Wait(Status &status);
+        -:   89:
+        -:   90:  virtual void Wait();
+        -:   91:
+        -:   92:  virtual bool Test(Status &status);
+        -:   93:
+        -:   94:  virtual bool Test();
+        -:   95:
+        -:   96:  virtual void Free(void);
+        -:   97:
+        -:   98:  static int Waitany(int count, Request array[], Status& status);
+        -:   99:
+        -:  100:  static int Waitany(int count, Request array[]);
+        -:  101:
+        -:  102:  static bool Testany(int count, Request array[], int& index, Status& status);
+        -:  103:
+        -:  104:  static bool Testany(int count, Request array[], int& index);
+        -:  105:
+        -:  106:  static void Waitall(int count, Request req_array[], Status stat_array[]);
+        -:  107:
+        -:  108:  static void Waitall(int count, Request req_array[]);
+        -:  109:
+        -:  110:  static bool Testall(int count, Request req_array[], Status stat_array[]);
+        -:  111:
+        -:  112:  static bool Testall(int count, Request req_array[]);
+        -:  113:
+        -:  114:  static int Waitsome(int incount, Request req_array[],
+        -:  115:			     int array_of_indices[], Status stat_array[]) ;
+        -:  116:
+        -:  117:  static int Waitsome(int incount, Request req_array[],
+        -:  118:			     int array_of_indices[]);
+        -:  119:
+        -:  120:  static int Testsome(int incount, Request req_array[],
+        -:  121:			     int array_of_indices[], Status stat_array[]);
+        -:  122:
+        -:  123:  static int Testsome(int incount, Request req_array[],
+        -:  124:			     int array_of_indices[]);
+        -:  125:
+        -:  126:  virtual void Cancel(void) const;
+        -:  127:
+        -:  128:  virtual bool Get_status(Status& status) const;
+        -:  129:
+        -:  130:  virtual bool Get_status() const;
+        -:  131:
+        -:  132:protected:
+        -:  133:#if ! 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:  134:  MPI_Request mpi_request;
+        -:  135:#endif
+        -:  136:
+        -:  137:private:
+        -:  138:
+        -:  139:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:  140:  PMPI::Request pmpi_request;
+        -:  141:#endif
+        -:  142:
+        -:  143:};
+        -:  144:
+        -:  145:
+        -:  146:class Prequest : public Request {
+        -:  147:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:  148:  //  friend class PMPI::Prequest;
+        -:  149:#endif
+        -:  150:public:
+        -:  151:
+        -:  152:  Prequest() { }
+        -:  153:
+        -:  154:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:  155:  Prequest(const Request& p) : Request(p), pmpi_request(p) { }
+        -:  156:
+        -:  157:  Prequest(const PMPI::Prequest& r) :
+        -:  158:    Request((const PMPI::Request&)r),
+        -:  159:    pmpi_request(r) { }
+        -:  160:
+        -:  161:  Prequest(const MPI_Request &i) : Request(i), pmpi_request(i) { }
+        -:  162:
+        -:  163:  virtual ~Prequest() { }
+        -:  164:
+        -:  165:  Prequest& operator=(const Request& r) {
+        -:  166:    Request::operator=(r);
+        -:  167:    pmpi_request = (PMPI::Prequest)r; return *this; }
+        -:  168:
+        -:  169:  Prequest& operator=(const Prequest& r) {
+        -:  170:    Request::operator=(r);
+        -:  171:    pmpi_request = r.pmpi_request; return *this; }
+        -:  172:#else
+        -:  173:  Prequest(const Request& p) : Request(p) { }
+        -:  174:
+function _ZN3MPI8PrequestC2ERKP14ompi_request_t called 0 returned 0% blocks executed 0%
+    #####:  175:  Prequest(const MPI_Request &i) : Request(i) { }
+    $$$$$:  175-block  0
+    $$$$$:  175-block  1
+call    0 never executed
+        -:  176:
+function _ZN3MPI8PrequestD0Ev called 0 returned 0% blocks executed 0%
+function _ZN3MPI8PrequestD2Ev called 0 returned 0% blocks executed 0%
+    #####:  177:  virtual ~Prequest() { }
+    $$$$$:  177-block  0
+    $$$$$:  177-block  1
+call    0 never executed
+call    1 never executed
+    $$$$$:  177-block  2
+    $$$$$:  177-block  3
+call    2 never executed
+        -:  178:
+        -:  179:  Prequest& operator=(const Request& r) {
+        -:  180:    mpi_request = r; return *this; }
+        -:  181:
+        -:  182:  Prequest& operator=(const Prequest& r) {
+        -:  183:    mpi_request = r.mpi_request; return *this; }
+        -:  184:#endif
+        -:  185:
+        -:  186:  virtual void Start();
+        -:  187:
+        -:  188:  static void Startall(int count, Prequest array_of_requests[]);
+        -:  189:
+        -:  190:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:  191:private:
+        -:  192:  PMPI::Prequest pmpi_request;
+        -:  193:#endif
+        -:  194:};
+        -:  195:
+        -:  196:
+        -:  197://
+        -:  198:// Generalized requests
+        -:  199://
+        -:  200:class Grequest : public MPI::Request {
+        -:  201:  public:
+        -:  202:    typedef int Query_function(void *, Status&);
+        -:  203:    typedef int Free_function(void *);
+        -:  204:    typedef int Cancel_function(void *, bool);
+        -:  205:
+        -:  206:    Grequest() {}
+        -:  207:    Grequest(const Request& req) : Request(req) {}
+        -:  208:    Grequest(const MPI_Request &req) : Request(req) {}
+function _ZN3MPI8GrequestD0Ev called 0 returned 0% blocks executed 0%
+function _ZN3MPI8GrequestD2Ev called 0 returned 0% blocks executed 0%
+    #####:  209:    virtual ~Grequest() {}
+    $$$$$:  209-block  0
+    $$$$$:  209-block  1
+call    0 never executed
+call    1 never executed
+    $$$$$:  209-block  2
+    $$$$$:  209-block  3
+call    2 never executed
+        -:  210:
+        -:  211:    Grequest& operator=(const Request& req) {
+        -:  212:	mpi_request = req; return(*this);
+        -:  213:    }
+        -:  214:
+        -:  215:    Grequest& operator=(const Grequest& req) {
+        -:  216:	mpi_request = req.mpi_request; return(*this);
+        -:  217:    }
+        -:  218:
+        -:  219:    static Grequest Start(Query_function *, Free_function *,
+        -:  220:	    Cancel_function *, void *);
+        -:  221:
+        -:  222:    virtual void Complete();
+        -:  223:
+        -:  224:    //
+        -:  225:    // Type used for intercepting Generalized requests in the C++ layer so
+        -:  226:    // that the type can be converted to C++ types before invoking the
+        -:  227:    // user-specified C++ callbacks.
+        -:  228:    //
+        -:  229:    struct Intercept_data_t {
+        -:  230:        void *id_extra;
+        -:  231:        Grequest::Query_function *id_cxx_query_fn;
+        -:  232:        Grequest::Free_function *id_cxx_free_fn;
+        -:  233:        Grequest::Cancel_function *id_cxx_cancel_fn;
+        -:  234:    };
+        -:  235:};

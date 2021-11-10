@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = 
 
-CXX_FLAGS =  -I/usr/lib/eigen -g -fopenmp -std=gnu++1z
+CXX_FLAGS =  -I/usr/lib/eigen -O1 -g -fopenmp -std=gnu++1z
 

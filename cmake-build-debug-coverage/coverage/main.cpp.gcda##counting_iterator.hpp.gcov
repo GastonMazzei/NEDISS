@@ -1,0 +1,252 @@
+        -:    0:Source:/usr/include/boost/iterator/counting_iterator.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Copyright David Abrahams 2003.
+        -:    2:// Distributed under the Boost Software License, Version 1.0. (See
+        -:    3:// accompanying file LICENSE_1_0.txt or copy at
+        -:    4:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    5:#ifndef COUNTING_ITERATOR_DWA200348_HPP
+        -:    6:# define COUNTING_ITERATOR_DWA200348_HPP
+        -:    7:
+        -:    8:# include <boost/iterator/iterator_adaptor.hpp>
+        -:    9:# include <boost/detail/numeric_traits.hpp>
+        -:   10:# include <boost/mpl/bool.hpp>
+        -:   11:# include <boost/mpl/if.hpp>
+        -:   12:# include <boost/mpl/identity.hpp>
+        -:   13:# include <boost/mpl/eval_if.hpp>
+        -:   14:
+        -:   15:namespace boost {
+        -:   16:namespace iterators {
+        -:   17:
+        -:   18:template <
+        -:   19:    class Incrementable
+        -:   20:  , class CategoryOrTraversal
+        -:   21:  , class Difference
+        -:   22:>
+        -:   23:class counting_iterator;
+        -:   24:
+        -:   25:namespace detail
+        -:   26:{
+        -:   27:  // Try to detect numeric types at compile time in ways compatible
+        -:   28:  // with the limitations of the compiler and library.
+        -:   29:  template <class T>
+        -:   30:  struct is_numeric_impl
+        -:   31:  {
+        -:   32:      // For a while, this wasn't true, but we rely on it below. This is a regression assert.
+        -:   33:      BOOST_STATIC_ASSERT(::boost::is_integral<char>::value);
+        -:   34:
+        -:   35:# ifndef BOOST_NO_LIMITS_COMPILE_TIME_CONSTANTS
+        -:   36:
+        -:   37:      BOOST_STATIC_CONSTANT(bool, value = std::numeric_limits<T>::is_specialized);
+        -:   38:
+        -:   39:# else
+        -:   40:
+        -:   41:#  if !BOOST_WORKAROUND(BOOST_BORLANDC, BOOST_TESTED_AT(0x551))
+        -:   42:      BOOST_STATIC_CONSTANT(
+        -:   43:          bool, value = (
+        -:   44:              boost::is_convertible<int,T>::value
+        -:   45:           && boost::is_convertible<T,int>::value
+        -:   46:      ));
+        -:   47:#  else
+        -:   48:    BOOST_STATIC_CONSTANT(bool, value = ::boost::is_arithmetic<T>::value);
+        -:   49:#  endif
+        -:   50:
+        -:   51:# endif
+        -:   52:  };
+        -:   53:
+        -:   54:  template <class T>
+        -:   55:  struct is_numeric
+        -:   56:    : mpl::bool_<(::boost::iterators::detail::is_numeric_impl<T>::value)>
+        -:   57:  {};
+        -:   58:
+        -:   59:#  if defined(BOOST_HAS_LONG_LONG)
+        -:   60:  template <>
+        -:   61:  struct is_numeric< ::boost::long_long_type>
+        -:   62:    : mpl::true_ {};
+        -:   63:
+        -:   64:  template <>
+        -:   65:  struct is_numeric< ::boost::ulong_long_type>
+        -:   66:    : mpl::true_ {};
+        -:   67:#  endif
+        -:   68:
+        -:   69:  // Some compilers fail to have a numeric_limits specialization
+        -:   70:  template <>
+        -:   71:  struct is_numeric<wchar_t>
+        -:   72:    : mpl::true_ {};
+        -:   73:
+        -:   74:  template <class T>
+        -:   75:  struct numeric_difference
+        -:   76:  {
+        -:   77:      typedef typename boost::detail::numeric_traits<T>::difference_type type;
+        -:   78:  };
+        -:   79:
+        -:   80:  BOOST_STATIC_ASSERT(is_numeric<int>::value);
+        -:   81:
+        -:   82:  template <class Incrementable, class CategoryOrTraversal, class Difference>
+        -:   83:  struct counting_iterator_base
+        -:   84:  {
+        -:   85:      typedef typename detail::ia_dflt_help<
+        -:   86:          CategoryOrTraversal
+        -:   87:        , mpl::eval_if<
+        -:   88:              is_numeric<Incrementable>
+        -:   89:            , mpl::identity<random_access_traversal_tag>
+        -:   90:            , iterator_traversal<Incrementable>
+        -:   91:          >
+        -:   92:      >::type traversal;
+        -:   93:
+        -:   94:      typedef typename detail::ia_dflt_help<
+        -:   95:          Difference
+        -:   96:        , mpl::eval_if<
+        -:   97:              is_numeric<Incrementable>
+        -:   98:            , numeric_difference<Incrementable>
+        -:   99:            , iterator_difference<Incrementable>
+        -:  100:          >
+        -:  101:      >::type difference;
+        -:  102:
+        -:  103:      typedef iterator_adaptor<
+        -:  104:          counting_iterator<Incrementable, CategoryOrTraversal, Difference> // self
+        -:  105:        , Incrementable                                           // Base
+        -:  106:        , Incrementable                                           // Value
+        -:  107:# ifndef BOOST_ITERATOR_REF_CONSTNESS_KILLS_WRITABILITY
+        -:  108:          const  // MSVC won't strip this.  Instead we enable Thomas'
+        -:  109:                 // criterion (see boost/iterator/detail/facade_iterator_category.hpp)
+        -:  110:# endif
+        -:  111:        , traversal
+        -:  112:        , Incrementable const&                                    // reference
+        -:  113:        , difference
+        -:  114:      > type;
+        -:  115:  };
+        -:  116:
+        -:  117:  // Template class distance_policy_select -- choose a policy for computing the
+        -:  118:  // distance between counting_iterators at compile-time based on whether or not
+        -:  119:  // the iterator wraps an integer or an iterator, using "poor man's partial
+        -:  120:  // specialization".
+        -:  121:
+        -:  122:  template <bool is_integer> struct distance_policy_select;
+        -:  123:
+        -:  124:  // A policy for wrapped iterators
+        -:  125:  template <class Difference, class Incrementable1, class Incrementable2>
+        -:  126:  struct iterator_distance
+        -:  127:  {
+        -:  128:      static Difference distance(Incrementable1 x, Incrementable2 y)
+        -:  129:      {
+        -:  130:          return y - x;
+        -:  131:      }
+        -:  132:  };
+        -:  133:
+        -:  134:  // A policy for wrapped numbers
+        -:  135:  template <class Difference, class Incrementable1, class Incrementable2>
+        -:  136:  struct number_distance
+        -:  137:  {
+function _ZN5boost9iterators6detail15number_distanceIlmmE8distanceEmm called 2 returned 100% blocks executed 100%
+        2:  138:      static Difference distance(Incrementable1 x, Incrementable2 y)
+        2:  138-block  0
+        -:  139:      {
+        2:  140:          return boost::detail::numeric_distance(x, y);
+        2:  140-block  0
+call    0 returned 2
+        -:  141:      }
+        -:  142:  };
+        -:  143:}
+        -:  144:
+        -:  145:template <
+        -:  146:    class Incrementable
+        -:  147:  , class CategoryOrTraversal = use_default
+        -:  148:  , class Difference = use_default
+        -:  149:>
+        -:  150:class counting_iterator
+        -:  151:  : public detail::counting_iterator_base<
+        -:  152:        Incrementable, CategoryOrTraversal, Difference
+        -:  153:    >::type
+        -:  154:{
+        -:  155:    typedef typename detail::counting_iterator_base<
+        -:  156:        Incrementable, CategoryOrTraversal, Difference
+        -:  157:    >::type super_t;
+        -:  158:
+        -:  159:    friend class iterator_core_access;
+        -:  160:
+        -:  161: public:
+        -:  162:    typedef typename super_t::difference_type difference_type;
+        -:  163:
+        -:  164:    counting_iterator() { }
+        -:  165:
+function _ZN5boost9iterators17counting_iteratorImNS_11use_defaultES2_EC2ERKS3_ called 26 returned 100% blocks executed 100%
+       52:  166:    counting_iterator(counting_iterator const& rhs) : super_t(rhs.base()) {}
+       26:  166-block  0
+       26:  166-block  1
+call    0 returned 26
+call    1 returned 26
+        -:  167:
+function _ZN5boost9iterators17counting_iteratorImNS_11use_defaultES2_EC2Em called 2 returned 100% blocks executed 100%
+        2:  168:    counting_iterator(Incrementable x)
+        2:  168-block  0
+        2:  169:      : super_t(x)
+        2:  169-block  0
+call    0 returned 2
+        -:  170:    {
+        2:  171:    }
+        -:  172:
+        -:  173:# if 0
+        -:  174:    template<class OtherIncrementable>
+        -:  175:    counting_iterator(
+        -:  176:        counting_iterator<OtherIncrementable, CategoryOrTraversal, Difference> const& t
+        -:  177:      , typename enable_if_convertible<OtherIncrementable, Incrementable>::type* = 0
+        -:  178:    )
+        -:  179:      : super_t(t.base())
+        -:  180:    {}
+        -:  181:# endif
+        -:  182:
+        -:  183: private:
+        -:  184:
+function _ZNK5boost9iterators17counting_iteratorImNS_11use_defaultES2_E11dereferenceEv called 1 returned 100% blocks executed 100%
+        1:  185:    typename super_t::reference dereference() const
+        1:  185-block  0
+        -:  186:    {
+        1:  187:        return this->base_reference();
+        1:  187-block  0
+call    0 returned 1
+        -:  188:    }
+        -:  189:
+        -:  190:    template <class OtherIncrementable>
+        -:  191:    difference_type
+function _ZNK5boost9iterators17counting_iteratorImNS_11use_defaultES2_E11distance_toImEElRKNS1_IT_S2_S2_EE called 2 returned 100% blocks executed 100%
+        2:  192:    distance_to(counting_iterator<OtherIncrementable, CategoryOrTraversal, Difference> const& y) const
+        2:  192-block  0
+        -:  193:    {
+        -:  194:      typedef typename mpl::if_<
+        -:  195:          detail::is_numeric<Incrementable>
+        -:  196:        , detail::number_distance<difference_type, Incrementable, OtherIncrementable>
+        -:  197:        , detail::iterator_distance<difference_type, Incrementable, OtherIncrementable>
+        -:  198:      >::type d;
+        -:  199:
+        2:  200:      return d::distance(this->base(), y.base());
+        2:  200-block  0
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+        -:  201:    }
+        -:  202:};
+        -:  203:
+        -:  204:// Manufacture a counting iterator for an arbitrary incrementable type
+        -:  205:template <class Incrementable>
+        -:  206:inline counting_iterator<Incrementable>
+function _ZN5boost9iterators22make_counting_iteratorImEENS0_17counting_iteratorIT_NS_11use_defaultES4_EES3_ called 2 returned 100% blocks executed 100%
+        2:  207:make_counting_iterator(Incrementable x)
+        2:  207-block  0
+        -:  208:{
+        -:  209:  typedef counting_iterator<Incrementable> result_t;
+        2:  210:  return result_t(x);
+        2:  210-block  0
+call    0 returned 2
+        -:  211:}
+        -:  212:
+        -:  213:} // namespace iterators
+        -:  214:
+        -:  215:using iterators::counting_iterator;
+        -:  216:using iterators::make_counting_iterator;
+        -:  217:
+        -:  218:} // namespace boost
+        -:  219:
+        -:  220:#endif // COUNTING_ITERATOR_DWA200348_HPP

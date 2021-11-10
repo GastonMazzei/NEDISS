@@ -1,0 +1,278 @@
+        -:    0:Source:/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/ompi/mpi/cxx/datatype.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// -*- c++ -*-
+        -:    2://
+        -:    3:// Copyright (c) 2004-2005 The Trustees of Indiana University and Indiana
+        -:    4://                         University Research and Technology
+        -:    5://                         Corporation.  All rights reserved.
+        -:    6:// Copyright (c) 2004-2005 The University of Tennessee and The University
+        -:    7://                         of Tennessee Research Foundation.  All rights
+        -:    8://                         reserved.
+        -:    9:// Copyright (c) 2004-2005 High Performance Computing Center Stuttgart,
+        -:   10://                         University of Stuttgart.  All rights reserved.
+        -:   11:// Copyright (c) 2004-2005 The Regents of the University of California.
+        -:   12://                         All rights reserved.
+        -:   13:// Copyright (c) 2006-2008 Sun Microsystems, Inc.  All rights reserved.
+        -:   14:// Copyright (c) 2006-2007 Cisco Systems, Inc.  All rights reserved.
+        -:   15:// Copyright (c) 2011      FUJITSU LIMITED.  All rights reserved.
+        -:   16:// $COPYRIGHT$
+        -:   17://
+        -:   18:// Additional copyrights may follow
+        -:   19://
+        -:   20:// $HEADER$
+        -:   21://
+        -:   22:
+        -:   23:
+        -:   24:class Datatype {
+        -:   25:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:   26:  //  friend class PMPI::Datatype;
+        -:   27:#endif
+        -:   28:public:
+        -:   29:
+        -:   30:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:   31:
+        -:   32:  // construction
+        -:   33:  inline Datatype() { }
+        -:   34:
+        -:   35:  // inter-language operability
+        -:   36:  inline Datatype(MPI_Datatype i) : pmpi_datatype(i) { }
+        -:   37:
+        -:   38:  // copy / assignment
+        -:   39:  inline Datatype(const Datatype& dt) : pmpi_datatype(dt.pmpi_datatype) { }
+        -:   40:
+        -:   41:  inline Datatype(const PMPI::Datatype& dt) : pmpi_datatype(dt) { }
+        -:   42:
+        -:   43:  inline virtual ~Datatype() {}
+        -:   44:
+        -:   45:  inline Datatype& operator=(const Datatype& dt) {
+        -:   46:    pmpi_datatype = dt.pmpi_datatype; return *this; }
+        -:   47:
+        -:   48:  // comparison
+        -:   49:  inline bool operator== (const Datatype &a) const
+        -:   50:    { return (bool) (pmpi_datatype == a.pmpi_datatype); }
+        -:   51:
+        -:   52:  inline bool operator!= (const Datatype &a) const
+        -:   53:    { return (bool) !(*this == a); }
+        -:   54:
+        -:   55:  // inter-language operability
+        -:   56:  inline Datatype& operator= (const MPI_Datatype &i)
+        -:   57:    { pmpi_datatype = i; return *this; }
+        -:   58:
+        -:   59:  inline operator MPI_Datatype() const { return (MPI_Datatype)pmpi_datatype; }
+        -:   60:  //  inline operator MPI_Datatype* ()/* JGS const */ { return pmpi_datatype; }
+        -:   61:
+        -:   62:  inline operator const PMPI::Datatype&() const { return pmpi_datatype; }
+        -:   63:
+        -:   64:  inline const PMPI::Datatype& pmpi() const { return pmpi_datatype; }
+        -:   65:
+        -:   66:#else
+        -:   67:
+        -:   68:  // construction / destruction
+        -:   69:  inline Datatype() : mpi_datatype(MPI_DATATYPE_NULL) { }
+function _ZN3MPI8DatatypeD0Ev called 0 returned 0% blocks executed 0%
+function _ZN3MPI8DatatypeD2Ev called 0 returned 0% blocks executed 0%
+    #####:   70:  inline virtual ~Datatype() {}
+    $$$$$:   70-block  0
+    $$$$$:   70-block  1
+call    0 never executed
+call    1 never executed
+    $$$$$:   70-block  2
+        -:   71:  // inter-language operability
+function _ZN3MPI8DatatypeC2EP15ompi_datatype_t called 0 returned 0% blocks executed 0%
+    #####:   72:  inline Datatype(MPI_Datatype i) : mpi_datatype(i) { }
+    $$$$$:   72-block  0
+        -:   73:
+        -:   74:  // copy / assignment
+        -:   75:  inline Datatype(const Datatype& dt) : mpi_datatype(dt.mpi_datatype) { }
+        -:   76:  inline Datatype& operator=(const Datatype& dt) {
+        -:   77:    mpi_datatype = dt.mpi_datatype; return *this; }
+        -:   78:
+        -:   79:  // comparison
+        -:   80:  inline bool operator== (const Datatype &a) const
+        -:   81:    { return (bool) (mpi_datatype == a.mpi_datatype); }
+        -:   82:
+        -:   83:  inline bool operator!= (const Datatype &a) const
+        -:   84:    { return (bool) !(*this == a); }
+        -:   85:
+        -:   86:  // inter-language operability
+function _ZN3MPI8DatatypeaSERKP15ompi_datatype_t called 0 returned 0% blocks executed 0%
+    #####:   87:  inline Datatype& operator= (const MPI_Datatype &i)
+    $$$$$:   87-block  0
+    #####:   88:    { mpi_datatype = i; return *this; }
+    $$$$$:   88-block  0
+        -:   89:
+function _ZNK3MPI8DatatypecvP15ompi_datatype_tEv called 0 returned 0% blocks executed 0%
+    #####:   90:  inline operator MPI_Datatype () const { return mpi_datatype; }
+    $$$$$:   90-block  0
+    $$$$$:   90-block  1
+        -:   91:  // inline operator MPI_Datatype* ()/* JGS const */ { return &mpi_datatype; }
+        -:   92:
+        -:   93:#endif
+        -:   94:
+        -:   95:  //
+        -:   96:  // User Defined Functions
+        -:   97:  //
+        -:   98:  typedef int Copy_attr_function(const Datatype& oldtype,
+        -:   99:						int type_keyval,
+        -:  100:						void* extra_state,
+        -:  101:						const void* attribute_val_in,
+        -:  102:						void* attribute_val_out,
+        -:  103:						bool& flag);
+        -:  104:
+        -:  105:  typedef int Delete_attr_function(Datatype& type, int type_keyval,
+        -:  106:				   void* attribute_val, void* extra_state);
+        -:  107:
+        -:  108:  //
+        -:  109:  // Point-to-Point Communication
+        -:  110:  //
+        -:  111:
+        -:  112:  virtual Datatype Create_contiguous(int count) const;
+        -:  113:
+        -:  114:  virtual Datatype Create_vector(int count, int blocklength,
+        -:  115:				 int stride) const;
+        -:  116:
+        -:  117:  virtual Datatype Create_indexed(int count,
+        -:  118:				  const int array_of_blocklengths[],
+        -:  119:				  const int array_of_displacements[]) const;
+        -:  120:
+        -:  121:  static Datatype Create_struct(int count, const int array_of_blocklengths[],
+        -:  122:				const Aint array_of_displacements[],
+        -:  123:				const Datatype array_if_types[]);
+        -:  124:
+        -:  125:  virtual Datatype Create_hindexed(int count, const int array_of_blocklengths[],
+        -:  126:				   const Aint array_of_displacements[]) const;
+        -:  127:
+        -:  128:  virtual Datatype Create_hvector(int count, int blocklength, Aint stride) const;
+        -:  129:
+        -:  130:  virtual Datatype Create_indexed_block(int count, int blocklength,
+        -:  131:					const int array_of_blocklengths[]) const;
+        -:  132:  virtual Datatype Create_resized(const Aint lb, const Aint extent) const;
+        -:  133:
+        -:  134:  virtual int Get_size() const;
+        -:  135:
+        -:  136:  virtual void Get_extent(Aint& lb, Aint& extent) const;
+        -:  137:
+        -:  138:  virtual void Get_true_extent(Aint&, Aint&) const;
+        -:  139:
+        -:  140:  virtual void Commit();
+        -:  141:
+        -:  142:  virtual void Free();
+        -:  143:
+        -:  144:  virtual void Pack(const void* inbuf, int incount, void *outbuf,
+        -:  145:		    int outsize, int& position, const Comm &comm) const;
+        -:  146:
+        -:  147:  virtual void Unpack(const void* inbuf, int insize, void *outbuf, int outcount,
+        -:  148:		      int& position, const Comm& comm) const;
+        -:  149:
+        -:  150:  virtual int Pack_size(int incount, const Comm& comm) const;
+        -:  151:
+        -:  152:  virtual void Pack_external(const char* datarep, const void* inbuf, int incount,
+        -:  153:              void* outbuf, Aint outsize, Aint& position) const;
+        -:  154:
+        -:  155:  virtual Aint Pack_external_size(const char* datarep, int incount) const;
+        -:  156:
+        -:  157:  virtual void Unpack_external(const char* datarep, const void* inbuf,
+        -:  158:              Aint insize, Aint& position, void* outbuf, int outcount) const;
+        -:  159:
+        -:  160:  //
+        -:  161:  // Miscellany
+        -:  162:  //
+        -:  163:  virtual Datatype Create_subarray(int ndims, const int array_of_sizes[],
+        -:  164:				   const int array_of_subsizes[],
+        -:  165:				   const int array_of_starts[], int order)
+        -:  166:    const;
+        -:  167:
+        -:  168:  virtual Datatype Create_darray(int size, int rank, int ndims,
+        -:  169:                   const int array_of_gsizes[], const int array_of_distribs[],
+        -:  170:                   const int array_of_dargs[],  const int array_of_psizes[],
+        -:  171:                   int order) const;
+        -:  172:
+        -:  173:  // Language Binding
+        -:  174:  static Datatype Create_f90_complex(int p, int r);
+        -:  175:
+        -:  176:  static Datatype Create_f90_integer(int r);
+        -:  177:
+        -:  178:  static Datatype Create_f90_real(int p, int r);
+        -:  179:
+        -:  180:  static Datatype Match_size(int typeclass, int size);
+        -:  181:
+        -:  182:  //
+        -:  183:  // External Interfaces
+        -:  184:  //
+        -:  185:
+        -:  186:  virtual Datatype Dup() const;
+        -:  187:
+        -:  188:  // Need 4 overloaded versions of this function because per the
+        -:  189:  // MPI-2 spec, you can mix-n-match the C predefined functions with
+        -:  190:  // C++ functions.
+        -:  191:  static int Create_keyval(Copy_attr_function* type_copy_attr_fn,
+        -:  192:                           Delete_attr_function* type_delete_attr_fn,
+        -:  193:                           void* extra_state);
+        -:  194:  static int Create_keyval(MPI_Type_copy_attr_function* type_copy_attr_fn,
+        -:  195:                           MPI_Type_delete_attr_function* type_delete_attr_fn,
+        -:  196:                           void* extra_state);
+        -:  197:  static int Create_keyval(Copy_attr_function* type_copy_attr_fn,
+        -:  198:                           MPI_Type_delete_attr_function* type_delete_attr_fn,
+        -:  199:                           void* extra_state);
+        -:  200:  static int Create_keyval(MPI_Type_copy_attr_function* type_copy_attr_fn,
+        -:  201:                           Delete_attr_function* type_delete_attr_fn,
+        -:  202:                           void* extra_state);
+        -:  203:
+        -:  204:protected:
+        -:  205:  // Back-end function to do the heavy lifting for creating the
+        -:  206:  // keyval
+        -:  207:  static int do_create_keyval(MPI_Type_copy_attr_function* c_copy_fn,
+        -:  208:                              MPI_Type_delete_attr_function* c_delete_fn,
+        -:  209:                              Copy_attr_function* cxx_copy_fn,
+        -:  210:                              Delete_attr_function* cxx_delete_fn,
+        -:  211:                              void* extra_state, int &keyval);
+        -:  212:
+        -:  213:public:
+        -:  214:
+        -:  215:  virtual void Delete_attr(int type_keyval);
+        -:  216:
+        -:  217:  static void Free_keyval(int& type_keyval);
+        -:  218:
+        -:  219:  virtual bool Get_attr(int type_keyval, void* attribute_val) const;
+        -:  220:
+        -:  221:  virtual void Get_contents(int max_integers, int max_addresses,
+        -:  222:                            int max_datatypes, int array_of_integers[],
+        -:  223:                            Aint array_of_addresses[],
+        -:  224:                            Datatype array_of_datatypes[]) const;
+        -:  225:
+        -:  226:  virtual void Get_envelope(int& num_integers, int& num_addresses,
+        -:  227:                            int& num_datatypes, int& combiner) const;
+        -:  228:
+        -:  229:  virtual void Get_name(char* type_name, int& resultlen) const;
+        -:  230:
+        -:  231:  virtual void Set_attr(int type_keyval, const void* attribute_val);
+        -:  232:
+        -:  233:  virtual void Set_name(const char* type_name);
+        -:  234:
+        -:  235:
+        -:  236:
+        -:  237:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:  238:private:
+        -:  239:  PMPI::Datatype pmpi_datatype;
+        -:  240:#else
+        -:  241:protected:
+        -:  242:  MPI_Datatype mpi_datatype;
+        -:  243:#endif
+        -:  244:
+        -:  245:public:
+        -:  246:    // Data that is passed through keyval create when C++ callback
+        -:  247:    // functions are used
+        -:  248:    struct keyval_intercept_data_t {
+        -:  249:        MPI_Type_copy_attr_function *c_copy_fn;
+        -:  250:        MPI_Type_delete_attr_function *c_delete_fn;
+        -:  251:        Copy_attr_function* cxx_copy_fn;
+        -:  252:        Delete_attr_function* cxx_delete_fn;
+        -:  253:        void *extra_state;
+        -:  254:    };
+        -:  255:
+        -:  256:    // Protect the global list from multiple thread access
+        -:  257:    static opal_mutex_t cxx_extra_states_lock;
+        -:  258:};

@@ -1,0 +1,107 @@
+        -:    0:Source:/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.cpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2:// Created by m4zz31 on 29/10/21.
+        -:    3://
+        -:    4:
+        -:    5:
+        -:    6:#include "GeneralGraph.h"
+        -:    7:#include "CliqueGraph.h"
+        -:    8:#include "../Utils/adequate_synchronization.h"
+        -:    9:
+        -:   10:
+        -:   11:using namespace std;
+        -:   12:using namespace boost;
+        -:   13:
+        -:   14:
+function _ZN17CliqueGraphObject5buildEv called 0 returned 0% blocks executed 0%
+    #####:   15:void CliqueGraphObject::build(){
+    $$$$$:   15-block  0
+        -:   16:    typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
+        -:   17:    //typedef property_map<Graph, int DynamicNode::*>::type LocalMap;
+        -:   18:    //LocalMap local = get(&DynamicNode::value, g);
+        -:   19:    //get(g, *v).value = 8;
+    #####:   20:    int i=0;
+    #####:   21:    if (process_id(g.process_group()) == 0) {
+    $$$$$:   21-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:   22:        for (int i = 0; i < N; i++) {
+    $$$$$:   22-block  0
+    $$$$$:   22-block  1
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   22-block  2
+    $$$$$:   22-block  3
+    #####:   23:#pragma omp for
+    $$$$$:   23-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   23-block  1
+    $$$$$:   23-block  2
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   23-block  3
+    #####:   24:            for (int j = i + 1; j < N; j++) {
+    #####:   25:                add_edge(vertex(i, g), vertex(j, g), g);
+    $$$$$:   25-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:   26:            }
+        -:   27:        }
+        -:   28:    }
+    #####:   29:    adsync_synchronization_barrier<0>("Clique constructor", g);
+    $$$$$:   29-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   29-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    $$$$$:   29-block  2
+call    7 never executed
+call    8 never executed
+    %%%%%:   29-block  3
+call    9 never executed
+    %%%%%:   29-block  4
+    %%%%%:   29-block  5
+call   10 never executed
+function _GLOBAL__sub_I__ZN17CliqueGraphObject5buildEv called 1 returned 100% blocks executed 100%
+function _Z41__static_initialization_and_destruction_1ii called 1 returned 100% blocks executed 44%
+function _Z41__static_initialization_and_destruction_0ii called 1 returned 100% blocks executed 80%
+        6:   30:}
+        1:   30-block  0
+        1:   30-block  1
+call    0 returned 1
+call    1 returned 1
+        1:   30-block  2
+        1:   30-block  3
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+        1:   30-block  4
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0
+        1:   30-block  5
+        1:   30-block  6
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0
+        1:   30-block  7
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0
+        1:   30-block  8
+        -:   31:
+        -:   32:
+        -:   33:
+        -:   34:

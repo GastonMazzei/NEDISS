@@ -1,0 +1,289 @@
+        -:    0:Source:/usr/include/boost/graph/distributed/adjlist/handlers.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Copyright (C) 2007 Douglas Gregor 
+        -:    2:
+        -:    3:// Use, modification and distribution is subject to the Boost Software
+        -:    4:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:    5:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    6:
+        -:    7:// This file contains code for the distributed adjacency list's
+        -:    8:// message handlers. It should not be included directly by users.
+        -:    9:
+        -:   10:#ifndef BOOST_GRAPH_DISTRIBUTED_ADJLIST_HANDLERS_HPP
+        -:   11:#define BOOST_GRAPH_DISTRIBUTED_ADJLIST_HANDLERS_HPP
+        -:   12:
+        -:   13:#ifndef BOOST_GRAPH_USE_MPI
+        -:   14:#error "Parallel BGL files should not be included unless <boost/graph/use_mpi.hpp> has been included"
+        -:   15:#endif
+        -:   16:
+        -:   17:#include <boost/graph/parallel/simple_trigger.hpp>
+        -:   18:#include <boost/graph/parallel/detail/untracked_pair.hpp>
+        -:   19:
+        -:   20:namespace boost { 
+        -:   21:
+        -:   22:template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
+        -:   23:void
+function _ZN5boost14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES1_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEE14setup_triggersEv called 0 returned 0% blocks executed 0%
+    #####:   24:PBGL_DISTRIB_ADJLIST_TYPE::
+    $$$$$:   24-block  0
+        -:   25:setup_triggers()
+        -:   26:{
+        -:   27:  using boost::graph::parallel::simple_trigger;
+        -:   28:
+    #####:   29:  simple_trigger(process_group_, msg_add_vertex_with_property, this,
+    $$$$$:   29-block  0
+call    0 never executed
+        -:   30:                 &adjacency_list::handle_add_vertex_with_property);
+    #####:   31:  simple_trigger(process_group_, msg_add_vertex_with_property_and_reply, this,
+call    0 never executed
+        -:   32:                 &adjacency_list::handle_add_vertex_with_property_and_reply);
+    #####:   33:  simple_trigger(process_group_, msg_add_edge, this, 
+call    0 never executed
+        -:   34:                 &adjacency_list::handle_add_edge);
+    #####:   35:  simple_trigger(process_group_, msg_add_edge_with_reply, this, 
+call    0 never executed
+        -:   36:                 &adjacency_list::handle_add_edge_with_reply);
+    #####:   37:  simple_trigger(process_group_, msg_add_edge_with_property, this,
+call    0 never executed
+        -:   38:                 &adjacency_list::handle_add_edge_with_property);
+    #####:   39:  simple_trigger(process_group_,  msg_add_edge_with_property_and_reply, this,
+call    0 never executed
+        -:   40:                 &adjacency_list::handle_add_edge_with_property_and_reply);
+    #####:   41:  simple_trigger(process_group_, msg_nonlocal_edge, this,
+call    0 never executed
+        -:   42:                 &adjacency_list::handle_nonlocal_edge);
+    #####:   43:  simple_trigger(process_group_, msg_remove_edge, this,
+call    0 never executed
+        -:   44:                 &adjacency_list::handle_remove_edge);
+    #####:   45:}
+        -:   46:
+        -:   47:template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
+        -:   48:void 
+function _ZN5boost14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES1_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEE31handle_add_vertex_with_propertyEiiRKS9_NS_8parallel23trigger_receive_contextE called 0 returned 0% blocks executed 0%
+    #####:   49:PBGL_DISTRIB_ADJLIST_TYPE::
+    $$$$$:   49-block  0
+        -:   50:handle_add_vertex_with_property(int source, int tag, 
+        -:   51:                                const vertex_property_type& data, 
+        -:   52:                                trigger_receive_context)
+        -:   53:{
+    #####:   54:  vertex_descriptor v(this->processor(), 
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   54-block  0
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   54-block  1
+call    6 never executed
+call    7 never executed
+call    8 never executed
+    %%%%%:   54-block  2
+call    9 never executed
+    %%%%%:   54-block  3
+    #####:   55:                      add_vertex(this->build_vertex_property(data), 
+    $$$$$:   55-block  0
+call    0 never executed
+        -:   56:                                 this->base()));
+    #####:   57:  if (on_add_vertex)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   58:    on_add_vertex(v, *this);
+    $$$$$:   58-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   58-block  1
+    #####:   59:}
+    $$$$$:   59-block  0
+        -:   60:
+        -:   61:template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
+        -:   62:typename PBGL_DISTRIB_ADJLIST_TYPE::local_vertex_descriptor
+function _ZN5boost14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES1_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEE41handle_add_vertex_with_property_and_replyEiiRKS9_NS_8parallel23trigger_receive_contextE called 0 returned 0% blocks executed 0%
+    #####:   63:PBGL_DISTRIB_ADJLIST_TYPE::
+    $$$$$:   63-block  0
+        -:   64:handle_add_vertex_with_property_and_reply(int source, int tag, 
+        -:   65:                                          const vertex_property_type& data, 
+        -:   66:                                          trigger_receive_context)
+        -:   67:{
+        -:   68:  // Try to find a vertex with this name
+    #####:   69:  local_vertex_descriptor local_v
+    $$$$$:   69-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   70:    = add_vertex(this->build_vertex_property(data), this->base());
+    $$$$$:   70-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   70-block  1
+call    4 never executed
+    %%%%%:   70-block  2
+call    5 never executed
+    %%%%%:   70-block  3
+        -:   71:
+    #####:   72:  vertex_descriptor v(processor(), local_v);
+call    0 never executed
+call    1 never executed
+    #####:   73:  if (on_add_vertex)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   74:    on_add_vertex(v, *this);
+    $$$$$:   74-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   74-block  1
+        -:   75:
+    #####:   76:  return local_v;
+    $$$$$:   76-block  0
+    $$$$$:   76-block  1
+        -:   77:}
+        -:   78:
+        -:   79:template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
+        -:   80:void 
+function _ZN5boost14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES1_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEE15handle_add_edgeEiiRKNS_6detail8parallel17msg_add_edge_dataINSF_17global_descriptorImEEmEENS_8parallel23trigger_receive_contextE called 0 returned 0% blocks executed 0%
+    #####:   81:PBGL_DISTRIB_ADJLIST_TYPE::
+    $$$$$:   81-block  0
+        -:   82:handle_add_edge(int source, int tag, const msg_add_edge_data& data,
+        -:   83:                trigger_receive_context)
+        -:   84:{
+    #####:   85:  add_edge(vertex_descriptor(processor(), data.source), 
+    $$$$$:   85-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    $$$$$:   85-block  1
+call    5 never executed
+        -:   86:           data.target, *this);
+    #####:   87:}
+        -:   88:
+        -:   89:template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
+        -:   90:boost::parallel::detail::untracked_pair<typename PBGL_DISTRIB_ADJLIST_TYPE::edge_descriptor, bool>
+function _ZN5boost14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES1_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEE26handle_add_edge_with_replyEiiRKNS_6detail8parallel17msg_add_edge_dataINSF_17global_descriptorImEEmEENS_8parallel23trigger_receive_contextE called 0 returned 0% blocks executed 0%
+    #####:   91:PBGL_DISTRIB_ADJLIST_TYPE::
+    $$$$$:   91-block  0
+        -:   92:handle_add_edge_with_reply(int source, int tag, const msg_add_edge_data& data,
+        -:   93:                           trigger_receive_context)
+        -:   94:{
+    #####:   95:  std::pair<typename PBGL_DISTRIB_ADJLIST_TYPE::edge_descriptor, bool> p = 
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   95-block  0
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    $$$$$:   95-block  1
+call    7 never executed
+    %%%%%:   95-block  2
+call    8 never executed
+    %%%%%:   95-block  3
+    %%%%%:   95-block  4
+    #####:   96:    add_edge(vertex_descriptor(processor(), data.source),data.target, *this);
+    $$$$$:   96-block  0
+call    0 never executed
+    #####:   97:  return p;
+call    0 never executed
+    $$$$$:   97-block  0
+        -:   98:}
+        -:   99:
+        -:  100:template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
+        -:  101:void 
+function _ZN5boost14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES1_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEE29handle_add_edge_with_propertyEiiRKNS_6detail8parallel31msg_add_edge_with_property_dataINSF_17global_descriptorImEEmSA_EENS_8parallel23trigger_receive_contextE called 0 returned 0% blocks executed 0%
+    #####:  102:PBGL_DISTRIB_ADJLIST_TYPE::
+    $$$$$:  102-block  0
+        -:  103:handle_add_edge_with_property(int source, int tag, 
+        -:  104:                              const msg_add_edge_with_property_data& data,
+        -:  105:                              trigger_receive_context)
+        -:  106:{
+    #####:  107:  add_edge(vertex_descriptor(processor(), data.source), 
+    $$$$$:  107-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:  107-block  1
+call    6 never executed
+        -:  108:           data.target, data.get_property(), *this);
+    #####:  109:}
+        -:  110:
+        -:  111:template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
+        -:  112:boost::parallel::detail::untracked_pair<typename PBGL_DISTRIB_ADJLIST_TYPE::edge_descriptor, bool>
+function _ZN5boost14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES1_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEE39handle_add_edge_with_property_and_replyEiiRKNS_6detail8parallel31msg_add_edge_with_property_dataINSF_17global_descriptorImEEmSA_EENS_8parallel23trigger_receive_contextE called 0 returned 0% blocks executed 0%
+    #####:  113:PBGL_DISTRIB_ADJLIST_TYPE::
+    $$$$$:  113-block  0
+        -:  114:handle_add_edge_with_property_and_reply
+        -:  115:  (int source, int tag, 
+        -:  116:   const msg_add_edge_with_property_data& data,
+        -:  117:   trigger_receive_context)
+        -:  118:{
+    #####:  119:  std::pair<typename PBGL_DISTRIB_ADJLIST_TYPE::edge_descriptor, bool> p = 
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:  119-block  0
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    $$$$$:  119-block  1
+call    7 never executed
+    %%%%%:  119-block  2
+call    8 never executed
+    %%%%%:  119-block  3
+    %%%%%:  119-block  4
+    #####:  120:    add_edge(vertex_descriptor(processor(), data.source), 
+    $$$$$:  120-block  0
+call    0 never executed
+call    1 never executed
+        -:  121:                  data.target, data.get_property(), *this);
+    #####:  122:  return p;
+call    0 never executed
+    $$$$$:  122-block  0
+        -:  123:}
+        -:  124:
+        -:  125:template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
+        -:  126:void 
+function _ZN5boost14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES1_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEE20handle_nonlocal_edgeEiiRKNS_6detail8parallel22msg_nonlocal_edge_dataISA_NSE_14edge_desc_implINS_12directed_tagEmEEEENS_8parallel23trigger_receive_contextE called 0 returned 0% blocks executed 0%
+    #####:  127:PBGL_DISTRIB_ADJLIST_TYPE::
+    $$$$$:  127-block  0
+        -:  128:handle_nonlocal_edge(int source, int tag, 
+        -:  129:                     const msg_nonlocal_edge_data& data,
+        -:  130:                     trigger_receive_context)
+        -:  131:{
+    #####:  132:  add_remote_edge(data, source, directed_selector());
+    $$$$$:  132-block  0
+call    0 never executed
+    #####:  133:}
+        -:  134:
+        -:  135:template<PBGL_DISTRIB_ADJLIST_TEMPLATE_PARMS>
+        -:  136:void 
+function _ZN5boost14adjacency_listINS_4vecSENS_12distributedSINS_5graph11distributed17mpi_process_groupES1_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEE18handle_remove_edgeEiiRKNS_6detail8parallel20msg_remove_edge_dataINSF_15edge_descriptorINSE_14edge_desc_implINS_12directed_tagEmEEEEEENS_8parallel23trigger_receive_contextE called 0 returned 0% blocks executed 0%
+    #####:  137:PBGL_DISTRIB_ADJLIST_TYPE::
+    $$$$$:  137-block  0
+        -:  138:handle_remove_edge(int source, int tag, 
+        -:  139:                   const msg_remove_edge_data& data,
+        -:  140:                   trigger_receive_context)
+        -:  141:{
+    #####:  142:  remove_local_edge(data, source, directed_selector());
+    $$$$$:  142-block  0
+call    0 never executed
+    #####:  143:}
+        -:  144:
+        -:  145:} 
+        -:  146:
+        -:  147:#endif // BOOST_GRAPH_DISTRIBUTED_ADJLIST_HANDLERS_HPP
+        -:  148:

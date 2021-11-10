@@ -1,0 +1,400 @@
+        -:    0:Source:/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/ompi/mpi/cxx/win_inln.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// -*- c++ -*-
+        -:    2://
+        -:    3:// Copyright (c) 2004-2005 The Trustees of Indiana University and Indiana
+        -:    4://                         University Research and Technology
+        -:    5://                         Corporation.  All rights reserved.
+        -:    6:// Copyright (c) 2004-2005 The University of Tennessee and The University
+        -:    7://                         of Tennessee Research Foundation.  All rights
+        -:    8://                         reserved.
+        -:    9:// Copyright (c) 2004-2005 High Performance Computing Center Stuttgart,
+        -:   10://                         University of Stuttgart.  All rights reserved.
+        -:   11:// Copyright (c) 2004-2005 The Regents of the University of California.
+        -:   12://                         All rights reserved.
+        -:   13:// Copyright (c) 2007      Sun Microsystems, Inc.  All rights reserved.
+        -:   14:// Copyright (c) 2007-2008 Cisco Systems, Inc.  All rights reserved.
+        -:   15:// $COPYRIGHT$
+        -:   16://
+        -:   17:// Additional copyrights may follow
+        -:   18://
+        -:   19:// $HEADER$
+        -:   20://
+        -:   21:
+        -:   22:
+        -:   23:
+        -:   24://
+        -:   25:// Miscellany
+        -:   26://
+        -:   27:
+        -:   28:
+        -:   29:inline MPI::Errhandler
+function _ZNK3MPI3Win14Get_errhandlerEv called 0 returned 0% blocks executed 0%
+    #####:   30:MPI::Win:: Get_errhandler() const
+    $$$$$:   30-block  0
+        -:   31:{
+        -:   32:    MPI_Errhandler errhandler;
+    #####:   33:    MPI_Win_get_errhandler(mpi_win, &errhandler);
+    $$$$$:   33-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   34:    return errhandler;
+    $$$$$:   34-block  0
+call    0 never executed
+    $$$$$:   34-block  1
+        -:   35:}
+        -:   36:
+        -:   37:
+        -:   38:inline void
+function _ZNK3MPI3Win14Set_errhandlerERKNS_10ErrhandlerE called 0 returned 0% blocks executed 0%
+    #####:   39:MPI::Win::Set_errhandler(const MPI::Errhandler& errhandler) const
+    $$$$$:   39-block  0
+        -:   40:{
+    #####:   41:    (void)MPI_Win_set_errhandler(mpi_win, errhandler);
+    $$$$$:   41-block  0
+call    0 never executed
+call    1 never executed
+    #####:   42:}
+        -:   43:
+        -:   44:
+        -:   45://
+        -:   46:// One sided communication
+        -:   47://
+        -:   48:
+        -:   49:
+        -:   50:inline void
+function _ZNK3MPI3Win10AccumulateEPKviRKNS_8DatatypeEiliS5_RKNS_2OpE called 0 returned 0% blocks executed 0%
+    #####:   51:MPI::Win::Accumulate(const void* origin_addr, int origin_count,
+    $$$$$:   51-block  0
+        -:   52:	       	const MPI::Datatype& origin_datatype, int target_rank,
+        -:   53:	       	MPI::Aint target_disp, int target_count,
+        -:   54:	       	const MPI::Datatype& target_datatype,
+        -:   55:	       	const MPI::Op& op) const
+        -:   56:{
+    #####:   57:  (void) MPI_Accumulate(const_cast<void *>(origin_addr), origin_count, origin_datatype,
+    $$$$$:   57-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:   58:			target_rank, target_disp, target_count,
+    #####:   59:			target_datatype, op, mpi_win);
+        -:   60:
+    #####:   61:}
+        -:   62:
+        -:   63:
+        -:   64:inline void
+function _ZNK3MPI3Win8CompleteEv called 0 returned 0% blocks executed 0%
+    #####:   65:MPI::Win::Complete() const
+    $$$$$:   65-block  0
+        -:   66:{
+    #####:   67:  (void) MPI_Win_complete(mpi_win);
+    $$$$$:   67-block  0
+call    0 never executed
+    #####:   68:}
+        -:   69:
+        -:   70:
+        -:   71:inline  MPI::Win
+        -:   72:MPI::Win::Create(const void* base, MPI::Aint size,
+        -:   73:			int disp_unit, const MPI::Info& info,
+        -:   74:			const MPI::Intracomm& comm)
+        -:   75:{
+        -:   76:  MPI_Win newwin;
+        -:   77:  (void) MPI_Win_create(const_cast<void *>(base), size, disp_unit, info, comm, &newwin);
+        -:   78:  return newwin;
+        -:   79:}
+        -:   80:
+        -:   81:
+        -:   82:inline void
+function _ZNK3MPI3Win5FenceEi called 0 returned 0% blocks executed 0%
+    #####:   83:MPI::Win::Fence(int assert) const
+    $$$$$:   83-block  0
+        -:   84:{
+    #####:   85:  (void) MPI_Win_fence(assert, mpi_win);
+    $$$$$:   85-block  0
+call    0 never executed
+    #####:   86:}
+        -:   87:
+        -:   88:
+        -:   89:inline void
+function _ZNK3MPI3Win3GetEPKviRKNS_8DatatypeEiliS5_ called 0 returned 0% blocks executed 0%
+    #####:   90:MPI::Win::Get(const void *origin_addr, int origin_count,
+    $$$$$:   90-block  0
+        -:   91:		     const MPI::Datatype& origin_datatype,
+        -:   92:		     int target_rank, MPI::Aint target_disp,
+        -:   93:		     int target_count,
+        -:   94:		     const MPI::Datatype& target_datatype) const
+        -:   95:{
+    #####:   96:  (void) MPI_Get(const_cast<void *>(origin_addr), origin_count, origin_datatype,
+    $$$$$:   96-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:   97:		     target_rank, target_disp,
+    #####:   98:		     target_count, target_datatype, mpi_win);
+        -:   99:
+    #####:  100:}
+        -:  101:
+        -:  102:
+        -:  103:inline MPI::Group
+function _ZNK3MPI3Win9Get_groupEv called 0 returned 0% blocks executed 0%
+    #####:  104:MPI::Win::Get_group() const
+    $$$$$:  104-block  0
+        -:  105:{
+        -:  106:  MPI_Group mpi_group;
+    #####:  107:  (void) MPI_Win_get_group(mpi_win, &mpi_group);
+    $$$$$:  107-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  108:  return mpi_group;
+    $$$$$:  108-block  0
+call    0 never executed
+    $$$$$:  108-block  1
+        -:  109:}
+        -:  110:
+        -:  111:
+        -:  112:inline void
+function _ZNK3MPI3Win4LockEiii called 0 returned 0% blocks executed 0%
+    #####:  113:MPI::Win::Lock(int lock_type, int rank, int assert) const
+    $$$$$:  113-block  0
+        -:  114:{
+    #####:  115:  (void) MPI_Win_lock(lock_type, rank, assert, mpi_win);
+    $$$$$:  115-block  0
+call    0 never executed
+    #####:  116:}
+        -:  117:
+        -:  118:
+        -:  119:inline void
+function _ZNK3MPI3Win4PostERKNS_5GroupEi called 0 returned 0% blocks executed 0%
+    #####:  120:MPI::Win::Post(const MPI::Group& group, int assert) const
+    $$$$$:  120-block  0
+        -:  121:{
+    #####:  122:  (void) MPI_Win_post(group, assert, mpi_win);
+    $$$$$:  122-block  0
+call    0 never executed
+call    1 never executed
+    #####:  123:}
+        -:  124:
+        -:  125:
+        -:  126:inline void
+function _ZNK3MPI3Win3PutEPKviRKNS_8DatatypeEiliS5_ called 0 returned 0% blocks executed 0%
+    #####:  127:MPI::Win::Put(const void* origin_addr, int origin_count,
+    $$$$$:  127-block  0
+        -:  128:		     const MPI::Datatype& origin_datatype,
+        -:  129:		     int target_rank, MPI::Aint target_disp,
+        -:  130:		     int target_count,
+        -:  131:		     const MPI::Datatype& target_datatype) const
+        -:  132:{
+    #####:  133:  (void) MPI_Put(const_cast<void *>(origin_addr), origin_count, origin_datatype,
+    $$$$$:  133-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  134:		 target_rank, target_disp, target_count,
+    #####:  135:		 target_datatype, mpi_win);
+        -:  136:
+    #####:  137:}
+        -:  138:
+        -:  139:
+        -:  140:inline void
+function _ZNK3MPI3Win5StartERKNS_5GroupEi called 0 returned 0% blocks executed 0%
+    #####:  141:MPI::Win::Start(const MPI::Group& group, int assert) const
+    $$$$$:  141-block  0
+        -:  142:{
+    #####:  143:  (void) MPI_Win_start(group, assert, mpi_win);
+    $$$$$:  143-block  0
+call    0 never executed
+call    1 never executed
+    #####:  144:}
+        -:  145:
+        -:  146:
+        -:  147:inline bool
+function _ZNK3MPI3Win4TestEv called 0 returned 0% blocks executed 0%
+    #####:  148:MPI::Win::Test() const
+    $$$$$:  148-block  0
+        -:  149:{
+        -:  150:  int flag;
+    #####:  151:  MPI_Win_test(mpi_win, &flag);
+    $$$$$:  151-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  152:  return OPAL_INT_TO_BOOL(flag);
+    $$$$$:  152-block  0
+    $$$$$:  152-block  1
+        -:  153:
+        -:  154:}
+        -:  155:
+        -:  156:
+        -:  157:inline void
+function _ZNK3MPI3Win6UnlockEi called 0 returned 0% blocks executed 0%
+    #####:  158:MPI::Win::Unlock(int rank) const
+    $$$$$:  158-block  0
+        -:  159:{
+    #####:  160:  (void) MPI_Win_unlock(rank, mpi_win);
+    $$$$$:  160-block  0
+call    0 never executed
+    #####:  161:}
+        -:  162:
+        -:  163:
+        -:  164:inline void
+function _ZNK3MPI3Win4WaitEv called 0 returned 0% blocks executed 0%
+    #####:  165:MPI::Win::Wait() const
+    $$$$$:  165-block  0
+        -:  166:{
+    #####:  167:  (void) MPI_Win_wait(mpi_win);
+    $$$$$:  167-block  0
+call    0 never executed
+    #####:  168:}
+        -:  169:
+        -:  170:
+        -:  171://
+        -:  172:// External Interfaces
+        -:  173://
+        -:  174:
+        -:  175:inline void
+function _ZNK3MPI3Win15Call_errhandlerEi called 0 returned 0% blocks executed 0%
+    #####:  176:MPI::Win::Call_errhandler(int errorcode) const
+    $$$$$:  176-block  0
+        -:  177:{
+    #####:  178:  (void) MPI_Win_call_errhandler(mpi_win, errorcode);
+    $$$$$:  178-block  0
+call    0 never executed
+    #####:  179:}
+        -:  180:
+        -:  181:// 1) original Create_keyval that takes the first 2 arguments as C++
+        -:  182://    functions
+        -:  183:inline int
+        -:  184:MPI::Win::Create_keyval(MPI::Win::Copy_attr_function* win_copy_attr_fn,
+        -:  185:                             MPI::Win::Delete_attr_function* win_delete_attr_fn,
+        -:  186:                             void* extra_state)
+        -:  187:{
+        -:  188:    // Back-end function does the heavy lifting
+        -:  189:    int ret, keyval;
+        -:  190:    ret = do_create_keyval(NULL, NULL,
+        -:  191:                           win_copy_attr_fn, win_delete_attr_fn,
+        -:  192:                           extra_state, keyval);
+        -:  193:    return (MPI_SUCCESS == ret) ? keyval : ret;
+        -:  194:}
+        -:  195:
+        -:  196:// 2) overload Create_keyval to take the first 2 arguments as C
+        -:  197://    functions
+        -:  198:inline int
+        -:  199:MPI::Win::Create_keyval(MPI_Win_copy_attr_function* win_copy_attr_fn,
+        -:  200:                             MPI_Win_delete_attr_function* win_delete_attr_fn,
+        -:  201:                             void* extra_state)
+        -:  202:{
+        -:  203:    // Back-end function does the heavy lifting
+        -:  204:    int ret, keyval;
+        -:  205:    ret = do_create_keyval(win_copy_attr_fn, win_delete_attr_fn,
+        -:  206:                           NULL, NULL,
+        -:  207:                           extra_state, keyval);
+        -:  208:    return (MPI_SUCCESS == ret) ? keyval : ret;
+        -:  209:}
+        -:  210:
+        -:  211:// 3) overload Create_keyval to take the first 2 arguments as C++ & C
+        -:  212://    functions
+        -:  213:inline int
+        -:  214:MPI::Win::Create_keyval(MPI::Win::Copy_attr_function* win_copy_attr_fn,
+        -:  215:                             MPI_Win_delete_attr_function* win_delete_attr_fn,
+        -:  216:                             void* extra_state)
+        -:  217:{
+        -:  218:    // Back-end function does the heavy lifting
+        -:  219:    int ret, keyval;
+        -:  220:    ret = do_create_keyval(NULL, win_delete_attr_fn,
+        -:  221:                           win_copy_attr_fn, NULL,
+        -:  222:                           extra_state, keyval);
+        -:  223:    return (MPI_SUCCESS == ret) ? keyval : ret;
+        -:  224:}
+        -:  225:
+        -:  226:// 4) overload Create_keyval to take the first 2 arguments as C & C++
+        -:  227://    functions
+        -:  228:inline int
+        -:  229:MPI::Win::Create_keyval(MPI_Win_copy_attr_function* win_copy_attr_fn,
+        -:  230:                             MPI::Win::Delete_attr_function* win_delete_attr_fn,
+        -:  231:                             void* extra_state)
+        -:  232:{
+        -:  233:    // Back-end function does the heavy lifting
+        -:  234:    int ret, keyval;
+        -:  235:    ret = do_create_keyval(win_copy_attr_fn, NULL,
+        -:  236:                           NULL, win_delete_attr_fn,
+        -:  237:                           extra_state, keyval);
+        -:  238:    return (MPI_SUCCESS == ret) ? keyval : ret;
+        -:  239:}
+        -:  240:
+        -:  241:inline void
+function _ZN3MPI3Win11Delete_attrEi called 0 returned 0% blocks executed 0%
+    #####:  242:MPI::Win::Delete_attr(int win_keyval)
+    $$$$$:  242-block  0
+        -:  243:{
+    #####:  244:  (void) MPI_Win_delete_attr(mpi_win, win_keyval);
+    $$$$$:  244-block  0
+call    0 never executed
+    #####:  245:}
+        -:  246:
+        -:  247:
+        -:  248:inline void
+        -:  249:MPI::Win::Free_keyval(int& win_keyval)
+        -:  250:{
+        -:  251:  (void) MPI_Win_free_keyval(&win_keyval);
+        -:  252:}
+        -:  253:
+        -:  254:
+        -:  255:// version 1: pre-errata Get_attr (not correct, but probably nice to support
+        -:  256:inline bool
+        -:  257:MPI::Win::Get_attr(const Win& win, int win_keyval,
+        -:  258:                         void* attribute_val) const
+        -:  259:{
+        -:  260:  int ret;
+        -:  261:  (void) MPI_Win_get_attr(win, win_keyval, attribute_val, &ret);
+        -:  262:  return OPAL_INT_TO_BOOL(ret);
+        -:  263:}
+        -:  264:
+        -:  265:
+        -:  266:// version 2: post-errata Get_attr (correct, but no one seems to know about it)
+        -:  267:inline bool
+        -:  268:MPI::Win::Get_attr(int win_keyval, void* attribute_val) const
+        -:  269:{
+        -:  270:  int ret;
+        -:  271:  (void) MPI_Win_get_attr(mpi_win, win_keyval, attribute_val, &ret);
+        -:  272:  return OPAL_INT_TO_BOOL(ret);
+        -:  273:}
+        -:  274:
+        -:  275:
+        -:  276:inline void
+function _ZNK3MPI3Win8Get_nameEPcRi called 0 returned 0% blocks executed 0%
+    #####:  277:MPI::Win::Get_name(char* win_name, int& resultlen) const
+    $$$$$:  277-block  0
+        -:  278:{
+    #####:  279:  (void) MPI_Win_get_name(mpi_win, win_name, &resultlen);
+    $$$$$:  279-block  0
+call    0 never executed
+    #####:  280:}
+        -:  281:
+        -:  282:
+        -:  283:inline void
+function _ZN3MPI3Win8Set_attrEiPKv called 0 returned 0% blocks executed 0%
+    #####:  284:MPI::Win::Set_attr(int win_keyval, const void* attribute_val)
+    $$$$$:  284-block  0
+        -:  285:{
+    #####:  286:  (void) MPI_Win_set_attr(mpi_win, win_keyval, const_cast<void *>(attribute_val));
+    $$$$$:  286-block  0
+call    0 never executed
+    #####:  287:}
+        -:  288:
+        -:  289:
+        -:  290:inline void
+function _ZN3MPI3Win8Set_nameEPKc called 0 returned 0% blocks executed 0%
+    #####:  291:MPI::Win::Set_name(const char* win_name)
+    $$$$$:  291-block  0
+        -:  292:{
+    #####:  293:  (void) MPI_Win_set_name(mpi_win, const_cast<char *>(win_name));
+    $$$$$:  293-block  0
+call    0 never executed
+    #####:  294:}
+        -:  295:

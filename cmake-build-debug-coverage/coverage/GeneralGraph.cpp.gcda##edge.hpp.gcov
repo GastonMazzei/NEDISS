@@ -1,0 +1,136 @@
+        -:    0:Source:/usr/include/boost/graph/detail/edge.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2://=======================================================================
+        -:    3:// Copyright 1997, 1998, 1999, 2000 University of Notre Dame.
+        -:    4:// Authors: Andrew Lumsdaine, Lie-Quan Lee, Jeremy G. Siek
+        -:    5://
+        -:    6:// Distributed under the Boost Software License, Version 1.0. (See
+        -:    7:// accompanying file LICENSE_1_0.txt or copy at
+        -:    8:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    9://=======================================================================
+        -:   10:
+        -:   11:#ifndef BOOST_GRAPH_DETAIL_EDGE_HPP
+        -:   12:#define BOOST_GRAPH_DETAIL_EDGE_HPP
+        -:   13:
+        -:   14:#include <iosfwd>
+        -:   15:
+        -:   16:#include <boost/functional/hash.hpp>
+        -:   17:
+        -:   18:namespace boost
+        -:   19:{
+        -:   20:
+        -:   21:namespace detail
+        -:   22:{
+        -:   23:
+        -:   24:    template < typename Directed, typename Vertex > struct edge_base
+        -:   25:    {
+        -:   26:        inline edge_base() {}
+function _ZN5boost6detail9edge_baseINS_12directed_tagEmEC2Emm called 0 returned 0% blocks executed 0%
+    #####:   27:        inline edge_base(Vertex s, Vertex d) : m_source(s), m_target(d) {}
+    $$$$$:   27-block  0
+        -:   28:        Vertex m_source;
+        -:   29:        Vertex m_target;
+        -:   30:    };
+        -:   31:
+        -:   32:    template < typename Directed, typename Vertex >
+        -:   33:    class edge_desc_impl : public edge_base< Directed, Vertex >
+        -:   34:    {
+        -:   35:        typedef edge_desc_impl self;
+        -:   36:        typedef edge_base< Directed, Vertex > Base;
+        -:   37:
+        -:   38:    public:
+        -:   39:        typedef void property_type;
+        -:   40:
+        -:   41:        inline edge_desc_impl() : m_eproperty(0) {}
+        -:   42:
+function _ZN5boost6detail14edge_desc_implINS_12directed_tagEmEC2EmmPKv called 0 returned 0% blocks executed 0%
+    #####:   43:        inline edge_desc_impl(Vertex s, Vertex d, const property_type* eplug)
+    $$$$$:   43-block  0
+    #####:   44:        : Base(s, d), m_eproperty(const_cast< property_type* >(eplug))
+    $$$$$:   44-block  0
+call    0 never executed
+        -:   45:        {
+    #####:   46:        }
+        -:   47:
+function _ZN5boost6detail14edge_desc_implINS_12directed_tagEmE12get_propertyEv called 0 returned 0% blocks executed 0%
+    #####:   48:        property_type* get_property() { return m_eproperty; }
+    $$$$$:   48-block  0
+    $$$$$:   48-block  1
+        -:   49:        const property_type* get_property() const { return m_eproperty; }
+        -:   50:
+        -:   51:        //  protected:
+        -:   52:        property_type* m_eproperty;
+        -:   53:    };
+        -:   54:
+        -:   55:    template < class D, class V >
+        -:   56:    inline bool operator==(const detail::edge_desc_impl< D, V >& a,
+        -:   57:        const detail::edge_desc_impl< D, V >& b)
+        -:   58:    {
+        -:   59:        return a.get_property() == b.get_property();
+        -:   60:    }
+        -:   61:    template < class D, class V >
+        -:   62:    inline bool operator!=(const detail::edge_desc_impl< D, V >& a,
+        -:   63:        const detail::edge_desc_impl< D, V >& b)
+        -:   64:    {
+        -:   65:        return !(a.get_property() == b.get_property());
+        -:   66:    }
+        -:   67:
+        -:   68:    // Order edges according to the address of their property object
+        -:   69:    template < class D, class V >
+        -:   70:    inline bool operator<(const detail::edge_desc_impl< D, V >& a,
+        -:   71:        const detail::edge_desc_impl< D, V >& b)
+        -:   72:    {
+        -:   73:        return a.get_property() < b.get_property();
+        -:   74:    }
+        -:   75:    template < class D, class V >
+        -:   76:    inline bool operator<=(const detail::edge_desc_impl< D, V >& a,
+        -:   77:        const detail::edge_desc_impl< D, V >& b)
+        -:   78:    {
+        -:   79:        return a.get_property() <= b.get_property();
+        -:   80:    }
+        -:   81:    template < class D, class V >
+        -:   82:    inline bool operator>(const detail::edge_desc_impl< D, V >& a,
+        -:   83:        const detail::edge_desc_impl< D, V >& b)
+        -:   84:    {
+        -:   85:        return a.get_property() > b.get_property();
+        -:   86:    }
+        -:   87:    template < class D, class V >
+        -:   88:    inline bool operator>=(const detail::edge_desc_impl< D, V >& a,
+        -:   89:        const detail::edge_desc_impl< D, V >& b)
+        -:   90:    {
+        -:   91:        return a.get_property() >= b.get_property();
+        -:   92:    }
+        -:   93:
+        -:   94:} // namespace detail
+        -:   95:
+        -:   96:} // namespace boost
+        -:   97:
+        -:   98:namespace std
+        -:   99:{
+        -:  100:template < class Char, class Traits, class D, class V >
+        -:  101:std::basic_ostream< Char, Traits >& operator<<(
+        -:  102:    std::basic_ostream< Char, Traits >& os,
+        -:  103:    const boost::detail::edge_desc_impl< D, V >& e)
+        -:  104:{
+        -:  105:    return os << "(" << e.m_source << "," << e.m_target << ")";
+        -:  106:}
+        -:  107:}
+        -:  108:
+        -:  109:// Boost's functional/hash
+        -:  110:namespace boost
+        -:  111:{
+        -:  112:template < typename D, typename V >
+        -:  113:struct hash< boost::detail::edge_desc_impl< D, V > >
+        -:  114:{
+        -:  115:    std::size_t operator()(const boost::detail::edge_desc_impl< D, V >& x) const
+        -:  116:    {
+        -:  117:        return hash_value(x.get_property());
+        -:  118:    }
+        -:  119:};
+        -:  120:}
+        -:  121:
+        -:  122:#endif // BOOST_GRAPH_DETAIL_DETAIL_EDGE_HPP

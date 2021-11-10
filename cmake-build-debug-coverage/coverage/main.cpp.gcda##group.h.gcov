@@ -1,0 +1,141 @@
+        -:    0:Source:/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/ompi/mpi/cxx/group.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// -*- c++ -*-
+        -:    2://
+        -:    3:// Copyright (c) 2004-2005 The Trustees of Indiana University and Indiana
+        -:    4://                         University Research and Technology
+        -:    5://                         Corporation.  All rights reserved.
+        -:    6:// Copyright (c) 2004-2005 The University of Tennessee and The University
+        -:    7://                         of Tennessee Research Foundation.  All rights
+        -:    8://                         reserved.
+        -:    9:// Copyright (c) 2004-2005 High Performance Computing Center Stuttgart,
+        -:   10://                         University of Stuttgart.  All rights reserved.
+        -:   11:// Copyright (c) 2004-2005 The Regents of the University of California.
+        -:   12://                         All rights reserved.
+        -:   13:// Copyright (c) 2006      Cisco Systems, Inc.  All rights reserved.
+        -:   14:// $COPYRIGHT$
+        -:   15://
+        -:   16:// Additional copyrights may follow
+        -:   17://
+        -:   18:// $HEADER$
+        -:   19://
+        -:   20:
+        -:   21:class Group {
+        -:   22:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:   23:  //  friend class PMPI::Group;
+        -:   24:#endif
+        -:   25:public:
+        -:   26:
+        -:   27:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:   28:
+        -:   29:  // construction
+        -:   30:  inline Group() { }
+        -:   31:  inline Group(MPI_Group i) : pmpi_group(i) { }
+        -:   32:  // copy
+        -:   33:  inline Group(const Group& g) : pmpi_group(g.pmpi_group) { }
+        -:   34:
+        -:   35:  inline Group(const PMPI::Group& g) : pmpi_group(g) { }
+        -:   36:
+        -:   37:  inline virtual ~Group() {}
+        -:   38:
+        -:   39:  Group& operator=(const Group& g) {
+        -:   40:    pmpi_group = g.pmpi_group; return *this;
+        -:   41:  }
+        -:   42:
+        -:   43:  // comparison
+        -:   44:  inline bool operator== (const Group &a) {
+        -:   45:    return (bool)(pmpi_group == a.pmpi_group);
+        -:   46:  }
+        -:   47:  inline bool operator!= (const Group &a) {
+        -:   48:    return (bool)!(*this == a);
+        -:   49:  }
+        -:   50:
+        -:   51:  // inter-language operability
+        -:   52:  Group& operator= (const MPI_Group &i) { pmpi_group = i; return *this; }
+        -:   53:  inline operator MPI_Group () const { return pmpi_group.mpi(); }
+        -:   54:  //  inline operator MPI_Group* () const { return pmpi_group; }
+        -:   55:  inline operator const PMPI::Group&() const { return pmpi_group; }
+        -:   56:
+        -:   57:  const PMPI::Group& pmpi() { return pmpi_group; }
+        -:   58:#else
+        -:   59:
+        -:   60:  // construction
+        -:   61:  inline Group() : mpi_group(MPI_GROUP_NULL) { }
+function _ZN3MPI5GroupC2EP12ompi_group_t called 0 returned 0% blocks executed 0%
+    #####:   62:  inline Group(MPI_Group i) : mpi_group(i) { }
+    $$$$$:   62-block  0
+        -:   63:
+        -:   64:  // copy
+        -:   65:  inline Group(const Group& g) : mpi_group(g.mpi_group) { }
+        -:   66:
+function _ZN3MPI5GroupD0Ev called 0 returned 0% blocks executed 0%
+function _ZN3MPI5GroupD2Ev called 0 returned 0% blocks executed 0%
+    #####:   67:  inline virtual ~Group() {}
+    $$$$$:   67-block  0
+    $$$$$:   67-block  1
+call    0 never executed
+call    1 never executed
+    $$$$$:   67-block  2
+        -:   68:
+        -:   69:  inline Group& operator=(const Group& g) { mpi_group = g.mpi_group; return *this; }
+        -:   70:
+        -:   71:  // comparison
+        -:   72:  inline bool operator== (const Group &a) { return (bool)(mpi_group == a.mpi_group); }
+        -:   73:  inline bool operator!= (const Group &a) { return (bool)!(*this == a); }
+        -:   74:
+        -:   75:  // inter-language operability
+        -:   76:  inline Group& operator= (const MPI_Group &i) { mpi_group = i; return *this; }
+function _ZNK3MPI5GroupcvP12ompi_group_tEv called 0 returned 0% blocks executed 0%
+    #####:   77:  inline operator MPI_Group () const { return mpi_group; }
+    $$$$$:   77-block  0
+    $$$$$:   77-block  1
+        -:   78:  //  inline operator MPI_Group* () const { return (MPI_Group*)&mpi_group; }
+        -:   79:
+        -:   80:  inline MPI_Group mpi() const { return mpi_group; }
+        -:   81:
+        -:   82:#endif
+        -:   83:
+        -:   84:  //
+        -:   85:  // Groups, Contexts, and Communicators
+        -:   86:  //
+        -:   87:
+        -:   88:  virtual int Get_size() const;
+        -:   89:
+        -:   90:  virtual int Get_rank() const;
+        -:   91:
+        -:   92:  static void Translate_ranks (const Group& group1, int n, const int ranks1[],
+        -:   93:			       const Group& group2, int ranks2[]);
+        -:   94:
+        -:   95:  static int Compare(const Group& group1, const Group& group2);
+        -:   96:
+        -:   97:  static Group Union(const Group &group1, const Group &group2);
+        -:   98:
+        -:   99:  static Group Intersect(const Group &group1, const Group &group2);
+        -:  100:
+        -:  101:  static Group Difference(const Group &group1, const Group &group2);
+        -:  102:
+        -:  103:  virtual Group Incl(int n, const int ranks[]) const;
+        -:  104:
+        -:  105:  virtual Group Excl(int n, const int ranks[]) const;
+        -:  106:
+        -:  107:  virtual Group Range_incl(int n, const int ranges[][3]) const;
+        -:  108:
+        -:  109:  virtual Group Range_excl(int n, const int ranges[][3]) const;
+        -:  110:
+        -:  111:  virtual void Free();
+        -:  112:
+        -:  113:protected:
+        -:  114:#if ! 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:  115:  MPI_Group mpi_group;
+        -:  116:#endif
+        -:  117:
+        -:  118:#if 0 /* OMPI_ENABLE_MPI_PROFILING */
+        -:  119:private:
+        -:  120:  PMPI::Group pmpi_group;
+        -:  121:#endif
+        -:  122:
+        -:  123:};
+        -:  124:

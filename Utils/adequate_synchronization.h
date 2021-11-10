@@ -7,48 +7,50 @@
 
 #include "../GraphClasses/GeneralGraph.h"
 #include "msleep.h"
+#include "../macros/macros.h"
 
-template <int T>
-void adsync_synchronization_barrier(std::string detail, Graph &g){
-    mssleep(T);
+
+
+
+
+
+template<int T>
+void adsync_synchronization_barrier(std::string detail, Graph &g) {
     synchronize(g.process_group());
-    boost::mpi::communicator().barrier();
     MPI_Barrier(MPI_COMM_WORLD);
-    if (process_id(g.process_group()) == 0) {
-        std::cout << "[info] " << detail << " informs: synchronization has been successful!" << std::endl;
+    if (VERBOSE) {
+        if (process_id(g.process_group()) == 0) {
+            std::cout << "[info] " << detail << " informs: synchronization has been successful!" << std::endl;
+        }
     }
     MPI_Barrier(MPI_COMM_WORLD);
-    mssleep(T);
 }
 
 
-template <int T>
-void adsync_message_barrier(std::string message, Graph &g){
-    mssleep(T);
-    boost::mpi::communicator().barrier();
+template<int T>
+void adsync_message_barrier(std::string message, Graph &g) {
     MPI_Barrier(MPI_COMM_WORLD);
-    if (process_id(g.process_group()) == 0) {
-        std::cout << message << " informs: barrier has been successfully applied!" << std::endl;
+    if (VERBOSE) {
+        if (process_id(g.process_group()) == 0) {
+            std::cout << message << " informs: barrier has been successfully applied!" << std::endl;
+        }
     }
     MPI_Barrier(MPI_COMM_WORLD);
-    mssleep(T);
 }
 
-template <int T>
-void adsync_barrier(){
-    mssleep(T);
+template<int T>
+void adsync_barrier() {
     boost::mpi::communicator().barrier();
     MPI_Barrier(MPI_COMM_WORLD);
-    mssleep(T);
 }
 
-template <int T>
-void adsync_message(std::string message, Graph &g){
-    mssleep(T);
-    if (process_id(g.process_group()) == 0) {
-        std::cout << message << std::endl;
+template<int T>
+void adsync_message(std::string message, Graph &g) {
+    if (VERBOSE) {
+        if (process_id(g.process_group()) == 0) {
+            std::cout << message << std::endl;
+        }
     }
-    mssleep(T);
 }
 
 

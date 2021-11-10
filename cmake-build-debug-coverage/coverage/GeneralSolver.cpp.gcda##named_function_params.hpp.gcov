@@ -1,0 +1,1012 @@
+        -:    0:Source:/usr/include/boost/graph/named_function_params.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://=======================================================================
+        -:    2:// Copyright 1997, 1998, 1999, 2000 University of Notre Dame.
+        -:    3:// Authors: Andrew Lumsdaine, Lie-Quan Lee, Jeremy G. Siek
+        -:    4://
+        -:    5:// Distributed under the Boost Software License, Version 1.0. (See
+        -:    6:// accompanying file LICENSE_1_0.txt or copy at
+        -:    7:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    8://=======================================================================
+        -:    9:
+        -:   10:#ifndef BOOST_GRAPH_NAMED_FUNCTION_PARAMS_HPP
+        -:   11:#define BOOST_GRAPH_NAMED_FUNCTION_PARAMS_HPP
+        -:   12:
+        -:   13:#include <functional>
+        -:   14:#include <vector>
+        -:   15:#include <boost/limits.hpp>
+        -:   16:#include <boost/core/enable_if.hpp>
+        -:   17:#include <boost/core/ref.hpp>
+        -:   18:#include <boost/utility/result_of.hpp>
+        -:   19:#include <boost/preprocessor.hpp>
+        -:   20:#include <boost/parameter/is_argument_pack.hpp>
+        -:   21:#include <boost/parameter/name.hpp>
+        -:   22:#include <boost/parameter/binding.hpp>
+        -:   23:#include <boost/type_traits.hpp>
+        -:   24:#include <boost/mpl/bool.hpp>
+        -:   25:#include <boost/mpl/has_key.hpp>
+        -:   26:#include <boost/graph/properties.hpp>
+        -:   27:#include <boost/graph/detail/d_ary_heap.hpp>
+        -:   28:#include <boost/property_map/property_map.hpp>
+        -:   29:#include <boost/property_map/shared_array_property_map.hpp>
+        -:   30:
+        -:   31:namespace boost
+        -:   32:{
+        -:   33:
+        -:   34:struct parity_map_t
+        -:   35:{
+        -:   36:};
+        -:   37:struct vertex_assignment_map_t
+        -:   38:{
+        -:   39:};
+        -:   40:struct distance_compare_t
+        -:   41:{
+        -:   42:};
+        -:   43:struct distance_combine_t
+        -:   44:{
+        -:   45:};
+        -:   46:struct distance_inf_t
+        -:   47:{
+        -:   48:};
+        -:   49:struct distance_zero_t
+        -:   50:{
+        -:   51:};
+        -:   52:struct buffer_param_t
+        -:   53:{
+        -:   54:};
+        -:   55:struct edge_copy_t
+        -:   56:{
+        -:   57:};
+        -:   58:struct vertex_copy_t
+        -:   59:{
+        -:   60:};
+        -:   61:struct vertex_isomorphism_t
+        -:   62:{
+        -:   63:};
+        -:   64:struct vertex_invariant_t
+        -:   65:{
+        -:   66:};
+        -:   67:struct vertex_invariant1_t
+        -:   68:{
+        -:   69:};
+        -:   70:struct vertex_invariant2_t
+        -:   71:{
+        -:   72:};
+        -:   73:struct edge_compare_t
+        -:   74:{
+        -:   75:};
+        -:   76:struct vertex_max_invariant_t
+        -:   77:{
+        -:   78:};
+        -:   79:struct orig_to_copy_t
+        -:   80:{
+        -:   81:};
+        -:   82:struct root_vertex_t
+        -:   83:{
+        -:   84:};
+        -:   85:struct polling_t
+        -:   86:{
+        -:   87:};
+        -:   88:struct lookahead_t
+        -:   89:{
+        -:   90:};
+        -:   91:struct in_parallel_t
+        -:   92:{
+        -:   93:};
+        -:   94:struct attractive_force_t
+        -:   95:{
+        -:   96:};
+        -:   97:struct repulsive_force_t
+        -:   98:{
+        -:   99:};
+        -:  100:struct force_pairs_t
+        -:  101:{
+        -:  102:};
+        -:  103:struct cooling_t
+        -:  104:{
+        -:  105:};
+        -:  106:struct vertex_displacement_t
+        -:  107:{
+        -:  108:};
+        -:  109:struct iterations_t
+        -:  110:{
+        -:  111:};
+        -:  112:struct diameter_range_t
+        -:  113:{
+        -:  114:};
+        -:  115:struct learning_constant_range_t
+        -:  116:{
+        -:  117:};
+        -:  118:struct vertices_equivalent_t
+        -:  119:{
+        -:  120:};
+        -:  121:struct edges_equivalent_t
+        -:  122:{
+        -:  123:};
+        -:  124:struct index_in_heap_map_t
+        -:  125:{
+        -:  126:};
+        -:  127:struct max_priority_queue_t
+        -:  128:{
+        -:  129:};
+        -:  130:
+        -:  131:#define BOOST_BGL_DECLARE_NAMED_PARAMS                                         \
+        -:  132:    BOOST_BGL_ONE_PARAM_CREF(weight_map, edge_weight)                          \
+        -:  133:    BOOST_BGL_ONE_PARAM_CREF(weight_map2, edge_weight2)                        \
+        -:  134:    BOOST_BGL_ONE_PARAM_CREF(distance_map, vertex_distance)                    \
+        -:  135:    BOOST_BGL_ONE_PARAM_CREF(distance_map2, vertex_distance2)                  \
+        -:  136:    BOOST_BGL_ONE_PARAM_CREF(predecessor_map, vertex_predecessor)              \
+        -:  137:    BOOST_BGL_ONE_PARAM_CREF(rank_map, vertex_rank)                            \
+        -:  138:    BOOST_BGL_ONE_PARAM_CREF(root_map, vertex_root)                            \
+        -:  139:    BOOST_BGL_ONE_PARAM_CREF(root_vertex, root_vertex)                         \
+        -:  140:    BOOST_BGL_ONE_PARAM_CREF(edge_centrality_map, edge_centrality)             \
+        -:  141:    BOOST_BGL_ONE_PARAM_CREF(centrality_map, vertex_centrality)                \
+        -:  142:    BOOST_BGL_ONE_PARAM_CREF(parity_map, parity_map)                           \
+        -:  143:    BOOST_BGL_ONE_PARAM_CREF(color_map, vertex_color)                          \
+        -:  144:    BOOST_BGL_ONE_PARAM_CREF(edge_color_map, edge_color)                       \
+        -:  145:    BOOST_BGL_ONE_PARAM_CREF(capacity_map, edge_capacity)                      \
+        -:  146:    BOOST_BGL_ONE_PARAM_CREF(residual_capacity_map, edge_residual_capacity)    \
+        -:  147:    BOOST_BGL_ONE_PARAM_CREF(reverse_edge_map, edge_reverse)                   \
+        -:  148:    BOOST_BGL_ONE_PARAM_CREF(discover_time_map, vertex_discover_time)          \
+        -:  149:    BOOST_BGL_ONE_PARAM_CREF(lowpoint_map, vertex_lowpoint)                    \
+        -:  150:    BOOST_BGL_ONE_PARAM_CREF(vertex_index_map, vertex_index)                   \
+        -:  151:    BOOST_BGL_ONE_PARAM_CREF(vertex_index1_map, vertex_index1)                 \
+        -:  152:    BOOST_BGL_ONE_PARAM_CREF(vertex_index2_map, vertex_index2)                 \
+        -:  153:    BOOST_BGL_ONE_PARAM_CREF(vertex_assignment_map, vertex_assignment_map)     \
+        -:  154:    BOOST_BGL_ONE_PARAM_CREF(visitor, graph_visitor)                           \
+        -:  155:    BOOST_BGL_ONE_PARAM_CREF(distance_compare, distance_compare)               \
+        -:  156:    BOOST_BGL_ONE_PARAM_CREF(distance_combine, distance_combine)               \
+        -:  157:    BOOST_BGL_ONE_PARAM_CREF(distance_inf, distance_inf)                       \
+        -:  158:    BOOST_BGL_ONE_PARAM_CREF(distance_zero, distance_zero)                     \
+        -:  159:    BOOST_BGL_ONE_PARAM_CREF(edge_copy, edge_copy)                             \
+        -:  160:    BOOST_BGL_ONE_PARAM_CREF(vertex_copy, vertex_copy)                         \
+        -:  161:    BOOST_BGL_ONE_PARAM_REF(buffer, buffer_param)                              \
+        -:  162:    BOOST_BGL_ONE_PARAM_CREF(orig_to_copy, orig_to_copy)                       \
+        -:  163:    BOOST_BGL_ONE_PARAM_CREF(isomorphism_map, vertex_isomorphism)              \
+        -:  164:    BOOST_BGL_ONE_PARAM_CREF(vertex_invariant, vertex_invariant)               \
+        -:  165:    BOOST_BGL_ONE_PARAM_CREF(vertex_invariant1, vertex_invariant1)             \
+        -:  166:    BOOST_BGL_ONE_PARAM_CREF(vertex_invariant2, vertex_invariant2)             \
+        -:  167:    BOOST_BGL_ONE_PARAM_CREF(vertex_max_invariant, vertex_max_invariant)       \
+        -:  168:    BOOST_BGL_ONE_PARAM_CREF(polling, polling)                                 \
+        -:  169:    BOOST_BGL_ONE_PARAM_CREF(lookahead, lookahead)                             \
+        -:  170:    BOOST_BGL_ONE_PARAM_CREF(in_parallel, in_parallel)                         \
+        -:  171:    BOOST_BGL_ONE_PARAM_CREF(displacement_map, vertex_displacement)            \
+        -:  172:    BOOST_BGL_ONE_PARAM_CREF(attractive_force, attractive_force)               \
+        -:  173:    BOOST_BGL_ONE_PARAM_CREF(repulsive_force, repulsive_force)                 \
+        -:  174:    BOOST_BGL_ONE_PARAM_CREF(force_pairs, force_pairs)                         \
+        -:  175:    BOOST_BGL_ONE_PARAM_CREF(cooling, cooling)                                 \
+        -:  176:    BOOST_BGL_ONE_PARAM_CREF(iterations, iterations)                           \
+        -:  177:    BOOST_BGL_ONE_PARAM_CREF(diameter_range, diameter_range)                   \
+        -:  178:    BOOST_BGL_ONE_PARAM_CREF(learning_constant_range, learning_constant_range) \
+        -:  179:    BOOST_BGL_ONE_PARAM_CREF(vertices_equivalent, vertices_equivalent)         \
+        -:  180:    BOOST_BGL_ONE_PARAM_CREF(edges_equivalent, edges_equivalent)               \
+        -:  181:    BOOST_BGL_ONE_PARAM_CREF(index_in_heap_map, index_in_heap_map)             \
+        -:  182:    BOOST_BGL_ONE_PARAM_REF(max_priority_queue, max_priority_queue)
+        -:  183:
+        -:  184:template < typename T, typename Tag, typename Base = no_property >
+        -:  185:struct bgl_named_params
+        -:  186:{
+        -:  187:    typedef bgl_named_params self;
+        -:  188:    typedef Base next_type;
+        -:  189:    typedef Tag tag_type;
+        -:  190:    typedef T value_type;
+        -:  191:    bgl_named_params(T v = T()) : m_value(v) {}
+        -:  192:    bgl_named_params(T v, const Base& b) : m_value(v), m_base(b) {}
+        -:  193:    T m_value;
+        -:  194:    Base m_base;
+        -:  195:
+        -:  196:#define BOOST_BGL_ONE_PARAM_REF(name, key)                           \
+        -:  197:    template < typename PType >                                      \
+        -:  198:    bgl_named_params< boost::reference_wrapper< PType >,             \
+        -:  199:        BOOST_PP_CAT(key, _t), self >                                \
+        -:  200:    name(PType& p) const                                             \
+        -:  201:    {                                                                \
+        -:  202:        typedef bgl_named_params< boost::reference_wrapper< PType >, \
+        -:  203:            BOOST_PP_CAT(key, _t), self >                            \
+        -:  204:            Params;                                                  \
+        -:  205:        return Params(boost::ref(p), *this);                         \
+        -:  206:    }
+        -:  207:
+        -:  208:#define BOOST_BGL_ONE_PARAM_CREF(name, key)                                    \
+        -:  209:    template < typename PType >                                                \
+        -:  210:    bgl_named_params< PType, BOOST_PP_CAT(key, _t), self > name(               \
+        -:  211:        const PType& p) const                                                  \
+        -:  212:    {                                                                          \
+        -:  213:        typedef bgl_named_params< PType, BOOST_PP_CAT(key, _t), self > Params; \
+        -:  214:        return Params(p, *this);                                               \
+        -:  215:    }
+        -:  216:
+        -:  217:    BOOST_BGL_DECLARE_NAMED_PARAMS
+        -:  218:
+        -:  219:#undef BOOST_BGL_ONE_PARAM_REF
+        -:  220:#undef BOOST_BGL_ONE_PARAM_CREF
+        -:  221:
+        -:  222:    // Duplicate
+        -:  223:    template < typename PType >
+        -:  224:    bgl_named_params< PType, vertex_color_t, self > vertex_color_map(
+        -:  225:        const PType& p) const
+        -:  226:    {
+        -:  227:        return this->color_map(p);
+        -:  228:    }
+        -:  229:};
+        -:  230:
+        -:  231:#define BOOST_BGL_ONE_PARAM_REF(name, key)                           \
+        -:  232:    template < typename PType >                                      \
+        -:  233:    bgl_named_params< boost::reference_wrapper< PType >,             \
+        -:  234:        BOOST_PP_CAT(key, _t) >                                      \
+        -:  235:    name(PType& p)                                                   \
+        -:  236:    {                                                                \
+        -:  237:        typedef bgl_named_params< boost::reference_wrapper< PType >, \
+        -:  238:            BOOST_PP_CAT(key, _t) >                                  \
+        -:  239:            Params;                                                  \
+        -:  240:        return Params(boost::ref(p));                                \
+        -:  241:    }
+        -:  242:
+        -:  243:#define BOOST_BGL_ONE_PARAM_CREF(name, key)                               \
+        -:  244:    template < typename PType >                                           \
+        -:  245:    bgl_named_params< PType, BOOST_PP_CAT(key, _t) > name(const PType& p) \
+        -:  246:    {                                                                     \
+        -:  247:        typedef bgl_named_params< PType, BOOST_PP_CAT(key, _t) > Params;  \
+        -:  248:        return Params(p);                                                 \
+        -:  249:    }
+        -:  250:
+        -:  251:BOOST_BGL_DECLARE_NAMED_PARAMS
+        -:  252:
+        -:  253:#undef BOOST_BGL_ONE_PARAM_REF
+        -:  254:#undef BOOST_BGL_ONE_PARAM_CREF
+        -:  255:
+        -:  256:// Duplicate
+        -:  257:template < typename PType >
+        -:  258:bgl_named_params< PType, vertex_color_t > vertex_color_map(const PType& p)
+        -:  259:{
+        -:  260:    return color_map(p);
+        -:  261:}
+        -:  262:
+        -:  263:namespace detail
+        -:  264:{
+        -:  265:    struct unused_tag_type
+        -:  266:    {
+        -:  267:    };
+        -:  268:}
+        -:  269:typedef bgl_named_params< char, detail::unused_tag_type > no_named_parameters;
+        -:  270:
+        -:  271://===========================================================================
+        -:  272:// Functions for extracting parameters from bgl_named_params
+        -:  273:
+        -:  274:template < typename Tag, typename Args > struct lookup_named_param
+        -:  275:{
+        -:  276:};
+        -:  277:
+        -:  278:template < typename T, typename Tag, typename Base >
+        -:  279:struct lookup_named_param< Tag, bgl_named_params< T, Tag, Base > >
+        -:  280:{
+        -:  281:    typedef T type;
+        -:  282:    static const T& get(const bgl_named_params< T, Tag, Base >& p)
+        -:  283:    {
+        -:  284:        return p.m_value;
+        -:  285:    }
+        -:  286:};
+        -:  287:
+        -:  288:template < typename Tag1, typename T, typename Tag, typename Base >
+        -:  289:struct lookup_named_param< Tag1, bgl_named_params< T, Tag, Base > >
+        -:  290:{
+        -:  291:    typedef typename lookup_named_param< Tag1, Base >::type type;
+        -:  292:    static const type& get(const bgl_named_params< T, Tag, Base >& p)
+        -:  293:    {
+        -:  294:        return lookup_named_param< Tag1, Base >::get(p.m_base);
+        -:  295:    }
+        -:  296:};
+        -:  297:
+        -:  298:template < typename Tag, typename Args, typename Def >
+        -:  299:struct lookup_named_param_def
+        -:  300:{
+        -:  301:    typedef Def type;
+        -:  302:    static const Def& get(const Args&, const Def& def) { return def; }
+        -:  303:};
+        -:  304:
+        -:  305:template < typename T, typename Tag, typename Base, typename Def >
+        -:  306:struct lookup_named_param_def< Tag, bgl_named_params< T, Tag, Base >, Def >
+        -:  307:{
+        -:  308:    typedef T type;
+        -:  309:    static const type& get(
+        -:  310:        const bgl_named_params< T, Tag, Base >& p, const Def&)
+        -:  311:    {
+        -:  312:        return p.m_value;
+        -:  313:    }
+        -:  314:};
+        -:  315:
+        -:  316:template < typename Tag1, typename T, typename Tag, typename Base,
+        -:  317:    typename Def >
+        -:  318:struct lookup_named_param_def< Tag1, bgl_named_params< T, Tag, Base >, Def >
+        -:  319:{
+        -:  320:    typedef typename lookup_named_param_def< Tag1, Base, Def >::type type;
+        -:  321:    static const type& get(
+        -:  322:        const bgl_named_params< T, Tag, Base >& p, const Def& def)
+        -:  323:    {
+        -:  324:        return lookup_named_param_def< Tag1, Base, Def >::get(p.m_base, def);
+        -:  325:    }
+        -:  326:};
+        -:  327:
+        -:  328:struct param_not_found
+        -:  329:{
+        -:  330:};
+        -:  331:static param_not_found g_param_not_found;
+        -:  332:
+        -:  333:template < typename Tag, typename Args >
+        -:  334:struct get_param_type : lookup_named_param_def< Tag, Args, param_not_found >
+        -:  335:{
+        -:  336:};
+        -:  337:
+        -:  338:template < class Tag, typename Args >
+        -:  339:inline const typename lookup_named_param_def< Tag, Args,
+        -:  340:    param_not_found >::type&
+        -:  341:get_param(const Args& p, Tag)
+        -:  342:{
+        -:  343:    return lookup_named_param_def< Tag, Args, param_not_found >::get(
+        -:  344:        p, g_param_not_found);
+        -:  345:}
+        -:  346:
+        -:  347:template < class P, class Default >
+        -:  348:const P& choose_param(const P& param, const Default&)
+        -:  349:{
+        -:  350:    return param;
+        -:  351:}
+        -:  352:
+        -:  353:template < class Default >
+        -:  354:Default choose_param(const param_not_found&, const Default& d)
+        -:  355:{
+        -:  356:    return d;
+        -:  357:}
+        -:  358:
+        -:  359:template < typename T > inline bool is_default_param(const T&) { return false; }
+        -:  360:
+        -:  361:inline bool is_default_param(const param_not_found&) { return true; }
+        -:  362:
+        -:  363:namespace detail
+        -:  364:{
+        -:  365:    template < typename T > struct const_type_as_type
+        -:  366:    {
+        -:  367:        typedef typename T::const_type type;
+        -:  368:    };
+        -:  369:} // namespace detail
+        -:  370:
+        -:  371:// Use this function instead of choose_param() when you want
+        -:  372:// to avoid requiring get(tag, g) when it is not used.
+        -:  373:namespace detail
+        -:  374:{
+        -:  375:    template < typename GraphIsConst, typename Graph, typename Param,
+        -:  376:        typename Tag >
+        -:  377:    struct choose_impl_result
+        -:  378:    : boost::mpl::eval_if< boost::is_same< Param, param_not_found >,
+        -:  379:          boost::mpl::eval_if< GraphIsConst,
+        -:  380:              detail::const_type_as_type< property_map< Graph, Tag > >,
+        -:  381:              property_map< Graph, Tag > >,
+        -:  382:          boost::mpl::identity< Param > >
+        -:  383:    {
+        -:  384:    };
+        -:  385:
+        -:  386:    // Parameters of f are (GraphIsConst, Graph, Param, Tag)
+        -:  387:    template < bool Found > struct choose_impl_helper;
+        -:  388:
+        -:  389:    template <> struct choose_impl_helper< false >
+        -:  390:    {
+        -:  391:        template < typename Param, typename Graph, typename PropertyTag >
+        -:  392:        static
+        -:  393:            typename property_map< typename boost::remove_const< Graph >::type,
+        -:  394:                PropertyTag >::const_type
+        -:  395:            f(boost::mpl::true_, const Graph& g, const Param&, PropertyTag tag)
+        -:  396:        {
+        -:  397:            return get(tag, g);
+        -:  398:        }
+        -:  399:
+        -:  400:        template < typename Param, typename Graph, typename PropertyTag >
+        -:  401:        static
+        -:  402:            typename property_map< typename boost::remove_const< Graph >::type,
+        -:  403:                PropertyTag >::type
+        -:  404:            f(boost::mpl::false_, Graph& g, const Param&, PropertyTag tag)
+        -:  405:        {
+        -:  406:            return get(tag, g);
+        -:  407:        }
+        -:  408:    };
+        -:  409:
+        -:  410:    template <> struct choose_impl_helper< true >
+        -:  411:    {
+        -:  412:        template < typename GraphIsConst, typename Param, typename Graph,
+        -:  413:            typename PropertyTag >
+        -:  414:        static Param f(GraphIsConst, const Graph&, const Param& p, PropertyTag)
+        -:  415:        {
+        -:  416:            return p;
+        -:  417:        }
+        -:  418:    };
+        -:  419:}
+        -:  420:
+        -:  421:template < typename Param, typename Graph, typename PropertyTag >
+        -:  422:typename detail::choose_impl_result< boost::mpl::true_, Graph, Param,
+        -:  423:    PropertyTag >::type
+        -:  424:choose_const_pmap(const Param& p, const Graph& g, PropertyTag tag)
+        -:  425:{
+        -:  426:    return detail::choose_impl_helper< !boost::is_same< Param,
+        -:  427:        param_not_found >::value >::f(boost::mpl::true_(), g, p, tag);
+        -:  428:}
+        -:  429:
+        -:  430:template < typename Param, typename Graph, typename PropertyTag >
+        -:  431:typename detail::choose_impl_result< boost::mpl::false_, Graph, Param,
+        -:  432:    PropertyTag >::type
+        -:  433:choose_pmap(const Param& p, Graph& g, PropertyTag tag)
+        -:  434:{
+        -:  435:    return detail::choose_impl_helper< !boost::is_same< Param,
+        -:  436:        param_not_found >::value >::f(boost::mpl::false_(), g, p, tag);
+        -:  437:}
+        -:  438:
+        -:  439:namespace detail
+        -:  440:{
+        -:  441:
+        -:  442:    // used in the max-flow algorithms
+        -:  443:    template < class Graph, class P, class T, class R >
+        -:  444:    struct edge_capacity_value
+        -:  445:    {
+        -:  446:        typedef bgl_named_params< P, T, R > Params;
+        -:  447:        typedef typename detail::choose_impl_result< boost::mpl::true_, Graph,
+        -:  448:            typename get_param_type< edge_capacity_t, Params >::type,
+        -:  449:            edge_capacity_t >::type CapacityEdgeMap;
+        -:  450:        typedef typename property_traits< CapacityEdgeMap >::value_type type;
+        -:  451:    };
+        -:  452:    // used in the max-flow algorithms
+        -:  453:    template < class Graph, class P, class T, class R > struct edge_weight_value
+        -:  454:    {
+        -:  455:        typedef bgl_named_params< P, T, R > Params;
+        -:  456:        typedef typename detail::choose_impl_result< boost::mpl::true_, Graph,
+        -:  457:            typename get_param_type< edge_weight_t, Params >::type,
+        -:  458:            edge_weight_t >::type WeightMap;
+        -:  459:        typedef typename property_traits< WeightMap >::value_type type;
+        -:  460:    };
+        -:  461:
+        -:  462:}
+        -:  463:
+        -:  464:// Declare all new tags
+        -:  465:namespace graph
+        -:  466:{
+        -:  467:    namespace keywords
+        -:  468:    {
+        -:  469:#define BOOST_BGL_ONE_PARAM_REF(name, key) BOOST_PARAMETER_NAME(name)
+        -:  470:#define BOOST_BGL_ONE_PARAM_CREF(name, key) BOOST_PARAMETER_NAME(name)
+        -:  471:        BOOST_BGL_DECLARE_NAMED_PARAMS
+        -:  472:#undef BOOST_BGL_ONE_PARAM_REF
+        -:  473:#undef BOOST_BGL_ONE_PARAM_CREF
+        -:  474:    }
+        -:  475:}
+        -:  476:
+        -:  477:namespace detail
+        -:  478:{
+        -:  479:    template < typename Tag > struct convert_one_keyword
+        -:  480:    {
+        -:  481:    };
+        -:  482:#define BOOST_BGL_ONE_PARAM_REF(name, key)                          \
+        -:  483:    template <> struct convert_one_keyword< BOOST_PP_CAT(key, _t) > \
+        -:  484:    {                                                               \
+        -:  485:        typedef boost::graph::keywords::tag::name type;             \
+        -:  486:    };
+        -:  487:#define BOOST_BGL_ONE_PARAM_CREF(name, key) BOOST_BGL_ONE_PARAM_REF(name, key)
+        -:  488:    BOOST_BGL_DECLARE_NAMED_PARAMS
+        -:  489:#undef BOOST_BGL_ONE_PARAM_REF
+        -:  490:#undef BOOST_BGL_ONE_PARAM_CREF
+        -:  491:
+        -:  492:    template < typename T > struct convert_bgl_params_to_boost_parameter
+        -:  493:    {
+        -:  494:        typedef
+        -:  495:            typename convert_one_keyword< typename T::tag_type >::type new_kw;
+        -:  496:        typedef boost::parameter::aux::tagged_argument< new_kw,
+        -:  497:            const typename T::value_type >
+        -:  498:            tagged_arg_type;
+        -:  499:        typedef convert_bgl_params_to_boost_parameter< typename T::next_type >
+        -:  500:            rest_conv;
+        -:  501:        typedef boost::parameter::aux::arg_list< tagged_arg_type,
+        -:  502:            typename rest_conv::type >
+        -:  503:            type;
+        -:  504:        static type conv(const T& x)
+        -:  505:        {
+        -:  506:            return type(tagged_arg_type(x.m_value), rest_conv::conv(x.m_base));
+        -:  507:        }
+        -:  508:    };
+        -:  509:
+        -:  510:    template < typename P, typename R >
+        -:  511:    struct convert_bgl_params_to_boost_parameter<
+        -:  512:        bgl_named_params< P, int, R > >
+        -:  513:    {
+        -:  514:        typedef convert_bgl_params_to_boost_parameter< R > rest_conv;
+        -:  515:        typedef typename rest_conv::type type;
+        -:  516:        static type conv(const bgl_named_params< P, int, R >& x)
+        -:  517:        {
+        -:  518:            return rest_conv::conv(x.m_base);
+        -:  519:        }
+        -:  520:    };
+        -:  521:
+        -:  522:    template <>
+        -:  523:    struct convert_bgl_params_to_boost_parameter< boost::no_property >
+        -:  524:    {
+        -:  525:        typedef boost::parameter::aux::empty_arg_list type;
+        -:  526:        static type conv(const boost::no_property&) { return type(); }
+        -:  527:    };
+        -:  528:
+        -:  529:    template <>
+        -:  530:    struct convert_bgl_params_to_boost_parameter< boost::no_named_parameters >
+        -:  531:    {
+        -:  532:        typedef boost::parameter::aux::empty_arg_list type;
+        -:  533:        static type conv(const boost::no_named_parameters&) { return type(); }
+        -:  534:    };
+        -:  535:
+        -:  536:    struct bgl_parameter_not_found_type
+        -:  537:    {
+        -:  538:    };
+        -:  539:}
+        -:  540:
+        -:  541:#define BOOST_GRAPH_DECLARE_CONVERTED_PARAMETERS(old_type, old_var)        \
+        -:  542:    typedef typename boost::detail::convert_bgl_params_to_boost_parameter< \
+        -:  543:        old_type >::type arg_pack_type;                                    \
+        -:  544:    arg_pack_type arg_pack                                                 \
+        -:  545:        = boost::detail::convert_bgl_params_to_boost_parameter<            \
+        -:  546:            old_type >::conv(old_var);
+        -:  547:
+        -:  548:namespace detail
+        -:  549:{
+        -:  550:
+        -:  551:    template < typename ArgType, typename Prop, typename Graph, bool Exists >
+        -:  552:    struct override_const_property_t
+        -:  553:    {
+        -:  554:        typedef typename boost::remove_const< ArgType >::type result_type;
+        -:  555:        result_type operator()(const Graph&, const ArgType& a) const
+        -:  556:        {
+        -:  557:            return a;
+        -:  558:        }
+        -:  559:    };
+        -:  560:
+        -:  561:    template < typename ArgType, typename Prop, typename Graph >
+        -:  562:    struct override_const_property_t< ArgType, Prop, Graph, false >
+        -:  563:    {
+        -:  564:        typedef
+        -:  565:            typename boost::property_map< Graph, Prop >::const_type result_type;
+        -:  566:        result_type operator()(const Graph& g, const ArgType&) const
+        -:  567:        {
+        -:  568:            return get(Prop(), g);
+        -:  569:        }
+        -:  570:    };
+        -:  571:
+        -:  572:    template < typename ArgPack, typename Tag, typename Prop, typename Graph >
+        -:  573:    struct override_const_property_result
+        -:  574:    {
+        -:  575:        typedef typename boost::mpl::has_key< ArgPack, Tag >::type
+        -:  576:            _parameter_exists;
+        -:  577:        typedef typename override_const_property_t<
+        -:  578:            typename boost::parameter::value_type< ArgPack, Tag, int >::type,
+        -:  579:            Prop, Graph, _parameter_exists::value >::result_type type;
+        -:  580:    };
+        -:  581:
+        -:  582:    template < typename ArgPack, typename Tag, typename Prop, typename Graph >
+        -:  583:    typename override_const_property_result< ArgPack, Tag, Prop, Graph >::type
+        -:  584:    override_const_property(const ArgPack& ap,
+        -:  585:        const boost::parameter::keyword< Tag >& t, const Graph& g, Prop)
+        -:  586:    {
+        -:  587:        typedef typename boost::mpl::has_key< ArgPack, Tag >::type
+        -:  588:            _parameter_exists;
+        -:  589:        return override_const_property_t<
+        -:  590:            typename boost::parameter::value_type< ArgPack, Tag, int >::type,
+        -:  591:            Prop, Graph, _parameter_exists::value >()(g, ap[t | 0]);
+        -:  592:    }
+        -:  593:
+        -:  594:    template < typename ArgType, typename Prop, typename Graph, bool Exists >
+        -:  595:    struct override_property_t
+        -:  596:    {
+        -:  597:        typedef ArgType result_type;
+        -:  598:        result_type operator()(const Graph&,
+        -:  599:            typename boost::add_lvalue_reference< ArgType >::type a) const
+        -:  600:        {
+        -:  601:            return a;
+        -:  602:        }
+        -:  603:    };
+        -:  604:
+        -:  605:    template < typename ArgType, typename Prop, typename Graph >
+        -:  606:    struct override_property_t< ArgType, Prop, Graph, false >
+        -:  607:    {
+        -:  608:        typedef typename boost::property_map< Graph, Prop >::type result_type;
+        -:  609:        result_type operator()(const Graph& g, const ArgType&) const
+        -:  610:        {
+        -:  611:            return get(Prop(), g);
+        -:  612:        }
+        -:  613:    };
+        -:  614:
+        -:  615:    template < typename ArgPack, typename Tag, typename Prop, typename Graph >
+        -:  616:    struct override_property_result
+        -:  617:    {
+        -:  618:        typedef typename boost::mpl::has_key< ArgPack, Tag >::type
+        -:  619:            _parameter_exists;
+        -:  620:        typedef typename override_property_t<
+        -:  621:            typename boost::parameter::value_type< ArgPack, Tag, int >::type,
+        -:  622:            Prop, Graph, _parameter_exists::value >::result_type type;
+        -:  623:    };
+        -:  624:
+        -:  625:    template < typename ArgPack, typename Tag, typename Prop, typename Graph >
+        -:  626:    typename override_property_result< ArgPack, Tag, Prop, Graph >::type
+        -:  627:    override_property(const ArgPack& ap,
+        -:  628:        const boost::parameter::keyword< Tag >& t, const Graph& g, Prop)
+        -:  629:    {
+        -:  630:        typedef typename boost::mpl::has_key< ArgPack, Tag >::type
+        -:  631:            _parameter_exists;
+        -:  632:        return override_property_t<
+        -:  633:            typename boost::parameter::value_type< ArgPack, Tag, int >::type,
+        -:  634:            Prop, Graph, _parameter_exists::value >()(g, ap[t | 0]);
+        -:  635:    }
+        -:  636:
+        -:  637:    template < typename F > struct make_arg_pack_type;
+        -:  638:    template <> struct make_arg_pack_type< void() >
+        -:  639:    {
+        -:  640:        typedef boost::parameter::aux::empty_arg_list type;
+        -:  641:    };
+        -:  642:    template < typename K, typename A > struct make_arg_pack_type< void(K, A) >
+        -:  643:    {
+        -:  644:        typedef boost::parameter::aux::tagged_argument< K, A > type;
+        -:  645:    };
+        -:  646:
+        -:  647:#define BOOST_GRAPH_OPENING_PART_OF_PAIR(z, i, n)                          \
+        -:  648:    boost::parameter::aux::arg_list                                        \
+        -:  649:        < boost::parameter::aux::tagged_argument< BOOST_PP_CAT(Keyword,    \
+        -:  650:                                                      BOOST_PP_SUB(n, i)), \
+        -:  651:            BOOST_PP_CAT(Arg, BOOST_PP_SUB(n, i)) >,
+        -:  652:#define BOOST_GRAPH_MAKE_PAIR_PARAM(z, i, _)                                \
+        -:  653:    const boost::parameter::aux::tagged_argument< BOOST_PP_CAT(Keyword, i), \
+        -:  654:        BOOST_PP_CAT(Arg, i) >& BOOST_PP_CAT(kw, i)
+        -:  655:
+        -:  656:#define BOOST_GRAPH_MAKE_AP_TYPE_SPECIALIZATION(z, i, _)                  \
+        -:  657:    template < BOOST_PP_ENUM_PARAMS(i, typename Keyword),                 \
+        -:  658:        BOOST_PP_ENUM_PARAMS(i, typename Arg) >                           \
+        -:  659:    struct make_arg_pack_type< void(                                      \
+        -:  660:        BOOST_PP_ENUM_PARAMS(i, Keyword), BOOST_PP_ENUM_PARAMS(i, Arg)) > \
+        -:  661:    {                                                                     \
+        -:  662:        typedef BOOST_PP_REPEAT(i, BOOST_GRAPH_OPENING_PART_OF_PAIR,      \
+        -:  663:            BOOST_PP_DEC(i)) boost::parameter::aux::empty_arg_list        \
+        -:  664:            BOOST_PP_REPEAT(i, > BOOST_PP_TUPLE_EAT(3), ~) type;          \
+        -:  665:    };
+        -:  666:    BOOST_PP_REPEAT_FROM_TO(2, 11, BOOST_GRAPH_MAKE_AP_TYPE_SPECIALIZATION, ~)
+        -:  667:#undef BOOST_GRAPH_MAKE_AP_TYPE_SPECIALIZATION
+        -:  668:
+        -:  669:#define BOOST_GRAPH_MAKE_FORWARDING_FUNCTION(name, nfixed, nnamed_max)        \
+        -:  670:    /* Entry point for conversion from BGL-style named parameters */          \
+        -:  671:    template < BOOST_PP_ENUM_PARAMS(nfixed, typename Param)                   \
+        -:  672:            BOOST_PP_COMMA_IF(nfixed) typename ArgPack >                      \
+        -:  673:        typename boost::result_of< detail::BOOST_PP_CAT(name, _impl)          \
+        -:  674:            < BOOST_PP_ENUM_PARAMS(nfixed, Param) >(BOOST_PP_ENUM_PARAMS(     \
+        -:  675:            nfixed, Param) BOOST_PP_COMMA_IF(nfixed) const ArgPack&)          \
+        -:  676:        > ::type BOOST_PP_CAT(name, _with_named_params)(                      \
+        -:  677:            BOOST_PP_ENUM_BINARY_PARAMS(nfixed, const Param, &param)          \
+        -:  678:                BOOST_PP_COMMA_IF(nfixed) const ArgPack& arg_pack)            \
+        -:  679:    {                                                                         \
+        -:  680:        return detail::BOOST_PP_CAT(                                          \
+        -:  681:            name, _impl)< BOOST_PP_ENUM_PARAMS(nfixed, Param) >()(            \
+        -:  682:            BOOST_PP_ENUM_PARAMS(nfixed, param) BOOST_PP_COMMA_IF(nfixed)     \
+        -:  683:                arg_pack);                                                    \
+        -:  684:    }                                                                         \
+        -:  685:    /* Individual functions taking Boost.Parameter-style keyword arguments */ \
+        -:  686:    BOOST_PP_REPEAT(BOOST_PP_INC(nnamed_max),                                 \
+        -:  687:        BOOST_GRAPH_MAKE_FORWARDING_FUNCTION_ONE, (name)(nfixed))
+        -:  688:
+        -:  689:#define BOOST_GRAPH_MAKE_FORWARDING_FUNCTION_ONE(z, nnamed, seq) \
+        -:  690:    BOOST_GRAPH_MAKE_FORWARDING_FUNCTION_ONEX(                   \
+        -:  691:        z, nnamed, BOOST_PP_SEQ_ELEM(0, seq), BOOST_PP_SEQ_ELEM(1, seq))
+        -:  692:
+        -:  693:#define BOOST_GRAPH_MAKE_FORWARDING_FUNCTION_ONEX(z, nnamed, name, nfixed)     \
+        -:  694:    template < BOOST_PP_ENUM_PARAMS_Z(z, nfixed, typename Param)               \
+        -:  695:            BOOST_PP_ENUM_TRAILING_PARAMS_Z(                                   \
+        -:  696:                z, nnamed, typename ArgumentPack) >                            \
+        -:  697:    typename BOOST_PP_EXPR_IF(nnamed,                                          \
+        -:  698:        boost::lazy_enable_if                                                  \
+        -:  699:            < boost::parameter::is_argument_pack< ArgumentPack0 >)             \
+        -:  700:        BOOST_PP_COMMA_IF(nnamed)::boost::graph::detail::BOOST_PP_CAT(         \
+        -:  701:            name, _impl)< BOOST_PP_ENUM_PARAMS_Z(z, nfixed, Param) >           \
+        -:  702:            BOOST_PP_EXPR_IF(nnamed, >)::type name(                            \
+        -:  703:                BOOST_PP_ENUM_BINARY_PARAMS_Z(z, nfixed, Param, const& param)  \
+        -:  704:                    BOOST_PP_ENUM_TRAILING_BINARY_PARAMS_Z(                    \
+        -:  705:                        z, nnamed, ArgumentPack, const& tagged_arg))           \
+        -:  706:    {                                                                          \
+        -:  707:        return ::boost::graph::BOOST_PP_CAT(name, _with_named_params)(         \
+        -:  708:            BOOST_PP_ENUM_PARAMS_Z(z, nfixed, param) BOOST_PP_COMMA_IF(nnamed) \
+        -:  709:                BOOST_PP_LPAREN_IF(nnamed) BOOST_PP_ENUM_PARAMS_Z(             \
+        -:  710:                    z, nnamed, tagged_arg) BOOST_PP_RPAREN_IF(nnamed));        \
+        -:  711:    }
+        -:  712:
+        -:  713:#define BOOST_GRAPH_MAKE_OLD_STYLE_PARAMETER_FUNCTION(name, nfixed)            \
+        -:  714:    template < BOOST_PP_ENUM_PARAMS(nfixed, typename Param)                    \
+        -:  715:                   BOOST_PP_COMMA_IF(nfixed) class P,                          \
+        -:  716:        class T, class R >                                                     \
+        -:  717:    typename boost::result_of< ::boost::graph::detail::BOOST_PP_CAT(           \
+        -:  718:        name, _impl) BOOST_PP_EXPR_IF(nfixed, <) BOOST_PP_ENUM_PARAMS(nfixed,  \
+        -:  719:        Param) BOOST_PP_EXPR_IF(nfixed, >)(BOOST_PP_ENUM_PARAMS(nfixed, Param) \
+        -:  720:            BOOST_PP_COMMA_IF(nfixed) const typename boost::detail::           \
+        -:  721:                convert_bgl_params_to_boost_parameter<                         \
+        -:  722:                    boost::bgl_named_params< P, T, R > >::type&) >::type       \
+        -:  723:    name(BOOST_PP_ENUM_BINARY_PARAMS(nfixed, const Param, &param)              \
+        -:  724:            BOOST_PP_COMMA_IF(nfixed)                                          \
+        -:  725:                const boost::bgl_named_params< P, T, R >& old_style_params)    \
+        -:  726:    {                                                                          \
+        -:  727:        typedef boost::bgl_named_params< P, T, R > old_style_params_type;      \
+        -:  728:        BOOST_GRAPH_DECLARE_CONVERTED_PARAMETERS(                              \
+        -:  729:            old_style_params_type, old_style_params)                           \
+        -:  730:        return ::boost::graph::BOOST_PP_CAT(name, _with_named_params)(         \
+        -:  731:            BOOST_PP_ENUM_PARAMS(nfixed, param) BOOST_PP_COMMA_IF(nfixed)      \
+        -:  732:                arg_pack);                                                     \
+        -:  733:    }                                                                          \
+        -:  734:    BOOST_PP_EXPR_IF(nfixed, template < )                                      \
+        -:  735:    BOOST_PP_ENUM_PARAMS(nfixed, typename Param)                               \
+        -:  736:    BOOST_PP_EXPR_IF(nfixed, >)                                                \
+        -:  737:    BOOST_PP_EXPR_IF(nfixed, typename)                                         \
+        -:  738:        boost::result_of< ::boost::graph::detail::BOOST_PP_CAT(                \
+        -:  739:            name, _impl) BOOST_PP_EXPR_IF(nfixed,                              \
+        -:  740:            <) BOOST_PP_ENUM_PARAMS(nfixed, Param) BOOST_PP_EXPR_IF(nfixed,    \
+        -:  741:            >)(BOOST_PP_ENUM_PARAMS(nfixed, Param) BOOST_PP_COMMA_IF(nfixed)   \
+        -:  742:                const boost::parameter::aux::empty_arg_list&) >::type          \
+        -:  743:            name(BOOST_PP_ENUM_BINARY_PARAMS(nfixed, const Param, &param))     \
+        -:  744:    {                                                                          \
+        -:  745:        BOOST_GRAPH_DECLARE_CONVERTED_PARAMETERS(                              \
+        -:  746:            boost::no_named_parameters, boost::no_named_parameters())          \
+        -:  747:        return ::boost::graph::BOOST_PP_CAT(name, _with_named_params)(         \
+        -:  748:            BOOST_PP_ENUM_PARAMS(nfixed, param) BOOST_PP_COMMA_IF(nfixed)      \
+        -:  749:                arg_pack);                                                     \
+        -:  750:    }
+        -:  751:
+        -:  752:}
+        -:  753:
+        -:  754:namespace detail
+        -:  755:{
+        -:  756:
+        -:  757:    template < bool Exists, typename Graph, typename ArgPack, typename Value,
+        -:  758:        typename PM >
+        -:  759:    struct map_maker_helper
+        -:  760:    {
+        -:  761:        typedef PM map_type;
+        -:  762:        static PM make_map(const Graph&, Value, const PM& pm, const ArgPack&)
+        -:  763:        {
+        -:  764:            return pm;
+        -:  765:        }
+        -:  766:    };
+        -:  767:
+        -:  768:    template < typename Graph, typename ArgPack, typename Value, typename PM >
+        -:  769:    struct map_maker_helper< false, Graph, ArgPack, Value, PM >
+        -:  770:    {
+        -:  771:        typedef typename boost::mpl::has_key< ArgPack,
+        -:  772:            boost::graph::keywords::tag::vertex_index_map >::type
+        -:  773:            _parameter_exists;
+        -:  774:        typedef
+        -:  775:            typename boost::remove_const< typename override_const_property_t<
+        -:  776:                typename boost::parameter::value_type< ArgPack,
+        -:  777:                    boost::graph::keywords::tag::vertex_index_map, int >::type,
+        -:  778:                boost::vertex_index_t, Graph,
+        -:  779:                _parameter_exists::value >::result_type >::type vi_map_type;
+        -:  780:        typedef boost::shared_array_property_map< Value, vi_map_type > map_type;
+        -:  781:        static map_type make_map(
+        -:  782:            const Graph& g, Value v, const PM&, const ArgPack& ap)
+        -:  783:        {
+        -:  784:            return make_shared_array_property_map(num_vertices(g), v,
+        -:  785:                override_const_property(ap,
+        -:  786:                    boost::graph::keywords::_vertex_index_map, g,
+        -:  787:                    vertex_index));
+        -:  788:        }
+        -:  789:    };
+        -:  790:
+        -:  791:    template < typename Graph, typename ArgPack, typename MapTag,
+        -:  792:        typename ValueType >
+        -:  793:    struct map_maker
+        -:  794:    {
+        -:  795:        typedef typename boost::mpl::has_key< ArgPack, MapTag >::type
+        -:  796:            _parameter_exists;
+        -:  797:        BOOST_STATIC_CONSTANT(bool, has_map = (_parameter_exists::value));
+        -:  798:        typedef map_maker_helper< has_map, Graph, ArgPack, ValueType,
+        -:  799:            typename boost::remove_const< typename boost::parameter::value_type<
+        -:  800:                ArgPack, MapTag, int >::type >::type >
+        -:  801:            helper;
+        -:  802:        typedef typename helper::map_type map_type;
+        -:  803:        static map_type make_map(
+        -:  804:            const Graph& g, const ArgPack& ap, ValueType default_value)
+        -:  805:        {
+        -:  806:            return helper::make_map(g, default_value,
+        -:  807:                ap[::boost::parameter::keyword< MapTag >::instance | 0], ap);
+        -:  808:        }
+        -:  809:    };
+        -:  810:
+        -:  811:    template < typename MapTag, typename ValueType = void >
+        -:  812:    class make_property_map_from_arg_pack_gen
+        -:  813:    {
+        -:  814:        ValueType default_value;
+        -:  815:
+        -:  816:    public:
+function _ZN5boost6detail35make_property_map_from_arg_pack_genINS_5graph8keywords3tag9color_mapENS_18default_color_typeEEC2ES6_ called 0 returned 0% blocks executed 0%
+    #####:  817:        make_property_map_from_arg_pack_gen(ValueType default_value)
+    $$$$$:  817-block  0
+    #####:  818:        : default_value(default_value)
+        -:  819:        {
+    #####:  820:        }
+        -:  821:
+        -:  822:        template < typename Graph, typename ArgPack >
+        -:  823:        typename map_maker< Graph, ArgPack, MapTag, ValueType >::map_type
+        -:  824:        operator()(const Graph& g, const ArgPack& ap) const
+        -:  825:        {
+        -:  826:            return map_maker< Graph, ArgPack, MapTag, ValueType >::make_map(
+        -:  827:                g, ap, default_value);
+        -:  828:        }
+        -:  829:    };
+        -:  830:
+        -:  831:    template < typename MapTag >
+        -:  832:    class make_property_map_from_arg_pack_gen< MapTag, void >
+        -:  833:    {
+        -:  834:    public:
+        -:  835:        template < typename ValueType, typename Graph, typename ArgPack >
+        -:  836:        typename map_maker< Graph, ArgPack, MapTag, ValueType >::map_type
+        -:  837:        operator()(
+        -:  838:            const Graph& g, const ArgPack& ap, ValueType default_value) const
+        -:  839:        {
+        -:  840:            return map_maker< Graph, ArgPack, MapTag, ValueType >::make_map(
+        -:  841:                g, ap, default_value);
+        -:  842:        }
+        -:  843:    };
+        -:  844:
+        -:  845:    static const make_property_map_from_arg_pack_gen<
+        -:  846:        boost::graph::keywords::tag::color_map, default_color_type >
+        1:  847:        make_color_map_from_arg_pack(white_color);
+call    0 returned 1
+        -:  848:
+        -:  849:    template < bool Exists, class Graph, class ArgPack, class KeyT,
+        -:  850:        class ValueT, class KeyMapTag, class IndexInHeapMapTag, class Compare,
+        -:  851:        class Q >
+        -:  852:    struct priority_queue_maker_helper
+        -:  853:    {
+        -:  854:        typedef Q priority_queue_type;
+        -:  855:
+        -:  856:        static priority_queue_type make_queue(
+        -:  857:            const Graph&, const ArgPack&, KeyT, const Q& q)
+        -:  858:        {
+        -:  859:            return q;
+        -:  860:        }
+        -:  861:    };
+        -:  862:
+        -:  863:    template < class Graph, class ArgPack, class KeyT, class ValueT,
+        -:  864:        class KeyMapTag, class IndexInHeapMapTag, class Compare, class Q >
+        -:  865:    struct priority_queue_maker_helper< false, Graph, ArgPack, KeyT, ValueT,
+        -:  866:        KeyMapTag, IndexInHeapMapTag, Compare, Q >
+        -:  867:    {
+        -:  868:        typedef typename std::vector< ValueT >::size_type
+        -:  869:            default_index_in_heap_type;
+        -:  870:        typedef typename map_maker< Graph, ArgPack, IndexInHeapMapTag,
+        -:  871:            default_index_in_heap_type >::helper::map_type index_in_heap_map;
+        -:  872:        typedef boost::d_ary_heap_indirect< ValueT, 4, index_in_heap_map,
+        -:  873:            typename map_maker< Graph, ArgPack, KeyMapTag,
+        -:  874:                KeyT >::helper::map_type,
+        -:  875:            Compare >
+        -:  876:            priority_queue_type;
+        -:  877:
+        -:  878:        static priority_queue_type make_queue(
+        -:  879:            const Graph& g, const ArgPack& ap, KeyT defaultKey, const Q&)
+        -:  880:        {
+        -:  881:            return priority_queue_type(
+        -:  882:                map_maker< Graph, ArgPack, KeyMapTag, KeyT >::make_map(
+        -:  883:                    g, ap, defaultKey),
+        -:  884:                map_maker< Graph, ArgPack, IndexInHeapMapTag,
+        -:  885:                    default_index_in_heap_type >::make_map(g, ap,
+        -:  886:                    typename boost::property_traits<
+        -:  887:                        index_in_heap_map >::value_type(-1)));
+        -:  888:        }
+        -:  889:    };
+        -:  890:
+        -:  891:    template < class Graph, class ArgPack, class KeyT, class ValueT,
+        -:  892:        class PriorityQueueTag, class KeyMapTag, class IndexInHeapMapTag,
+        -:  893:        class Compare >
+        -:  894:    struct priority_queue_maker
+        -:  895:    {
+        -:  896:        typedef typename boost::mpl::has_key< ArgPack, PriorityQueueTag >::type
+        -:  897:            _parameter_exists;
+        -:  898:        BOOST_STATIC_CONSTANT(bool, g_hasQ = (_parameter_exists::value));
+        -:  899:        typedef boost::reference_wrapper< int > int_refw;
+        -:  900:        typedef typename boost::parameter::value_type< ArgPack,
+        -:  901:            PriorityQueueTag, int_refw >::type param_value_type_wrapper;
+        -:  902:        typedef typename param_value_type_wrapper::type param_value_type;
+        -:  903:        typedef typename boost::remove_const< param_value_type >::type
+        -:  904:            param_value_type_no_const;
+        -:  905:        typedef priority_queue_maker_helper< g_hasQ, Graph, ArgPack, KeyT,
+        -:  906:            ValueT, KeyMapTag, IndexInHeapMapTag, Compare,
+        -:  907:            param_value_type_no_const >
+        -:  908:            helper;
+        -:  909:        typedef typename helper::priority_queue_type priority_queue_type;
+        -:  910:
+        -:  911:        static priority_queue_type make_queue(
+        -:  912:            const Graph& g, const ArgPack& ap, KeyT defaultKey)
+        -:  913:        {
+        -:  914:            return helper::make_queue(g, ap, defaultKey,
+        -:  915:                ap[::boost::parameter::keyword< PriorityQueueTag >::instance
+        -:  916:                    | 0]);
+        -:  917:        }
+        -:  918:    };
+        -:  919:
+        -:  920:    template < class PriorityQueueTag, class KeyT, class ValueT,
+        -:  921:        class Compare = std::less< KeyT >,
+        -:  922:        class KeyMapTag = boost::graph::keywords::tag::distance_map,
+        -:  923:        class IndexInHeapMapTag
+        -:  924:        = boost::graph::keywords::tag::index_in_heap_map >
+        -:  925:    struct make_priority_queue_from_arg_pack_gen
+        -:  926:    {
+        -:  927:        KeyT defaultKey;
+        -:  928:
+        -:  929:        make_priority_queue_from_arg_pack_gen(KeyT defaultKey_)
+        -:  930:        : defaultKey(defaultKey_)
+        -:  931:        {
+        -:  932:        }
+        -:  933:
+        -:  934:        template < class F > struct result
+        -:  935:        {
+        -:  936:            typedef typename remove_const< typename remove_reference<
+        -:  937:                typename function_traits< F >::arg1_type >::type >::type
+        -:  938:                graph_type;
+        -:  939:            typedef typename remove_const< typename remove_reference<
+        -:  940:                typename function_traits< F >::arg2_type >::type >::type
+        -:  941:                arg_pack_type;
+        -:  942:            typedef typename priority_queue_maker< graph_type, arg_pack_type,
+        -:  943:                KeyT, ValueT, PriorityQueueTag, KeyMapTag, IndexInHeapMapTag,
+        -:  944:                Compare >::priority_queue_type type;
+        -:  945:        };
+        -:  946:
+        -:  947:        template < class Graph, class ArgPack >
+        -:  948:        typename priority_queue_maker< Graph, ArgPack, KeyT, ValueT,
+        -:  949:            PriorityQueueTag, KeyMapTag, IndexInHeapMapTag,
+        -:  950:            Compare >::priority_queue_type
+        -:  951:        operator()(const Graph& g, const ArgPack& ap) const
+        -:  952:        {
+        -:  953:            return priority_queue_maker< Graph, ArgPack, KeyT, ValueT,
+        -:  954:                PriorityQueueTag, KeyMapTag, IndexInHeapMapTag,
+        -:  955:                Compare >::make_queue(g, ap, defaultKey);
+        -:  956:        }
+        -:  957:    };
+        -:  958:
+        -:  959:    template < typename G >
+        -:  960:    typename boost::graph_traits< G >::vertex_descriptor get_null_vertex(
+        -:  961:        const G&)
+        -:  962:    {
+        -:  963:        return boost::graph_traits< G >::null_vertex();
+        -:  964:    }
+        -:  965:
+        -:  966:    template < typename G >
+        -:  967:    typename boost::graph_traits< G >::vertex_descriptor
+        -:  968:    get_default_starting_vertex(const G& g)
+        -:  969:    {
+        -:  970:        std::pair< typename boost::graph_traits< G >::vertex_iterator,
+        -:  971:            typename boost::graph_traits< G >::vertex_iterator >
+        -:  972:            iters = vertices(g);
+        -:  973:        return (iters.first == iters.second)
+        -:  974:            ? boost::graph_traits< G >::null_vertex()
+        -:  975:            : *iters.first;
+        -:  976:    }
+        -:  977:
+        -:  978:    template < typename G > struct get_default_starting_vertex_t
+        -:  979:    {
+        -:  980:        typedef
+        -:  981:            typename boost::graph_traits< G >::vertex_descriptor result_type;
+        -:  982:        const G& g;
+        -:  983:        get_default_starting_vertex_t(const G& g) : g(g) {}
+        -:  984:        result_type operator()() const
+        -:  985:        {
+        -:  986:            return get_default_starting_vertex(g);
+        -:  987:        }
+        -:  988:    };
+        -:  989:
+        -:  990:    // Wrapper to avoid instantiating numeric_limits when users provide
+        -:  991:    // distance_inf value manually
+        -:  992:    template < typename T > struct get_max
+        -:  993:    {
+        -:  994:        T operator()() const { return (std::numeric_limits< T >::max)(); }
+        -:  995:        typedef T result_type;
+        -:  996:    };
+        -:  997:
+        -:  998:} // namespace detail
+        -:  999:
+        -: 1000:} // namespace boost
+        -: 1001:
+        -: 1002:#undef BOOST_BGL_DECLARE_NAMED_PARAMS
+        -: 1003:
+        -: 1004:#endif // BOOST_GRAPH_NAMED_FUNCTION_PARAMS_HPP

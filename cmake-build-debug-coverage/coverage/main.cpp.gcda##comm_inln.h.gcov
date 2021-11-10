@@ -1,0 +1,1059 @@
+        -:    0:Source:/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/ompi/mpi/cxx/comm_inln.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// -*- c++ -*-
+        -:    2://
+        -:    3:// Copyright (c) 2004-2005 The Trustees of Indiana University and Indiana
+        -:    4://                         University Research and Technology
+        -:    5://                         Corporation.  All rights reserved.
+        -:    6:// Copyright (c) 2004-2005 The University of Tennessee and The University
+        -:    7://                         of Tennessee Research Foundation.  All rights
+        -:    8://                         reserved.
+        -:    9:// Copyright (c) 2004-2005 High Performance Computing Center Stuttgart,
+        -:   10://                         University of Stuttgart.  All rights reserved.
+        -:   11:// Copyright (c) 2004-2005 The Regents of the University of California.
+        -:   12://                         All rights reserved.
+        -:   13:// Copyright (c) 2007-2016 Cisco Systems, Inc.  All rights reserved.
+        -:   14:// Copyright (c) 2011      FUJITSU LIMITED.  All rights reserved.
+        -:   15:// $COPYRIGHT$
+        -:   16://
+        -:   17:// Additional copyrights may follow
+        -:   18://
+        -:   19:// $HEADER$
+        -:   20://
+        -:   21:
+        -:   22://
+        -:   23:// Point-to-Point
+        -:   24://
+        -:   25:
+        -:   26:inline void
+function _ZNK3MPI4Comm4SendEPKviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:   27:MPI::Comm::Send(const void *buf, int count,
+    $$$$$:   27-block  0
+        -:   28:		const MPI::Datatype & datatype, int dest, int tag) const
+        -:   29:{
+    #####:   30:  (void)MPI_Send(const_cast<void *>(buf), count, datatype, dest, tag, mpi_comm);
+    $$$$$:   30-block  0
+call    0 never executed
+call    1 never executed
+    #####:   31:}
+        -:   32:
+        -:   33:inline void
+function _ZNK3MPI4Comm4RecvEPviRKNS_8DatatypeEiiRNS_6StatusE called 0 returned 0% blocks executed 0%
+    #####:   34:MPI::Comm::Recv(void *buf, int count, const MPI::Datatype & datatype,
+    $$$$$:   34-block  0
+        -:   35:		int source, int tag, MPI::Status & status) const
+        -:   36:{
+    #####:   37:  (void)MPI_Recv(buf, count, datatype, source, tag, mpi_comm, &status.mpi_status);
+    $$$$$:   37-block  0
+call    0 never executed
+call    1 never executed
+    #####:   38:}
+        -:   39:
+        -:   40:inline void
+function _ZNK3MPI4Comm4RecvEPviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:   41:MPI::Comm::Recv(void *buf, int count, const MPI::Datatype & datatype,
+    $$$$$:   41-block  0
+        -:   42:				    int source, int tag) const
+        -:   43:{
+    #####:   44:  (void)MPI_Recv(buf, count, datatype, source,
+    $$$$$:   44-block  0
+call    0 never executed
+call    1 never executed
+    #####:   45:		 tag, mpi_comm, MPI_STATUS_IGNORE);
+    #####:   46:}
+        -:   47:
+        -:   48:inline void
+function _ZNK3MPI4Comm5BsendEPKviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:   49:MPI::Comm::Bsend(const void *buf, int count,
+    $$$$$:   49-block  0
+        -:   50:		 const MPI::Datatype & datatype, int dest, int tag) const
+        -:   51:{
+    #####:   52:  (void)MPI_Bsend(const_cast<void *>(buf), count, datatype,
+    $$$$$:   52-block  0
+call    0 never executed
+call    1 never executed
+    #####:   53:		  dest, tag, mpi_comm);
+    #####:   54:}
+        -:   55:
+        -:   56:inline void
+function _ZNK3MPI4Comm5SsendEPKviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:   57:MPI::Comm::Ssend(const void *buf, int count,
+    $$$$$:   57-block  0
+        -:   58:		 const MPI::Datatype & datatype, int dest, int tag) const
+        -:   59:{
+    #####:   60:  (void)MPI_Ssend(const_cast<void *>(buf), count,  datatype, dest,
+    $$$$$:   60-block  0
+call    0 never executed
+call    1 never executed
+    #####:   61:		  tag, mpi_comm);
+    #####:   62:}
+        -:   63:
+        -:   64:inline void
+function _ZNK3MPI4Comm5RsendEPKviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:   65:MPI::Comm::Rsend(const void *buf, int count,
+    $$$$$:   65-block  0
+        -:   66:		 const MPI::Datatype & datatype, int dest, int tag) const
+        -:   67:{
+    #####:   68:  (void)MPI_Rsend(const_cast<void *>(buf), count, datatype,
+    $$$$$:   68-block  0
+call    0 never executed
+call    1 never executed
+    #####:   69:		  dest, tag, mpi_comm);
+    #####:   70:}
+        -:   71:
+        -:   72:inline MPI::Request
+function _ZNK3MPI4Comm5IsendEPKviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:   73:MPI::Comm::Isend(const void *buf, int count,
+    $$$$$:   73-block  0
+        -:   74:		 const MPI::Datatype & datatype, int dest, int tag) const
+        -:   75:{
+        -:   76:  MPI_Request request;
+    #####:   77:  (void)MPI_Isend(const_cast<void *>(buf), count, datatype,
+    $$$$$:   77-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:   78:		  dest, tag, mpi_comm, &request);
+    #####:   79:  return request;
+    $$$$$:   79-block  0
+call    0 never executed
+    $$$$$:   79-block  1
+        -:   80:}
+        -:   81:
+        -:   82:inline MPI::Request
+function _ZNK3MPI4Comm6IbsendEPKviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:   83:MPI::Comm::Ibsend(const void *buf, int count,
+    $$$$$:   83-block  0
+        -:   84:		  const MPI::Datatype & datatype, int dest, int tag) const
+        -:   85:{
+        -:   86:  MPI_Request request;
+    #####:   87:  (void)MPI_Ibsend(const_cast<void *>(buf), count, datatype,
+    $$$$$:   87-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:   88:		   dest, tag, mpi_comm, &request);
+    #####:   89:  return request;
+    $$$$$:   89-block  0
+call    0 never executed
+    $$$$$:   89-block  1
+        -:   90:}
+        -:   91:
+        -:   92:inline MPI::Request
+function _ZNK3MPI4Comm6IssendEPKviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:   93:MPI::Comm::Issend(const void *buf, int count,
+    $$$$$:   93-block  0
+        -:   94:		  const MPI::Datatype & datatype, int dest, int tag) const
+        -:   95:{
+        -:   96:  MPI_Request request;
+    #####:   97:  (void)MPI_Issend(const_cast<void *>(buf), count, datatype,
+    $$$$$:   97-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:   98:		   dest, tag, mpi_comm, &request);
+    #####:   99:  return request;
+    $$$$$:   99-block  0
+call    0 never executed
+    $$$$$:   99-block  1
+        -:  100:}
+        -:  101:
+        -:  102:inline MPI::Request
+function _ZNK3MPI4Comm6IrsendEPKviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:  103:MPI::Comm::Irsend(const void *buf, int count,
+    $$$$$:  103-block  0
+        -:  104:		  const MPI::Datatype & datatype, int dest, int tag) const
+        -:  105:{
+        -:  106:  MPI_Request request;
+    #####:  107:  (void)MPI_Irsend(const_cast<void *>(buf), count, datatype,
+    $$$$$:  107-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  108:		   dest, tag, mpi_comm, &request);
+    #####:  109:  return request;
+    $$$$$:  109-block  0
+call    0 never executed
+    $$$$$:  109-block  1
+        -:  110:}
+        -:  111:
+        -:  112:inline MPI::Request
+function _ZNK3MPI4Comm5IrecvEPviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:  113:MPI::Comm::Irecv(void *buf, int count,
+    $$$$$:  113-block  0
+        -:  114:		 const MPI::Datatype & datatype, int source, int tag) const
+        -:  115:{
+        -:  116:  MPI_Request request;
+    #####:  117:  (void)MPI_Irecv(buf, count, datatype, source,
+    $$$$$:  117-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  118:		  tag, mpi_comm, &request);
+    #####:  119:  return request;
+    $$$$$:  119-block  0
+call    0 never executed
+    $$$$$:  119-block  1
+        -:  120:}
+        -:  121:
+        -:  122:
+        -:  123:inline bool
+function _ZNK3MPI4Comm6IprobeEiiRNS_6StatusE called 0 returned 0% blocks executed 0%
+    #####:  124:MPI::Comm::Iprobe(int source, int tag, MPI::Status & status) const
+    $$$$$:  124-block  0
+        -:  125:{
+        -:  126:  int t;
+    #####:  127:  (void)MPI_Iprobe(source, tag, mpi_comm, &t, &status.mpi_status);
+    $$$$$:  127-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  128:  return OPAL_INT_TO_BOOL(t);
+    $$$$$:  128-block  0
+    $$$$$:  128-block  1
+        -:  129:}
+        -:  130:
+        -:  131:inline bool
+function _ZNK3MPI4Comm6IprobeEii called 0 returned 0% blocks executed 0%
+    #####:  132:MPI::Comm::Iprobe(int source, int tag) const
+    $$$$$:  132-block  0
+        -:  133:{
+        -:  134:  int t;
+    #####:  135:  (void)MPI_Iprobe(source, tag, mpi_comm, &t, MPI_STATUS_IGNORE);
+    $$$$$:  135-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  136:  return OPAL_INT_TO_BOOL(t);
+    $$$$$:  136-block  0
+    $$$$$:  136-block  1
+        -:  137:}
+        -:  138:
+        -:  139:inline void
+function _ZNK3MPI4Comm5ProbeEiiRNS_6StatusE called 0 returned 0% blocks executed 0%
+    #####:  140:MPI::Comm::Probe(int source, int tag, MPI::Status & status) const
+    $$$$$:  140-block  0
+        -:  141:{
+    #####:  142:  (void)MPI_Probe(source, tag, mpi_comm, &status.mpi_status);
+    $$$$$:  142-block  0
+call    0 never executed
+    #####:  143:}
+        -:  144:
+        -:  145:inline void
+function _ZNK3MPI4Comm5ProbeEii called 0 returned 0% blocks executed 0%
+    #####:  146:MPI::Comm::Probe(int source, int tag) const
+    $$$$$:  146-block  0
+        -:  147:{
+    #####:  148:  (void)MPI_Probe(source, tag, mpi_comm, MPI_STATUS_IGNORE);
+    $$$$$:  148-block  0
+call    0 never executed
+    #####:  149:}
+        -:  150:
+        -:  151:inline MPI::Prequest
+function _ZNK3MPI4Comm9Send_initEPKviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:  152:MPI::Comm::Send_init(const void *buf, int count,
+    $$$$$:  152-block  0
+        -:  153:		     const MPI::Datatype & datatype, int dest, int tag) const
+        -:  154:{
+        -:  155:  MPI_Request request;
+    #####:  156:  (void)MPI_Send_init(const_cast<void *>(buf), count, datatype,
+    $$$$$:  156-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  157:		      dest, tag, mpi_comm, &request);
+    #####:  158:  return request;
+    $$$$$:  158-block  0
+call    0 never executed
+    $$$$$:  158-block  1
+        -:  159:}
+        -:  160:
+        -:  161:inline MPI::Prequest
+function _ZNK3MPI4Comm10Bsend_initEPKviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:  162:MPI::Comm::Bsend_init(const void *buf, int count,
+    $$$$$:  162-block  0
+        -:  163:		      const MPI::Datatype & datatype, int dest, int tag) const
+        -:  164:{
+        -:  165:  MPI_Request request;
+    #####:  166:  (void)MPI_Bsend_init(const_cast<void *>(buf), count, datatype,
+    $$$$$:  166-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  167:		       dest, tag, mpi_comm, &request);
+    #####:  168:  return request;
+    $$$$$:  168-block  0
+call    0 never executed
+    $$$$$:  168-block  1
+        -:  169:}
+        -:  170:
+        -:  171:inline MPI::Prequest
+function _ZNK3MPI4Comm10Ssend_initEPKviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:  172:MPI::Comm::Ssend_init(const void *buf, int count,
+    $$$$$:  172-block  0
+        -:  173:		      const MPI::Datatype & datatype, int dest, int tag) const
+        -:  174:{
+        -:  175:  MPI_Request request;
+    #####:  176:  (void)MPI_Ssend_init(const_cast<void *>(buf), count, datatype,
+    $$$$$:  176-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  177:		       dest, tag, mpi_comm, &request);
+    #####:  178:  return request;
+    $$$$$:  178-block  0
+call    0 never executed
+    $$$$$:  178-block  1
+        -:  179:}
+        -:  180:
+        -:  181:inline MPI::Prequest
+function _ZNK3MPI4Comm10Rsend_initEPKviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:  182:MPI::Comm::Rsend_init(const void *buf, int count,
+    $$$$$:  182-block  0
+        -:  183:		      const MPI::Datatype & datatype, int dest, int tag) const
+        -:  184:{
+        -:  185:  MPI_Request request;
+    #####:  186:  (void)MPI_Rsend_init(const_cast<void *>(buf), count,  datatype,
+    $$$$$:  186-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  187:		       dest, tag, mpi_comm, &request);
+    #####:  188:  return request;
+    $$$$$:  188-block  0
+call    0 never executed
+    $$$$$:  188-block  1
+        -:  189:}
+        -:  190:
+        -:  191:inline MPI::Prequest
+function _ZNK3MPI4Comm9Recv_initEPviRKNS_8DatatypeEii called 0 returned 0% blocks executed 0%
+    #####:  192:MPI::Comm::Recv_init(void *buf, int count,
+    $$$$$:  192-block  0
+        -:  193:		     const MPI::Datatype & datatype, int source, int tag) const
+        -:  194:{
+        -:  195:  MPI_Request request;
+    #####:  196:  (void)MPI_Recv_init(buf, count, datatype, source,
+    $$$$$:  196-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  197:		      tag, mpi_comm, &request);
+    #####:  198:  return request;
+    $$$$$:  198-block  0
+call    0 never executed
+    $$$$$:  198-block  1
+        -:  199:}
+        -:  200:
+        -:  201:inline void
+function _ZNK3MPI4Comm8SendrecvEPKviRKNS_8DatatypeEiiPviS5_iiRNS_6StatusE called 0 returned 0% blocks executed 0%
+    #####:  202:MPI::Comm::Sendrecv(const void *sendbuf, int sendcount,
+    $$$$$:  202-block  0
+        -:  203:		    const MPI::Datatype & sendtype, int dest, int sendtag,
+        -:  204:		    void *recvbuf, int recvcount,
+        -:  205:		    const MPI::Datatype & recvtype, int source,
+        -:  206:		    int recvtag, MPI::Status & status) const
+        -:  207:{
+    #####:  208:  (void)MPI_Sendrecv(const_cast<void *>(sendbuf), sendcount,
+    $$$$$:  208-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  209:		     sendtype,
+        -:  210:		     dest, sendtag, recvbuf, recvcount,
+        -:  211:		     recvtype,
+    #####:  212:		     source, recvtag, mpi_comm, &status.mpi_status);
+    #####:  213:}
+        -:  214:
+        -:  215:inline void
+function _ZNK3MPI4Comm8SendrecvEPKviRKNS_8DatatypeEiiPviS5_ii called 0 returned 0% blocks executed 0%
+    #####:  216:MPI::Comm::Sendrecv(const void *sendbuf, int sendcount,
+    $$$$$:  216-block  0
+        -:  217:		    const MPI::Datatype & sendtype, int dest, int sendtag,
+        -:  218:		    void *recvbuf, int recvcount,
+        -:  219:		    const MPI::Datatype & recvtype, int source,
+        -:  220:		    int recvtag) const
+        -:  221:{
+    #####:  222:  (void)MPI_Sendrecv(const_cast<void *>(sendbuf), sendcount,
+    $$$$$:  222-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  223:		     sendtype,
+        -:  224:		     dest, sendtag, recvbuf, recvcount,
+        -:  225:		     recvtype,
+    #####:  226:		     source, recvtag, mpi_comm, MPI_STATUS_IGNORE);
+    #####:  227:}
+        -:  228:
+        -:  229:inline void
+function _ZNK3MPI4Comm16Sendrecv_replaceEPviRKNS_8DatatypeEiiiiRNS_6StatusE called 0 returned 0% blocks executed 0%
+    #####:  230:MPI::Comm::Sendrecv_replace(void *buf, int count,
+    $$$$$:  230-block  0
+        -:  231:			    const MPI::Datatype & datatype, int dest,
+        -:  232:			    int sendtag, int source,
+        -:  233:			    int recvtag, MPI::Status & status) const
+        -:  234:{
+    #####:  235:  (void)MPI_Sendrecv_replace(buf, count, datatype, dest,
+    $$$$$:  235-block  0
+call    0 never executed
+call    1 never executed
+    #####:  236:			     sendtag, source, recvtag, mpi_comm,
+        -:  237:			     &status.mpi_status);
+    #####:  238:}
+        -:  239:
+        -:  240:inline void
+function _ZNK3MPI4Comm16Sendrecv_replaceEPviRKNS_8DatatypeEiiii called 0 returned 0% blocks executed 0%
+    #####:  241:MPI::Comm::Sendrecv_replace(void *buf, int count,
+    $$$$$:  241-block  0
+        -:  242:			    const MPI::Datatype & datatype, int dest,
+        -:  243:			    int sendtag, int source,
+        -:  244:			    int recvtag) const
+        -:  245:{
+    #####:  246:  (void)MPI_Sendrecv_replace(buf, count, datatype, dest,
+    $$$$$:  246-block  0
+call    0 never executed
+call    1 never executed
+    #####:  247:			     sendtag, source, recvtag, mpi_comm,
+        -:  248:			     MPI_STATUS_IGNORE);
+    #####:  249:}
+        -:  250:
+        -:  251://
+        -:  252:// Groups, Contexts, and Communicators
+        -:  253://
+        -:  254:
+        -:  255:inline MPI::Group
+function _ZNK3MPI4Comm9Get_groupEv called 0 returned 0% blocks executed 0%
+    #####:  256:MPI::Comm::Get_group() const
+    $$$$$:  256-block  0
+        -:  257:{
+        -:  258:  MPI_Group group;
+    #####:  259:  (void)MPI_Comm_group(mpi_comm, &group);
+    $$$$$:  259-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  260:  return group;
+    $$$$$:  260-block  0
+call    0 never executed
+    $$$$$:  260-block  1
+        -:  261:}
+        -:  262:
+        -:  263:inline int
+function _ZNK3MPI4Comm8Get_sizeEv called 0 returned 0% blocks executed 0%
+    #####:  264:MPI::Comm::Get_size() const
+    $$$$$:  264-block  0
+        -:  265:{
+        -:  266:  int size;
+    #####:  267:  (void)MPI_Comm_size (mpi_comm, &size);
+    $$$$$:  267-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  268:  return size;
+    $$$$$:  268-block  0
+    $$$$$:  268-block  1
+        -:  269:}
+        -:  270:
+        -:  271:inline int
+function _ZNK3MPI4Comm8Get_rankEv called 0 returned 0% blocks executed 0%
+    #####:  272:MPI::Comm::Get_rank() const
+    $$$$$:  272-block  0
+        -:  273:{
+        -:  274:  int myrank;
+    #####:  275:  (void)MPI_Comm_rank (mpi_comm, &myrank);
+    $$$$$:  275-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  276:  return myrank;
+    $$$$$:  276-block  0
+    $$$$$:  276-block  1
+        -:  277:}
+        -:  278:
+        -:  279:inline int
+        -:  280:MPI::Comm::Compare(const MPI::Comm & comm1,
+        -:  281:		   const MPI::Comm & comm2)
+        -:  282:{
+        -:  283:  int result;
+        -:  284:  (void)MPI_Comm_compare(comm1, comm2, &result);
+        -:  285:  return result;
+        -:  286:}
+        -:  287:
+        -:  288:inline void
+function _ZN3MPI4Comm4FreeEv called 0 returned 0% blocks executed 0%
+    #####:  289:MPI::Comm::Free(void)
+    $$$$$:  289-block  0
+        -:  290:{
+    #####:  291:    (void)MPI_Comm_free(&mpi_comm);
+    $$$$$:  291-block  0
+call    0 never executed
+    #####:  292:}
+        -:  293:
+        -:  294:inline bool
+function _ZNK3MPI4Comm8Is_interEv called 0 returned 0% blocks executed 0%
+    #####:  295:MPI::Comm::Is_inter() const
+    $$$$$:  295-block  0
+        -:  296:{
+        -:  297:  int t;
+    #####:  298:  (void)MPI_Comm_test_inter(mpi_comm, &t);
+    $$$$$:  298-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  299:  return OPAL_INT_TO_BOOL(t);
+    $$$$$:  299-block  0
+    $$$$$:  299-block  1
+        -:  300:}
+        -:  301:
+        -:  302:
+        -:  303://
+        -:  304:// Collective Communication
+        -:  305://
+        -:  306:
+        -:  307:inline void
+function _ZNK3MPI4Comm7BarrierEv called 0 returned 0% blocks executed 0%
+    #####:  308:MPI::Comm::Barrier() const
+    $$$$$:  308-block  0
+        -:  309:{
+    #####:  310:    (void)MPI_Barrier(mpi_comm);
+    $$$$$:  310-block  0
+call    0 never executed
+    #####:  311:}
+        -:  312:
+        -:  313:inline void
+function _ZNK3MPI4Comm5BcastEPviRKNS_8DatatypeEi called 0 returned 0% blocks executed 0%
+    #####:  314:MPI::Comm::Bcast(void *buffer, int count,
+    $$$$$:  314-block  0
+        -:  315:                 const MPI::Datatype& datatype, int root) const
+        -:  316:{
+    #####:  317:    (void)MPI_Bcast(buffer, count, datatype, root, mpi_comm);
+    $$$$$:  317-block  0
+call    0 never executed
+call    1 never executed
+    #####:  318:}
+        -:  319:
+        -:  320:inline void
+function _ZNK3MPI4Comm6GatherEPKviRKNS_8DatatypeEPviS5_i called 0 returned 0% blocks executed 0%
+    #####:  321:MPI::Comm::Gather(const void *sendbuf, int sendcount,
+    $$$$$:  321-block  0
+        -:  322:                  const MPI::Datatype & sendtype,
+        -:  323:                  void *recvbuf, int recvcount,
+        -:  324:                  const MPI::Datatype & recvtype, int root) const
+        -:  325:{
+    #####:  326:    (void)MPI_Gather(const_cast<void *>(sendbuf), sendcount, sendtype,
+    $$$$$:  326-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  327:                     recvbuf, recvcount, recvtype, root, mpi_comm);
+    #####:  328:}
+        -:  329:
+        -:  330:inline void
+function _ZNK3MPI4Comm7GathervEPKviRKNS_8DatatypeEPvPKiS8_S5_i called 0 returned 0% blocks executed 0%
+    #####:  331:MPI::Comm::Gatherv(const void *sendbuf, int sendcount,
+    $$$$$:  331-block  0
+        -:  332:                   const MPI::Datatype & sendtype, void *recvbuf,
+        -:  333:                   const int recvcounts[], const int displs[],
+        -:  334:                   const MPI::Datatype & recvtype, int root) const
+        -:  335:{
+    #####:  336:    (void)MPI_Gatherv(const_cast<void *>(sendbuf), sendcount,  sendtype,
+    $$$$$:  336-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  337:                      recvbuf, const_cast<int *>(recvcounts),
+        -:  338:                      const_cast<int *>(displs),
+    #####:  339:                      recvtype, root, mpi_comm);
+    #####:  340:}
+        -:  341:
+        -:  342:inline void
+function _ZNK3MPI4Comm7ScatterEPKviRKNS_8DatatypeEPviS5_i called 0 returned 0% blocks executed 0%
+    #####:  343:MPI::Comm::Scatter(const void *sendbuf, int sendcount,
+    $$$$$:  343-block  0
+        -:  344:                   const MPI::Datatype & sendtype,
+        -:  345:                   void *recvbuf, int recvcount,
+        -:  346:                   const MPI::Datatype & recvtype, int root) const
+        -:  347:{
+    #####:  348:    (void)MPI_Scatter(const_cast<void *>(sendbuf), sendcount, sendtype,
+    $$$$$:  348-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  349:                      recvbuf, recvcount, recvtype, root, mpi_comm);
+    #####:  350:}
+        -:  351:
+        -:  352:inline void
+function _ZNK3MPI4Comm8ScattervEPKvPKiS4_RKNS_8DatatypeEPviS7_i called 0 returned 0% blocks executed 0%
+    #####:  353:MPI::Comm::Scatterv(const void *sendbuf, const int sendcounts[],
+    $$$$$:  353-block  0
+        -:  354:                    const int displs[], const MPI::Datatype & sendtype,
+        -:  355:                    void *recvbuf, int recvcount,
+        -:  356:                    const MPI::Datatype & recvtype, int root) const
+        -:  357:{
+    #####:  358:    (void)MPI_Scatterv(const_cast<void *>(sendbuf),
+    $$$$$:  358-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  359:                       const_cast<int *>(sendcounts),
+        -:  360:                       const_cast<int *>(displs), sendtype,
+        -:  361:                       recvbuf, recvcount, recvtype,
+    #####:  362:                       root, mpi_comm);
+    #####:  363:}
+        -:  364:
+        -:  365:inline void
+function _ZNK3MPI4Comm9AllgatherEPKviRKNS_8DatatypeEPviS5_ called 0 returned 0% blocks executed 0%
+    #####:  366:MPI::Comm::Allgather(const void *sendbuf, int sendcount,
+    $$$$$:  366-block  0
+        -:  367:                     const MPI::Datatype & sendtype, void *recvbuf,
+        -:  368:                     int recvcount, const MPI::Datatype & recvtype) const
+        -:  369:{
+    #####:  370:    (void)MPI_Allgather(const_cast<void *>(sendbuf), sendcount,
+    $$$$$:  370-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  371:                        sendtype, recvbuf, recvcount,
+    #####:  372:                        recvtype, mpi_comm);
+    #####:  373:}
+        -:  374:
+        -:  375:inline void
+function _ZNK3MPI4Comm10AllgathervEPKviRKNS_8DatatypeEPvPKiS8_S5_ called 0 returned 0% blocks executed 0%
+    #####:  376:MPI::Comm::Allgatherv(const void *sendbuf, int sendcount,
+    $$$$$:  376-block  0
+        -:  377:                      const MPI::Datatype & sendtype, void *recvbuf,
+        -:  378:                      const int recvcounts[], const int displs[],
+        -:  379:                      const MPI::Datatype & recvtype) const
+        -:  380:{
+    #####:  381:    (void)MPI_Allgatherv(const_cast<void *>(sendbuf), sendcount,
+    $$$$$:  381-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  382:                         sendtype, recvbuf,
+        -:  383:                         const_cast<int *>(recvcounts),
+        -:  384:                         const_cast<int *>(displs),
+    #####:  385:                         recvtype, mpi_comm);
+    #####:  386:}
+        -:  387:
+        -:  388:inline void
+function _ZNK3MPI4Comm8AlltoallEPKviRKNS_8DatatypeEPviS5_ called 0 returned 0% blocks executed 0%
+    #####:  389:MPI::Comm::Alltoall(const void *sendbuf, int sendcount,
+    $$$$$:  389-block  0
+        -:  390:                    const MPI::Datatype & sendtype, void *recvbuf,
+        -:  391:                    int recvcount, const MPI::Datatype & recvtype) const
+        -:  392:{
+    #####:  393:    (void)MPI_Alltoall(const_cast<void *>(sendbuf), sendcount,
+    $$$$$:  393-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  394:                       sendtype, recvbuf, recvcount,
+    #####:  395:                       recvtype, mpi_comm);
+    #####:  396:}
+        -:  397:
+        -:  398:inline void
+function _ZNK3MPI4Comm9AlltoallvEPKvPKiS4_RKNS_8DatatypeEPvS4_S4_S7_ called 0 returned 0% blocks executed 0%
+    #####:  399:MPI::Comm::Alltoallv(const void *sendbuf, const int sendcounts[],
+    $$$$$:  399-block  0
+        -:  400:                     const int sdispls[], const MPI::Datatype & sendtype,
+        -:  401:                     void *recvbuf, const int recvcounts[],
+        -:  402:                     const int rdispls[],
+        -:  403:                     const MPI::Datatype & recvtype) const
+        -:  404:{
+    #####:  405:    (void)MPI_Alltoallv(const_cast<void *>(sendbuf),
+    $$$$$:  405-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  406:                        const_cast<int *>(sendcounts),
+        -:  407:			const_cast<int *>(sdispls), sendtype, recvbuf,
+        -:  408:			const_cast<int *>(recvcounts),
+        -:  409:                        const_cast<int *>(rdispls),
+    #####:  410:			recvtype,mpi_comm);
+    #####:  411:}
+        -:  412:
+        -:  413:inline void
+function _ZNK3MPI4Comm9AlltoallwEPKvPKiS4_PKNS_8DatatypeEPvS4_S4_S7_ called 0 returned 0% blocks executed 0%
+    #####:  414:MPI::Comm::Alltoallw(const void *sendbuf, const int sendcounts[],
+    $$$$$:  414-block  0
+        -:  415:                     const int sdispls[], const MPI::Datatype sendtypes[],
+        -:  416:                     void *recvbuf, const int recvcounts[],
+        -:  417:                     const int rdispls[],
+        -:  418:                     const MPI::Datatype recvtypes[]) const
+        -:  419:{
+    #####:  420:    const int comm_size = Get_size();
+    $$$$$:  420-block  0
+call    0 never executed
+    #####:  421:    MPI_Datatype *const data_type_tbl = new MPI_Datatype [2*comm_size];
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  421-block  0
+    $$$$$:  421-block  1
+call    2 never executed
+    $$$$$:  421-block  2
+call    3 never executed
+        -:  422:
+        -:  423:    // This must be done because MPI::Datatype arrays cannot be
+        -:  424:    // converted directly into MPI_Datatype arrays.
+    #####:  425:    for (int i_rank=0; i_rank < comm_size; i_rank++) {
+    $$$$$:  425-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  426:        data_type_tbl[i_rank] = sendtypes[i_rank];
+    $$$$$:  426-block  0
+call    0 never executed
+    #####:  427:        data_type_tbl[i_rank + comm_size] = recvtypes[i_rank];
+call    0 never executed
+        -:  428:    }
+        -:  429:
+    #####:  430:    (void)MPI_Alltoallw(const_cast<void *>(sendbuf),
+    $$$$$:  430-block  0
+call    0 never executed
+        -:  431:                        const_cast<int *>(sendcounts),
+        -:  432:                        const_cast<int *>(sdispls),
+        -:  433:                        data_type_tbl, recvbuf,
+        -:  434:                        const_cast<int *>(recvcounts),
+        -:  435:                        const_cast<int *>(rdispls),
+    #####:  436:                        &data_type_tbl[comm_size], mpi_comm);
+        -:  437:
+    #####:  438:    delete[] data_type_tbl;
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  438-block  0
+call    2 never executed
+    #####:  439:}
+        -:  440:
+        -:  441:inline void
+function _ZNK3MPI4Comm6ReduceEPKvPviRKNS_8DatatypeERKNS_2OpEi called 0 returned 0% blocks executed 0%
+    #####:  442:MPI::Comm::Reduce(const void *sendbuf, void *recvbuf, int count,
+    $$$$$:  442-block  0
+        -:  443:                  const MPI::Datatype & datatype, const MPI::Op& op,
+        -:  444:                  int root) const
+        -:  445:{
+    #####:  446:    (void)MPI_Reduce(const_cast<void *>(sendbuf), recvbuf, count, datatype, op, root, mpi_comm);
+    $$$$$:  446-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  447:}
+        -:  448:
+        -:  449:inline void
+function _ZNK3MPI4Comm9AllreduceEPKvPviRKNS_8DatatypeERKNS_2OpE called 0 returned 0% blocks executed 0%
+    #####:  450:MPI::Comm::Allreduce(const void *sendbuf, void *recvbuf, int count,
+    $$$$$:  450-block  0
+        -:  451:                     const MPI::Datatype & datatype, const MPI::Op& op) const
+        -:  452:{
+    #####:  453:    (void)MPI_Allreduce (const_cast<void *>(sendbuf), recvbuf, count, datatype,  op, mpi_comm);
+    $$$$$:  453-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  454:}
+        -:  455:
+        -:  456:inline void
+function _ZNK3MPI4Comm14Reduce_scatterEPKvPvPiRKNS_8DatatypeERKNS_2OpE called 0 returned 0% blocks executed 0%
+    #####:  457:MPI::Comm::Reduce_scatter(const void *sendbuf, void *recvbuf,
+    $$$$$:  457-block  0
+        -:  458:                          int recvcounts[],
+        -:  459:                          const MPI::Datatype & datatype,
+        -:  460:                          const MPI::Op& op) const
+        -:  461:{
+    #####:  462:    (void)MPI_Reduce_scatter(const_cast<void *>(sendbuf), recvbuf, recvcounts,
+    $$$$$:  462-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  463:                             datatype, op, mpi_comm);
+    #####:  464:}
+        -:  465:
+        -:  466://
+        -:  467:// Process Creation and Managemnt
+        -:  468://
+        -:  469:
+        -:  470:inline void
+function _ZN3MPI4Comm10DisconnectEv called 0 returned 0% blocks executed 0%
+    #####:  471:MPI::Comm::Disconnect()
+    $$$$$:  471-block  0
+        -:  472:{
+    #####:  473:  (void) MPI_Comm_disconnect(&mpi_comm);
+    $$$$$:  473-block  0
+call    0 never executed
+    #####:  474:}
+        -:  475:
+        -:  476:
+        -:  477:inline MPI::Intercomm
+        -:  478:MPI::Comm::Get_parent()
+        -:  479:{
+        -:  480:  MPI_Comm parent;
+        -:  481:  MPI_Comm_get_parent(&parent);
+        -:  482:  return parent;
+        -:  483:}
+        -:  484:
+        -:  485:
+        -:  486:inline MPI::Intercomm
+        -:  487:MPI::Comm::Join(const int fd)
+        -:  488:{
+        -:  489:  MPI_Comm newcomm;
+        -:  490:  (void) MPI_Comm_join((int) fd, &newcomm);
+        -:  491:  return newcomm;
+        -:  492:}
+        -:  493:
+        -:  494://
+        -:  495:// External Interfaces
+        -:  496://
+        -:  497:
+        -:  498:inline void
+function _ZNK3MPI4Comm8Get_nameEPcRi called 0 returned 0% blocks executed 0%
+    #####:  499:MPI::Comm::Get_name(char* comm_name, int& resultlen) const
+    $$$$$:  499-block  0
+        -:  500:{
+    #####:  501:  (void) MPI_Comm_get_name(mpi_comm, comm_name, &resultlen);
+    $$$$$:  501-block  0
+call    0 never executed
+    #####:  502:}
+        -:  503:
+        -:  504:inline void
+function _ZN3MPI4Comm8Set_nameEPKc called 0 returned 0% blocks executed 0%
+    #####:  505:MPI::Comm::Set_name(const char* comm_name)
+    $$$$$:  505-block  0
+        -:  506:{
+    #####:  507:  (void) MPI_Comm_set_name(mpi_comm, const_cast<char *>(comm_name));
+    $$$$$:  507-block  0
+call    0 never executed
+    #####:  508:}
+        -:  509:
+        -:  510://
+        -:  511://Process Topologies
+        -:  512://
+        -:  513:
+        -:  514:inline int
+function _ZNK3MPI4Comm12Get_topologyEv called 0 returned 0% blocks executed 0%
+    #####:  515:MPI::Comm::Get_topology() const
+    $$$$$:  515-block  0
+        -:  516:{
+        -:  517:  int status;
+    #####:  518:  (void)MPI_Topo_test(mpi_comm, &status);
+    $$$$$:  518-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  519:  return status;
+    $$$$$:  519-block  0
+    $$$$$:  519-block  1
+        -:  520:}
+        -:  521:
+        -:  522://
+        -:  523:// Environmental Inquiry
+        -:  524://
+        -:  525:
+        -:  526:inline void
+function _ZN3MPI4Comm5AbortEi called 0 returned 0% blocks executed 0%
+    #####:  527:MPI::Comm::Abort(int errorcode)
+    $$$$$:  527-block  0
+        -:  528:{
+    #####:  529:  (void)MPI_Abort(mpi_comm, errorcode);
+    $$$$$:  529-block  0
+call    0 never executed
+    #####:  530:}
+        -:  531:
+        -:  532://
+        -:  533://  These C++ bindings are for MPI-2.
+        -:  534://  The MPI-1.2 functions called below are all
+        -:  535://  going to be deprecated and replaced in MPI-2.
+        -:  536://
+        -:  537:
+        -:  538:inline MPI::Errhandler
+function _ZNK3MPI4Comm14Get_errhandlerEv called 0 returned 0% blocks executed 0%
+    #####:  539:MPI::Comm::Get_errhandler() const
+    $$$$$:  539-block  0
+        -:  540:{
+        -:  541:    MPI_Errhandler errhandler;
+    #####:  542:    MPI_Comm_get_errhandler(mpi_comm, &errhandler);
+    $$$$$:  542-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  543:    return errhandler;
+    $$$$$:  543-block  0
+call    0 never executed
+    $$$$$:  543-block  1
+        -:  544:}
+        -:  545:
+        -:  546:inline void
+function _ZN3MPI4Comm14Set_errhandlerERKNS_10ErrhandlerE called 0 returned 0% blocks executed 0%
+    #####:  547:MPI::Comm::Set_errhandler(const MPI::Errhandler& errhandler)
+    $$$$$:  547-block  0
+        -:  548:{
+    #####:  549:    (void)MPI_Comm_set_errhandler(mpi_comm, errhandler);
+    $$$$$:  549-block  0
+call    0 never executed
+call    1 never executed
+    #####:  550:}
+        -:  551:
+        -:  552:inline void
+        -:  553:MPI::Comm::Call_errhandler(int errorcode) const
+        -:  554:{
+        -:  555:  (void) MPI_Comm_call_errhandler(mpi_comm, errorcode);
+        -:  556:}
+        -:  557:
+        -:  558:// 1) original Create_keyval that takes the first 2 arguments as C++
+        -:  559://    functions
+        -:  560:inline int
+        -:  561:MPI::Comm::Create_keyval(MPI::Comm::Copy_attr_function* comm_copy_attr_fn,
+        -:  562:                         MPI::Comm::Delete_attr_function* comm_delete_attr_fn,
+        -:  563:                         void* extra_state)
+        -:  564:{
+        -:  565:    // Back-end function does the heavy lifting
+        -:  566:    int ret, keyval;
+        -:  567:    ret = do_create_keyval(NULL, NULL,
+        -:  568:                           comm_copy_attr_fn, comm_delete_attr_fn,
+        -:  569:                           extra_state, keyval);
+        -:  570:    return (MPI_SUCCESS == ret) ? keyval : ret;
+        -:  571:}
+        -:  572:
+        -:  573:// 2) overload Create_keyval to take the first 2 arguments as C
+        -:  574://    functions
+        -:  575:inline int
+        -:  576:MPI::Comm::Create_keyval(MPI_Comm_copy_attr_function* comm_copy_attr_fn,
+        -:  577:                         MPI_Comm_delete_attr_function* comm_delete_attr_fn,
+        -:  578:                         void* extra_state)
+        -:  579:{
+        -:  580:    // Back-end function does the heavy lifting
+        -:  581:    int ret, keyval;
+        -:  582:    ret = do_create_keyval(comm_copy_attr_fn, comm_delete_attr_fn,
+        -:  583:                           NULL, NULL,
+        -:  584:                           extra_state, keyval);
+        -:  585:    return (MPI_SUCCESS == ret) ? keyval : ret;
+        -:  586:}
+        -:  587:
+        -:  588:// 3) overload Create_keyval to take the first 2 arguments as C++ & C
+        -:  589://    functions
+        -:  590:inline int
+        -:  591:MPI::Comm::Create_keyval(MPI::Comm::Copy_attr_function* comm_copy_attr_fn,
+        -:  592:                         MPI_Comm_delete_attr_function* comm_delete_attr_fn,
+        -:  593:                         void* extra_state)
+        -:  594:{
+        -:  595:    // Back-end function does the heavy lifting
+        -:  596:    int ret, keyval;
+        -:  597:    ret = do_create_keyval(NULL, comm_delete_attr_fn,
+        -:  598:                           comm_copy_attr_fn, NULL,
+        -:  599:                           extra_state, keyval);
+        -:  600:    return (MPI_SUCCESS == ret) ? keyval : ret;
+        -:  601:}
+        -:  602:
+        -:  603:// 4) overload Create_keyval to take the first 2 arguments as C & C++
+        -:  604://    functions
+        -:  605:inline int
+        -:  606:MPI::Comm::Create_keyval(MPI_Comm_copy_attr_function* comm_copy_attr_fn,
+        -:  607:                         MPI::Comm::Delete_attr_function* comm_delete_attr_fn,
+        -:  608:                         void* extra_state)
+        -:  609:{
+        -:  610:    // Back-end function does the heavy lifting
+        -:  611:    int ret, keyval;
+        -:  612:    ret = do_create_keyval(comm_copy_attr_fn, NULL,
+        -:  613:                           NULL, comm_delete_attr_fn,
+        -:  614:                           extra_state, keyval);
+        -:  615:    return (MPI_SUCCESS == ret) ? keyval : ret;
+        -:  616:}
+        -:  617:
+        -:  618:inline void
+        -:  619:MPI::Comm::Free_keyval(int& comm_keyval)
+        -:  620:{
+        -:  621:    (void) MPI_Comm_free_keyval(&comm_keyval);
+        -:  622:}
+        -:  623:
+        -:  624:inline void
+function _ZNK3MPI4Comm8Set_attrEiPKv called 0 returned 0% blocks executed 0%
+    #####:  625:MPI::Comm::Set_attr(int comm_keyval, const void* attribute_val) const
+    $$$$$:  625-block  0
+        -:  626:{
+    #####:  627:    (void)MPI_Comm_set_attr(mpi_comm, comm_keyval, const_cast<void*>(attribute_val));
+    $$$$$:  627-block  0
+call    0 never executed
+    #####:  628:}
+        -:  629:
+        -:  630:inline bool
+function _ZNK3MPI4Comm8Get_attrEiPv called 0 returned 0% blocks executed 0%
+    #####:  631:MPI::Comm::Get_attr(int comm_keyval, void* attribute_val) const
+    $$$$$:  631-block  0
+        -:  632:{
+        -:  633:  int flag;
+    #####:  634:  (void)MPI_Comm_get_attr(mpi_comm, comm_keyval, attribute_val, &flag);
+    $$$$$:  634-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  635:  return OPAL_INT_TO_BOOL(flag);
+    $$$$$:  635-block  0
+    $$$$$:  635-block  1
+        -:  636:}
+        -:  637:
+        -:  638:inline void
+function _ZN3MPI4Comm11Delete_attrEi called 0 returned 0% blocks executed 0%
+    #####:  639:MPI::Comm::Delete_attr(int comm_keyval)
+    $$$$$:  639-block  0
+        -:  640:{
+    #####:  641:  (void)MPI_Comm_delete_attr(mpi_comm, comm_keyval);
+    $$$$$:  641-block  0
+call    0 never executed
+    #####:  642:}
+        -:  643:
+        -:  644:// Comment out the unused parameters so that compilers don't warn
+        -:  645:// about them.  Use comments instead of just deleting the param names
+        -:  646:// outright so that we know/remember what they are.
+        -:  647:inline int
+        -:  648:MPI::Comm::NULL_COPY_FN(const MPI::Comm& /* oldcomm */,
+        -:  649:                        int /* comm_keyval */,
+        -:  650:                        void* /* extra_state */,
+        -:  651:                        void* /* attribute_val_in */,
+        -:  652:                        void* /* attribute_val_out */,
+        -:  653:                        bool& flag)
+        -:  654:{
+        -:  655:    flag = false;
+        -:  656:    return MPI_SUCCESS;
+        -:  657:}
+        -:  658:
+        -:  659:inline int
+        -:  660:MPI::Comm::DUP_FN(const MPI::Comm& oldcomm, int comm_keyval,
+        -:  661:			 void* extra_state, void* attribute_val_in,
+        -:  662:			 void* attribute_val_out, bool& flag)
+        -:  663:{
+        -:  664:    if (sizeof(bool) != sizeof(int)) {
+        -:  665:        int f = (int)flag;
+        -:  666:        int ret;
+        -:  667:        ret = MPI_COMM_DUP_FN(oldcomm, comm_keyval, extra_state,
+        -:  668:                              attribute_val_in, attribute_val_out, &f);
+        -:  669:        flag = OPAL_INT_TO_BOOL(f);
+        -:  670:        return ret;
+        -:  671:    } else {
+        -:  672:        return MPI_COMM_DUP_FN(oldcomm, comm_keyval, extra_state,
+        -:  673:                               attribute_val_in, attribute_val_out,
+        -:  674:                               (int*)&flag);
+        -:  675:    }
+        -:  676:}
+        -:  677:
+        -:  678:// Comment out the unused parameters so that compilers don't warn
+        -:  679:// about them.  Use comments instead of just deleting the param names
+        -:  680:// outright so that we know/remember what they are.
+        -:  681:inline int
+        -:  682:MPI::Comm::NULL_DELETE_FN(MPI::Comm& /* comm */,
+        -:  683:                          int /* comm_keyval */,
+        -:  684:                          void* /* attribute_val */,
+        -:  685:                          void* /* extra_state */)
+        -:  686:{
+        -:  687:    return MPI_SUCCESS;
+        -:  688:}
+        -:  689:

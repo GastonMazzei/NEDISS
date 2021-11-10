@@ -1,0 +1,166 @@
+        -:    0:Source:/usr/include/boost/graph/distributed/shuffled_distribution.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Copyright Daniel Wallin 2007. Use, modification and distribution is
+        -:    2:// subject to the Boost Software License, Version 1.0. (See accompanying
+        -:    3:// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+        -:    4:
+        -:    5:#ifndef BOOST_SHUFFLED_DISTRIBUTION_070923_HPP
+        -:    6:#define BOOST_SHUFFLED_DISTRIBUTION_070923_HPP
+        -:    7:
+        -:    8:#ifndef BOOST_GRAPH_USE_MPI
+        -:    9:#error "Parallel BGL files should not be included unless <boost/graph/use_mpi.hpp> has been included"
+        -:   10:#endif
+        -:   11:
+        -:   12:# include <boost/assert.hpp>
+        -:   13:# include <boost/iterator/counting_iterator.hpp>
+        -:   14:# include <vector>
+        -:   15:
+        -:   16:namespace boost { namespace graph { namespace distributed {
+        -:   17:
+        -:   18:template <class BaseDistribution>
+function _ZN5boost5graph11distributed21shuffled_distributionINS_8parallel20variant_distributionINS1_17mpi_process_groupEmEEED2Ev called 1 returned 100% blocks executed 100%
+        2:   19:struct shuffled_distribution : BaseDistribution
+        1:   19-block  0
+        1:   19-block  1
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+        -:   20:{
+        -:   21:    typedef std::size_t size_type;
+        -:   22:
+        -:   23:    template <class ProcessGroup>
+function _ZN5boost5graph11distributed21shuffled_distributionINS_8parallel20variant_distributionINS1_17mpi_process_groupEmEEEC2IS5_EERKT_RKS6_ called 1 returned 100% blocks executed 56%
+        1:   24:    shuffled_distribution(ProcessGroup const& pg, BaseDistribution const& base)
+        1:   24-block  0
+        -:   25:      : BaseDistribution(base)
+        1:   26:      , n(num_processes(pg))
+call    0 returned 1
+        -:   27:      , mapping_(make_counting_iterator(size_type(0)), make_counting_iterator(n))
+        2:   28:      , reverse_mapping(mapping_)
+        1:   28-block  0
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0 (throw)
+        1:   28-block  1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+        1:   28-block  2
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+        1:   28-block  3
+call   11 returned 1
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+    %%%%%:   28-block  4
+    %%%%%:   28-block  5
+    %%%%%:   28-block  6
+call   15 never executed
+    %%%%%:   28-block  7
+    %%%%%:   28-block  8
+call   16 never executed
+    %%%%%:   28-block  9
+call   17 never executed
+        1:   29:    {}
+        1:   29-block  0
+        -:   30:
+        -:   31:    std::vector<size_type> const& mapping() const
+        -:   32:    {
+        -:   33:        return mapping_;
+        -:   34:    }
+        -:   35:
+        -:   36:    template <class InputIterator>
+        -:   37:    void assign_mapping(InputIterator first, InputIterator last)
+        -:   38:    {
+        -:   39:        mapping_.assign(first, last);
+        -:   40:        BOOST_ASSERT(mapping_.size() == n);
+        -:   41:        reverse_mapping.resize(mapping_.size());
+        -:   42:
+        -:   43:        for (std::vector<size_t>::iterator i(mapping_.begin());
+        -:   44:            i != mapping_.end(); ++i)
+        -:   45:        {
+        -:   46:            reverse_mapping[*i] = i - mapping_.begin();
+        -:   47:        }
+        -:   48:    }
+        -:   49:
+        -:   50:    BaseDistribution& base()
+        -:   51:    {
+        -:   52:        return *this;
+        -:   53:    }
+        -:   54:
+function _ZNK5boost5graph11distributed21shuffled_distributionINS_8parallel20variant_distributionINS1_17mpi_process_groupEmEEE4baseEv called 801 returned 100% blocks executed 100%
+      801:   55:    BaseDistribution const& base() const
+      801:   55-block  0
+        -:   56:    {
+      801:   57:        return *this;
+      801:   57-block  0
+        -:   58:    }
+        -:   59:
+        -:   60:    template <class ProcessID>
+function _ZNK5boost5graph11distributed21shuffled_distributionINS_8parallel20variant_distributionINS1_17mpi_process_groupEmEEE10block_sizeIiEEmT_m called 1 returned 100% blocks executed 100%
+        1:   61:    size_type block_size(ProcessID id, size_type n) const
+        1:   61-block  0
+        -:   62:    {
+        1:   63:        return base().block_size(reverse_mapping[id], n);
+        1:   63-block  0
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+        -:   64:    }
+        -:   65:
+        -:   66:    template <class T>
+        -:   67:    size_type operator()(T const& value) const
+        -:   68:    {
+        -:   69:        return mapping_[base()(value)];
+        -:   70:    }
+        -:   71:
+        -:   72:    template <class ProcessID>
+        -:   73:    size_type start(ProcessID id) const
+        -:   74:    {
+        -:   75:        return base().start(reverse_mapping[id]);
+        -:   76:    }
+        -:   77:
+        -:   78:    size_type local(size_type i) const
+        -:   79:    {
+        -:   80:        return base().local(i);
+        -:   81:    }
+        -:   82:
+        -:   83:    size_type global(size_type i) const
+        -:   84:    {
+        -:   85:        return base().global(i);
+        -:   86:    }
+        -:   87:
+        -:   88:    template <class ProcessID>
+        -:   89:    size_type global(ProcessID id, size_type n) const
+        -:   90:    {
+        -:   91:        return base().global(reverse_mapping[id], n);
+        -:   92:    }
+        -:   93:
+        -:   94:    template <class Archive>
+        -:   95:    void serialize(Archive& ar, unsigned long /*version*/)
+        -:   96:    {
+        -:   97:        ar & serialization::make_nvp("base", base());
+        -:   98:    }
+        -:   99:
+        -:  100:    void clear() 
+        -:  101:    {
+        -:  102:        base().clear();
+        -:  103:    }
+        -:  104:
+        -:  105:private:
+        -:  106:    size_type n;
+        -:  107:    std::vector<size_type> mapping_;
+        -:  108:    std::vector<size_type> reverse_mapping;
+        -:  109:};
+        -:  110:
+        -:  111:}}} // namespace boost::graph::distributed
+        -:  112:
+        -:  113:#endif // BOOST_SHUFFLED_DISTRIBUTION_070923_HPP
+        -:  114:

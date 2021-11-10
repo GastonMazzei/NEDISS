@@ -1,0 +1,291 @@
+        -:    0:Source:/home/m4zz31/cppprojct/Utils/HelperClasses.cpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2:// Created by m4zz31 on 5/11/21.
+        -:    3://
+        -:    4:#include "HelperClasses.h"
+        -:    5:
+function _ZN19CommunicationHelperC2ERN5boost14adjacency_listINS0_4vecSENS0_12distributedSINS0_5graph11distributed17mpi_process_groupES2_NS0_8defaultSEEENS0_14bidirectionalSE11DynamicNode11DynamicEdgeNS0_11no_propertyENS0_5listSEEE called 1 returned 100% blocks executed 59%
+        2:    6:CommunicationHelper::CommunicationHelper(Graph &g) {
+        1:    6-block  0
+        1:    6-block  1
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:    6-block  2
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+    %%%%%:    6-block  3
+call    9 never executed
+    %%%%%:    6-block  4
+call   10 never executed
+    %%%%%:    6-block  5
+call   11 never executed
+    %%%%%:    6-block  6
+call   12 never executed
+    %%%%%:    6-block  7
+call   13 never executed
+        -:    7:    // set the threading lvl: https://www.boost.org/doc/libs/1_68_0/doc/html/boost/mpi/threading/level.html
+        -:    8:    // (our version is 1.77)
+        -:    9:    //    boost::mpi::environment env(boost::mpi::threading::funneled);
+        2:   10:    boost::mpi::environment env(boost::mpi::threading::serialized);
+        1:   10-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   10-block  1
+call    3 returned 1
+    %%%%%:   10-block  2
+call    4 never executed
+    %%%%%:   10-block  3
+        -:   11:
+        -:   12:    int MY_NUM_v, WORLD_RANK_v, WORLD_SIZE_v;
+        1:   13:    NUM_THREADS = std::stoi(std::getenv("OMP_THREAD_LIMIT"));
+        1:   13-block  0
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0 (throw)
+        1:   13-block  1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+        1:   13-block  2
+call    8 returned 1
+call    9 returned 1
+    %%%%%:   13-block  3
+call   10 never executed
+    %%%%%:   13-block  4
+    %%%%%:   13-block  5
+call   11 never executed
+    %%%%%:   13-block  6
+        1:   14:    MY_NUM_v = process_id(g.process_group());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   14-block  0
+call    3 returned 1
+call    4 returned 1
+        1:   15:    MPI_Comm_rank(MPI_COMM_WORLD, &WORLD_RANK_v);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   16:    MPI_Comm_size(MPI_COMM_WORLD, &WORLD_SIZE_v);
+        1:   16-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        7:   17:    for (int i = 0; i < NUM_THREADS; i++) {
+        1:   17-block  0
+        7:   17-block  1
+branch  0 taken 6 (fallthrough)
+branch  1 taken 1
+        6:   17-block  2
+        6:   18:        WORLD_RANK.push_back(WORLD_RANK_v);
+        6:   18-block  0
+call    0 returned 6
+branch  1 taken 6 (fallthrough)
+branch  2 taken 0 (throw)
+        6:   19:        WORLD_SIZE.push_back(WORLD_SIZE_v);
+        6:   19-block  0
+call    0 returned 6
+branch  1 taken 6 (fallthrough)
+branch  2 taken 0 (throw)
+        6:   20:        MY_NUM.push_back(MY_NUM_v);
+        6:   20-block  0
+call    0 returned 6
+branch  1 taken 6 (fallthrough)
+branch  2 taken 0 (throw)
+        -:   21:    }
+        1:   22:}
+        -:   23:
+function _ZN14ParallelHelperC2Eim called 1 returned 100% blocks executed 93%
+        2:   24:ParallelHelper::ParallelHelper(int NT, unsigned long NNodes){
+        1:   24-block  0
+        1:   24-block  1
+call    0 returned 1
+    %%%%%:   24-block  2
+call    1 never executed
+        1:   25:    data.resize(NNodes);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+      201:   26:    for (int i=0; i<NNodes; i++){
+        1:   26-block  0
+      201:   26-block  1
+branch  0 taken 200 (fallthrough)
+branch  1 taken 1
+      200:   26-block  2
+      200:   27:        data[i].ProcessLocally.resize(NT);
+      200:   27-block  0
+call    0 returned 200
+call    1 returned 200
+branch  2 taken 200 (fallthrough)
+branch  3 taken 0 (throw)
+      200:   28:        data[i].MissingA.resize(NT);
+      200:   28-block  0
+call    0 returned 200
+call    1 returned 200
+branch  2 taken 200 (fallthrough)
+branch  3 taken 0 (throw)
+      200:   29:        data[i].MissingB.resize(NT);
+      200:   29-block  0
+call    0 returned 200
+call    1 returned 200
+branch  2 taken 200 (fallthrough)
+branch  3 taken 0 (throw)
+        -:   30:    }
+        1:   31:}
+        1:   31-block  0
+        -:   32:
+        -:   33:
+function _ZN12OpenMPHelperC2Eli called 183310 returned 100% blocks executed 100%
+   183310:   34:OpenMPHelper::OpenMPHelper(long NLocals, int i){
+   183310:   34-block  0
+   183310:   35:    MY_THREAD_n= omp_get_thread_num();
+   183310:   35-block  0
+call    0 returned 183310
+   183310:   36:    N_THREADS_n = omp_get_num_threads();
+call    0 returned 183310
+   183310:   37:    MY_OFFSET_n = (NLocals / (N_THREADS_n-i)) * (MY_THREAD_n-i);
+   183310:   38:    MY_LENGTH_n = (NLocals / (N_THREADS_n-i));
+   183310:   39:    if (MY_THREAD_n + 1 == N_THREADS_n) {
+branch  0 taken 100500 (fallthrough)
+branch  1 taken 82810
+   100500:   40:        MY_LENGTH_n += NLocals % (N_THREADS_n-i);
+   100500:   40-block  0
+        -:   41:    }
+   183310:   42:}
+        -:   43:
+        -:   44:
+function _ZN12OpenMPHelperC2Elill called 181310 returned 100% blocks executed 100%
+   181310:   45:OpenMPHelper::OpenMPHelper(long NLocals, int i, long N_THREADS, long MY_THREAD){
+   181310:   45-block  0
+   181310:   46:    MY_THREAD_n= MY_THREAD;
+   181310:   47:    N_THREADS_n = N_THREADS;
+   181310:   48:    MY_OFFSET_n = (NLocals / (N_THREADS_n-i)) * (MY_THREAD_n-i);
+   181310:   49:    MY_LENGTH_n = (NLocals / (N_THREADS_n-i));
+   181310:   50:    if (MY_THREAD_n + 1 == N_THREADS_n) {
+   181310:   50-block  0
+branch  0 taken 100000 (fallthrough)
+branch  1 taken 81310
+   100000:   51:        MY_LENGTH_n += NLocals % (N_THREADS_n-i);
+   100000:   51-block  0
+        -:   52:    }
+   181310:   53:}
+        -:   54:
+        -:   55:
+function _ZN15IntegrationCell5buildERN5boost14adjacency_listINS0_4vecSENS0_12distributedSINS0_5graph11distributed17mpi_process_groupES2_NS0_8defaultSEEENS0_14bidirectionalSE11DynamicNode11DynamicEdgeNS0_11no_propertyENS0_5listSEEENS0_6detail8parallel17global_descriptorImEER13MappingHelperRmSM_SM_SM_ called 100000 returned 100% blocks executed 95%
+   100000:   56:void IntegrationCell::build(Graph &g, VD v, MappingHelper &Map,
+   100000:   56-block  0
+        -:   57:                            unsigned long &NOwned,
+        -:   58:                            unsigned long &rank,
+        -:   59:                            unsigned long &NLocals,
+        -:   60:                            unsigned long &M){
+   100000:   61:    auto neighbors = boost::adjacent_vertices(v, g);
+   100000:   61-block  0
+call    0 returned 100000
+branch  1 taken 100000 (fallthrough)
+branch  2 taken 0 (throw)
+   100000:   62:    auto in_edges = boost::in_edges(v, g);
+   100000:   62-block  0
+call    0 returned 100000
+branch  1 taken 100000 (fallthrough)
+branch  2 taken 0 (throw)
+   100000:   63:    NOwned = 0;
+   100000:   64:    rank = in_degree(v, g) + out_degree(v, g);
+   100000:   64-block  0
+call    0 returned 100000
+branch  1 taken 100000 (fallthrough)
+branch  2 taken 0 (throw)
+   100000:   64-block  1
+call    3 returned 100000
+branch  4 taken 100000 (fallthrough)
+branch  5 taken 0 (throw)
+   100000:   65:    NLocals = neighbors.second - neighbors.first;
+   100000:   65-block  0
+call    0 returned 100000
+branch  1 taken 100000 (fallthrough)
+branch  2 taken 0 (throw)
+   100000:   66:    M = rank - NLocals;
+   200000:   67:    for (auto n = neighbors.first; n != neighbors.second; ++n) {
+   100000:   67-block  0
+   200000:   67-block  1
+call    0 returned 200000
+branch  1 taken 200000 (fallthrough)
+branch  2 taken 0 (throw)
+   200000:   67-block  2
+branch  3 taken 100000 (fallthrough)
+branch  4 taken 100000
+   100000:   67-block  3
+call    5 returned 100000
+branch  6 taken 100000 (fallthrough)
+branch  7 taken 0 (throw)
+   100000:   67-block  4
+   100000:   68:        if (get(Map.Local, *n) == 1){
+   100000:   68-block  0
+call    0 returned 100000
+branch  1 taken 100000 (fallthrough)
+branch  2 taken 0 (throw)
+   100000:   68-block  1
+call    3 returned 100000
+branch  4 taken 500 (fallthrough)
+branch  5 taken 99500
+      500:   69:            ++NOwned;
+      500:   69-block  0
+        -:   70:        }
+        -:   71:    }
+   100000:   72:    neighborValues.resize(rank);
+   100000:   72-block  0
+call    0 returned 100000
+branch  1 taken 100000 (fallthrough)
+branch  2 taken 0 (throw)
+   100000:   73:    edgeValues.resize(rank);
+   100000:   73-block  0
+call    0 returned 100000
+branch  1 taken 100000 (fallthrough)
+branch  2 taken 0 (throw)
+   100000:   74:}
+   100000:   74-block  0
+    %%%%%:   74-block  1
+        -:   75:
+function _ZN18ReferenceContainerC2ER14ParallelHelperR19CommunicationHelperRN5boost14adjacency_listINS4_4vecSENS4_12distributedSINS4_5graph11distributed17mpi_process_groupES6_NS4_8defaultSEEENS4_14bidirectionalSE11DynamicNode11DynamicEdgeNS4_11no_propertyENS4_5listSEEERSt5queueIlSt5dequeIlSaIlEEESP_RSt6vectorI15IntegrationCellSaISR_EERiSV_ called 500 returned 100% blocks executed 100%
+      500:   76:ReferenceContainer::ReferenceContainer(ParallelHelper &ParHelper,
+      500:   76-block  0
+        -:   77:                                       CommunicationHelper &ComHelper,
+        -:   78:                                       Graph & g,
+        -:   79:                                       std::queue<long> & CHECKED,
+        -:   80:                                       std::queue<long> & READY_FOR_INTEGRATION,
+        -:   81:                                       IntegrationHelper & IntHelper,
+        -:   82:                                       int & TOT,
+      500:   83:                                       int & PENDING_INT){
+      500:   84:    p_ParHelper = &ParHelper;
+      500:   85:    p_ComHelper = &ComHelper;
+      500:   86:    p_PENDING_INT = &PENDING_INT;
+      500:   87:    p_g = &g;
+      500:   88:    p_CHECKED = &CHECKED;
+      500:   89:    p_READY_FOR_INTEGRATION = &READY_FOR_INTEGRATION;
+      500:   90:    p_IntHelper = reinterpret_cast<IntegrationHelper *>(&IntHelper);
+      500:   91:    p_TOT = &TOT;
+function _GLOBAL__sub_I__ZN19CommunicationHelperC2ERN5boost14adjacency_listINS0_4vecSENS0_12distributedSINS0_5graph11distributed17mpi_process_groupES2_NS0_8defaultSEEENS0_14bidirectionalSE11DynamicNode11DynamicEdgeNS0_11no_propertyENS0_5listSEEE called 1 returned 100% blocks executed 100%
+function _Z41__static_initialization_and_destruction_0ii called 1 returned 100% blocks executed 100%
+        4:   92:}
+        1:   92-block  0
+        1:   92-block  1
+call    0 returned 1
+        1:   92-block  2
+        1:   92-block  3
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   92-block  4
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+        1:   92-block  5

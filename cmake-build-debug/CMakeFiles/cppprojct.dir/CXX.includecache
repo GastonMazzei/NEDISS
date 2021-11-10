@@ -13,6 +13,8 @@ CommunicationFunctions.h
 /home/m4zz31/cppprojct/Utils/global_standard_messages.h
 
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
+../macros/macros.h
+/home/m4zz31/cppprojct/macros/macros.h
 boost/serialization/string.hpp
 -
 ../GraphClasses/GeneralGraph.h
@@ -61,6 +63,8 @@ string
 -
 ../Utils/error.h
 /home/m4zz31/cppprojct/Utils/error.h
+../macros/macros.h
+/home/m4zz31/cppprojct/macros/macros.h
 omp.h
 -
 vector
@@ -119,6 +123,8 @@ GraphFunctions.h
 /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
 
 /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
+../macros/macros.h
+/home/m4zz31/cppprojct/macros/macros.h
 ../Solvers/GeneralSolver.h
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
 ../Utils/adequate_synchronization.h
@@ -240,10 +246,6 @@ long-singlestep-run.h
 ../Communication/CommunicationFunctions.h
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
 
-/home/m4zz31/cppprojct/Utils/HelperClasses.cpp
-HelperClasses.h
-/home/m4zz31/cppprojct/Utils/HelperClasses.h
-
 /home/m4zz31/cppprojct/Utils/HelperClasses.h
 ../GraphClasses/GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
@@ -253,6 +255,8 @@ HelperClasses.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 msleep.h
 /home/m4zz31/cppprojct/Utils/msleep.h
+../macros/macros.h
+/home/m4zz31/cppprojct/macros/macros.h
 
 /home/m4zz31/cppprojct/Utils/differential_equations_aux.h
 functional
@@ -300,6 +304,8 @@ boost/random.hpp
 
 /home/m4zz31/cppprojct/Utils/timers.h
 
+/home/m4zz31/cppprojct/macros/macros.h
+
 /home/m4zz31/cppprojct/main.cpp
 iostream
 -
@@ -321,4 +327,6 @@ Utils/parallel_sanitizer.h
 /home/m4zz31/cppprojct/Utils/parallel_sanitizer.h
 Tests/long-singlestep-run.h
 /home/m4zz31/cppprojct/Tests/long-singlestep-run.h
+macros/macros.h
+/home/m4zz31/cppprojct/macros/macros.h
 

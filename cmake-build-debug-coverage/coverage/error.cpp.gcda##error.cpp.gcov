@@ -1,0 +1,36 @@
+        -:    0:Source:/home/m4zz31/cppprojct/Utils/error.cpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Utils/error.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Utils/error.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2:// Created by m4zz31 on 26/10/21.
+        -:    3://
+        -:    4:
+        -:    5:#include <stdlib.h>
+        -:    6:#include <iostream>
+        -:    7:#include <string>
+        -:    8:
+        -:    9:using namespace std;
+        -:   10:
+function _Z12error_reportNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+    #####:   11:__attribute__((unused)) [[ noreturn ]] void error_report(string s){
+    $$$$$:   11-block  0
+    #####:   12:    cout << s << endl;
+    $$$$$:   12-block  0
+call    0 never executed
+call    1 never executed
+    #####:   13:    exit(EXIT_FAILURE);
+function _GLOBAL__sub_I__Z12error_reportNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 1 returned 100% blocks executed 100%
+function _Z41__static_initialization_and_destruction_0ii called 1 returned 100% blocks executed 100%
+        4:   14:}
+        1:   14-block  0
+        1:   14-block  1
+call    0 returned 1
+        1:   14-block  2
+        1:   14-block  3
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   14-block  4
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0

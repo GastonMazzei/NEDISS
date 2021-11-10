@@ -1,0 +1,199 @@
+        -:    0:Source:/usr/include/boost/property_map/parallel/detail/untracked_pair.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Copyright (C) 2007 Matthias Troyer
+        -:    2://
+        -:    3:// Use, modification and distribution is subject to the Boost Software
+        -:    4:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:    5://
+        -:    6:// This file contains helper data structures for use in transmitting
+        -:    7:// properties. The basic idea is to optimize away any storage for the
+        -:    8:// properties when no properties are specified.
+        -:    9:#ifndef BOOST_PARALLEL_DETAIL_UNTRACKED_PAIR_HPP
+        -:   10:#define BOOST_PARALLEL_DETAIL_UNTRACKED_PAIR_HPP
+        -:   11:
+        -:   12:#include <boost/mpi/datatype.hpp>
+        -:   13:#include <utility> // for std::pair
+        -:   14:#include <boost/serialization/utility.hpp>
+        -:   15:
+        -:   16:namespace boost { namespace parallel { namespace detail {
+        -:   17:
+        -:   18:/**
+        -:   19: * This structure is like std::pair, with the only difference
+        -:   20: * that tracking in the serialization library is turned off.
+        -:   21: */
+        -:   22: 
+        -:   23:template<typename T, typename U>
+function _ZN5boost8parallel6detail14untracked_pairIi11DynamicNodeED2Ev called 0 returned 0% blocks executed 0%
+    #####:   24:struct untracked_pair : public std::pair<T,U>
+    $$$$$:   24-block  0
+    $$$$$:   24-block  1
+call    0 never executed
+        -:   25:{
+function _ZN5boost8parallel6detail14untracked_pairIi11DynamicNodeEC2Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost8parallel6detail14untracked_pairIiNS_6detail8parallel17msg_add_edge_dataINS4_17global_descriptorImEEmEEEC2Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost8parallel6detail14untracked_pairIiNS_6detail8parallel31msg_add_edge_with_property_dataINS4_17global_descriptorImEEm11DynamicEdgeEEEC2Ev called 0 returned 0% blocks executed 0%
+function _ZN5boost8parallel6detail14untracked_pairINS_6detail8parallel15edge_descriptorINS3_14edge_desc_implINS_12directed_tagEmEEEEbEC2Ev called 0 returned 0% blocks executed 0%
+    #####:   26:  untracked_pair() {}
+    $$$$$:   26-block  0
+    $$$$$:   26-block  1
+call    0 never executed
+    $$$$$:   26-block  2
+    $$$$$:   26-block  3
+call    1 never executed
+    $$$$$:   26-block  4
+    $$$$$:   26-block  5
+call    2 never executed
+    $$$$$:   26-block  6
+    $$$$$:   26-block  7
+call    3 never executed
+        -:   27:
+function _ZN5boost8parallel6detail14untracked_pairIiNS_6detail8parallel31msg_add_edge_with_property_dataINS4_17global_descriptorImEEm11DynamicEdgeEEEC2ERKiRKS9_ called 0 returned 0% blocks executed 0%
+function _ZN5boost8parallel6detail14untracked_pairIiNS_6detail8parallel17msg_add_edge_dataINS4_17global_descriptorImEEmEEEC2ERKiRKS8_ called 0 returned 0% blocks executed 0%
+    #####:   28:  untracked_pair(const T& t, const U& u)
+    $$$$$:   28-block  0
+    $$$$$:   28-block  1
+    #####:   29:  : std::pair<T,U>(t,u) {}
+    $$$$$:   29-block  0
+call    0 never executed
+    $$$$$:   29-block  1
+call    1 never executed
+        -:   30:
+        -:   31:  template<class T1, class U1>
+function _ZN5boost8parallel6detail14untracked_pairINS_6detail8parallel15edge_descriptorINS3_14edge_desc_implINS_12directed_tagEmEEEEbEC2IS9_bEERKSt4pairIT_T0_E called 0 returned 0% blocks executed 0%
+    #####:   32:  untracked_pair(std::pair<T1,U1> const& p)
+    $$$$$:   32-block  0
+    #####:   33:  : std::pair<T,U>(p) {}  
+        -:   34:};
+        -:   35:
+        -:   36:template<typename T, typename U>
+        -:   37:inline untracked_pair<T, U>
+function _ZN5boost8parallel6detail19make_untracked_pairIiNS_6detail8parallel31msg_add_edge_with_property_dataINS4_17global_descriptorImEEm11DynamicEdgeEEEENS1_14untracked_pairIT_T0_EERKSB_RKSC_ called 0 returned 0% blocks executed 0%
+function _ZN5boost8parallel6detail19make_untracked_pairIiNS_6detail8parallel17msg_add_edge_dataINS4_17global_descriptorImEEmEEEENS1_14untracked_pairIT_T0_EERKSA_RKSB_ called 0 returned 0% blocks executed 0%
+    #####:   38:make_untracked_pair(const T& t, const U& u)
+    $$$$$:   38-block  0
+    $$$$$:   38-block  1
+        -:   39:{
+    #####:   40:  return untracked_pair<T,U>(t,u);
+    $$$$$:   40-block  0
+call    0 never executed
+    $$$$$:   40-block  1
+call    1 never executed
+        -:   41:}
+        -:   42:
+        -:   43:} } } // end namespace boost::parallel::detail
+        -:   44:
+        -:   45:namespace boost { namespace mpi {
+        -:   46:
+        -:   47:template<typename T, typename U>
+        -:   48:struct is_mpi_datatype<boost::parallel::detail::untracked_pair<T, U> >
+        -:   49:  : is_mpi_datatype<std::pair<T,U> > {};
+        -:   50:
+        -:   51:} } // end namespace boost::mpi
+        -:   52:
+        -:   53:namespace boost { namespace serialization {
+        -:   54:
+        -:   55:// pair
+        -:   56:template<class Archive, class F, class S>
+function _ZN5boost13serialization9serializeINS_3mpi15packed_iarchiveEi11DynamicNodeEEvRT_RNS_8parallel6detail14untracked_pairIT0_T1_EEj called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization9serializeINS_3mpi15packed_iarchiveEiNS_6detail8parallel31msg_add_edge_with_property_dataINS5_17global_descriptorImEEm11DynamicEdgeEEEEvRT_RNS_8parallel6detail14untracked_pairIT0_T1_EEj called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization9serializeINS_3mpi6detail21mpi_datatype_oarchiveENS_6detail8parallel15edge_descriptorINS5_14edge_desc_implINS_12directed_tagEmEEEEbEEvRT_RNS_8parallel6detail14untracked_pairIT0_T1_EEj called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization9serializeINS_3mpi6detail21mpi_datatype_oarchiveEiNS_6detail8parallel17msg_add_edge_dataINS6_17global_descriptorImEEmEEEEvRT_RNS_8parallel6detail14untracked_pairIT0_T1_EEj called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization9serializeINS_3mpi15packed_oarchiveEiNS_6detail8parallel31msg_add_edge_with_property_dataINS5_17global_descriptorImEEm11DynamicEdgeEEEEvRT_RNS_8parallel6detail14untracked_pairIT0_T1_EEj called 0 returned 0% blocks executed 0%
+    #####:   57:inline void serialize(
+    $$$$$:   57-block  0
+    $$$$$:   57-block  1
+    $$$$$:   57-block  2
+    $$$$$:   57-block  3
+    $$$$$:   57-block  4
+        -:   58:    Archive & ar,
+        -:   59:    boost::parallel::detail::untracked_pair<F, S> & p,
+        -:   60:    const unsigned int /* file_version */
+        -:   61:){
+    #####:   62:    ar & boost::serialization::make_nvp("first", p.first);
+    $$$$$:   62-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   62-block  1
+call    4 never executed
+    $$$$$:   62-block  2
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%:   62-block  3
+call    9 never executed
+    $$$$$:   62-block  4
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+    %%%%%:   62-block  5
+call   14 never executed
+    $$$$$:   62-block  6
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+    %%%%%:   62-block  7
+call   19 never executed
+    $$$$$:   62-block  8
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+    %%%%%:   62-block  9
+call   24 never executed
+    #####:   63:    ar & boost::serialization::make_nvp("second", p.second);
+    $$$$$:   63-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   63-block  1
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    $$$$$:   63-block  2
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+    $$$$$:   63-block  3
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+    $$$$$:   63-block  4
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+    #####:   64:}
+    $$$$$:   64-block  0
+    $$$$$:   64-block  1
+    $$$$$:   64-block  2
+    $$$$$:   64-block  3
+    $$$$$:   64-block  4
+        -:   65:
+        -:   66:template<typename T, typename U>
+        -:   67:struct is_bitwise_serializable<
+        -:   68:        boost::parallel::detail::untracked_pair<T, U> >
+        -:   69:  : is_bitwise_serializable<std::pair<T, U> > {};
+        -:   70:
+        -:   71:template<typename T, typename U>
+        -:   72:struct implementation_level<boost::parallel::detail::untracked_pair<T, U> >
+        -:   73: : mpl::int_<object_serializable> {} ;
+        -:   74:
+        -:   75:template<typename T, typename U>
+        -:   76:struct tracking_level<boost::parallel::detail::untracked_pair<T, U> >
+        -:   77: : mpl::int_<track_never> {} ;
+        -:   78:
+        -:   79:} } // end namespace boost::serialization
+        -:   80:
+        -:   81:#endif // BOOST_PARALLEL_DETAIL_UNTRACKED_PAIR_HPP

@@ -1,0 +1,228 @@
+        -:    0:Source:/home/m4zz31/cppprojct/Solvers/GeneralSolver.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2:// Created by m4zz31 on 1/11/21.
+        -:    3://
+        -:    4:
+        -:    5:#ifndef CPPPROJCT_GENERALSOLVER_H
+        -:    6:#define CPPPROJCT_GENERALSOLVER_H
+        -:    7:
+        -:    8:#include <functional>
+        -:    9:
+        -:   10:
+        -:   11:#include "../GraphClasses/GeneralGraph.h"
+        -:   12:#include "../DifferentialEquations/GeneralDifferentialEquation.h"
+        -:   13:
+        -:   14:typedef std::function<double(double, double, std::vector<double>, std::vector<double>, std::vector<double>)> ScalarFlow;
+        -:   15:typedef std::function<double(double a, std::vector<double> &b, std::vector<double> &c, std::vector<double> &d, Graph &g, ScalarFlow &F)> SolverOp;
+        -:   16:
+function _ZN13TimeStructureC2Ev called 2 returned 100% blocks executed 100%
+        2:   17:struct TimeStructure{
+        2:   17-block  0
+        -:   18:    double h = 0.01;
+        -:   19:    double t = 0;
+        -:   20:};
+        -:   21:
+        -:   22:
+        -:   23:template <typename DIFFEQ, typename SOLVER>
+function _ZN13GeneralSolverI17NoiselessKuramoto16RungeKuttaSolverIS0_EED2Ev called 1 returned 100% blocks executed 100%
+function _ZN13GeneralSolverI17NoiselessKuramoto11EulerSolverIS0_EED2Ev called 1 returned 100% blocks executed 100%
+        4:   24:class GeneralSolver{
+        1:   24-block  0
+        1:   24-block  1
+call    0 returned 1
+call    1 returned 1
+        1:   24-block  2
+        1:   24-block  3
+call    2 returned 1
+call    3 returned 1
+        -:   25:public:
+        -:   26:    // Configuration specific to the solver structure :-)
+        -:   27:    double Params[4]; // up to 4 weights for runge-kutta
+        -:   28:    //                      for example, for Heun's method it would be {1/2,1/2,0,0}
+        -:   29:    //              Note: in this example, k3 and k4 would still be computed if deg=4.
+        -:   30:    int deg; // the degree of the integration algorithm
+        -:   31:
+        -:   32:    std::string type;
+        -:   33:    GeneralSolver();
+        -:   34:    GeneralSolver(std::string valtype);
+        -:   35:    GeneralSolver(std::string valtype, int d);
+        -:   36:    GeneralSolver(std::string valtype, int d, double params[4]);
+        -:   37:
+        -:   38:    // Instantiate the Differential Equation and prepare stuff if necessary
+        -:   39:    DIFFEQ DifferentialEquation;
+        -:   40:    SOLVER Solver;
+        -:   41:    void PostTemplateProcessing();
+        -:   42:
+        -:   43:
+        -:   44:    // main function: evolver
+        -:   45:    double evolve(double a,
+        -:   46:                std::vector<double> &b,
+        -:   47:                std::vector<double> &c,
+        -:   48:                std::vector<double> &d);
+        -:   49:
+        -:   50:    // Configuration specific to the time structure :-)
+        -:   51:    TimeStructure T;
+        -:   52:    void SetStep(double h);
+        -:   53:    void SetT0(double t0);
+        -:   54:    void EvolveTime();
+        -:   55:};
+        -:   56:
+        -:   57:template <typename DIFFEQ, typename SOLVER>
+function _ZN13GeneralSolverI17NoiselessKuramoto16RungeKuttaSolverIS0_EEC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiPd called 1 returned 100% blocks executed 70%
+        2:   58:GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d, double params[4]){
+        1:   58-block  0
+        1:   58-block  1
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+    %%%%%:   58-block  2
+call    4 never executed
+    %%%%%:   58-block  3
+call    5 never executed
+        1:   59:    type = valtype;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   60:    deg = d;
+        1:   61:    Params[0] = params[0];
+        1:   62:    Params[1] = params[1];
+        1:   63:    Params[2] = params[2];
+        1:   64:    Params[3] = params[3];
+        1:   65:};
+        1:   65-block  0
+        -:   66:
+        -:   67:template <typename DIFFEQ, typename SOLVER>
+        -:   68:GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype){
+        -:   69:    // Types available should be:
+        -:   70:    //  (1) Euler ('eu')
+        -:   71:    //  (2) Runge-Kutta ('rk')
+        -:   72:    std::string methods_str = "(1) Euler ('eu'), (2) Runge-Kutta up to order 4 included ('rk').";
+        -:   73:    type = std::move(valtype);
+        -:   74:    if (type == "rk") {
+        -:   75:        // Heun method's initialization :-)
+        -:   76:        deg = 2;
+        -:   77:        Params[0] = 0.5;
+        -:   78:        Params[1] = 0.5;
+        -:   79:        Params[2] = 0;
+        -:   80:        Params[3] = 0;
+        -:   81:    } else if (type == "eu") {
+        -:   82:        deg = 1;
+        -:   83:    } else if (type != "eu") {
+        -:   84:        error_report("Only support for Integration is available for the following methods:" + methods_str);
+        -:   85:    }
+        -:   86:};
+        -:   87:
+        -:   88:template <typename DIFFEQ, typename SOLVER>
+        -:   89:GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(){
+        -:   90:    type = "eu";
+        -:   91:    deg = 1;
+        -:   92:}
+        -:   93:
+        -:   94:template <typename DIFFEQ, typename SOLVER>
+function _ZN13GeneralSolverI17NoiselessKuramoto11EulerSolverIS0_EEC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi called 1 returned 100% blocks executed 52%
+        2:   95:GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d) {
+        1:   95-block  0
+        1:   95-block  1
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+    %%%%%:   95-block  2
+call    4 never executed
+    %%%%%:   95-block  3
+call    5 never executed
+        -:   96:    // Types available should be:
+        -:   97:    //  (1) Euler ('eu')
+        -:   98:    //  (2) Runge-Kutta ('rk')
+        2:   99:    std::string methods_str = "(1) Euler ('eu'), (2) Runge-Kutta up to order 4 included ('rk').";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:   99-block  0
+call    4 returned 1
+        1:   99-block  1
+call    5 returned 1
+    %%%%%:   99-block  2
+    %%%%%:   99-block  3
+call    6 never executed
+    %%%%%:   99-block  4
+        1:  100:    type = std::move(valtype);
+call    0 returned 1
+call    1 returned 1
+        1:  101:    deg = d;
+        1:  102:    if (type == "rk") {
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+        -:  103:        // Heun method's initialization :-)
+    #####:  104:        Params[0] = 0.5;
+    #####:  105:        Params[1] = 0.5;
+    #####:  106:        Params[2] = 0;
+    #####:  107:        Params[3] = 0;
+    $$$$$:  107-block  0
+        1:  108:    } else if (type != "eu") {
+        1:  108-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  108-block  1
+branch  3 taken 0 (fallthrough)
+branch  4 taken 1
+    #####:  109:        error_report("Only support for Integration is available for the following methods:" + methods_str);
+    $$$$$:  109-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:  109-block  1
+call    3 never executed
+    %%%%%:  109-block  2
+call    4 never executed
+    %%%%%:  109-block  3
+        -:  110:    }
+        1:  111:};
+    %%%%%:  111-block  0
+call    0 never executed
+        -:  112:
+        -:  113:template <typename DIFFEQ, typename SOLVER>
+        -:  114:void GeneralSolver<DIFFEQ, SOLVER>::SetStep(double h){
+        -:  115:    T.h = h;
+        -:  116:}
+        -:  117:
+        -:  118:template <typename DIFFEQ, typename SOLVER>
+        -:  119:void GeneralSolver<DIFFEQ, SOLVER>::SetT0(double t0){
+        -:  120:    T.t = t0;
+        -:  121:}
+        -:  122:
+        -:  123:template <typename DIFFEQ, typename SOLVER>
+        -:  124:void GeneralSolver<DIFFEQ, SOLVER>::EvolveTime(){
+        -:  125:    T.t += T.h;
+        -:  126:}
+        -:  127:
+        -:  128:
+        -:  129:
+        -:  130:template <typename DIFFEQ, typename SOLVER>
+        -:  131:double GeneralSolver<DIFFEQ, SOLVER>::evolve(double a,
+        -:  132:                                             std::vector<double> &b,
+        -:  133:                                             std::vector<double> &c,
+        -:  134:                                             std::vector<double> &d){
+        -:  135:    return Solver.evolve(T.t, T.h, a, b, c, d, DifferentialEquation,
+        -:  136:                         DifferentialEquation.Specs);
+        -:  137:}
+        -:  138:
+        -:  139:template <typename DIFFEQ, typename SOLVER>
+        -:  140:void GeneralSolver<DIFFEQ, SOLVER>::PostTemplateProcessing(){
+        -:  141:    if (DifferentialEquation.RequiresBuilding){
+        -:  142:        DifferentialEquation.BuildForSolver();
+        -:  143:    };
+        -:  144:}
+        -:  145:
+        -:  146:
+        -:  147:
+        -:  148:
+        -:  149:#endif //CPPPROJCT_GENERALSOLVER_H

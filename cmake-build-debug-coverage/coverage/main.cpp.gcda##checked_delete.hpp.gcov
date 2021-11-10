@@ -1,0 +1,143 @@
+        -:    0:Source:/usr/include/boost/core/checked_delete.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_CORE_CHECKED_DELETE_HPP
+        -:    2:#define BOOST_CORE_CHECKED_DELETE_HPP
+        -:    3:
+        -:    4:// MS compatible compilers support #pragma once
+        -:    5:
+        -:    6:#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+        -:    7:# pragma once
+        -:    8:#endif
+        -:    9:
+        -:   10:#include <boost/config.hpp>
+        -:   11:
+        -:   12://
+        -:   13://  boost/checked_delete.hpp
+        -:   14://
+        -:   15://  Copyright (c) 2002, 2003 Peter Dimov
+        -:   16://  Copyright (c) 2003 Daniel Frey
+        -:   17://  Copyright (c) 2003 Howard Hinnant
+        -:   18://
+        -:   19://  Distributed under the Boost Software License, Version 1.0. (See
+        -:   20://  accompanying file LICENSE_1_0.txt or copy at
+        -:   21://  http://www.boost.org/LICENSE_1_0.txt)
+        -:   22://
+        -:   23://  See http://www.boost.org/libs/core/doc/html/core/checked_delete.html for documentation.
+        -:   24://
+        -:   25:
+        -:   26:namespace boost
+        -:   27:{
+        -:   28:
+        -:   29:// verify that types are complete for increased safety
+        -:   30:
+function _ZN5boost14checked_deleteINS_5graph11distributed17mpi_process_group16trigger_launcherINS_6detail8parallel20msg_remove_edge_dataINS6_15edge_descriptorINS5_14edge_desc_implINS_12directed_tagEmEEEEEENS_8parallel6detail16simple_trigger_tINS_14adjacency_listINS_4vecSENS_12distributedSIS3_SI_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEEESD_vEEEEEEvPT_ called 1 returned 100% blocks executed 100%
+function _ZN5boost14checked_deleteINS_5graph11distributed17mpi_process_group16trigger_launcherINS_6detail8parallel22msg_nonlocal_edge_dataI11DynamicEdgeNS5_14edge_desc_implINS_12directed_tagEmEEEENS_8parallel6detail16simple_trigger_tINS_14adjacency_listINS_4vecSENS_12distributedSIS3_SH_NS_8defaultSEEENS_14bidirectionalSE11DynamicNodeS8_NS_11no_propertyENS_5listSEEESC_vEEEEEEvPT_ called 1 returned 100% blocks executed 100%
+function _ZN5boost14checked_deleteINS_5graph11distributed17mpi_process_group22reply_trigger_launcherINS_6detail8parallel31msg_add_edge_with_property_dataINS6_17global_descriptorImEEm11DynamicEdgeEENS_8parallel6detail16simple_trigger_tINS_14adjacency_listINS_4vecSENS_12distributedSIS3_SG_NS_8defaultSEEENS_14bidirectionalSE11DynamicNodeSA_NS_11no_propertyENS_5listSEEESB_NSD_14untracked_pairINS6_15edge_descriptorINS5_14edge_desc_implINS_12directed_tagEmEEEEbEEEEEEEEvPT_ called 1 returned 100% blocks executed 100%
+function _ZN5boost14checked_deleteINS_5graph11distributed17mpi_process_group16trigger_launcherINS_6detail8parallel31msg_add_edge_with_property_dataINS6_17global_descriptorImEEm11DynamicEdgeEENS_8parallel6detail16simple_trigger_tINS_14adjacency_listINS_4vecSENS_12distributedSIS3_SG_NS_8defaultSEEENS_14bidirectionalSE11DynamicNodeSA_NS_11no_propertyENS_5listSEEESB_vEEEEEEvPT_ called 1 returned 100% blocks executed 100%
+function _ZN5boost14checked_deleteINS_5graph11distributed17mpi_process_group22reply_trigger_launcherINS_6detail8parallel17msg_add_edge_dataINS6_17global_descriptorImEEmEENS_8parallel6detail16simple_trigger_tINS_14adjacency_listINS_4vecSENS_12distributedSIS3_SF_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEEESA_NSC_14untracked_pairINS6_15edge_descriptorINS5_14edge_desc_implINS_12directed_tagEmEEEEbEEEEEEEEvPT_ called 1 returned 100% blocks executed 100%
+function _ZN5boost14checked_deleteINS_5graph11distributed17mpi_process_group16trigger_launcherINS_6detail8parallel17msg_add_edge_dataINS6_17global_descriptorImEEmEENS_8parallel6detail16simple_trigger_tINS_14adjacency_listINS_4vecSENS_12distributedSIS3_SF_NS_8defaultSEEENS_14bidirectionalSE11DynamicNode11DynamicEdgeNS_11no_propertyENS_5listSEEESA_vEEEEEEvPT_ called 1 returned 100% blocks executed 100%
+function _ZN5boost14checked_deleteINS_5graph11distributed17mpi_process_group22reply_trigger_launcherI11DynamicNodeNS_8parallel6detail16simple_trigger_tINS_14adjacency_listINS_4vecSENS_12distributedSIS3_SA_NS_8defaultSEEENS_14bidirectionalSES5_11DynamicEdgeNS_11no_propertyENS_5listSEEES5_mEEEEEEvPT_ called 1 returned 100% blocks executed 100%
+function _ZN5boost14checked_deleteINS_5graph11distributed17mpi_process_group16trigger_launcherI11DynamicNodeNS_8parallel6detail16simple_trigger_tINS_14adjacency_listINS_4vecSENS_12distributedSIS3_SA_NS_8defaultSEEENS_14bidirectionalSES5_11DynamicEdgeNS_11no_propertyENS_5listSEEES5_vEEEEEEvPT_ called 1 returned 100% blocks executed 100%
+function _ZN5boost14checked_deleteINS_8parallel20variant_distributionINS_5graph11distributed17mpi_process_groupEmE17poly_distributionINS1_5blockEEEEEvPT_ called 1 returned 100% blocks executed 100%
+function _ZN5boost14checked_deleteINS_11no_propertyEEEvPT_ called 1 returned 100% blocks executed 100%
+       10:   31:template<class T> inline void checked_delete(T * x) BOOST_NOEXCEPT
+        1:   31-block  0
+        1:   31-block  1
+        1:   31-block  2
+        1:   31-block  3
+        1:   31-block  4
+        1:   31-block  5
+        1:   31-block  6
+        1:   31-block  7
+        1:   31-block  8
+        1:   31-block  9
+        -:   32:{
+        -:   33:    // intentionally complex - simplification causes regressions
+        -:   34:    typedef char type_must_be_complete[ sizeof(T)? 1: -1 ];
+        -:   35:    (void) sizeof(type_must_be_complete);
+       10:   36:    delete x;
+        1:   36-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   36-block  1
+call    2 returned 1
+        1:   36-block  2
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+        1:   36-block  3
+call    5 returned 1
+        1:   36-block  4
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0
+        1:   36-block  5
+call    8 returned 1
+        1:   36-block  6
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0
+        1:   36-block  7
+call   11 returned 1
+        1:   36-block  8
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0
+        1:   36-block  9
+call   14 returned 1
+        1:   36-block 10
+branch 15 taken 1 (fallthrough)
+branch 16 taken 0
+        1:   36-block 11
+call   17 returned 1
+        1:   36-block 12
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0
+        1:   36-block 13
+call   20 returned 1
+        1:   36-block 14
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0
+        1:   36-block 15
+call   23 returned 1
+        1:   36-block 16
+branch 24 taken 1 (fallthrough)
+branch 25 taken 0
+        1:   36-block 17
+call   26 returned 1
+        1:   36-block 18
+call   27 returned 1
+       10:   37:}
+        -:   38:
+        -:   39:template<class T> inline void checked_array_delete(T * x) BOOST_NOEXCEPT
+        -:   40:{
+        -:   41:    typedef char type_must_be_complete[ sizeof(T)? 1: -1 ];
+        -:   42:    (void) sizeof(type_must_be_complete);
+        -:   43:    delete [] x;
+        -:   44:}
+        -:   45:
+        -:   46:template<class T> struct checked_deleter
+        -:   47:{
+        -:   48:    typedef void result_type;
+        -:   49:    typedef T * argument_type;
+        -:   50:
+        -:   51:    void operator()(T * x) const BOOST_NOEXCEPT
+        -:   52:    {
+        -:   53:        // boost:: disables ADL
+        -:   54:        boost::checked_delete(x);
+        -:   55:    }
+        -:   56:};
+        -:   57:
+        -:   58:template<class T> struct checked_array_deleter
+        -:   59:{
+        -:   60:    typedef void result_type;
+        -:   61:    typedef T * argument_type;
+        -:   62:
+        -:   63:    void operator()(T * x) const BOOST_NOEXCEPT
+        -:   64:    {
+        -:   65:        boost::checked_array_delete(x);
+        -:   66:    }
+        -:   67:};
+        -:   68:
+        -:   69:} // namespace boost
+        -:   70:
+        -:   71:#endif  // #ifndef BOOST_CORE_CHECKED_DELETE_HPP

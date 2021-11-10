@@ -1,0 +1,73 @@
+        -:    0:Source:/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2:// Created by m4zz31 on 29/10/21.
+        -:    3://
+        -:    4:
+        -:    5:#ifndef CPPPROJCT_CLIQUEGRAPH_H
+        -:    6:#define CPPPROJCT_CLIQUEGRAPH_H
+        -:    7:
+        -:    8:
+        -:    9:#include "GeneralGraph.h"
+        -:   10:
+        -:   11:
+function _ZN17CliqueGraphObjectD2Ev called 0 returned 0% blocks executed 0%
+    #####:   12:class CliqueGraphObject : public CommonGraphObjectClass {
+    $$$$$:   12-block  0
+    $$$$$:   12-block  1
+call    0 never executed
+        -:   13:public:
+        -:   14:    unsigned long N;
+        -:   15:    unsigned long E;
+        -:   16:    Graph g;
+    #####:   17:    unsigned long Procs = num_processes(boost::graph::distributed::mpi_process_group());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   17-block  0
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   17-block  1
+call    6 never executed
+call    7 never executed
+call    8 never executed
+    %%%%%:   17-block  2
+call    9 never executed
+    %%%%%:   17-block  3
+        -:   18:
+function _ZN17CliqueGraphObjectC2Em called 0 returned 0% blocks executed 0%
+    #####:   19:    CliqueGraphObject(unsigned long num_nodes) :
+    $$$$$:   19-block  0
+    #####:   20:            E((num_nodes * (num_nodes - 1)) / 2),
+        -:   21:            N(num_nodes),
+    #####:   22:            g(N) {};
+    $$$$$:   22-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   22-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    $$$$$:   22-block  2
+call    7 never executed
+call    8 never executed
+    %%%%%:   22-block  3
+call    9 never executed
+    %%%%%:   22-block  4
+    %%%%%:   22-block  5
+call   10 never executed
+    %%%%%:   22-block  6
+call   11 never executed
+    %%%%%:   22-block  7
+call   12 never executed
+        -:   23:
+        -:   24:    void build();
+        -:   25:};
+        -:   26:
+        -:   27:#endif //CPPPROJCT_CLIQUEGRAPH_H

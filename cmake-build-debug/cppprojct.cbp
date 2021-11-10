@@ -246,6 +246,9 @@
 		<Unit filename="/home/m4zz31/cppprojct/Utils/typed_combinations.h">
 			<Option target="cppprojct"/>
 		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/macros/macros.h">
+			<Option target="cppprojct"/>
+		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/main.cpp">
 			<Option target="cppprojct"/>
 		</Unit>

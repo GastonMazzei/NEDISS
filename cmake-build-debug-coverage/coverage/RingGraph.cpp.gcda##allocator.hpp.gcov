@@ -1,0 +1,271 @@
+        -:    0:Source:/usr/include/boost/mpi/allocator.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Copyright (C) 2006 Douglas Gregor <doug.gregor -at- gmail.com>
+        -:    2:
+        -:    3:// Use, modification and distribution is subject to the Boost Software
+        -:    4:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:    5:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    6:
+        -:    7:/** @file allocator.hpp
+        -:    8: *
+        -:    9: *  This header provides an STL-compliant allocator that uses the
+        -:   10: *  MPI-2 memory allocation facilities.
+        -:   11: */
+        -:   12:#ifndef BOOST_MPI_ALLOCATOR_HPP
+        -:   13:#define BOOST_MPI_ALLOCATOR_HPP
+        -:   14:
+        -:   15:#include <boost/mpi/config.hpp>
+        -:   16:#include <boost/mpi/exception.hpp>
+        -:   17:#include <cstddef>
+        -:   18:#include <memory>
+        -:   19:#include <boost/limits.hpp>
+        -:   20:
+        -:   21:namespace boost { namespace mpi {
+        -:   22:
+        -:   23:#if defined(BOOST_MPI_HAS_MEMORY_ALLOCATION)
+        -:   24:template<typename T> class allocator;
+        -:   25:
+        -:   26:/** @brief Allocator specialization for @c void value types.
+        -:   27: *
+        -:   28: *  The @c void specialization of @c allocator is useful only for
+        -:   29: *  rebinding to another, different value type.
+        -:   30: */
+        -:   31:template<> 
+        -:   32:class BOOST_MPI_DECL allocator<void> 
+        -:   33:{ 
+        -:   34:public: 
+        -:   35:  typedef void* pointer; 
+        -:   36:  typedef const void* const_pointer; 
+        -:   37:  typedef void value_type; 
+        -:   38:
+        -:   39:  template <class U> 
+        -:   40:  struct rebind 
+        -:   41:  { 
+        -:   42:    typedef allocator<U> other; 
+        -:   43:  }; 
+        -:   44:};
+        -:   45:
+        -:   46:/** @brief Standard Library-compliant allocator for the MPI-2 memory
+        -:   47: *  allocation routines.
+        -:   48: *
+        -:   49: *  This allocator provides a standard C++ interface to the @c
+        -:   50: *  MPI_Alloc_mem and @c MPI_Free_mem routines of MPI-2. It is
+        -:   51: *  intended to be used with the containers in the Standard Library
+        -:   52: *  (@c vector, in particular) in cases where the contents of the
+        -:   53: *  container will be directly transmitted via MPI. This allocator is
+        -:   54: *  also used internally by the library for character buffers that
+        -:   55: *  will be used in the transmission of data.
+        -:   56: *
+        -:   57: *  The @c allocator class template only provides MPI memory
+        -:   58: *  allocation when the underlying MPI implementation is either MPI-2
+        -:   59: *  compliant or is known to provide @c MPI_Alloc_mem and @c
+        -:   60: *  MPI_Free_mem as extensions. When the MPI memory allocation
+        -:   61: *  routines are not available, @c allocator is brought in directly
+        -:   62: *  from namespace @c std, so that standard allocators are used
+        -:   63: *  throughout. The macro @c BOOST_MPI_HAS_MEMORY_ALLOCATION will be
+        -:   64: *  defined when the MPI-2 memory allocation facilities are available.
+        -:   65: */
+        -:   66:template<typename T> 
+        -:   67:class BOOST_MPI_DECL allocator 
+        -:   68:{
+        -:   69:public:
+        -:   70:  /// Holds the size of objects
+        -:   71:  typedef std::size_t     size_type;
+        -:   72:
+        -:   73:  /// Holds the number of elements between two pointers
+        -:   74:  typedef std::ptrdiff_t  difference_type;
+        -:   75:
+        -:   76:  /// A pointer to an object of type @c T
+        -:   77:  typedef T*              pointer;
+        -:   78:
+        -:   79:  /// A pointer to a constant object of type @c T
+        -:   80:  typedef const T*        const_pointer;
+        -:   81:
+        -:   82:  /// A reference to an object of type @c T
+        -:   83:  typedef T&              reference;
+        -:   84:
+        -:   85:  /// A reference to a constant object of type @c T
+        -:   86:  typedef const T&        const_reference;
+        -:   87:
+        -:   88:  /// The type of memory allocated by this allocator
+        -:   89:  typedef T               value_type;
+        -:   90:
+        -:   91:  /** @brief Retrieve the type of an allocator similar to this
+        -:   92:   * allocator but for a different value type.
+        -:   93:   */
+        -:   94:  template <typename U> 
+        -:   95:  struct rebind 
+        -:   96:  { 
+        -:   97:    typedef allocator<U> other; 
+        -:   98:  };
+        -:   99:
+        -:  100:  /** Default-construct an allocator. */
+function _ZN5boost3mpi9allocatorIcEC2Ev called 0 returned 0% blocks executed 0%
+    #####:  101:  allocator() throw() { }
+    $$$$$:  101-block  0
+        -:  102:
+        -:  103:  /** Copy-construct an allocator. */
+        -:  104:  allocator(const allocator&) throw() { }
+        -:  105:
+        -:  106:  /** 
+        -:  107:   * Copy-construct an allocator from another allocator for a
+        -:  108:   * different value type.
+        -:  109:   */
+        -:  110:  template <typename U> 
+        -:  111:  allocator(const allocator<U>&) throw() { }
+        -:  112:
+        -:  113:  /** Destroy an allocator. */
+function _ZN5boost3mpi9allocatorIcED2Ev called 0 returned 0% blocks executed 0%
+    #####:  114:  ~allocator() throw() { }
+    $$$$$:  114-block  0
+        -:  115:
+        -:  116:  /** Returns the address of object @p x. */
+        -:  117:  pointer address(reference x) const
+        -:  118:  {
+        -:  119:    return &x;
+        -:  120:  }
+        -:  121:
+        -:  122:  /** Returns the address of object @p x. */
+        -:  123:  const_pointer address(const_reference x) const
+        -:  124:  {
+        -:  125:    return &x;
+        -:  126:  }
+        -:  127:
+        -:  128:  /** 
+        -:  129:   *  Allocate enough memory for @p n elements of type @c T.
+        -:  130:   *
+        -:  131:   *  @param n The number of elements for which memory should be
+        -:  132:   *  allocated.
+        -:  133:   *
+        -:  134:   *  @return a pointer to the newly-allocated memory
+        -:  135:   */
+function _ZN5boost3mpi9allocatorIcE8allocateEmPKv called 0 returned 0% blocks executed 0%
+    #####:  136:  pointer allocate(size_type n, allocator<void>::const_pointer /*hint*/ = 0)
+    $$$$$:  136-block  0
+        -:  137:  {
+        -:  138:    pointer result;
+    #####:  139:    BOOST_MPI_CHECK_RESULT(MPI_Alloc_mem,
+    $$$$$:  139-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:  139-block  1
+branch  3 never executed
+branch  4 never executed
+    $$$$$:  139-block  2
+call    5 never executed
+    $$$$$:  139-block  3
+branch  6 never executed
+branch  7 never executed
+    $$$$$:  139-block  4
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    $$$$$:  139-block  5
+call   11 never executed
+    %%%%%:  139-block  6
+call   12 never executed
+    %%%%%:  139-block  7
+        -:  140:                           (static_cast<MPI_Aint>(n * sizeof(T)), 
+        -:  141:                            MPI_INFO_NULL, 
+        -:  142:                            &result));
+    #####:  143:    return result;
+    $$$$$:  143-block  0
+    $$$$$:  143-block  1
+        -:  144:  }
+        -:  145:
+        -:  146:  /**
+        -:  147:   *  Deallocate memory referred to by the pointer @c p.
+        -:  148:   *
+        -:  149:   *  @param p The pointer whose memory should be deallocated. This
+        -:  150:   *  pointer shall have been returned from the @c allocate() function
+        -:  151:   *  and not have already been freed.
+        -:  152:   */
+function _ZN5boost3mpi9allocatorIcE10deallocateEPcm called 0 returned 0% blocks executed 0%
+    #####:  153:  void deallocate(pointer p, size_type /*n*/)
+    $$$$$:  153-block  0
+        -:  154:  {
+    #####:  155:    BOOST_MPI_CHECK_RESULT(MPI_Free_mem, (p));
+    $$$$$:  155-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:  155-block  1
+call    3 never executed
+    $$$$$:  155-block  2
+branch  4 never executed
+branch  5 never executed
+    $$$$$:  155-block  3
+call    6 never executed
+call    7 never executed
+    %%%%%:  155-block  4
+call    8 never executed
+    #####:  156:  }
+    $$$$$:  156-block  0
+        -:  157:
+        -:  158:  /** 
+        -:  159:   * Returns the maximum number of elements that can be allocated
+        -:  160:   * with @c allocate().
+        -:  161:   */
+function _ZNK5boost3mpi9allocatorIcE8max_sizeEv called 0 returned 0% blocks executed 0%
+    #####:  162:  size_type max_size() const throw()
+    $$$$$:  162-block  0
+        -:  163:  {
+    #####:  164:    return (std::numeric_limits<std::size_t>::max)() / sizeof(T);
+    $$$$$:  164-block  0
+call    0 never executed
+        -:  165:  }
+        -:  166:
+        -:  167:  /** Construct a copy of @p val at the location referenced by @c p. */
+function _ZN5boost3mpi9allocatorIcE9constructEPcRKc called 0 returned 0% blocks executed 0%
+    #####:  168:  void construct(pointer p, const T& val)
+    $$$$$:  168-block  0
+        -:  169:  {
+    #####:  170:    new ((void *)p) T(val);
+    $$$$$:  170-block  0
+call    0 never executed
+    #####:  171:  }
+        -:  172:
+        -:  173:  /** Destroy the object referenced by @c p. */
+function _ZN5boost3mpi9allocatorIcE7destroyEPc called 0 returned 0% blocks executed 0%
+    #####:  174:  void destroy(pointer p)
+    $$$$$:  174-block  0
+        -:  175:  {
+        -:  176:    ((T*)p)->~T();
+    #####:  177:  }
+        -:  178:};
+        -:  179:
+        -:  180:/** @brief Compare two allocators for equality.
+        -:  181: *
+        -:  182: *  Since MPI allocators have no state, all MPI allocators are equal.
+        -:  183: *
+        -:  184: *  @returns @c true
+        -:  185: */
+        -:  186:template<typename T1, typename T2>
+        -:  187:inline bool operator==(const allocator<T1>&, const allocator<T2>&) throw()
+        -:  188:{
+        -:  189:  return true;
+        -:  190:}
+        -:  191:
+        -:  192:/** @brief Compare two allocators for inequality.
+        -:  193: *
+        -:  194: *  Since MPI allocators have no state, all MPI allocators are equal.
+        -:  195: *
+        -:  196: *  @returns @c false
+        -:  197: */
+        -:  198:template<typename T1, typename T2>
+        -:  199:inline bool operator!=(const allocator<T1>&, const allocator<T2>&) throw()
+        -:  200:{
+        -:  201:  return false;
+        -:  202:}
+        -:  203:#else
+        -:  204:// Bring in the default allocator from namespace std.
+        -:  205:using std::allocator;
+        -:  206:#endif
+        -:  207:
+        -:  208:} } /// end namespace boost::mpi
+        -:  209:
+        -:  210:#endif // BOOST_MPI_ALLOCATOR_HPP

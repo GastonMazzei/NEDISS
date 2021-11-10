@@ -1,0 +1,200 @@
+        -:    0:Source:/usr/include/boost/mpi/detail/mpi_datatype_cache.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// (C) Copyright 2005 Matthias Troyer
+        -:    2:
+        -:    3:// Use, modification and distribution is subject to the Boost Software
+        -:    4:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:    5:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    6:
+        -:    7://  Authors: Matthias Troyer
+        -:    8:
+        -:    9:#ifndef BOOST_MPI_DETAIL_TYPE_MPI_DATATYPE_CACHE_HPP
+        -:   10:#define BOOST_MPI_DETAIL_TYPE_MPI_DATATYPE_CACHE_HPP
+        -:   11:
+        -:   12:#include <boost/mpi/datatype_fwd.hpp>
+        -:   13:#include <boost/mpi/detail/mpi_datatype_oarchive.hpp>
+        -:   14:#include <boost/mpi/exception.hpp>
+        -:   15:#include <boost/utility/enable_if.hpp>
+        -:   16:#include <boost/mpl/assert.hpp>
+        -:   17:#include <boost/noncopyable.hpp>
+        -:   18:#include <typeinfo>
+        -:   19:
+        -:   20:// The std::type_info::before function in Visual C++ 8.0 (and probably earlier)
+        -:   21:// incorrectly returns an "int" instead of a "bool". Then the compiler has the
+        -:   22:// audacity to complain when that "int" is converted to a "bool". Silence
+        -:   23:// this warning.
+        -:   24:#ifdef BOOST_MSVC
+        -:   25:#  pragma warning(push)
+        -:   26:#  pragma warning(disable : 4800)
+        -:   27:#endif
+        -:   28:
+        -:   29:namespace boost { namespace mpi { namespace detail {
+        -:   30:
+        -:   31:/// @brief comparison function object for two std::type_info pointers
+        -:   32:///
+        -:   33:/// is implemented using the before() member function of the std::type_info
+        -:   34:/// class
+        -:   35:
+        -:   36:struct type_info_compare
+        -:   37:{
+        -:   38:  bool operator()(std::type_info const* lhs, std::type_info const* rhs) const
+        -:   39:  {
+        -:   40:    return lhs->before(*rhs);
+        -:   41:  }
+        -:   42:};
+        -:   43:
+        -:   44:
+        -:   45:/// @brief a map of MPI data types, indexed by their type_info
+        -:   46:///
+        -:   47:///
+        -:   48:class BOOST_MPI_DECL mpi_datatype_map
+        -:   49: : public boost::noncopyable
+        -:   50:{
+        -:   51:  struct implementation;
+        -:   52:
+        -:   53:  implementation *impl;
+        -:   54:
+        -:   55:public:
+        -:   56:  mpi_datatype_map();
+        -:   57:  ~mpi_datatype_map();
+        -:   58:
+        -:   59:  template <class T>
+        -:   60:  MPI_Datatype datatype(const T& x = T(), typename boost::enable_if<is_mpi_builtin_datatype<T> >::type* =0)
+        -:   61:  {
+        -:   62:    return get_mpi_datatype<T>(x);
+        -:   63:  }
+        -:   64:
+        -:   65:  template <class T>
+function _ZN5boost3mpi6detail16mpi_datatype_map8datatypeINS_6detail8parallel17msg_add_edge_dataINS5_17global_descriptorImEEmEEEEP15ompi_datatype_tRKT_PNS_10disable_ifINS0_23is_mpi_builtin_datatypeISC_EEvE4typeE called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi6detail16mpi_datatype_map8datatypeINS_6detail8parallel20msg_remove_edge_dataINS5_15edge_descriptorINS4_14edge_desc_implINS_12directed_tagEmEEEEEEEEP15ompi_datatype_tRKT_PNS_10disable_ifINS0_23is_mpi_builtin_datatypeISF_EEvE4typeE called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi6detail16mpi_datatype_map8datatypeINS_8parallel6detail14untracked_pairINS_6detail8parallel15edge_descriptorINS7_14edge_desc_implINS_12directed_tagEmEEEEbEEEEP15ompi_datatype_tRKT_PNS_10disable_ifINS0_23is_mpi_builtin_datatypeISH_EEvE4typeE called 0 returned 0% blocks executed 0%
+function _ZN5boost3mpi6detail16mpi_datatype_map8datatypeINS_8parallel6detail14untracked_pairIiNS_6detail8parallel17msg_add_edge_dataINS8_17global_descriptorImEEmEEEEEEP15ompi_datatype_tRKT_PNS_10disable_ifINS0_23is_mpi_builtin_datatypeISG_EEvE4typeE called 0 returned 0% blocks executed 0%
+    #####:   66:  MPI_Datatype datatype(const T& x =T(), typename boost::disable_if<is_mpi_builtin_datatype<T> >::type* =0 )
+    $$$$$:   66-block  0
+    $$$$$:   66-block  1
+    $$$$$:   66-block  2
+    $$$$$:   66-block  3
+        -:   67:  {
+        -:   68:    BOOST_MPL_ASSERT((is_mpi_datatype<T>));
+        -:   69:
+        -:   70:    // check whether the type already exists
+    #####:   71:    std::type_info const* t = &typeid(T);
+    #####:   72:    MPI_Datatype datatype = get(t);
+    $$$$$:   72-block  0
+call    0 never executed
+    $$$$$:   72-block  1
+call    1 never executed
+    $$$$$:   72-block  2
+call    2 never executed
+    $$$$$:   72-block  3
+call    3 never executed
+    #####:   73:    if (datatype == MPI_DATATYPE_NULL) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+        -:   74:      // need to create a type
+    #####:   75:      mpi_datatype_oarchive ar(x);
+    $$$$$:   75-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   75-block  1
+call    3 never executed
+    %%%%%:   75-block  2
+call    4 never executed
+    $$$$$:   75-block  3
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    $$$$$:   75-block  4
+call    8 never executed
+    %%%%%:   75-block  5
+call    9 never executed
+    $$$$$:   75-block  6
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+    $$$$$:   75-block  7
+call   13 never executed
+    %%%%%:   75-block  8
+call   14 never executed
+    $$$$$:   75-block  9
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+    $$$$$:   75-block 10
+call   18 never executed
+    %%%%%:   75-block 11
+call   19 never executed
+    #####:   76:      datatype = ar.get_mpi_datatype();
+    $$$$$:   76-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   76-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   76-block  2
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    $$$$$:   76-block  3
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+    #####:   77:      set(t, datatype);
+    $$$$$:   77-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   77-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   77-block  2
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    $$$$$:   77-block  3
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+        -:   78:    }
+        -:   79:
+    #####:   80:    return datatype;
+    $$$$$:   80-block  0
+    $$$$$:   80-block  1
+    $$$$$:   80-block  2
+    $$$$$:   80-block  3
+    $$$$$:   80-block  4
+    $$$$$:   80-block  5
+    $$$$$:   80-block  6
+    $$$$$:   80-block  7
+        -:   81:  }
+        -:   82:  
+        -:   83:  void clear(); 
+        -:   84:
+        -:   85:private:
+        -:   86:  MPI_Datatype get(const std::type_info* t);
+        -:   87:  void set(const std::type_info* t, MPI_Datatype datatype);
+        -:   88:};
+        -:   89:
+        -:   90:/// Retrieve the MPI datatype cache
+        -:   91:BOOST_MPI_DECL mpi_datatype_map& mpi_datatype_cache();
+        -:   92:
+        -:   93:} } } // end namespace boost::mpi::detail
+        -:   94:
+        -:   95:#ifdef BOOST_MSVC
+        -:   96:#  pragma warning(pop)
+        -:   97:#endif
+        -:   98:
+        -:   99:#endif // BOOST_MPI_DETAIL_TYPE_MPI_DATATYPE_CACHE_HPP

@@ -1,0 +1,153 @@
+        -:    0:Source:/usr/include/boost/serialization/base_object.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_SERIALIZATION_BASE_OBJECT_HPP
+        -:    2:#define BOOST_SERIALIZATION_BASE_OBJECT_HPP
+        -:    3:
+        -:    4:// MS compatible compilers support #pragma once
+        -:    5:#if defined(_MSC_VER)
+        -:    6:# pragma once
+        -:    7:#endif
+        -:    8:
+        -:    9://///////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
+        -:   10:// base_object.hpp:
+        -:   11:
+        -:   12:// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com .
+        -:   13:// Use, modification and distribution is subject to the Boost Software
+        -:   14:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:   15:// http://www.boost.org/LICENSE_1_0.txt)
+        -:   16:
+        -:   17://  See http://www.boost.org for updates, documentation, and revision history.
+        -:   18:
+        -:   19:// if no archive headers have been included this is a no op
+        -:   20:// this is to permit BOOST_EXPORT etc to be included in a
+        -:   21:// file declaration header
+        -:   22:
+        -:   23:#include <boost/config.hpp>
+        -:   24:#include <boost/detail/workaround.hpp>
+        -:   25:
+        -:   26:#include <boost/mpl/eval_if.hpp>
+        -:   27:#include <boost/mpl/int.hpp>
+        -:   28:#include <boost/mpl/identity.hpp>
+        -:   29:
+        -:   30:#include <boost/type_traits/is_base_and_derived.hpp>
+        -:   31:#include <boost/type_traits/is_pointer.hpp>
+        -:   32:#include <boost/type_traits/is_const.hpp>
+        -:   33:#include <boost/type_traits/is_polymorphic.hpp>
+        -:   34:
+        -:   35:#include <boost/static_assert.hpp>
+        -:   36:#include <boost/serialization/access.hpp>
+        -:   37:#include <boost/serialization/force_include.hpp>
+        -:   38:#include <boost/serialization/void_cast_fwd.hpp>
+        -:   39:
+        -:   40:namespace boost {
+        -:   41:namespace serialization {
+        -:   42:
+        -:   43:namespace detail
+        -:   44:{
+        -:   45:    // get the base type for a given derived type
+        -:   46:    // preserving the const-ness
+        -:   47:    template<class B, class D>
+        -:   48:    struct base_cast
+        -:   49:    {
+        -:   50:        typedef typename
+        -:   51:        mpl::if_<
+        -:   52:            is_const<D>,
+        -:   53:            const B,
+        -:   54:            B
+        -:   55:        >::type type;
+        -:   56:        BOOST_STATIC_ASSERT(is_const<type>::value == is_const<D>::value);
+        -:   57:    };
+        -:   58:
+        -:   59:    // only register void casts if the types are polymorphic
+        -:   60:    template<class Base, class Derived>
+        -:   61:    struct base_register
+        -:   62:    {
+        -:   63:        struct polymorphic {
+        -:   64:            static void const * invoke(){
+        -:   65:                Base const * const b = 0;
+        -:   66:                Derived const * const d = 0;
+        -:   67:                return & void_cast_register(d, b);
+        -:   68:            }
+        -:   69:        };
+        -:   70:        struct non_polymorphic {
+function _ZN5boost13serialization6detail13base_registerINS_6detail9edge_baseINS_12directed_tagEmEENS3_14edge_desc_implIS5_mEEE15non_polymorphic6invokeEv called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6detail13base_registerINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEENS4_31msg_add_edge_with_property_dataINS4_17global_descriptorImEEmS6_EEE15non_polymorphic6invokeEv called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6detail13base_registerINS_6detail8parallel17msg_add_edge_dataINS4_17global_descriptorImEEmEENS4_31msg_add_edge_with_property_dataIS7_m11DynamicEdgeEEE15non_polymorphic6invokeEv called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6detail13base_registerINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEENS4_22msg_nonlocal_edge_dataIS6_NS3_14edge_desc_implINS_12directed_tagEmEEEEE15non_polymorphic6invokeEv called 0 returned 0% blocks executed 0%
+    #####:   71:            static void const * invoke(){
+    $$$$$:   71-block  0
+    $$$$$:   71-block  1
+    $$$$$:   71-block  2
+    $$$$$:   71-block  3
+    #####:   72:                return 0;
+    $$$$$:   72-block  0
+    $$$$$:   72-block  1
+    $$$$$:   72-block  2
+    $$$$$:   72-block  3
+        -:   73:            }
+        -:   74:        };
+function _ZN5boost13serialization6detail13base_registerINS_6detail9edge_baseINS_12directed_tagEmEENS3_14edge_desc_implIS5_mEEE6invokeEv called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6detail13base_registerINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEENS4_31msg_add_edge_with_property_dataINS4_17global_descriptorImEEmS6_EEE6invokeEv called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6detail13base_registerINS_6detail8parallel17msg_add_edge_dataINS4_17global_descriptorImEEmEENS4_31msg_add_edge_with_property_dataIS7_m11DynamicEdgeEEE6invokeEv called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization6detail13base_registerINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEENS4_22msg_nonlocal_edge_dataIS6_NS3_14edge_desc_implINS_12directed_tagEmEEEEE6invokeEv called 0 returned 0% blocks executed 0%
+    #####:   75:        static void const * invoke(){
+    $$$$$:   75-block  0
+    $$$$$:   75-block  1
+    $$$$$:   75-block  2
+    $$$$$:   75-block  3
+        -:   76:            typedef typename mpl::eval_if<
+        -:   77:                is_polymorphic<Base>,
+        -:   78:                mpl::identity<polymorphic>,
+        -:   79:                mpl::identity<non_polymorphic>
+        -:   80:            >::type type;
+    #####:   81:            return type::invoke();
+    $$$$$:   81-block  0
+call    0 never executed
+    $$$$$:   81-block  1
+call    1 never executed
+    $$$$$:   81-block  2
+call    2 never executed
+    $$$$$:   81-block  3
+call    3 never executed
+        -:   82:        }
+        -:   83:    };
+        -:   84:
+        -:   85:} // namespace detail
+        -:   86:template<class Base, class Derived>
+        -:   87:typename detail::base_cast<Base, Derived>::type &
+function _ZN5boost13serialization11base_objectINS_6detail9edge_baseINS_12directed_tagEmEENS2_14edge_desc_implIS4_mEEEERNS0_6detail9base_castIT_T0_E4typeERSB_ called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization11base_objectINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEENS3_31msg_add_edge_with_property_dataINS3_17global_descriptorImEEmS5_EEEERNS0_6detail9base_castIT_T0_E4typeERSE_ called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization11base_objectINS_6detail8parallel17msg_add_edge_dataINS3_17global_descriptorImEEmEENS3_31msg_add_edge_with_property_dataIS6_m11DynamicEdgeEEEERNS0_6detail9base_castIT_T0_E4typeERSE_ called 0 returned 0% blocks executed 0%
+function _ZN5boost13serialization11base_objectINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEENS3_22msg_nonlocal_edge_dataIS5_NS2_14edge_desc_implINS_12directed_tagEmEEEEEERNS0_6detail9base_castIT_T0_E4typeERSF_ called 0 returned 0% blocks executed 0%
+    #####:   88:base_object(Derived &d)
+    $$$$$:   88-block  0
+    $$$$$:   88-block  1
+    $$$$$:   88-block  2
+    $$$$$:   88-block  3
+        -:   89:{
+        -:   90:    BOOST_STATIC_ASSERT(( is_base_and_derived<Base,Derived>::value));
+        -:   91:    BOOST_STATIC_ASSERT(! is_pointer<Derived>::value);
+        -:   92:    typedef typename detail::base_cast<Base, Derived>::type type;
+    #####:   93:    detail::base_register<type, Derived>::invoke();
+    $$$$$:   93-block  0
+call    0 never executed
+    $$$$$:   93-block  1
+call    1 never executed
+    $$$$$:   93-block  2
+call    2 never executed
+    $$$$$:   93-block  3
+call    3 never executed
+    #####:   94:    return access::cast_reference<type, Derived>(d);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:   95:}
+        -:   96:
+        -:   97:} // namespace serialization
+        -:   98:} // namespace boost
+        -:   99:
+        -:  100:#endif // BOOST_SERIALIZATION_BASE_OBJECT_HPP

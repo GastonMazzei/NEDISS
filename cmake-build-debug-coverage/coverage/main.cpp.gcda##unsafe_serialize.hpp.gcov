@@ -1,0 +1,92 @@
+        -:    0:Source:/usr/include/boost/property_map/parallel/unsafe_serialize.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Copyright (C) 2006 The Trustees of Indiana University.
+        -:    2:
+        -:    3:// Use, modification and distribution is subject to the Boost Software
+        -:    4:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:    5:// http://www.boost.org/LICENSE_1_0.txt)
+        -:    6:
+        -:    7://  Authors: Douglas Gregor
+        -:    8://           Andrew Lumsdaine
+        -:    9:
+        -:   10:// This file contains the "unsafe_serialize" routine, which transforms
+        -:   11:// types they may not be serializable (such as void*) into
+        -:   12:// serializable equivalents.
+        -:   13:#ifndef BOOST_PROPERTY_MAP_UNSAFE_SERIALIZE_HPP
+        -:   14:#define BOOST_PROPERTY_MAP_UNSAFE_SERIALIZE_HPP
+        -:   15:
+        -:   16:#include <boost/mpi/datatype.hpp>
+        -:   17:#include <boost/serialization/is_bitwise_serializable.hpp>
+        -:   18:#include <boost/mpl/bool.hpp>
+        -:   19:#include <boost/mpl/if.hpp>
+        -:   20:#include <boost/cstdint.hpp>
+        -:   21:#include <boost/static_assert.hpp>
+        -:   22:#include <boost/type_traits.hpp>
+        -:   23:#include <utility>
+        -:   24:
+        -:   25:BOOST_IS_BITWISE_SERIALIZABLE(void*)
+        -:   26:namespace boost { namespace mpi {
+        -:   27:    template<> struct is_mpi_datatype<void*> : mpl::true_ { };
+        -:   28:} } // end namespace boost::mpi
+        -:   29:
+        -:   30:namespace boost {
+        -:   31:  typedef mpl::if_c<(sizeof(int) == sizeof(void*)), 
+        -:   32:                    int, 
+        -:   33:                    mpl::if_c<(sizeof(long) == sizeof(void*)),
+        -:   34:                              long,
+        -:   35:                              mpl::if_c<(sizeof(void*) <= sizeof(boost::intmax_t)),
+        -:   36:                                        boost::intmax_t,
+        -:   37:                                        void>::type
+        -:   38:                              >::type
+        -:   39:                    >::type ptr_serialize_type;
+        -:   40:
+        -:   41:  BOOST_STATIC_ASSERT ((!boost::is_void<ptr_serialize_type>::value));
+        -:   42:    
+function _ZN5boost16unsafe_serializeImEERT_S2_ called 0 returned 0% blocks executed 0%
+    #####:   43:  template<typename T> inline T& unsafe_serialize(T& x) { return x; }
+    $$$$$:   43-block  0
+    $$$$$:   43-block  1
+        -:   44:
+function _ZN5boost16unsafe_serializeERPv called 0 returned 0% blocks executed 0%
+    #####:   45:  inline ptr_serialize_type& unsafe_serialize(void*& x)
+    $$$$$:   45-block  0
+    #####:   46:  { return reinterpret_cast<ptr_serialize_type&>(x); }
+    $$$$$:   46-block  0
+        -:   47:
+        -:   48:  // Force Boost.MPI to serialize a void* like a ptr_serialize_type
+        -:   49:  namespace mpi {
+        -:   50:    template<> inline MPI_Datatype get_mpi_datatype<void*>(void* const& x)
+        -:   51:    {
+        -:   52:      return get_mpi_datatype<ptr_serialize_type>();
+        -:   53:    }
+        -:   54:  }
+        -:   55:
+        -:   56:  template<typename T, typename U>
+        -:   57:  struct unsafe_pair
+        -:   58:  {
+        -:   59:    unsafe_pair() { }
+        -:   60:    unsafe_pair(const T& t, const U& u) : first(t), second(u) { }
+        -:   61:    unsafe_pair(const std::pair<T, U>& p) : first(p.first), second(p.second) { }
+        -:   62:    T first;
+        -:   63:    U second;
+        -:   64:
+        -:   65:    template<typename Archiver>
+        -:   66:    void serialize(Archiver& ar, const unsigned /*version*/)
+        -:   67:    {
+        -:   68:      ar & unsafe_serialize(first) & unsafe_serialize(second);
+        -:   69:    }
+        -:   70:  };
+        -:   71:
+        -:   72:  template<typename T, typename U>
+        -:   73:  bool operator<(unsafe_pair<T,U> const& x, unsafe_pair<T,U> const& y)
+        -:   74:  {
+        -:   75:    return std::make_pair(x.first, x.second) < 
+        -:   76:      std::make_pair(y.first, y.second);  
+        -:   77:  }
+        -:   78:
+        -:   79:} // end namespace boost
+        -:   80:
+        -:   81:#endif // BOOST_PROPERTY_MAP_UNSAFE_SERIALIZE_HPP

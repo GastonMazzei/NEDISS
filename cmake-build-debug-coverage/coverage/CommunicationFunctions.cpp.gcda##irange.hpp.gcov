@@ -1,0 +1,268 @@
+        -:    0:Source:/usr/include/boost/range/irange.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Boost.Range library
+        -:    2://
+        -:    3://  Copyright Neil Groves 2010. Use, modification and
+        -:    4://  distribution is subject to the Boost Software License, Version
+        -:    5://  1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:    6://  http://www.boost.org/LICENSE_1_0.txt)
+        -:    7://
+        -:    8://
+        -:    9:// For more information, see http://www.boost.org/libs/range/
+        -:   10://
+        -:   11:#ifndef BOOST_RANGE_IRANGE_HPP_INCLUDED
+        -:   12:#define BOOST_RANGE_IRANGE_HPP_INCLUDED
+        -:   13:
+        -:   14:#include <boost/assert.hpp>
+        -:   15:#include <boost/iterator/iterator_facade.hpp>
+        -:   16:#include <boost/range/iterator_range.hpp>
+        -:   17:
+        -:   18:namespace boost
+        -:   19:{
+        -:   20:    namespace range_detail
+        -:   21:    {
+        -:   22:        // integer_iterator is an iterator over an integer sequence that
+        -:   23:        // is bounded only by the limits of the underlying integer
+        -:   24:        // representation.
+        -:   25:        //
+        -:   26:        // This is useful for implementing the irange(first, last)
+        -:   27:        // function.
+        -:   28:        //
+        -:   29:        // Note:
+        -:   30:        // This use of this iterator and irange is appreciably less
+        -:   31:        // performant than the corresponding hand-written integer
+        -:   32:        // loop on many compilers.
+        -:   33:        template<typename Integer>
+        -:   34:        class integer_iterator
+        -:   35:            : public boost::iterator_facade<
+        -:   36:                        integer_iterator<Integer>,
+        -:   37:                        Integer,
+        -:   38:                        boost::random_access_traversal_tag,
+        -:   39:                        Integer,
+        -:   40:                        std::ptrdiff_t
+        -:   41:                    >
+        -:   42:        {
+        -:   43:            typedef boost::iterator_facade<
+        -:   44:                        integer_iterator<Integer>,
+        -:   45:                        Integer,
+        -:   46:                        boost::random_access_traversal_tag,
+        -:   47:                        Integer,
+        -:   48:                        std::ptrdiff_t
+        -:   49:                    > base_t;
+        -:   50:        public:
+        -:   51:            typedef typename base_t::value_type value_type;
+        -:   52:            typedef typename base_t::difference_type difference_type;
+        -:   53:            typedef typename base_t::reference reference;
+        -:   54:            typedef std::random_access_iterator_tag iterator_category;
+        -:   55:
+        -:   56:            integer_iterator() : m_value() {}
+function _ZN5boost12range_detail16integer_iteratorImEC2Em called 0 returned 0% blocks executed 0%
+    #####:   57:            explicit integer_iterator(value_type x) : m_value(x) {}
+    $$$$$:   57-block  0
+        -:   58:
+        -:   59:        private:
+function _ZN5boost12range_detail16integer_iteratorImE9incrementEv called 0 returned 0% blocks executed 0%
+    #####:   60:            void increment()
+    $$$$$:   60-block  0
+        -:   61:            {
+    #####:   62:                ++m_value;
+    #####:   63:            }
+        -:   64:
+        -:   65:            void decrement()
+        -:   66:            {
+        -:   67:                --m_value;
+        -:   68:            }
+        -:   69:
+        -:   70:            void advance(difference_type offset)
+        -:   71:            {
+        -:   72:                m_value += offset;
+        -:   73:            }
+        -:   74:
+        -:   75:            difference_type distance_to(const integer_iterator& other) const
+        -:   76:            {
+        -:   77:                return is_signed<value_type>::value
+        -:   78:                    ? (other.m_value - m_value)
+        -:   79:                    : (other.m_value >= m_value)
+        -:   80:                        ? static_cast<difference_type>(other.m_value - m_value)
+        -:   81:                        : -static_cast<difference_type>(m_value - other.m_value);
+        -:   82:            }
+        -:   83:
+function _ZNK5boost12range_detail16integer_iteratorImE5equalERKS2_ called 0 returned 0% blocks executed 0%
+    #####:   84:            bool equal(const integer_iterator& other) const
+    $$$$$:   84-block  0
+        -:   85:            {
+    #####:   86:                return m_value == other.m_value;
+    $$$$$:   86-block  0
+        -:   87:            }
+        -:   88:
+function _ZNK5boost12range_detail16integer_iteratorImE11dereferenceEv called 0 returned 0% blocks executed 0%
+    #####:   89:            reference dereference() const
+    $$$$$:   89-block  0
+        -:   90:            {
+    #####:   91:                return m_value;
+    $$$$$:   91-block  0
+        -:   92:            }
+        -:   93:
+        -:   94:            friend class ::boost::iterator_core_access;
+        -:   95:            value_type m_value;
+        -:   96:        };
+        -:   97:
+        -:   98:        // integer_iterator_with_step is similar in nature to the
+        -:   99:        // integer_iterator but provides the ability to 'move' in
+        -:  100:        // a number of steps specified at construction time.
+        -:  101:        //
+        -:  102:        // The three variable implementation provides the best guarantees
+        -:  103:        // of loop termination upon various combinations of input.
+        -:  104:        //
+        -:  105:        // While this design is less performant than some less
+        -:  106:        // safe alternatives, the use of ranges and iterators to
+        -:  107:        // perform counting will never be optimal anyhow, hence
+        -:  108:        // if optimal performance is desired a hand-coded loop
+        -:  109:        // is the solution.
+        -:  110:        template<typename Integer>
+        -:  111:        class integer_iterator_with_step
+        -:  112:            : public boost::iterator_facade<
+        -:  113:                        integer_iterator_with_step<Integer>,
+        -:  114:                        Integer,
+        -:  115:                        boost::random_access_traversal_tag,
+        -:  116:                        Integer,
+        -:  117:                        std::ptrdiff_t
+        -:  118:                    >
+        -:  119:        {
+        -:  120:            typedef boost::iterator_facade<
+        -:  121:                        integer_iterator_with_step<Integer>,
+        -:  122:                        Integer,
+        -:  123:                        boost::random_access_traversal_tag,
+        -:  124:                        Integer,
+        -:  125:                        std::ptrdiff_t
+        -:  126:                    > base_t;
+        -:  127:        public:
+        -:  128:            typedef typename base_t::value_type value_type;
+        -:  129:            typedef typename base_t::difference_type difference_type;
+        -:  130:            typedef typename base_t::reference reference;
+        -:  131:            typedef std::random_access_iterator_tag iterator_category;
+        -:  132:
+        -:  133:            integer_iterator_with_step(value_type first, difference_type step, value_type step_size)
+        -:  134:                : m_first(first)
+        -:  135:                , m_step(step)
+        -:  136:                , m_step_size(step_size)
+        -:  137:            {
+        -:  138:            }
+        -:  139:
+        -:  140:        private:
+        -:  141:            void increment()
+        -:  142:            {
+        -:  143:                ++m_step;
+        -:  144:            }
+        -:  145:
+        -:  146:            void decrement()
+        -:  147:            {
+        -:  148:                --m_step;
+        -:  149:            }
+        -:  150:
+        -:  151:            void advance(difference_type offset)
+        -:  152:            {
+        -:  153:                m_step += offset;
+        -:  154:            }
+        -:  155:
+        -:  156:            difference_type distance_to(const integer_iterator_with_step& other) const
+        -:  157:            {
+        -:  158:                return other.m_step - m_step;
+        -:  159:            }
+        -:  160:
+        -:  161:            bool equal(const integer_iterator_with_step& other) const
+        -:  162:            {
+        -:  163:                return m_step == other.m_step;
+        -:  164:            }
+        -:  165:
+        -:  166:            reference dereference() const
+        -:  167:            {
+        -:  168:                return m_first + (m_step * m_step_size);
+        -:  169:            }
+        -:  170:
+        -:  171:            friend class ::boost::iterator_core_access;
+        -:  172:            value_type m_first;
+        -:  173:            difference_type m_step;
+        -:  174:            difference_type m_step_size;
+        -:  175:        };
+        -:  176:
+        -:  177:    } // namespace range_detail
+        -:  178:
+        -:  179:    template<typename Integer>
+        -:  180:    class integer_range
+        -:  181:        : public iterator_range< range_detail::integer_iterator<Integer> >
+        -:  182:    {
+        -:  183:        typedef range_detail::integer_iterator<Integer> iterator_t;
+        -:  184:        typedef iterator_range<iterator_t> base_t;
+        -:  185:    public:
+function _ZN5boost13integer_rangeImEC2Emm called 0 returned 0% blocks executed 0%
+    #####:  186:        integer_range(Integer first, Integer last)
+    $$$$$:  186-block  0
+    #####:  187:            : base_t(iterator_t(first), iterator_t(last))
+    $$$$$:  187-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  187-block  1
+        -:  188:        {
+    #####:  189:        }
+    $$$$$:  189-block  0
+        -:  190:    };
+        -:  191:
+        -:  192:    template<typename Integer>
+        -:  193:    class strided_integer_range
+        -:  194:    : public iterator_range< range_detail::integer_iterator_with_step<Integer> >
+        -:  195:    {
+        -:  196:        typedef range_detail::integer_iterator_with_step<Integer> iterator_t;
+        -:  197:        typedef iterator_range<iterator_t> base_t;
+        -:  198:    public:
+        -:  199:        template<typename Iterator>
+        -:  200:        strided_integer_range(Iterator first, Iterator last)
+        -:  201:            : base_t(first, last)
+        -:  202:        {
+        -:  203:        }
+        -:  204:    };
+        -:  205:
+        -:  206:    template<typename Integer>
+        -:  207:    integer_range<Integer>
+        -:  208:    irange(Integer first, Integer last)
+        -:  209:    {
+        -:  210:        BOOST_ASSERT( first <= last );
+        -:  211:        return integer_range<Integer>(first, last);
+        -:  212:    }
+        -:  213:
+        -:  214:    template<typename Integer, typename StepSize>
+        -:  215:    strided_integer_range<Integer>
+        -:  216:        irange(Integer first, Integer last, StepSize step_size)
+        -:  217:    {
+        -:  218:        BOOST_ASSERT( step_size != 0 );
+        -:  219:        BOOST_ASSERT( (step_size > 0) ? (last >= first) : (last <= first) );
+        -:  220:
+        -:  221:        typedef typename range_detail::integer_iterator_with_step<Integer> iterator_t;
+        -:  222:
+        -:  223:        const std::ptrdiff_t sz = static_cast<std::ptrdiff_t>(step_size >= 0 ? step_size : -step_size);
+        -:  224:        const Integer l = step_size >= 0 ? last : first;
+        -:  225:        const Integer f = step_size >= 0 ? first : last;
+        -:  226:        const std::ptrdiff_t num_steps = (l - f) / sz + ((l - f) % sz ? 1 : 0);
+        -:  227:        BOOST_ASSERT(num_steps >= 0);
+        -:  228:
+        -:  229:        return strided_integer_range<Integer>(
+        -:  230:            iterator_t(first, 0, step_size),
+        -:  231:            iterator_t(first, num_steps, step_size));
+        -:  232:    }
+        -:  233:
+        -:  234:    template<typename Integer>
+        -:  235:    integer_range<Integer>
+        -:  236:    irange(Integer last)
+        -:  237:    {
+        -:  238:        return integer_range<Integer>(static_cast<Integer>(0), last);
+        -:  239:    }
+        -:  240:
+        -:  241:} // namespace boost
+        -:  242:
+        -:  243:#endif // include guard

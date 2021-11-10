@@ -1,0 +1,320 @@
+        -:    0:Source:/usr/include/boost/archive/detail/interface_iarchive.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/main.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BOOST_ARCHIVE_DETAIL_INTERFACE_IARCHIVE_HPP
+        -:    2:#define BOOST_ARCHIVE_DETAIL_INTERFACE_IARCHIVE_HPP
+        -:    3:
+        -:    4:// MS compatible compilers support #pragma once
+        -:    5:#if defined(_MSC_VER)
+        -:    6:# pragma once
+        -:    7:#endif
+        -:    8:
+        -:    9://///////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
+        -:   10:// interface_iarchive.hpp
+        -:   11:
+        -:   12:// (C) Copyright 2002 Robert Ramey - http://www.rrsd.com .
+        -:   13:// Use, modification and distribution is subject to the Boost Software
+        -:   14:// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+        -:   15:// http://www.boost.org/LICENSE_1_0.txt)
+        -:   16:
+        -:   17://  See http://www.boost.org for updates, documentation, and revision history.
+        -:   18:#include <cstddef> // NULL
+        -:   19:#include <boost/cstdint.hpp>
+        -:   20:#include <boost/mpl/bool.hpp>
+        -:   21:#include <boost/archive/detail/auto_link_archive.hpp>
+        -:   22:#include <boost/archive/detail/iserializer.hpp>
+        -:   23:#include <boost/archive/detail/helper_collection.hpp>
+        -:   24:#include <boost/serialization/singleton.hpp>
+        -:   25:#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
+        -:   26:
+        -:   27:namespace boost {
+        -:   28:namespace archive {
+        -:   29:namespace detail {
+        -:   30:
+        -:   31:class basic_pointer_iserializer;
+        -:   32:
+        -:   33:template<class Archive>
+        -:   34:class interface_iarchive
+        -:   35:{
+        -:   36:protected:
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEEC2Ev called 0 returned 0% blocks executed 0%
+    #####:   37:    interface_iarchive() {}
+    $$$$$:   37-block  0
+        -:   38:public:
+        -:   39:    /////////////////////////////////////////////////////////
+        -:   40:    // archive public interface
+        -:   41:    typedef mpl::bool_<true> is_loading;
+        -:   42:    typedef mpl::bool_<false> is_saving;
+        -:   43:
+        -:   44:    // return a pointer to the most derived class
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEE4ThisEv called 0 returned 0% blocks executed 0%
+    #####:   45:    Archive * This(){
+    $$$$$:   45-block  0
+    #####:   46:        return static_cast<Archive *>(this);
+    $$$$$:   46-block  0
+        -:   47:    }
+        -:   48:
+        -:   49:    template<class T>
+        -:   50:    const basic_pointer_iserializer *
+        -:   51:    register_type(T * = NULL){
+        -:   52:        const basic_pointer_iserializer & bpis =
+        -:   53:            boost::serialization::singleton<
+        -:   54:                pointer_iserializer<Archive, T>
+        -:   55:            >::get_const_instance();
+        -:   56:        this->This()->register_basic_serializer(bpis.get_basic_serializer());
+        -:   57:        return & bpis;
+        -:   58:    }
+        -:   59:    template<class Helper>
+        -:   60:    Helper &
+        -:   61:    get_helper(void * const id = 0){
+        -:   62:        helper_collection & hc = this->This()->get_helper_collection();
+        -:   63:        return hc.template find_helper<Helper>(id);
+        -:   64:    }
+        -:   65:
+        -:   66:    template<class T>
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsIjEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS_13serialization20collection_size_typeEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsIKNS_13serialization13array_wrapperIdEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsIKNS_13serialization3nvpIjEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsIKNS_13serialization3nvpINS7_20collection_size_typeEEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsI11DynamicEdgeEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsIiEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsISt6vectorIdSaIdEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsIdEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS_6detail14edge_desc_implINS_12directed_tagEmEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsIKNS_13serialization3nvpI11DynamicNodeEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsIKNS_13serialization3nvpINS_6detail8parallel31msg_add_edge_with_property_dataINSA_17global_descriptorImEEm11DynamicEdgeEEEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsIKNS_13serialization3nvpIiEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsI11DynamicNodeEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS_8parallel6detail14untracked_pairIi11DynamicNodeEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS_6detail8parallel17msg_add_edge_dataINS8_17global_descriptorImEEmEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS_6detail8parallel31msg_add_edge_with_property_dataINS8_17global_descriptorImEEm11DynamicEdgeEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS_8parallel6detail14untracked_pairIiNS_6detail8parallel31msg_add_edge_with_property_dataINSB_17global_descriptorImEEm11DynamicEdgeEEEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS_6detail8parallel22msg_nonlocal_edge_dataI11DynamicEdgeNS7_14edge_desc_implINS_12directed_tagEmEEEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS_6detail8parallel20msg_remove_edge_dataINS8_15edge_descriptorINS7_14edge_desc_implINS_12directed_tagEmEEEEEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS0_13tracking_typeEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS0_15class_name_typeEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS0_22class_id_optional_typeEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS0_13class_id_typeEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS0_14object_id_typeEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINS0_12version_typeEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsIaEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEErsIsEERS4_RT_ called 0 returned 0% blocks executed 0%
+    #####:   67:    Archive & operator>>(T & t){
+    $$$$$:   67-block  0
+    $$$$$:   67-block  1
+    $$$$$:   67-block  2
+    $$$$$:   67-block  3
+    $$$$$:   67-block  4
+    $$$$$:   67-block  5
+    $$$$$:   67-block  6
+    $$$$$:   67-block  7
+    $$$$$:   67-block  8
+    $$$$$:   67-block  9
+    $$$$$:   67-block 10
+    $$$$$:   67-block 11
+    $$$$$:   67-block 12
+    $$$$$:   67-block 13
+    $$$$$:   67-block 14
+    $$$$$:   67-block 15
+    $$$$$:   67-block 16
+    $$$$$:   67-block 17
+    $$$$$:   67-block 18
+    $$$$$:   67-block 19
+    $$$$$:   67-block 20
+    $$$$$:   67-block 21
+    $$$$$:   67-block 22
+    $$$$$:   67-block 23
+    $$$$$:   67-block 24
+    $$$$$:   67-block 25
+    $$$$$:   67-block 26
+    $$$$$:   67-block 27
+    $$$$$:   67-block 28
+    $$$$$:   67-block 29
+    #####:   68:        this->This()->load_override(t);
+    $$$$$:   68-block  0
+call    0 never executed
+call    1 never executed
+    $$$$$:   68-block  1
+call    2 never executed
+call    3 never executed
+    $$$$$:   68-block  2
+call    4 never executed
+call    5 never executed
+    $$$$$:   68-block  3
+call    6 never executed
+call    7 never executed
+    $$$$$:   68-block  4
+call    8 never executed
+call    9 never executed
+    $$$$$:   68-block  5
+call   10 never executed
+call   11 never executed
+    $$$$$:   68-block  6
+call   12 never executed
+call   13 never executed
+    $$$$$:   68-block  7
+call   14 never executed
+call   15 never executed
+    $$$$$:   68-block  8
+call   16 never executed
+call   17 never executed
+    $$$$$:   68-block  9
+call   18 never executed
+call   19 never executed
+    $$$$$:   68-block 10
+call   20 never executed
+call   21 never executed
+    $$$$$:   68-block 11
+call   22 never executed
+call   23 never executed
+    $$$$$:   68-block 12
+call   24 never executed
+call   25 never executed
+    $$$$$:   68-block 13
+call   26 never executed
+call   27 never executed
+    $$$$$:   68-block 14
+call   28 never executed
+call   29 never executed
+    $$$$$:   68-block 15
+call   30 never executed
+call   31 never executed
+    $$$$$:   68-block 16
+call   32 never executed
+call   33 never executed
+    $$$$$:   68-block 17
+call   34 never executed
+call   35 never executed
+    $$$$$:   68-block 18
+call   36 never executed
+call   37 never executed
+    $$$$$:   68-block 19
+call   38 never executed
+call   39 never executed
+    $$$$$:   68-block 20
+call   40 never executed
+call   41 never executed
+    $$$$$:   68-block 21
+call   42 never executed
+call   43 never executed
+    $$$$$:   68-block 22
+call   44 never executed
+call   45 never executed
+    $$$$$:   68-block 23
+call   46 never executed
+call   47 never executed
+    $$$$$:   68-block 24
+call   48 never executed
+call   49 never executed
+    $$$$$:   68-block 25
+call   50 never executed
+call   51 never executed
+    $$$$$:   68-block 26
+call   52 never executed
+call   53 never executed
+    $$$$$:   68-block 27
+call   54 never executed
+call   55 never executed
+    $$$$$:   68-block 28
+call   56 never executed
+call   57 never executed
+    $$$$$:   68-block 29
+call   58 never executed
+call   59 never executed
+    #####:   69:        return * this->This();
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+        -:   70:    }
+        -:   71:
+        -:   72:    // the & operator
+        -:   73:    template<class T>
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEEanI11DynamicEdgeEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEEanISt6vectorIdSaIdEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEEanIdEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEEanINS_6detail8parallel17msg_add_edge_dataINS8_17global_descriptorImEEmEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEEanINS_6detail14edge_desc_implINS_12directed_tagEmEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEEanINS_6detail8parallel20maybe_store_propertyI11DynamicEdgeEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEEanIKNS_13serialization3nvpI11DynamicNodeEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEEanIKNS_13serialization3nvpINS_6detail8parallel31msg_add_edge_with_property_dataINSA_17global_descriptorImEEm11DynamicEdgeEEEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+function _ZN5boost7archive6detail18interface_iarchiveINS_3mpi15packed_iarchiveEEanIKNS_13serialization3nvpIiEEEERS4_RT_ called 0 returned 0% blocks executed 0%
+    #####:   74:    Archive & operator&(T & t){
+    $$$$$:   74-block  0
+    $$$$$:   74-block  1
+    $$$$$:   74-block  2
+    $$$$$:   74-block  3
+    $$$$$:   74-block  4
+    $$$$$:   74-block  5
+    $$$$$:   74-block  6
+    $$$$$:   74-block  7
+    $$$$$:   74-block  8
+    #####:   75:        return *(this->This()) >> t;
+    $$$$$:   75-block  0
+call    0 never executed
+call    1 never executed
+    $$$$$:   75-block  1
+call    2 never executed
+call    3 never executed
+    $$$$$:   75-block  2
+call    4 never executed
+call    5 never executed
+    $$$$$:   75-block  3
+call    6 never executed
+call    7 never executed
+    $$$$$:   75-block  4
+call    8 never executed
+call    9 never executed
+    $$$$$:   75-block  5
+call   10 never executed
+call   11 never executed
+    $$$$$:   75-block  6
+call   12 never executed
+call   13 never executed
+    $$$$$:   75-block  7
+call   14 never executed
+call   15 never executed
+    $$$$$:   75-block  8
+call   16 never executed
+call   17 never executed
+        -:   76:    }
+        -:   77:};
+        -:   78:
+        -:   79:} // namespace detail
+        -:   80:} // namespace archive
+        -:   81:} // namespace boost
+        -:   82:
+        -:   83:#include <boost/archive/detail/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
+        -:   84:
+        -:   85:#endif // BOOST_ARCHIVE_DETAIL_INTERFACE_IARCHIVE_HPP

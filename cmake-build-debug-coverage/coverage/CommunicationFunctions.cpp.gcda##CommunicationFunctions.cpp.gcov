@@ -1,0 +1,362 @@
+        -:    0:Source:/home/m4zz31/cppprojct/Communication/CommunicationFunctions.cpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2:// Created by m4zz31 on 5/11/21.
+        -:    3://
+        -:    4:
+        -:    5:
+        -:    6:#include "CommunicationFunctions.h"
+        -:    7:#include "../Utils/global_standard_messages.h"
+        -:    8:
+        -:    9:// Keep building MPI with https://www.boost.org/doc/libs/1_77_0/doc/html/mpi/tutorial.html
+        -:   10:
+function _Z14irespond_valueR18ReferenceContainerdiRSt14_List_iteratorIP14ompi_request_tE called 0 returned 0% blocks executed 0%
+    #####:   11:void irespond_value(ReferenceContainer &REF, double ix, int owner, std::list<MPI_Request>::iterator &R){
+    $$$$$:   11-block  0
+    #####:   12:    auto vs = vertices(*REF.p_g);
+    $$$$$:   12-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   13:    for (auto v = vs.first; v != vs.second; ++v){
+    $$$$$:   13-block  0
+    $$$$$:   13-block  1
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   13-block  2
+branch  3 never executed
+branch  4 never executed
+    $$$$$:   13-block  3
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    $$$$$:   13-block  4
+    $$$$$:   13-block  5
+    $$$$$:   13-block  6
+    #####:   14:        if (get(get(boost::vertex_index, *(REF.p_g)), *v) == ix){
+    $$$$$:   14-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   14-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   14-block  2
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    $$$$$:   14-block  3
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+    %%%%%:   14-block  4
+call   12 never executed
+    %%%%%:   14-block  5
+    %%%%%:   14-block  6
+    %%%%%:   14-block  7
+    #####:   15:            send_nonblocking(owner, *R, &(*REF.p_g)[*v].value, 3);
+    $$$$$:   15-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   15-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   15-block  2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+    #####:   16:            return;
+    $$$$$:   16-block  0
+        -:   17:        }
+        -:   18:    }
+        -:   19:};
+        -:   20:
+        -:   21:
+function _Z16send_nonblockingiRP14ompi_request_tPdi called 0 returned 0% blocks executed 0%
+    #####:   22:void send_nonblocking(int owner, MPI_Request &r, double *ix, int TAG){
+    $$$$$:   22-block  0
+        -:   23:    // (A) TAG = 1 means asking for a node's value by sending one int
+        -:   24:    // (B) TAG = 2 means asking for an edge's value by sending two ints
+        -:   25:    // (C) TAG = 3 means sending in return a node's value
+        -:   26:    // (D) TAG = 4 means sending in return both an edge and node's value
+    #####:   27:    if ((TAG == 1) || (TAG == 3)) {
+    $$$$$:   27-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   27-block  1
+branch  2 never executed
+branch  3 never executed
+    #####:   28:        MPI_Isend(ix,
+    $$$$$:   28-block  0
+call    0 never executed
+        -:   29:                  1,//count
+        -:   30:                  MPI_DOUBLE, // type
+        -:   31:                  owner, // destination
+        -:   32:                  TAG, MPI_COMM_WORLD, &r);
+    #####:   33:    } else if ((TAG == 2) || (TAG == 4)) {
+    $$$$$:   33-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   33-block  1
+branch  2 never executed
+branch  3 never executed
+    #####:   34:        MPI_Isend(ix,
+    $$$$$:   34-block  0
+call    0 never executed
+        -:   35:                  2,//count
+        -:   36:                  MPI_DOUBLE, // type
+        -:   37:                  owner, // destination
+        -:   38:                  TAG, MPI_COMM_WORLD, &r);
+    #####:   39:        ++ix;
+    #####:   40:        MPI_Isend(ix,
+call    0 never executed
+        -:   41:                  2,//count
+        -:   42:                  MPI_DOUBLE, // type
+        -:   43:                  owner, // destination
+        -:   44:                  TAG, MPI_COMM_WORLD, &r);
+        -:   45:    }
+    #####:   46:};
+        -:   47:
+        -:   48:
+        -:   49:
+function _Z16recv_nonblockingiRP14ompi_request_tPdi called 0 returned 0% blocks executed 0%
+    #####:   50:void recv_nonblocking(int owner, MPI_Request &r, double *result, int TAG){
+    $$$$$:   50-block  0
+        -:   51:    // (A) TAG = 1 means getting a request for a node's value by recieving an int
+        -:   52:    // (B) TAG = 2 means getting a request for an edge's value which require two ints
+        -:   53:    // (C) TAG = 3 means getting in return a node's value
+        -:   54:    // (D) TAG = 4 means getting in return both an edge and node's value
+    #####:   55:    if ((TAG == 1) || (TAG == 3)) {
+    $$$$$:   55-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   55-block  1
+branch  2 never executed
+branch  3 never executed
+    #####:   56:        MPI_Irecv(result,
+    $$$$$:   56-block  0
+call    0 never executed
+        -:   57:                  1,//count
+        -:   58:                  MPI_DOUBLE, // type
+        -:   59:                  owner, // destination
+        -:   60:                  TAG, MPI_COMM_WORLD, &r);
+    #####:   61:    } else if ((TAG == 4) || (TAG == 2)) {
+    $$$$$:   61-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   61-block  1
+branch  2 never executed
+branch  3 never executed
+    #####:   62:        MPI_Irecv(result,
+    $$$$$:   62-block  0
+call    0 never executed
+        -:   63:                  2,//count
+        -:   64:                  MPI_DOUBLE, // type
+        -:   65:                  owner, // destination
+        -:   66:                  TAG, MPI_COMM_WORLD, &r);
+    #####:   67:        ++result;
+    #####:   68:        MPI_Irecv(result,
+call    0 never executed
+        -:   69:                  2,//count
+        -:   70:                  MPI_DOUBLE, // type
+        -:   71:                  owner, // destination
+        -:   72:                  TAG, MPI_COMM_WORLD, &r);
+        -:   73:    }
+    #####:   74:};
+        -:   75:
+        -:   76:
+function _Z12ask_for_nodeiRdR19CommunicationHelperiRN5boost14adjacency_listINS2_4vecSENS2_12distributedSINS2_5graph11distributed17mpi_process_groupES4_NS2_8defaultSEEENS2_14bidirectionalSE11DynamicNode11DynamicEdgeNS2_11no_propertyENS2_5listSEEE called 0 returned 0% blocks executed 0%
+    #####:   77:void ask_for_node(int owner, double &vvalue, CommunicationHelper &H, int ix, Graph &g){
+    $$$$$:   77-block  0
+        -:   78:    // asks processor 'owner' for the 'v' element
+        -:   79:    // while trying to dispatch as much requests
+        -:   80:    // as possible ;-)
+        -:   81:    //
+        -:   82:    // This should be templated in order to use hyper-params comfortably,
+        -:   83:    // e.g. batched-ops
+        -:   84:    //
+        -:   85:    // This could include a total pend in queue by reference and participate in
+        -:   86:    // GetAllMsgs and GetOneMsg concurently...
+        -:   87:
+        -:   88:    // Call "Nprocs - 1" probes with TAG=1 as in looking for questions
+    #####:   89:    int unread = H.WORLD_SIZE[0]-1;
+    $$$$$:   89-block  0
+call    0 never executed
+    #####:   90:    std::vector<int> flag(H.WORLD_SIZE[0],0);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    $$$$$:   90-block  0
+call    5 never executed
+    $$$$$:   90-block  1
+call    6 never executed
+    %%%%%:   90-block  2
+    %%%%%:   90-block  3
+call    7 never executed
+    %%%%%:   90-block  4
+    %%%%%:   90-block  5
+    %%%%%:   90-block  6
+    %%%%%:   90-block  7
+call    8 never executed
+    #####:   91:    for (int i=0; i<H.WORLD_SIZE[0]; i++) {
+    $$$$$:   91-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:   91-block  1
+    #####:   92:        if  (i != H.WORLD_RANK[0]) {
+    $$$$$:   92-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   93:            MPI_Iprobe(i, 1, MPI_COMM_WORLD, &flag[i], MPI_STATUS_IGNORE);
+    $$$$$:   93-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   93-block  1
+        -:   94:        }
+        -:   95:    }
+        -:   96:
+        -:   97:    // Send my specific request with TAG = 1 as it is a question
+        -:   98:    MPI_Request r;
+    #####:   99:    int r_stat_1 = 0, r_stat_2 = 0;
+    #####:  100:    MPI_Isend(&ix,
+    $$$$$:  100-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  101:              1,//count
+        -:  102:              MPI_DOUBLE, // type
+        -:  103:              owner, // destination
+        -:  104:              1, MPI_COMM_WORLD, &r);
+        -:  105:
+        -:  106:    // Loop over the probes waiting for some potential question with TAG=1
+    #####:  107:    while ((unread!=0) && (!r_stat_2)){
+    $$$$$:  107-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  107-block  1
+branch  2 never executed
+branch  3 never executed
+    $$$$$:  107-block  2
+        -:  108:        // one lap checking for requests and responding them
+    #####:  109:        for (int i=0; i<H.WORLD_SIZE[0]; i++) {
+    $$$$$:  109-block  0
+    $$$$$:  109-block  1
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:  109-block  2
+    #####:  110:            if  ((i != H.WORLD_RANK[0]) && flag[i]){
+    $$$$$:  110-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:  110-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    $$$$$:  110-block  2
+    $$$$$:  110-block  3
+    $$$$$:  110-block  4
+branch  6 never executed
+branch  7 never executed
+        -:  111:                double value;
+    #####:  112:                MPI_Recv(&value, 1, MPI_DOUBLE, i, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    $$$$$:  112-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  113:                //---
+        -:  114:                // respond accordingly!
+        -:  115:                //--- USE TAG 0, FOR ANSWERS ONLY
+    #####:  116:                unread--;
+    $$$$$:  116-block  0
+        -:  117:            }
+    #####:  118:            if (!r_stat_1) {
+    $$$$$:  118-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  119:                MPI_Request_get_status(r, &r_stat_1, MPI_STATUS_IGNORE);
+    $$$$$:  119-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  120:                if (r_stat_1) {
+    $$$$$:  120-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  121:                    double result;
+    #####:  122:                    r = MPI_Request();
+        -:  123:                    //     Now we use TAG 0 which is the tag for answers :-)
+    #####:  124:                    MPI_Irecv(&result, 1, MPI_DOUBLE, owner, 0, MPI_COMM_WORLD, &r);
+    $$$$$:  124-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:  124-block  1
+    $$$$$:  124-block  2
+        -:  125:                }
+        -:  126:            }
+    #####:  127:            if ((r_stat_1) && (!r_stat_2)){MPI_Request_get_status(r, &r_stat_2, MPI_STATUS_IGNORE);}
+    $$$$$:  127-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  127-block  1
+branch  2 never executed
+branch  3 never executed
+    $$$$$:  127-block  2
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    $$$$$:  127-block  3
+        -:  128:        }
+        -:  129:    }
+    #####:  130:};
+    %%%%%:  130-block  0
+        -:  131:
+function _Z23ask_for_node_and_vertexiRdS_R19CommunicationHelperiRN5boost14adjacency_listINS2_4vecSENS2_12distributedSINS2_5graph11distributed17mpi_process_groupES4_NS2_8defaultSEEENS2_14bidirectionalSE11DynamicNode11DynamicEdgeNS2_11no_propertyENS2_5listSEEE called 0 returned 0% blocks executed 0%
+    #####:  132:void ask_for_node_and_vertex(int owner, double &vvalue, double &evalue, CommunicationHelper &H, int ix, Graph &g){
+    $$$$$:  132-block  0
+        -:  133:    //asks processor 'owner' for the 'v' and 'e' elements
+function _GLOBAL__sub_I__Z14irespond_valueR18ReferenceContainerdiRSt14_List_iteratorIP14ompi_request_tE called 1 returned 100% blocks executed 100%
+function _Z41__static_initialization_and_destruction_0ii called 1 returned 100% blocks executed 64%
+        4:  134:};
+        1:  134-block  0
+        1:  134-block  1
+call    0 returned 1
+        1:  134-block  2
+        1:  134-block  3
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  134-block  4
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+        1:  134-block  5
+        -:  135:
+        -:  136:
+        -:  137:
+        -:  138:
+        -:  139:
+        -:  140:
+        -:  141:
+        -:  142:
+        -:  143:
+        -:  144:
+        -:  145:
+        -:  146:
+        -:  147:
+        -:  148:
+        -:  149:

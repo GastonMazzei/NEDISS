@@ -1,0 +1,163 @@
+        -:    0:Source:/usr/include/boost/core/uncaught_exceptions.hpp
+        -:    0:Graph:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcno
+        -:    0:Data:/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*
+        -:    2: *          Copyright Andrey Semashev 2018 - 2020.
+        -:    3: * Distributed under the Boost Software License, Version 1.0.
+        -:    4: *    (See accompanying file LICENSE_1_0.txt or copy at
+        -:    5: *          https://www.boost.org/LICENSE_1_0.txt)
+        -:    6: */
+        -:    7:/*!
+        -:    8: * \file   uncaught_exceptions.hpp
+        -:    9: * \author Andrey Semashev
+        -:   10: * \date   2018-11-10
+        -:   11: *
+        -:   12: * \brief  This header provides an `uncaught_exceptions` function implementation, which was introduced in C++17.
+        -:   13: *
+        -:   14: * The code in this file is based on the implementation by Evgeny Panasyuk:
+        -:   15: *
+        -:   16: * https://github.com/panaseleus/stack_unwinding/blob/master/boost/exception/uncaught_exception_count.hpp
+        -:   17: */
+        -:   18:
+        -:   19:#ifndef BOOST_CORE_UNCAUGHT_EXCEPTIONS_HPP_INCLUDED_
+        -:   20:#define BOOST_CORE_UNCAUGHT_EXCEPTIONS_HPP_INCLUDED_
+        -:   21:
+        -:   22:#include <exception>
+        -:   23:#include <boost/config.hpp>
+        -:   24:
+        -:   25:#if defined(BOOST_HAS_PRAGMA_ONCE)
+        -:   26:#pragma once
+        -:   27:#endif
+        -:   28:
+        -:   29:#if (defined(__cpp_lib_uncaught_exceptions) && __cpp_lib_uncaught_exceptions >= 201411)
+        -:   30:#if defined(__APPLE__)
+        -:   31:#include <Availability.h>
+        -:   32:// Apple systems only support std::uncaught_exceptions starting with specific versions:
+        -:   33:// - Mac OS >= 10.12
+        -:   34:// - iOS >= 10.0
+        -:   35:// - tvOS >= 10.0
+        -:   36:// - watchOS >= 3.0
+        -:   37:// https://github.com/boostorg/core/issues/80
+        -:   38:#if (defined(__MAC_OS_X_VERSION_MIN_REQUIRED) && __MAC_OS_X_VERSION_MIN_REQUIRED >= 101200) || \
+        -:   39:    (defined(__IPHONE_OS_VERSION_MIN_REQUIRED) && __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000)
+        -:   40:#define BOOST_CORE_HAS_UNCAUGHT_EXCEPTIONS
+        -:   41:#endif
+        -:   42:#else
+        -:   43:#define BOOST_CORE_HAS_UNCAUGHT_EXCEPTIONS
+        -:   44:#endif // defined(__APPLE__)
+        -:   45:// Visual Studio 14.0 supports N4152 std::uncaught_exceptions() but doesn't define __cpp_lib_uncaught_exceptions
+        -:   46:#elif (defined(_MSC_VER) && _MSC_VER >= 1900)
+        -:   47:#define BOOST_CORE_HAS_UNCAUGHT_EXCEPTIONS
+        -:   48:#endif
+        -:   49:
+        -:   50:#if !defined(BOOST_CORE_HAS_UNCAUGHT_EXCEPTIONS)
+        -:   51:
+        -:   52:// cxxabi.h availability macro
+        -:   53:#if defined(__has_include) && (!defined(BOOST_GCC) || (__GNUC__ >= 5))
+        -:   54:#   if __has_include(<cxxabi.h>)
+        -:   55:#       define BOOST_CORE_HAS_CXXABI_H
+        -:   56:#   endif
+        -:   57:#elif defined(__GLIBCXX__) || defined(__GLIBCPP__)
+        -:   58:#   define BOOST_CORE_HAS_CXXABI_H
+        -:   59:#endif
+        -:   60:
+        -:   61:#if defined(BOOST_CORE_HAS_CXXABI_H)
+        -:   62:// MinGW GCC 4.4 seem to not work the same way the newer GCC versions do. As a result, __cxa_get_globals based implementation will always return 0.
+        -:   63:// Just disable it for now and fall back to std::uncaught_exception().
+        -:   64:// On AIX, xlclang++ does have cxxabi.h but doesn't have __cxa_get_globals (https://github.com/boostorg/core/issues/78).
+        -:   65:#if !( \
+        -:   66:        (defined(__MINGW32__) && (defined(__GNUC__) && (__GNUC__ * 100 + __GNUC_MINOR__) < 405)) || \
+        -:   67:        defined(__ibmxl__) \
+        -:   68:    )
+        -:   69:#include <cxxabi.h>
+        -:   70:#include <cstring>
+        -:   71:#define BOOST_CORE_HAS_CXA_GET_GLOBALS
+        -:   72:// At least on MinGW and Linux, only GCC since 4.7 declares __cxa_get_globals() in cxxabi.h. Older versions of GCC do not expose this function but it's there.
+        -:   73:// On OpenBSD, it seems, the declaration is also missing.
+        -:   74:// Note that at least on FreeBSD 11, cxxabi.h declares __cxa_get_globals with a different exception specification, so we can't declare the function unconditionally.
+        -:   75:// On Linux with clang and libc++ and on OS X, there is a version of cxxabi.h from libc++abi that doesn't declare __cxa_get_globals, but provides __cxa_uncaught_exceptions.
+        -:   76:// The function only appeared in version _LIBCPPABI_VERSION >= 1002 of the library. Unfortunately, there are linking errors about undefined reference to __cxa_uncaught_exceptions
+        -:   77:// on Ubuntu Trusty and OS X, so we avoid using it and forward-declare __cxa_get_globals instead.
+        -:   78:// On QNX SDP 7.0 (QCC 5.4.0), there are multiple cxxabi.h, one from glibcxx from gcc and another from libc++abi from LLVM. Which one is included will be determined by the qcc
+        -:   79:// command line arguments (-V and/or -Y; http://www.qnx.com/developers/docs/7.0.0/#com.qnx.doc.neutrino.utilities/topic/q/qcc.html). The LLVM libc++abi is missing the declaration
+        -:   80:// of __cxa_get_globals but it is also patched by QNX developers to not define _LIBCPPABI_VERSION. Older QNX SDP versions, up to and including 6.6, don't provide LLVM and libc++abi.
+        -:   81:// See https://github.com/boostorg/core/issues/59.
+        -:   82:#if !defined(__FreeBSD__) && \
+        -:   83:    ( \
+        -:   84:        (defined(__GNUC__) && (__GNUC__ * 100 + __GNUC_MINOR__) < 407) || \
+        -:   85:        defined(__OpenBSD__) || \
+        -:   86:        (defined(__QNXNTO__) && !defined(__GLIBCXX__) && !defined(__GLIBCPP__)) || \
+        -:   87:        defined(_LIBCPPABI_VERSION) \
+        -:   88:    )
+        -:   89:namespace __cxxabiv1 {
+        -:   90:struct __cxa_eh_globals;
+        -:   91:#if defined(__OpenBSD__)
+        -:   92:extern "C" __cxa_eh_globals* __cxa_get_globals();
+        -:   93:#else
+        -:   94:extern "C" __cxa_eh_globals* __cxa_get_globals() BOOST_NOEXCEPT_OR_NOTHROW __attribute__((__const__));
+        -:   95:#endif
+        -:   96:} // namespace __cxxabiv1
+        -:   97:#endif
+        -:   98:#endif
+        -:   99:#endif // defined(BOOST_CORE_HAS_CXXABI_H)
+        -:  100:
+        -:  101:#if defined(_MSC_VER) && _MSC_VER >= 1400
+        -:  102:#include <cstring>
+        -:  103:#define BOOST_CORE_HAS_GETPTD
+        -:  104:namespace boost {
+        -:  105:namespace core {
+        -:  106:namespace detail {
+        -:  107:extern "C" void* _getptd();
+        -:  108:} // namespace detail
+        -:  109:} // namespace core
+        -:  110:} // namespace boost
+        -:  111:#endif // defined(_MSC_VER) && _MSC_VER >= 1400
+        -:  112:
+        -:  113:#endif // !defined(BOOST_CORE_HAS_UNCAUGHT_EXCEPTIONS)
+        -:  114:
+        -:  115:#if !defined(BOOST_CORE_HAS_UNCAUGHT_EXCEPTIONS) && !defined(BOOST_CORE_HAS_CXA_GET_GLOBALS) && !defined(BOOST_CORE_HAS_GETPTD)
+        -:  116://! This macro is defined when `uncaught_exceptions` is not guaranteed to return values greater than 1 if multiple exceptions are pending
+        -:  117:#define BOOST_CORE_UNCAUGHT_EXCEPTIONS_EMULATED
+        -:  118:#endif
+        -:  119:
+        -:  120:namespace boost {
+        -:  121:
+        -:  122:namespace core {
+        -:  123:
+        -:  124://! Returns the number of currently pending exceptions
+function _ZN5boost4core19uncaught_exceptionsEv called 0 returned 0% blocks executed 0%
+    #####:  125:inline unsigned int uncaught_exceptions() BOOST_NOEXCEPT
+    $$$$$:  125-block  0
+        -:  126:{
+        -:  127:#if defined(BOOST_CORE_HAS_UNCAUGHT_EXCEPTIONS)
+        -:  128:    // C++17 implementation
+    #####:  129:    return static_cast< unsigned int >(std::uncaught_exceptions());
+    $$$$$:  129-block  0
+        -:  130:#elif defined(BOOST_CORE_HAS_CXA_GET_GLOBALS)
+        -:  131:    // Tested on {clang 3.2,GCC 3.5.6,GCC 4.1.2,GCC 4.4.6,GCC 4.4.7}x{x32,x64}
+        -:  132:    unsigned int count;
+        -:  133:    std::memcpy(&count, reinterpret_cast< const unsigned char* >(::abi::__cxa_get_globals()) + sizeof(void*), sizeof(count)); // __cxa_eh_globals::uncaughtExceptions, x32 offset - 0x4, x64 - 0x8
+        -:  134:    return count;
+        -:  135:#elif defined(BOOST_CORE_HAS_GETPTD)
+        -:  136:    // MSVC specific. Tested on {MSVC2005SP1,MSVC2008SP1,MSVC2010SP1,MSVC2012}x{x32,x64}.
+        -:  137:    unsigned int count;
+        -:  138:    std::memcpy(&count, static_cast< const unsigned char* >(boost::core::detail::_getptd()) + (sizeof(void*) == 8u ? 0x100 : 0x90), sizeof(count)); // _tiddata::_ProcessingThrow, x32 offset - 0x90, x64 - 0x100
+        -:  139:    return count;
+        -:  140:#else
+        -:  141:    // Portable C++03 implementation. Does not allow to detect multiple nested exceptions.
+        -:  142:    return static_cast< unsigned int >(std::uncaught_exception());
+        -:  143:#endif
+        -:  144:}
+        -:  145:
+        -:  146:} // namespace core
+        -:  147:
+        -:  148:} // namespace boost
+        -:  149:
+        -:  150:#undef BOOST_CORE_HAS_CXXABI_H
+        -:  151:#undef BOOST_CORE_HAS_CXA_GET_GLOBALS
+        -:  152:#undef BOOST_CORE_HAS_UNCAUGHT_EXCEPTIONS
+        -:  153:#undef BOOST_CORE_HAS_GETPTD
+        -:  154:
+        -:  155:#endif // BOOST_CORE_UNCAUGHT_EXCEPTIONS_HPP_INCLUDED_
