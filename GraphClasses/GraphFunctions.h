@@ -267,7 +267,7 @@ void single_evolution(Graph &g,
     {
         std::cout << " FAILED! check please" <<std::endl;
     }
-    std::cout << "Ended one lap!" << std::endl;
+    //std::cout << "Ended one lap!" << std::endl;
     //mssleep(5000);
 
     // swap (local) node's values with

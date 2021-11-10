@@ -28,7 +28,7 @@ int main(int argc, char** argv)
     // START:
     //
     int rank;
-    unsigned int SEED = 12345;
+    unsigned int SEED = std::stoi(std::getenv("SEED"));//12345;
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     print_init(rank);
@@ -46,13 +46,13 @@ int main(int argc, char** argv)
     //                  that each threaded requester does. It is also used
     //                  in the dispatcher framework in general without a clear interpretation.
     //                  it is generally called "BATCH".
-    graph_tests_singlestep_evolution<8>(SEED,
-                                        NNodes,
-                                        ErdosRenyiProba);
-//    central_test_long_singlestep_run<8>(SEED,
-//                                      NNodes,
-//                                      ErdosRenyiProba,
-//                                      NRUNS);
+//    graph_tests_singlestep_evolution<8>(SEED,
+//                                        NNodes,
+//                                        ErdosRenyiProba);
+    central_test_long_singlestep_run<8>(SEED,
+                                      NNodes,
+                                      ErdosRenyiProba,
+                                      NRUNS);
 
 
     // END:

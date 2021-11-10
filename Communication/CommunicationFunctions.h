@@ -34,6 +34,7 @@ void answer_messages(ReferenceContainer &REF,
                      std::list<MPI_Request> &R_tot){
 
     // please add BATCH * (TIMETOL + 1) if N_remaining isnt enough
+    int NDISPATCHED = 0;
     size_t d = std::distance(R, R_tot.end());
     int N_remaining = sizeof(d)/sizeof(MPI_Request);
 #pragma omp critical
@@ -73,6 +74,7 @@ void answer_messages(ReferenceContainer &REF,
                 }
                 flagprobes[i] = 0;
                 answered.insert(i);
+                NDISPATCHED++;
             }
             if (i >= REF.p_ComHelper->WORLD_SIZE[MYTHR]) {
                 i = 0;
@@ -90,6 +92,8 @@ void answer_messages(ReferenceContainer &REF,
         ++ticks;
 //        std::cout << "Ticks are " << ticks << " out of " << TIMETOL << std::endl;
     }
+    // leave
+    //printf("Successfully dispatched %d requests\n", NDISPATCHED);
 };
 
 //template <int BATCH>
@@ -209,7 +213,6 @@ void GetAllMsgs(int NNodes,
     long ix = - 1; // the index we will get, use and change from the global queue :-)!
     std::list<MPI_Request> REQUESTLIST(10);
     std::list<MPI_Request>::iterator p_REQUESTLIST = REQUESTLIST.begin();
-    int DEBUG_CALLS_ANSWER = 0, DEBUG_CALLS_ASK = 0;
 //    std::cout << "Confirm we are at the face of the parallel region..." << std::endl;
 //    mssleep(2000);
 
@@ -219,9 +222,6 @@ void GetAllMsgs(int NNodes,
         //PRINTF_DBG("One subthread is not enough; recursive restart.");
 //        std::cout << "There is only one thread, so I will answer some messages and then call again itself hoping that more threads are spawned :o"<< std::endl;
         //answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
-#pragma omp atomical upadte
-        DEBUG_CALLS_ANSWER++;
-        printf("%d,%d,0\n", DEBUG_CALLS_ASK, DEBUG_CALLS_ANSWER);
     }
     //} else if ((omp_get_thread_num() == 0) && (omp_get_num_threads()>1)) {
     if ((omp_get_thread_num() == 0) && (omp_get_num_threads()>1)) {
@@ -242,8 +242,6 @@ void GetAllMsgs(int NNodes,
             atomic_helper = N_SPAWNED;
             spawned_max_capacity = (atomic_helper == MAX_SUBTHR);
             if ((spawned_max_capacity) || (isempty)) {
-#pragma omp atomical upadte
-                DEBUG_CALLS_ANSWER++;
                 //answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
             } else if (!isempty) { // update our index so
                 // in the elapsed time, it could happen that the only available
@@ -274,9 +272,6 @@ void GetAllMsgs(int NNodes,
         // Please spend some prudential time answering messages before exiting to join the communal integration :O
         //PRINTF_DBG("Skipped answering messages :-)\n");
         //answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
-#pragma omp atomical upadte
-        DEBUG_CALLS_ANSWER++;
-        printf("%d,%d,1\n", DEBUG_CALLS_ASK, DEBUG_CALLS_ANSWER);
     } else if (omp_get_num_threads()>1) {
         bool globalstatus = true;
         int local_ix;
@@ -302,8 +297,6 @@ void GetAllMsgs(int NNodes,
                 //std::cout << "[DEBUG] about to call GetOneMsg" << std::endl;
                 //GetOneMsg<BATCH>(local_ix, REF, N);
                 //PRINTF_DBG("Skipped sending messages :-)\n");
-#pragma omp atomical upadte
-                DEBUG_CALLS_ASK++;
 #pragma omp atomic update
                 ++ *(REF.p_TOT);
 #pragma omp atomic update
@@ -329,11 +322,8 @@ void GetAllMsgs(int NNodes,
             globalstatus = (atomic_helper < NNodes);
         }
         // Please spend some prudential time answering messages before joining the communal integration :O
-        //answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
+        //  answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
         //PRINTF_DBG("Skipped answering messages :-)\n");
-#pragma omp atomical upadte
-        DEBUG_CALLS_ANSWER++;
-        printf("%d,%d,2\n", DEBUG_CALLS_ASK, DEBUG_CALLS_ANSWER);
     } // this was all for the threads!= 0
 } // end of parallel region
 } // end of function
