@@ -29,23 +29,26 @@ void irespond_value(ReferenceContainer &REF, double ix, int owner, std::list<MPI
 
 template<int DT, int TIMETOL, int BATCH>
 void answer_messages(ReferenceContainer &REF,
-                     int MYTHR,
-                     std::list<MPI_Request>::iterator &R,
-                     std::list<MPI_Request> &R_tot){
+                     int MYTHR
+//                     ,std::list<MPI_Request>::iterator &R,
+//                     std::list<MPI_Request> &R_tot
+                     ){
+
+    std::list<MPI_Request> R_tot(10);
+    std::list<MPI_Request>::iterator R = R_tot.begin();
+
+// Potentially exetend the request strip :O
 
     // please add BATCH * (TIMETOL + 1) if N_remaining isnt enough
     int NDISPATCHED = 0;
     size_t d = std::distance(R, R_tot.end());
     int N_remaining = sizeof(d)/sizeof(MPI_Request);
-#pragma omp critical
-{
     int N_SafeRequired = BATCH * (TIMETOL + 1) - N_remaining;
     if (N_SafeRequired > 0){
         for (int i=0; i<N_SafeRequired; i++){
             R_tot.push_back(MPI_Request());
         }
     }
-}
 
     // lay the probes for all the procs
     int flagprobes[REF.p_ComHelper->WORLD_SIZE[MYTHR]] = {0};
@@ -55,6 +58,7 @@ void answer_messages(ReferenceContainer &REF,
         }
     }
 
+
     // initialize auxiliary variables
     int ticks = 0;
     std::set<int> answered;
@@ -62,19 +66,38 @@ void answer_messages(ReferenceContainer &REF,
     double ix;
     int i = 0;
     int status = 0;
+    MPI_Request localreq;
+    int status_localreq = 0;
 
     // start iterating
     while (ticks < TIMETOL){
         for (int j=0; j < BATCH; ++j) {
             if (flagprobes[i] == 1) { // a message is available! recieve it!
-                MPI_Recv(&ix, 1, MPI_DOUBLE, i, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-                if (R != R_tot.end()) {
-                    irespond_value(REF, ix, i, R);
-                    ++R;
+                printf("THIS IS AN ERROR: THERE SHOULD BE NO INCOMING MESSAGES!");
+                // FLAG IS TRUE: TRY TO CAPTURE IT
+                //
+                // MPI_Recv(&ix, 1, MPI_DOUBLE, i, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                // Blocking was not suited :-( So we do the following non-blocking :-)
+                //
+                MPI_Irecv(&ix,
+                          1,//count
+                          MPI_DOUBLE, // type
+                          i, // destination
+                          1, MPI_COMM_WORLD, &localreq);
+                MPI_Request_get_status(localreq, &status_localreq, MPI_STATUS_IGNORE);
+                if (status_localreq){ // IF INDEED THERE WAS  A MESSAGE, PROCEED.
+                    if (R != R_tot.end()) {
+                        irespond_value(REF, ix, i, R);
+                        ++R;
+                    }
+                    flagprobes[i] = 0;
+                    answered.insert(i);
+                    NDISPATCHED++;
+                    status_localreq = 0;
+                } else { // CLEAN
+                    flagprobes[i] = 0;
+                    answered.insert(i); // it was answered, just not by us :-)
                 }
-                flagprobes[i] = 0;
-                answered.insert(i);
-                NDISPATCHED++;
             }
             if (i >= REF.p_ComHelper->WORLD_SIZE[MYTHR]) {
                 i = 0;
@@ -82,7 +105,14 @@ void answer_messages(ReferenceContainer &REF,
                 ++i;
             }
             if (answered.size() == REF.p_ComHelper->WORLD_SIZE[MYTHR]){
-                return;
+                return; // we responded to all processes at least once, now we can leave :-)
+                // this is a moment to note with clarity that if our graph has N nodes, P processes
+                // and T threads devoted to answering operations (i.e. ~T/2 with T total threads),
+                // then assuming that P-2 processes have 0 nodes, we have 1, and processor P-1 has
+                // N-1 nodes that require our information, then we should have at least (N-1)
+                // communications open with each processor. Here it is enforced in parallel
+                // quite heuristically, but later in the singlestep_evolution code the all2all
+                // is alternated with this answering role until all information is propagated.
             }
             if (answered.count(i) == 1) {
                     ++i;
@@ -198,7 +228,6 @@ void GetAllMsgs(int NNodes,
                 unsigned long N,
                 OpenMPHelper &O) {
 
-
 //    std::cout << "Hi, welcome to 'GetAllMsgs'... " << std::endl;
 //    mssleep(2000);
 
@@ -211,8 +240,6 @@ void GetAllMsgs(int NNodes,
     macro_threadn = O.MY_THREAD_n;
     std::set<int> covered;
     long ix = - 1; // the index we will get, use and change from the global queue :-)!
-    std::list<MPI_Request> REQUESTLIST(10);
-    std::list<MPI_Request>::iterator p_REQUESTLIST = REQUESTLIST.begin();
 //    std::cout << "Confirm we are at the face of the parallel region..." << std::endl;
 //    mssleep(2000);
 
@@ -242,7 +269,7 @@ void GetAllMsgs(int NNodes,
             atomic_helper = N_SPAWNED;
             spawned_max_capacity = (atomic_helper == MAX_SUBTHR);
             if ((spawned_max_capacity) || (isempty)) {
-                //answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
+                answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn);
             } else if (!isempty) { // update our index so
                 // in the elapsed time, it could happen that the only available
                 // thread has just become busy and now you would be overwriting a value
@@ -299,6 +326,12 @@ void GetAllMsgs(int NNodes,
                 //PRINTF_DBG("Skipped sending messages :-)\n");
 #pragma omp atomic update
                 ++ *(REF.p_TOT);
+                // Also communicate to other threads that there is one new item pending integration :o
+#pragma critical
+{
+                REF.p_READY_FOR_INTEGRATION->push(local_ix);
+
+}
 #pragma omp atomic update
                 -- N_SPAWNED; // let the thread=0 know you may become idle.
                 ix_update = false;
@@ -322,7 +355,7 @@ void GetAllMsgs(int NNodes,
             globalstatus = (atomic_helper < NNodes);
         }
         // Please spend some prudential time answering messages before joining the communal integration :O
-        //  answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
+        //answer_messages<DT, TIMETOL, BATCH>(REF, macro_threadn, p_REQUESTLIST, REQUESTLIST);
         //PRINTF_DBG("Skipped answering messages :-)\n");
     } // this was all for the threads!= 0
 } // end of parallel region

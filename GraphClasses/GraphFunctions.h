@@ -74,7 +74,7 @@ void single_evolution(Graph &g,
     NT = ComHelper.NUM_THREADS;
     auto vs = vertices(g);
     double temporalResult;
-
+    bool is_unclaimed = true;
     int TOT = 1;
     ReferenceContainer REF(ParHelper,
                            ComHelper,
@@ -85,12 +85,13 @@ void single_evolution(Graph &g,
                            TOT,
                            PENDING_INT);
 
-    const int MAX_SUBTHR = 1;
+    const int MAX_SUBTHR = 2;
 
 
 
 #pragma omp parallel firstprivate(NVtot, vs, NT, N_total_nodes, REF, MAX_SUBTHR) // Node iterators have random access ;-)
 {
+    bool am_i_first;
     int SplitCoef = omp_get_num_threads()/2; // 3/2
     if (SplitCoef < 2){SplitCoef = 2;}
     OpenMPHelper OmpHelper(NVtot, SplitCoef);
@@ -104,15 +105,16 @@ void single_evolution(Graph &g,
         // the so-called 'BATCH' is how many requests are handled simultaneously (by each thread)
 //        mssleep(5000);
         if (OmpHelper.MY_THREAD_n % (MAX_SUBTHR + 1) == 0) {
-            GetAllMsgs<5, 1, MAX_SUBTHR, BATCH>(NVtot, REF, N_total_nodes, OmpHelper);
-            GetAllMsgs<5, 1, MAX_SUBTHR, BATCH>(NVtot, REF, N_total_nodes, OmpHelper);
+            //int TIMETOL = 2 * (REF.p_ComHelper->WORLD_SIZE[OmpHelper.MY_THREAD_n] / BATCH + 1);
+            const int TIMETOL = 5;
+            GetAllMsgs<5, TIMETOL, MAX_SUBTHR, BATCH>(NVtot, REF, N_total_nodes, OmpHelper);
+            GetAllMsgs<5, TIMETOL, MAX_SUBTHR, BATCH>(NVtot, REF, N_total_nodes, OmpHelper);
             // STRONG INTEGRATION OCCURS HERE! just call:
             if (VERBOSE) {
                 // use PRINTF_DBG()
                 std::cout << " I am thread " << omp_get_thread_num() <<
                           " and I have finished doing my job ;-)" << std::endl;
             }
-            //contribute_to_integration(REF);
         }
     }
     else {
@@ -151,10 +153,6 @@ void single_evolution(Graph &g,
             } else {
                 ready4int = false;
             };
-
-            // **********LITTLE CHEATING GOING ON HERE TO TEST COMMUNICATION STUFF
-            ready4int = true;
-            //**********************************************************************
 
             auto neighbors = boost::adjacent_vertices(*v, g);
             auto in_edges = boost::in_edges(*v, g);
@@ -227,8 +225,6 @@ void single_evolution(Graph &g,
                 READY_FOR_INTEGRATION.push(i);
 }
 #pragma omp atomic update
-                --PENDING_INT;
-#pragma omp atomic update
                 ++TOT;
             } else {
 #pragma omp critical
@@ -241,43 +237,68 @@ void single_evolution(Graph &g,
             // use PRINTF_DBG()
             std::cout << " I am 'for' worker " << omp_get_thread_num() << " and I have completed my Job :-)" << std::endl;
         }
-        // STRONG INTEGRATION OCCURS HERE! just call:
+    }
+
+    // The previous code is a race to this point :-) if you didnt arrived first move on lol
+#pragma omp critical
+{
+            am_i_first = is_unclaimed;
+            if (is_unclaimed){
+                is_unclaimed = false;
+            }
+}
+    if (am_i_first) {
+        // Prepare vars
+        MPI_Request my_request;
+        bool are_we_over = false;
+        bool is_everyone_over = false;
+        bool recv_status[ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]];
+        int atomical_int;
+        std::set<int> ready;
+
+        // While our Process is not over, I am the official responder :-)
+#pragma omp atomic read
+        atomical_int = TOT;
+        are_we_over = (atomical_int == NVtot);
+        while (!are_we_over){
+            // 1) Answer some messages
+            //answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelperN.MY_THREAD_n);
+            // 2) Re-check if we are over
+#pragma omp atomic read
+            atomical_int = TOT;
+            are_we_over = (atomical_int == NVtot);
+        }
+
+        // Once everyone in our Process is over, I can participate in the asynchronous
+        // All2All while I keep responding.
+        MPI_Ialltoall(&are_we_over, 1, MPI_C_BOOL, &recv_status, 1, MPI_C_BOOL, MPI_COMM_WORLD, &my_request);
+        while (!is_everyone_over) {
+            // 1) check if everyone is over
+            // If all processes do not require novel information,
+            // lets finalize and join the communal integration.
+            for (int pi = 0; pi < ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]; pi++) {
+                if (ready.count(pi) != 1) {
+                    if (recv_status[pi] || (ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n] == pi)) {
+                        ready.insert(pi);
+                    }
+                }
+            }
+            if (ready.size() == ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]) is_everyone_over = true;
+
+            // 2) Spend some time answering messages so that they can be over ;-)
+            //answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelperN.MY_THREAD_n, p_REQUESTLIST, REQUESTLIST);
+
+        }
+     } else {
+        // If you are here then you have lost the race :-)
+        // just go and integrate the respective equation ;-)
+        // While there are pending integrations...
+        // 1)
         contribute_to_integration(REF);
+        // 2)
+        //register_to_value(g);
     }
 } // end of the parallel construct
-
-    // By now, there is only one thread and is not
-    // dispatching other process' requests, so only
-    // for assertion purposes we will produce:
-    // wait until the global max of PENDING_INT is  exactly 0
-    // use:
-    if (PENDING_INT == 0) {
-
-        // Define vars
-        bool status = true;
-        bool recv_status[ComHelper.WORLD_SIZE[0] - 1];
-        int finalstate = MPI_Alltoall(&status,
-                                      1,
-                                      MPI_C_BOOL,
-                                      &recv_status[0],
-                                      ComHelper.WORLD_SIZE[0] - 1,
-                                      MPI_C_BOOL,
-                                      MPI_COMM_WORLD);
-    } else
-    {
-        std::cout << " FAILED! check please" <<std::endl;
-    }
-    //std::cout << "Ended one lap!" << std::endl;
-    //mssleep(5000);
-
-    // swap (local) node's values with
-    // the value at register
-    register_to_value(g);
-
-
-    // ************SYNCHRONIZATION DIRECTIVES: Only for Dynamic Networks
-    // we are not modifying the topology so there is no need for synchronization
-    //synchronize(g.process_group());
 }
 
 
