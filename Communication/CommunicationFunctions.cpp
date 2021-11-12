@@ -13,12 +13,15 @@ void irespond_value(ReferenceContainer &REF, double ix, int owner, MPI_Request &
     for (auto v = vs.first; v != vs.second; ++v){
         if (get(REF.p_MapHelper->NodeOwner,*v)==MyNProc) {
             //printf("I am the owner! :-)");
-        } else printf("I am not the owner!!\n");
-        if (get(get(boost::vertex_index, *(REF.p_g)), *v) == ix){
-            send_nonblocking(owner, R, REF.placeholder, (int) ix);
-            //send_nonblocking(owner, R, &(*REF.p_g)[*v].value, (int) ix);
-            printf("ANSWERED ONE MESSAGE!\n");
-            return;
+            if (get(get(boost::vertex_index, *(REF.p_g)), *v) == ix){
+                //send_nonblocking(owner, R, REF.placeholder, (int) ix);
+                send_nonblocking(owner, R, (*REF.p_g)[*v].value, (int) ix);
+                printf("ANSWERED ONE MESSAGE!\n");
+                return;
+        } else {
+            printf("I am not the owner!!\n");
+            std::cout  << std::flush;
+        }
         }
     }
 };

@@ -91,8 +91,8 @@ void single_evolution(Graph &g,
                            MapHelper);
 
     const int MAX_SUBTHR = 1;
-    const int TIMETOL = 2;//ComHelper.WORLD_SIZE[0] / BATCH + 1;
-    const int DT = 1;
+    const int TIMETOL = 5;//ComHelper.WORLD_SIZE[0] / BATCH + 1;
+    const int DT = 5;
     bool keep_responding = true;
 
     // For testing :-0
@@ -268,8 +268,9 @@ void single_evolution(Graph &g,
             are_we_over = (atomical_int == NVtot);
             ++notreadyyet;
         }
+        PRINTF_DBG("\n\n\n\n\n\n\WE WERE OVERRR\n\n\n\n");
         PRINTF_DBG("Before being ready, we waited for %d laps!\n", notreadyyet);
-
+        std::cout << std::flush;
 
         // Once everyone in our Process is over, I can participate in the asynchronous
         // All2All while I keep responding.
@@ -368,6 +369,7 @@ void single_evolution(Graph &g,
 #pragma omp atomic read
                 atomic_bool = keep_responding;
                 mssleep(50);
+
             }
         }
         contribute_to_integration(REF); // dont help answering messages ;-)
