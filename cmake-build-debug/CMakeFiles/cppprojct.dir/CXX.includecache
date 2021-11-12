@@ -125,6 +125,8 @@ GraphFunctions.h
 /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
 ../macros/macros.h
 /home/m4zz31/cppprojct/macros/macros.h
+../Communication/CommunicationFunctions.h
+/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
 ../Solvers/GeneralSolver.h
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
 ../Utils/adequate_synchronization.h

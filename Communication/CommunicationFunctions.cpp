@@ -8,69 +8,73 @@
 
 // Keep building MPI with https://www.boost.org/doc/libs/1_77_0/doc/html/mpi/tutorial.html
 
-void irespond_value(ReferenceContainer &REF, double ix, int owner, std::list<MPI_Request>::iterator &R){
+void irespond_value(ReferenceContainer &REF, double ix, int owner, MPI_Request & R, int MyNProc){
     auto vs = vertices(*REF.p_g);
     for (auto v = vs.first; v != vs.second; ++v){
+        if (get(REF.p_MapHelper->NodeOwner,*v)==MyNProc) {
+            //printf("I am the owner! :-)");
+        } else printf("I am not the owner!!\n");
         if (get(get(boost::vertex_index, *(REF.p_g)), *v) == ix){
-            send_nonblocking(owner, *R, &(*REF.p_g)[*v].value, 3);
+            send_nonblocking(owner, R, REF.placeholder, (int) ix);
+            //send_nonblocking(owner, R, &(*REF.p_g)[*v].value, (int) ix);
+            printf("ANSWERED ONE MESSAGE!\n");
             return;
         }
     }
 };
 
 
-void send_nonblocking(int owner, MPI_Request &r, double *ix, int TAG){
+void send_nonblocking(int owner, MPI_Request &r, double &ix, int TAG){
+    // DEPRECATED!
     // (A) TAG = 1 means asking for a node's value by sending one int
     // (B) TAG = 2 means asking for an edge's value by sending two ints
     // (C) TAG = 3 means sending in return a node's value
     // (D) TAG = 4 means sending in return both an edge and node's value
-    if ((TAG == 1) || (TAG == 3)) {
-        MPI_Isend(ix,
-                  1,//count
-                  MPI_DOUBLE, // type
-                  owner, // destination
-                  TAG, MPI_COMM_WORLD, &r);
-    } else if ((TAG == 2) || (TAG == 4)) {
-        MPI_Isend(ix,
-                  2,//count
-                  MPI_DOUBLE, // type
-                  owner, // destination
-                  TAG, MPI_COMM_WORLD, &r);
-        ++ix;
-        MPI_Isend(ix,
-                  2,//count
-                  MPI_DOUBLE, // type
-                  owner, // destination
-                  TAG, MPI_COMM_WORLD, &r);
-    }
+    //----------
+     MPI_Isend(&ix,
+              1,//count
+              MPI_DOUBLE, // type
+              owner, // destination
+              TAG, MPI_COMM_WORLD, &r);
+//    } else if ((TAG == 2) || (TAG == 4)) {
+//        MPI_Isend(&ix,
+//                  2,//count
+//                  MPI_DOUBLE, // type
+//                  owner, // destination
+//                  TAG, MPI_COMM_WORLD, &r);
+//        ++ix;
+//        MPI_Isend(&ix,
+//                  2,//count
+//                  MPI_DOUBLE, // type
+//                  owner, // destination
+//                  TAG, MPI_COMM_WORLD, &r);
+//    }
+    printf("sent ONE MESSAGE!\n");
 };
 
 
 
-void recv_nonblocking(int owner, MPI_Request &r, double *result, int TAG){
-    // (A) TAG = 1 means getting a request for a node's value by recieving an int
-    // (B) TAG = 2 means getting a request for an edge's value which require two ints
-    // (C) TAG = 3 means getting in return a node's value
-    // (D) TAG = 4 means getting in return both an edge and node's value
-    if ((TAG == 1) || (TAG == 3)) {
-        MPI_Irecv(result,
+void recv_nonblocking(int owner, MPI_Request &r, double &result, int TAG){
+    MPI_Irecv(&result,
                   1,//count
                   MPI_DOUBLE, // type
                   owner, // destination
                   TAG, MPI_COMM_WORLD, &r);
-    } else if ((TAG == 4) || (TAG == 2)) {
-        MPI_Irecv(result,
-                  2,//count
-                  MPI_DOUBLE, // type
-                  owner, // destination
-                  TAG, MPI_COMM_WORLD, &r);
-        ++result;
-        MPI_Irecv(result,
-                  2,//count
-                  MPI_DOUBLE, // type
-                  owner, // destination
-                  TAG, MPI_COMM_WORLD, &r);
-    }
+    // HERE GOES SOME EDGE RECIEVING STRATEGY
+//    if ((TAG == 4) || (TAG == 2)) {
+//        MPI_Irecv(&result,
+//                  2,//count
+//                  MPI_DOUBLE, // type
+//                  owner, // destination
+//                  TAG, MPI_COMM_WORLD, &r);
+//        ++result;
+//        MPI_Irecv(&result,
+//                  2,//count
+//                  MPI_DOUBLE, // type
+//                  owner, // destination
+//                  TAG, MPI_COMM_WORLD, &r);
+//    }
+    printf("recieved ONE MESSAGE!\n");
 };
 
 
@@ -109,6 +113,7 @@ void ask_for_node(int owner, double &vvalue, CommunicationHelper &H, int ix, Gra
         for (int i=0; i<H.WORLD_SIZE[0]; i++) {
             if  ((i != H.WORLD_RANK[0]) && flag[i]){
                 double value;
+                printf("[HANG ALERT] About to use a blocking recieve in ask_for_node");
                 MPI_Recv(&value, 1, MPI_DOUBLE, i, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
                 //---
                 // respond accordingly!
@@ -132,6 +137,38 @@ void ask_for_node(int owner, double &vvalue, CommunicationHelper &H, int ix, Gra
 void ask_for_node_and_vertex(int owner, double &vvalue, double &evalue, CommunicationHelper &H, int ix, Graph &g){
     //asks processor 'owner' for the 'v' and 'e' elements
 };
+
+void destroyRequest(MPI_Request &R, int &NERR){
+    MPI_Status S;
+    int flag=0;
+    MPI_Cancel(&R);
+    MPI_Wait(&R, &S);
+    MPI_Test_cancelled(&S, &flag);
+    if (!flag){
+        PRINTF_DBG("failed to cancel a request!  :-(");
+        ++NERR;
+    }
+}
+
+void destroyRequestWithoutCounter(MPI_Request &R){
+    MPI_Status S;
+    int flag=0;
+    MPI_Cancel(&R);
+    MPI_Wait(&R, &S);
+    MPI_Test_cancelled(&S, &flag);
+    if (!flag){
+        PRINTF_DBG("\n\n\n\nfailed to cancel a request! flag was %d :-(\n\n\n\n",flag);
+    }
+}
+
+int destroyRequestReturnInteger(MPI_Request &R){
+    MPI_Status S;
+    int flag=0;
+    MPI_Cancel(&R);
+    MPI_Wait(&R, &S);
+    MPI_Test_cancelled(&S, &flag);
+    return flag;
+}
 
 
 

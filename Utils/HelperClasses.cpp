@@ -80,9 +80,11 @@ ReferenceContainer::ReferenceContainer(ParallelHelper &ParHelper,
                                        std::queue<long> & READY_FOR_INTEGRATION,
                                        IntegrationHelper & IntHelper,
                                        int & TOT,
-                                       int & PENDING_INT){
+                                       int & PENDING_INT,
+                                       MappingHelper & MapHelper){
     p_ParHelper = &ParHelper;
     p_ComHelper = &ComHelper;
+    p_MapHelper = &MapHelper;
     p_PENDING_INT = &PENDING_INT;
     p_g = &g;
     p_CHECKED = &CHECKED;

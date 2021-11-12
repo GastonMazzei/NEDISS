@@ -28,8 +28,13 @@ int main(int argc, char** argv)
     // START:
     //
     int rank;
+    int provided;
     unsigned int SEED = std::stoi(std::getenv("SEED"));//12345;
-    MPI_Init(&argc, &argv);
+    //MPI_Init(&argc, &argv); // We want a multithreaded MPI application :-)
+    MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &provided);
+    if (provided < MPI_THREAD_MULTIPLE) {
+        error_report("[error] The MPI did not provide the requested threading behaviour.");
+    }
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     print_init(rank);
     print_warnings(rank);
@@ -38,21 +43,28 @@ int main(int argc, char** argv)
     check_nested_status();
 
     // Testing Section ;-)
-    const int NNodes = 200;
+    const int NNodes = std::stoi(std::getenv("NNODES")); //12345;200;
     const int NRUNS = 500;
+    const int BATCH = 8;
     const double ErdosRenyiProba = 0.5;
-    //graph_tests_init(SEED, NNodes, ErdosRenyiProba);
-    //                  template param is the N of simultaneous requests
-    //                  that each threaded requester does. It is also used
-    //                  in the dispatcher framework in general without a clear interpretation.
-    //                  it is generally called "BATCH".
-//    graph_tests_singlestep_evolution<8>(SEED,
-//                                        NNodes,
-//                                        ErdosRenyiProba);
-    central_test_long_singlestep_run<8>(SEED,
-                                      NNodes,
-                                      ErdosRenyiProba,
-                                      NRUNS);
+    const int TESTN = std::stoi(std::getenv("TEST"));
+
+    if (TESTN == 0){
+        // TEST INITIALIZATION OF ALL NETWORKS INCLUDING THEIR ATTRIBUTES
+        graph_tests_init(SEED, NNodes, ErdosRenyiProba);
+    } else if (TESTN == 1) {
+        // TEST SINGLESTEP EVOLUTION 'A COUPLE' OF TIMES
+        graph_tests_singlestep_evolution<BATCH>(SEED,
+                                            NNodes,
+                                            ErdosRenyiProba);
+    } else if (TESTN == 2){
+        // TEST SINGLESTEP EVOLUTION SEVERAL THOUSAND TIMES
+        central_test_long_singlestep_run<BATCH>(SEED,
+                                            NNodes,
+                                            ErdosRenyiProba,
+                                            NRUNS);
+
+    }
 
 
     // END:

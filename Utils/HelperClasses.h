@@ -72,9 +72,11 @@ typedef std::vector<IntegrationCell> IntegrationHelper;
 
 
 struct ReferenceContainer {
+    double placeholder = 0.;
     ParallelHelper * p_ParHelper;
     CommunicationHelper * p_ComHelper;
     IntegrationHelper * p_IntHelper;
+    MappingHelper * p_MapHelper;
     Graph * p_g;
     int * p_TOT;
     int * p_PENDING_INT;
@@ -87,7 +89,8 @@ struct ReferenceContainer {
                        std::queue<long> & READY_FOR_INTEGRATION,
                        IntegrationHelper & IntHelper,
                        int & TOT,
-                       int & PENDING_INT);
+                       int & PENDING_INT,
+                       MappingHelper & MapHelper);
 };
 
 

@@ -5,6 +5,7 @@
 #ifndef CPPPROJCT_GRAPHFUNCTIONS_H
 #define CPPPROJCT_GRAPHFUNCTIONS_H
 #include "../macros/macros.h"
+#include "../Communication/CommunicationFunctions.h"
 #include "../Solvers/GeneralSolver.h"
 #include "../Utils/adequate_synchronization.h"
 #include "../Utils/memory_management.h"
@@ -17,16 +18,19 @@
 #include <boost/mpi/environment.hpp>
 #include "../Communication/CommunicationFunctions.h"
 
-template <int TIMETOL, int DT, int MAX_SUBTHR, int BATCH>
-void GetAllMsgs(int NNodes,
-                ReferenceContainer REF,
-                unsigned long N,
-                OpenMPHelper &O);
+
 
 void contribute_to_integration(ReferenceContainer &REF);
 
 
+template<int DT, int TIMETOL, int BATCH>
+void answer_messages(ReferenceContainer &REF, int MYTHR);
 
+template <int DT, int TIMETOL, int BATCH>
+void perform_requests(int NNodes,
+                      ReferenceContainer REF,
+                      unsigned long N,
+                      OpenMPHelper &O);
 
 // processors will iterate their "N=num_vertex(g)" nodes,
 // and in each iteration they will either
@@ -48,7 +52,7 @@ void contribute_to_integration(ReferenceContainer &REF);
 
 void register_to_value(Graph &g);
 
-
+void destroyRequestWithoutCounter(MPI_Request &R);
 
 // Fully declared template
 template<typename DIFFEQ, typename SOLVER, int BATCH> // e.g. DIFFEQ = NoiselessKuramoto, SOLVER = EulerSolver<NoiselessKuramoto>
@@ -59,12 +63,12 @@ void single_evolution(Graph &g,
                       IntegrationHelper &IntHelper,
                       MappingHelper &MapHelper,
                       unsigned long N_total_nodes){
+
     // Roughly we are:
     // (1) gathering info from neighbors in parallel using MPI calls to other procs.
     // (2) solving the respective differential equation
     // (3) calling the proc synchronization
 
-    //void GetAllMsgs(int NNodes, CommunicationHelper &H, Graph &g, ParallelHelper &P, IntegrationHelper &I, std::queue<long> &C);
     unsigned long NVtot = boost::num_vertices(g), NT;
     int PENDING_INT = NVtot;
 
@@ -83,13 +87,21 @@ void single_evolution(Graph &g,
                            READY_FOR_INTEGRATION,
                            IntHelper,
                            TOT,
-                           PENDING_INT);
+                           PENDING_INT,
+                           MapHelper);
 
-    const int MAX_SUBTHR = 2;
+    const int MAX_SUBTHR = 1;
+    const int TIMETOL = 2;//ComHelper.WORLD_SIZE[0] / BATCH + 1;
+    const int DT = 1;
+    bool keep_responding = true;
+
+    // For testing :-0
+//    CHECKED.push(0);
+//    CHECKED.push(1);
+//    TOT = NVtot - 2;
 
 
-
-#pragma omp parallel firstprivate(NVtot, vs, NT, N_total_nodes, REF, MAX_SUBTHR) // Node iterators have random access ;-)
+#pragma omp parallel firstprivate(NVtot, vs, NT, N_total_nodes, REF, MAX_SUBTHR, TIMETOL, DT) // Node iterators have random access ;-)
 {
     bool am_i_first;
     int SplitCoef = omp_get_num_threads()/2; // 3/2
@@ -97,43 +109,26 @@ void single_evolution(Graph &g,
     OpenMPHelper OmpHelper(NVtot, SplitCoef);
 
 
-
     if (OmpHelper.MY_THREAD_n < SplitCoef){
-                // The following is a templated function:
-        // it requires <Number of timesteps, Delta time, Num Subthreads, BATCH>
-        // we allow a delay of 5 failed attemps waiting 1ms and using only ONE helper (i.e. subthread)
-        // the so-called 'BATCH' is how many requests are handled simultaneously (by each thread)
-//        mssleep(5000);
         if (OmpHelper.MY_THREAD_n % (MAX_SUBTHR + 1) == 0) {
-            //int TIMETOL = 2 * (REF.p_ComHelper->WORLD_SIZE[OmpHelper.MY_THREAD_n] / BATCH + 1);
-            const int TIMETOL = 5;
-            GetAllMsgs<5, TIMETOL, MAX_SUBTHR, BATCH>(NVtot, REF, N_total_nodes, OmpHelper);
-            GetAllMsgs<5, TIMETOL, MAX_SUBTHR, BATCH>(NVtot, REF, N_total_nodes, OmpHelper);
-            // STRONG INTEGRATION OCCURS HERE! just call:
-            if (VERBOSE) {
-                // use PRINTF_DBG()
-                std::cout << " I am thread " << omp_get_thread_num() <<
-                          " and I have finished doing my job ;-)" << std::endl;
+            bool atomic_bool;
+#pragma omp atomic read
+            atomic_bool = keep_responding;
+            while (atomic_bool) { // as long as we keep processing our own,
+                //                    we mantain at least one dispatcher alive :-)
+                answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+#pragma omp atomic read
+                atomic_bool = keep_responding;
+                //printf("We are not over yet  :O\n");
             }
+            if (!atomic_bool) printf("OVER!  :O\n");
+            PRINTF_DBG(" I am thread %d (MESSAGE ANSWERER) and I have finished doing my job ;-)\n",omp_get_thread_num());
+        } else {
+            perform_requests<DT, TIMETOL, BATCH>(NVtot, REF, N_total_nodes,OmpHelper);
+            PRINTF_DBG(" I am thread %d (PERFORM REQUESTER) and I have finished doing my job ;-)\n",omp_get_thread_num());
         }
     }
     else {
-        //*************************************DEBUG!!!**************************************
-//        if (OmpHelper.MY_THREAD_n == SplitCoef){
-//#pragma omp critical
-//{
-//                CHECKED.push(0);
-//                ParHelper.data[0].MissingA[0].emplace_back(4.,
-//                                                                                1,
-//                                                                                0);
-//                CHECKED.push(1);
-//                ParHelper.data[1].MissingA[0].emplace_back(5.,
-//                                                                                2,
-//                                                                                0);
-//            }
-//}
-//        mssleep(50000); // DEBUG: watch what occurs in the MPI section :-0
-        //*********************************************************************************
         unsigned long NLocals, NInedges, M, rank, NOwned;
         long i=-1;
 
@@ -144,7 +139,6 @@ void single_evolution(Graph &g,
             ++i;
 
             // Capture the central node's values
-
             IntHelper[i].centralValue = g[*v].value;
             IntHelper[i].centralParams = g[*v].params;
             IntHelper[i].build(g, *v, MapHelper, NOwned, rank, NLocals, M);
@@ -157,7 +151,7 @@ void single_evolution(Graph &g,
             auto neighbors = boost::adjacent_vertices(*v, g);
             auto in_edges = boost::in_edges(*v, g);
 #pragma omp parallel firstprivate(i, v, M, neighbors, NLocals, NInedges, NOwned, N_total_nodes)
-            {
+{
                 OpenMPHelper OmpHelperN(NLocals, 0);
                 for (auto n = neighbors.first + OmpHelperN.MY_OFFSET_n;
                      n != neighbors.first + OmpHelperN.MY_OFFSET_n + OmpHelperN.MY_LENGTH_n; ++n) {
@@ -167,7 +161,7 @@ void single_evolution(Graph &g,
                         if (edge(*v, *n, g).second == 1) {
 #pragma omp critical         // Just store the results directly in the results.
                             // we can probably afford being critical as there is
-                            // MPI communication overhead in other threads.
+                           // MPI communication overhead in other threads.
 {
                             IntHelper[i].ResultsPendProcess.emplace_back(g[*n].value,
                                                                          g[edge(*v, *n,
@@ -216,9 +210,9 @@ void single_evolution(Graph &g,
                     }
                     ++j;
                 }
-            } // end of the nested parallelism! :-)
+} // end of the nested parallelism! :-)
 
-            // FROZEN FOR DEBUGGING!
+
             if (ready4int){
 #pragma omp critical
 {
@@ -232,73 +226,155 @@ void single_evolution(Graph &g,
                 CHECKED.push(i); // Adding the index to the list of checked indexes ;-)
 }
             }
-        } // end of the for :-)
-        if (VERBOSE) {
-            // use PRINTF_DBG()
-            std::cout << " I am 'for' worker " << omp_get_thread_num() << " and I have completed my Job :-)" << std::endl;
         }
+        PRINTF_DBG(" I am thread %d (FOR WORKER) and I have finished doing my job ;-)\n",omp_get_thread_num());
+        printf("This thread is a for worker that has ended :-)\n");
     }
 
+    //mssleep(15000); // keep guys waiting so we focus on MPI debugging ;_)
+
+    // BYPASS for debugging**
+//#pragma omp atomic write
+//    TOT = NVtot;
+    // **********************
+
+    //printf("I am a thread that  has  arrives to the end of the script :-)\n", ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n]);
     // The previous code is a race to this point :-) if you didnt arrived first move on lol
 #pragma omp critical
 {
             am_i_first = is_unclaimed;
             if (is_unclaimed){
                 is_unclaimed = false;
+                PRINTF_DBG("Claimed by thread %ld of processor %d\n", OmpHelper.MY_THREAD_n, ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n]);
             }
 }
     if (am_i_first) {
         // Prepare vars
-        MPI_Request my_request;
-        bool are_we_over = false;
-        bool is_everyone_over = false;
-        bool recv_status[ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]];
         int atomical_int;
-        std::set<int> ready;
+        bool are_we_over = false;
 
         // While our Process is not over, I am the official responder :-)
 #pragma omp atomic read
         atomical_int = TOT;
+        PRINTF_DBG("Already checking if we are over, proc %d\n", ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n]);
         are_we_over = (atomical_int == NVtot);
+        int notreadyyet=0;
         while (!are_we_over){
             // 1) Answer some messages
-            //answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelperN.MY_THREAD_n);
+            answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
             // 2) Re-check if we are over
 #pragma omp atomic read
             atomical_int = TOT;
             are_we_over = (atomical_int == NVtot);
+            ++notreadyyet;
         }
+        PRINTF_DBG("Before being ready, we waited for %d laps!\n", notreadyyet);
+
 
         // Once everyone in our Process is over, I can participate in the asynchronous
         // All2All while I keep responding.
-        MPI_Ialltoall(&are_we_over, 1, MPI_C_BOOL, &recv_status, 1, MPI_C_BOOL, MPI_COMM_WORLD, &my_request);
-        while (!is_everyone_over) {
-            // 1) check if everyone is over
-            // If all processes do not require novel information,
-            // lets finalize and join the communal integration.
+        int counter=0;
+        const int MAX_COUNTER=5;
+        bool is_everyone_over = false;
+        bool is_everyone_over_doubleChecked = false;
+        int all2all_status = 0;
+        int CHECKVAL;
+        MPI_Request my_request[MAX_COUNTER]; // 5 requests
+        int we_are_over[MAX_COUNTER][ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]];
+        int recv_status[MAX_COUNTER][ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]];
+        std::set<int> ready;
+
+        // Print for debug
+        PRINTF_DBG("Already checking if everyone is over, proc %d, ready size is: %lu, here comes the ALL2ALL\n",
+               ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n], ready.size());
+
+        CHECKVAL = 1;
+        while ((!is_everyone_over) || (!is_everyone_over_doubleChecked)) {
+#pragma omp atomic write
+            keep_responding = true;
+
+            if (counter >= MAX_COUNTER){
+                error_report("Max All2All instances exceeded");
+            }
+            if  (!is_everyone_over) {
+                CHECKVAL = 1;
+            } else  {
+                CHECKVAL = 4;
+                PRINTF_DBG("Now checkval is 4\n");
+            }
+
+            for (int i=0; i<ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]; ++i) we_are_over[counter][i] = CHECKVAL;
+            for (int i=0; i<ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]; ++i) recv_status[counter][i] = 0;
+            all2all_status = 0;
+            ready = std::set<int>();
+            ready.insert(ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n]);
+
+            PRINTF_DBG("New all2all with checkval 4"); // ampersand for recv_status after spotting RookieHPC's bug ;-)
+            MPI_Ialltoall(&we_are_over[counter], 1, MPI_INT, &recv_status[counter], 1, MPI_INT, MPI_COMM_WORLD, &my_request[counter]);
+
+            MPI_Request_get_status(my_request[counter], &all2all_status, MPI_STATUS_IGNORE);
+
+            // check if they have all been recieved :-)
+            while (all2all_status != 1){
+                answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                MPI_Request_get_status(my_request[counter], &all2all_status, MPI_STATUS_IGNORE);
+            }
+
+            // if it has been recieved, update
             for (int pi = 0; pi < ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]; pi++) {
                 if (ready.count(pi) != 1) {
-                    if (recv_status[pi] || (ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n] == pi)) {
+                    if (recv_status[counter][pi]==CHECKVAL) {
                         ready.insert(pi);
                     }
                 }
             }
-            if (ready.size() == ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]) is_everyone_over = true;
-
-            // 2) Spend some time answering messages so that they can be over ;-)
-            //answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelperN.MY_THREAD_n, p_REQUESTLIST, REQUESTLIST);
-
+            if (ready.size() == ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]) {
+                if (is_everyone_over) {
+                    is_everyone_over_doubleChecked = true;
+                    PRINTF_DBG("P%d recieved consensus from all regarding that they are all over. Flags list is %d %d %d\n",
+                           ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n],
+                           recv_status[counter][0], recv_status[counter][1], recv_status[counter][2]);
+                } else {
+                    PRINTF_DBG("P%d says that everyone is over! flags list is %d %d %d\n",
+                           ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n],
+                           recv_status[counter][0], recv_status[counter][1], recv_status[counter][2]);
+                    is_everyone_over = true;
+                }
+            } else {
+                is_everyone_over = false;
+                is_everyone_over_doubleChecked = false;
+                // DEBUG MSG
+                PRINTF_DBG("P%d says that not everyone has finished! flags list is %d %d %d\n",
+                       ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n],
+                       recv_status[counter][0], recv_status[counter][1], recv_status[counter][2]);
+            }
+            // Finally destroy request
+            destroyRequestWithoutCounter(my_request[counter]);
+            ++counter;
         }
-     } else {
-        // If you are here then you have lost the race :-)
-        // just go and integrate the respective equation ;-)
-        // While there are pending integrations...
-        // 1)
-        contribute_to_integration(REF);
+#pragma omp atomic write
+        keep_responding = false;
+
+    } else if (OmpHelper.MY_THREAD_n % 2 == 0) {
+            // help answering messages ;-)
+            bool atomic_bool;
+#pragma omp atomic read
+            atomic_bool = keep_responding;
+            while (atomic_bool){
+                //printf("A for worker that is finally responding messages says that we are not over with TOT\n");
+                // 1) Answer some messages
+                answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                // 2) Re-check if we are over
+#pragma omp atomic read
+                atomic_bool = keep_responding;
+                mssleep(50);
+            }
+        }
+        contribute_to_integration(REF); // dont help answering messages ;-)
         // 2)
         //register_to_value(g);
-    }
 } // end of the parallel construct
+PRINTF_DBG("exited");
 }
 
 
