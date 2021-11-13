@@ -82,8 +82,8 @@ void answer_messages(ReferenceContainer &REF,int MYTHR){
                     R_send.push_back(MPI_Request());
                     NDISPATCHED++;
                 } else {
-                    printf("We were faced with a probe that indicated an incoming message but we couldnt capture it :o\n");
-                    std::cout << std::flush;
+                    PRINTF_DBG("We were faced with a probe that indicated an incoming message but we couldnt capture it :o\n");
+                    //std::cout << std::flush;
                 }
                 status_localreq = 0;
                 flagprobes[i] = 0;
@@ -202,10 +202,10 @@ void perform_requests(int NNodes,
                     // retrieve data
                     owner[QAvailable.front()] = std::get<1>(*it);
                     their_vix[QAvailable.front()] = std::get<2>(*it);
-                    std::cout << "B" << std::endl;
-                    std::cout << std::flush; // DEBUGGING
+//                    std::cout << "B" << std::endl;
+//                    std::cout << std::flush; // DEBUGGING
                     // Debug! :-)
-                    printf("Sending and recieving (nonblocking): asking %d for vertex w index: %f \n",
+                    PRINTF_DBG("Sending and recieving (nonblocking): asking %d for vertex w index: %f \n",
                            owner[QAvailable.front()], their_vix[QAvailable.front()]);
                     std::cout  << std::flush; // DEBUGGING
 
@@ -225,25 +225,32 @@ void perform_requests(int NNodes,
                                                                   std::get<0>(*it),
                                                                   owner[QAvailable.front()] * N + their_vix[QAvailable.front()]);
 
+                    PRINTF_DBG("A\n");
+                    std::cout << std::flush;
                     // Store the temporal results index that is requiring an answer
                     QPend.push_back(QAvailable.front());
-
+                    PRINTF_DBG("B\n");
+                    std::cout << std::flush;
                     // add to ixlist[QAvailable.front()] the ix
                     // so that if we dont get the answer in this ix then we can do it in the future
                     ixlist[QAvailable.front()] = ix;
-
+                    PRINTF_DBG("C\n");
+                    std::cout << std::flush;
                     // Remove that last used element from QAvailable ;-)
                     QAvailable.pop();
-
+                    PRINTF_DBG("queue size is %d\n", QAvailable.size());
+                    std::cout << std::flush;
                     // If QAvailable is empty, devote ourselves to asynchronously waiting for
                     // answers to arrive. This indirectly means that our QPend has reached length BATCH.
                     if (QAvailable.empty()) {
                         waiting = true;
+                        PRINTF_DBG("it IS FINALLY EMPTY\n");
+                        std::cout << std::flush;
 
                         while (waiting) {
-                            //printf("We are waiting :-(\n");
-                            //std::cout << std::flush;
-                            mssleep(25);
+                            printf("We are waiting to be responded :-( Qpends size is %d\n", QPend.size());
+                            std::cout << std::flush;
+                            mssleep(150);
                             // Iterate through the pending indexes to see if one has been answered
                             auto i = QPend.begin();
                             while (i != QPend.end()) {
@@ -254,6 +261,8 @@ void perform_requests(int NNodes,
                                 // If it both arrived to them and was answered and came back, then
                                 // store that value and free one space in QPend while inserting the
                                 // new freed index into QAvailable.
+                                printf("sstatus = %d, rstatus = %d\n", sstatus, rstatus);
+                                std::cout << std::flush;
                                 if ((sstatus==1) && (rstatus==1)) {
                                     // We keep track of the locally successfully sent and recieved
                                     // requests as to at last check if, for this index, we were able
@@ -261,7 +270,7 @@ void perform_requests(int NNodes,
                                     std::get<0>(results[*i]) = vval[*i];
                                     special_index = ixlist[*i];
                                     (*REF.p_IntHelper)[special_index].ResultsPendProcess.push_back(results[*i]);
-                                    printf("Recieved a response to our request: val %f for ix: %d\n", vval[*i], special_index);
+                                    PRINTF_DBG("Recieved a response to our request: val %f for ix: %d\n", vval[*i], special_index);
                                     std::cout << std::flush;
                                     // Set the index "*i" of the batch-sized containers as available
                                     QAvailable.push(*i);
@@ -282,7 +291,7 @@ void perform_requests(int NNodes,
                                             }
                                         }
                                         if (was_last_appearance) {
-                                            printf("We have effectively recieved the answer to all the sent msgs\n");
+                                            PRINTF_DBG("We have effectively recieved the answer to all the sent msgs\n");
                                             std::cout << std::flush;
 #pragma critical
 {
@@ -299,6 +308,8 @@ void perform_requests(int NNodes,
                                 }
                             }
                         }
+                        PRINTF_DBG("DISPATCHED CORRECTLY\n");
+                        std::cout << std::flush;
                     }
                 }
             }
@@ -306,7 +317,7 @@ void perform_requests(int NNodes,
 //            std::cout << std::flush; // DEBUGGING
             // If we got answers to all sent messages then flag it globally as available for integration
             if (sent_locally == tot_locals){
-                printf("We have effectively recieved the answer to all the sent msgs\n");
+                PRINTF_DBG("We have effectively recieved the answer to all the sent msgs\n");
                 std::cout << std::flush;
 #pragma critical
 {
@@ -357,7 +368,7 @@ void perform_requests(int NNodes,
                 ix = REF.p_CHECKED->front();
                 REF.p_CHECKED->pop();
                 ix_update = true;
-                printf("Obtained a new ix\n");
+                PRINTF_DBG("Obtained a new ix\n");
                 std::cout << std::flush;
             }
 }
@@ -367,7 +378,7 @@ void perform_requests(int NNodes,
         if (total_processed != 0) {
 #pragma omp atomic update
             *(REF.p_TOT) += total_processed;
-            printf("Increased the TOT from global pool\n");
+            PRINTF_DBG("Increased the TOT from global pool\n");
             std::cout << std::flush;
         }
 //        std::cout << "j" << std::endl;
@@ -389,15 +400,15 @@ void perform_requests(int NNodes,
     total_processed = 0;
     waiting = (QPend.size()>0);
     while (waiting) {
-        printf("We are waiting before exiting, i.e. CLEANING! :-(\n");
+        PRINTF_DBG("We are waiting before exiting, i.e. CLEANING! :-(\n");
         std::cout << std::flush;
-        mssleep(100);
+        //mssleep(100);
         auto i = QPend.begin();
         while (i != QPend.end()) {
             MPI_Request_get_status(requests_send[*i], &sstatus, MPI_STATUS_IGNORE);
             MPI_Request_get_status(requests_recv[*i], &rstatus, MPI_STATUS_IGNORE);
             if ((sstatus==1) && (rstatus==1)) {
-                printf("Recieved a response to our request: val %f\n", vval[*i]);
+                PRINTF_DBG("Recieved a response to our request: val %f\n", vval[*i]);
                 std::cout << std::flush;
                 std::get<0>(results[*i]) = vval[*i];
                 special_index = ixlist[*i];
@@ -415,7 +426,7 @@ void perform_requests(int NNodes,
                     }
                 }
                 if (was_last_appearance) {
-                    printf("[LAST REMANENT] We have effectively recieved the answer to all the sent msgs\n");
+                    PRINTF_DBG("[LAST REMANENT] We have effectively recieved the answer to all the sent msgs\n");
                     std::cout << std::flush;
 #pragma critical
                     {

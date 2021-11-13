@@ -16,10 +16,10 @@ void irespond_value(ReferenceContainer &REF, double ix, int owner, MPI_Request &
             if (get(get(boost::vertex_index, *(REF.p_g)), *v) == ix){
                 //send_nonblocking(owner, R, REF.placeholder, (int) ix);
                 send_nonblocking(owner, R, (*REF.p_g)[*v].value, (int) ix);
-                printf("ANSWERED ONE MESSAGE!\n");
+                PRINTF_DBG("ANSWERED ONE MESSAGE!\n");
                 return;
         } else {
-            printf("I am not the owner!!\n");
+            PRINTF_DBG("I am not the owner!!\n");
             std::cout  << std::flush;
         }
         }
@@ -52,7 +52,7 @@ void send_nonblocking(int owner, MPI_Request &r, double &ix, int TAG){
 //                  owner, // destination
 //                  TAG, MPI_COMM_WORLD, &r);
 //    }
-    printf("sent ONE MESSAGE!\n");
+    PRINTF_DBG("sent ONE MESSAGE!\n");
 };
 
 
@@ -77,7 +77,7 @@ void recv_nonblocking(int owner, MPI_Request &r, double &result, int TAG){
 //                  owner, // destination
 //                  TAG, MPI_COMM_WORLD, &r);
 //    }
-    printf("recieved ONE MESSAGE!\n");
+    PRINTF_DBG("recieved ONE MESSAGE!\n");
 };
 
 
@@ -116,7 +116,7 @@ void ask_for_node(int owner, double &vvalue, CommunicationHelper &H, int ix, Gra
         for (int i=0; i<H.WORLD_SIZE[0]; i++) {
             if  ((i != H.WORLD_RANK[0]) && flag[i]){
                 double value;
-                printf("[HANG ALERT] About to use a blocking recieve in ask_for_node");
+                PRINTF_DBG("[HANG ALERT] About to use a blocking recieve in ask_for_node");
                 MPI_Recv(&value, 1, MPI_DOUBLE, i, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
                 //---
                 // respond accordingly!
@@ -176,7 +176,36 @@ int destroyRequestReturnInteger(MPI_Request &R){
 
 
 
+void sendReqForTest(int MYPROC){
+    // Send request for missing info
+    double vix = 0;
+    double vval;
+    MPI_Request sReq, rReq;
+    int owner, flagstatus;
+    if (MYPROC==0){
+        owner = 1;
+    } else {
+        owner = MYPROC -1;
+    }
 
+    // send a request
+    send_nonblocking(owner,
+                     sReq,
+                     vix, 1);
+
+    // recieve a request
+    recv_nonblocking(owner,
+                     rReq, // flag = (int) index :-)
+                     vval, (int) vix);
+
+    MPI_Request_get_status(sReq, &flagstatus, MPI_STATUS_IGNORE);
+    while (flagstatus!=1){
+        mssleep(50);
+        MPI_Request_get_status(sReq, &flagstatus, MPI_STATUS_IGNORE);
+    }
+    printf("\n\n\nWE WERE ANSWERED CORRECTLY ;-)\nval is : %f\nhehehe\n\n\n", vval);
+    std::cout << std::flush;
+}
 
 
 

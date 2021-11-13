@@ -45,7 +45,7 @@ int main(int argc, char** argv)
     // Testing Section ;-)
     const int NNodes = std::stoi(std::getenv("NNODES")); //12345;200;
     const int NRUNS = 500;
-    const int BATCH = 8;
+    const int BATCH = 2;
     const double ErdosRenyiProba = 0.5;
     const int TESTN = std::stoi(std::getenv("TEST"));
 

@@ -26,6 +26,8 @@ void contribute_to_integration(ReferenceContainer &REF);
 template<int DT, int TIMETOL, int BATCH>
 void answer_messages(ReferenceContainer &REF, int MYTHR);
 
+void sendReqForTest(int MYPROC);
+
 template <int DT, int TIMETOL, int BATCH>
 void perform_requests(int NNodes,
                       ReferenceContainer REF,
@@ -114,16 +116,19 @@ void single_evolution(Graph &g,
             bool atomic_bool;
 #pragma omp atomic read
             atomic_bool = keep_responding;
+            //for (int k=0; k<4; ++k) {
             while (atomic_bool) { // as long as we keep processing our own,
                 //                    we mantain at least one dispatcher alive :-)
                 answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
 #pragma omp atomic read
                 atomic_bool = keep_responding;
-                //printf("We are not over yet  :O\n");
             }
-            if (!atomic_bool) printf("OVER!  :O\n");
+            if (!atomic_bool) PRINTF_DBG("OVER!  :O\n");
             PRINTF_DBG(" I am thread %d (MESSAGE ANSWERER) and I have finished doing my job ;-)\n",omp_get_thread_num());
         } else {
+//            for (int i=0; i<5;++i) {
+//                sendReqForTest(REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n]);
+//            }
             perform_requests<DT, TIMETOL, BATCH>(NVtot, REF, N_total_nodes,OmpHelper);
             PRINTF_DBG(" I am thread %d (PERFORM REQUESTER) and I have finished doing my job ;-)\n",omp_get_thread_num());
         }
@@ -228,7 +233,7 @@ void single_evolution(Graph &g,
             }
         }
         PRINTF_DBG(" I am thread %d (FOR WORKER) and I have finished doing my job ;-)\n",omp_get_thread_num());
-        printf("This thread is a for worker that has ended :-)\n");
+        PRINTF_DBG("This thread is a for worker that has ended :-)\n");
     }
 
     //mssleep(15000); // keep guys waiting so we focus on MPI debugging ;_)
@@ -248,6 +253,7 @@ void single_evolution(Graph &g,
                 PRINTF_DBG("Claimed by thread %ld of processor %d\n", OmpHelper.MY_THREAD_n, ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n]);
             }
 }
+
     if (am_i_first) {
         // Prepare vars
         int atomical_int;
@@ -291,8 +297,6 @@ void single_evolution(Graph &g,
 
         CHECKVAL = 1;
         while ((!is_everyone_over) || (!is_everyone_over_doubleChecked)) {
-#pragma omp atomic write
-            keep_responding = true;
 
             if (counter >= MAX_COUNTER){
                 error_report("Max All2All instances exceeded");
@@ -362,13 +366,14 @@ void single_evolution(Graph &g,
 #pragma omp atomic read
             atomic_bool = keep_responding;
             while (atomic_bool){
+            //for (int k=0;k<50;++k){
                 //printf("A for worker that is finally responding messages says that we are not over with TOT\n");
                 // 1) Answer some messages
                 answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
                 // 2) Re-check if we are over
 #pragma omp atomic read
                 atomic_bool = keep_responding;
-                mssleep(50);
+                //mssleep(50);
 
             }
         }
