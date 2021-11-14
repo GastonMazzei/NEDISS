@@ -13,2900 +13,646 @@
 [warning] We currently rely heavily on the long -> int conversion which during compilation raises warnings of being implementation-defined. Two important lines are:    
 (1) 'rank = in_degree(*v, g) + out_degree(*v, g);' and
 (2) 'NLocals = neighbors.second - neighbors.first;'
-I am Proc N'1 and, according to 'boost::num_vertices', I report having 5 nodes! After iterating 'boost::vertices' I noted I own 5 nodes.
-I am Proc N'2 and, according to 'boost::num_vertices', I report having 5 nodes! After iterating 'boost::vertices' I noted I own 5 nodes.
-I am Proc N'0 and, according to 'boost::num_vertices', I report having 5 nodes! After iterating 'boost::vertices' I noted I own 5 nodes.
+[info][informal-test] about to run 'test_Ring_graph_singlestep_evolution'
+[info][informal-test] about to run 'preparing Ring graph for singlestep evolution'
+[info] Ring constructor informs: synchronization has been successful!
+[info][informal-test] (apparent) success 'preparing ring graph for singlestep evolution' informs: barrier has been successfully applied!
+[info][informal-test] about to run 'reportNodes' informs: barrier has been successfully applied!
+I am Proc N'0 and, according to 'boost::num_vertices', I report having 7 nodes! After iterating 'boost::vertices' I noted I own 7 nodes.
+[info][informal-test] (apparent) success 'reportNodes' informs: barrier has been successfully applied!
+[info][informal-test] about to run 'single_kuramoto_evolution' with euler (1 of 3)
+I am Proc N'1 and, according to 'boost::num_vertices', I report having 7 nodes! After iterating 'boost::vertices' I noted I own 7 nodes.
+I am Proc N'2 and, according to 'boost::num_vertices', I report having 6 nodes! After iterating 'boost::vertices' I noted I own 6 nodes.
+Obtained a new ix
+About to ask for the process of local elem ix: 3
+Sending and recieving (nonblocking): asking 1 for vertex w index: 4.000000 
+ I am thread 2 (FOR WORKER) and I have finished doing my job ;-)
+This thread is a for worker that has ended :-)
 about to enter 'omp critical unclaimed'
+About to perform MPI_Ssend w id 250589
+ I am thread 3 (FOR WORKER) and I have finished doing my job ;-)
+This thread is a for worker that has ended :-)
 about to enter 'omp critical unclaimed'
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
+Claimed by thread 3 of processor 1
+Already checking if we are over, proc 1
+Claimed by thread 2 of processor 2
+ I am thread 2 (FOR WORKER) and I have finished doing my job ;-)
+This thread is a for worker that has ended :-)
 about to enter 'omp critical unclaimed'
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|1 0 0|
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 2 with 2's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 2 with 2's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|1 0 0|
-|1 0 0|
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-Sent and recieved correctly ;-)  (i=0)
+Claimed by thread 2 of processor 0
+Already checking if we are over, proc 0
+Already checking if we are over, proc 2
+Obtained a new ix
+Obtained a new ix
+About to ask for the process of local elem ix: 0
+About to ask for the process of local elem ix: 0
+About to ask for the process of local elem ix: 0
+About to ask for the process of local elem ix: 0
+About to ask for the process of local elem ix: 0
+Obtained a new ix
+About to ask for the process of local elem ix: 1
+Sending and recieving (nonblocking): asking 2 for vertex w index: 2.000000 
+About to perform MPI_Ssend w id 250589
+About to ask for the process of local elem ix: 0
+Sending and recieving (nonblocking): asking 2 for vertex w index: 5.000000 
+About to perform MPI_Ssend w id 250589
+ I am thread 3 (FOR WORKER) and I have finished doing my job ;-)
+This thread is a for worker that has ended :-)
 about to enter 'omp critical unclaimed'
 about to enter 'second branch of the end'
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
+ I am thread 2 (FOR WORKER) and I have finished doing my job ;-)
+This thread is a for worker that has ended :-)
 about to enter 'omp critical unclaimed'
 about to enter 'second branch of the end'
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-|1 0 0|
-Just sent a message with status 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Answering 0 with 0's value
-|1 0 0|
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-|1 0 0|
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 0 with 0's value
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-|1 0 0|
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 0 with 0's value
-|1 0 0|
-|1 0 0|
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-|1 0 0|
-|1 0 0|
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 0 with 0's value
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 0 with 0's value
-|1 0 0|
-|1 0 0|
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-|1 0 0|
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 0 with 0's value
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-P2 says that everyone is over! flags list is 1 1 1
-P0 says that everyone is over! flags list is 1 1 1
-P1 says that everyone is over! flags list is 1 1 1
-P1 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-P2 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-About to synchronizeabout to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-P0 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-About to synchronizeabout to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-About to synchronizeDoneDoneDone
-
-
-\n
-
-
-
-
-
-
-
-\n
-
-
-
-
-
-
-
-\n
-
-
-
-
-about to enter 'omp critical unclaimed'
-about to enter 'omp critical unclaimed'
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|0 1 0|
-Just sent a message with status 0
-about to enter 'omp critical unclaimed'
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-|1 0 0|
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 1 with 1's value
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-|0 0 1|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 2 with 2's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Answering 0 with 0's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-|1 0 0|
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|0 1 0|
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 2
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 1
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 2
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 0 with 0's value
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Answering 0 with 0's value
-|1 0 0|
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-|1 0 0|
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 0 with 0's value
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Answering 0 with 0's value
-|1 0 0|
-|1 0 0|
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-P0 says that everyone is over! flags list is 1 1 1
-P1 says that everyone is over! flags list is 1 1 1
-P2 says that everyone is over! flags list is 1 1 1
-P2 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-P0 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-P1 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-About to synchronizeAbout to synchronizeabout to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-About to synchronizeDoneDoneDone
-
-
-\n
-
-
-
-
-
-
-
-\n
-
-
-
-
-
-
-
-\n
-
-
-
-
-about to enter 'omp critical unclaimed'
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-about to enter 'omp critical unclaimed'
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 1 with 1's value
-about to enter 'omp critical unclaimed'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 0 1|
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-|0 1 0|
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 2 with 2's value
-|0 0 1|
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 2
-RECURSIVE SOLUTION... the damned proc is 1
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-|0 0 1|
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 2 with 2's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-|0 0 1|
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 2 with 2's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-RECURSIVE SOLUTION... the damned proc is 1
-Stuck at some special state B;-/ recieving 0 and flag 0
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-|1 0 0|
-Just sent a message with status 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Answering 0 with 0's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 2
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Answering 0 with 0's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|1 0 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Stuck at some special state B;-/ recieving 0 and flag 0
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 2
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 2 with 2's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 0 with 0's value
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-P0 says that everyone is over! flags list is 1 1 1
-P2 says that everyone is over! flags list is 1 1 1
-P1 says that everyone is over! flags list is 1 1 1
-P1 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-P2 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-About to synchronizeP0 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-About to synchronizeAbout to synchronizeDoneDoneDone
-
-
-\n
-
-
-
-
-
-
-
-\n
-
-
-
-
-
-
-
-\n
-
-
-
-
-about to enter 'omp critical unclaimed'
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-about to enter 'omp critical unclaimed'
-Just sent a message with status 0
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Answering 2 with 2's value
-about to enter 'omp critical unclaimed'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-|0 1 0|
-|1 0 0|
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-|0 1 0|
-Answering 2 with 2's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Answering 2 with 2's value
-|0 0 1|
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-RECURSIVE SOLUTION... the damned proc is 1
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|1 0 0|
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 2
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-|0 0 1|
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 1
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-RECURSIVE SOLUTION... the damned proc is 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 2
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-|0 0 1|
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 1
-Stuck at some special state B;-/ recieving 0 and flag 0
-|0 1 0|
-Just sent a message with status 0
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Answering 0 with 0's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 2
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|1 0 0|
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 1
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-|0 1 0|
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 2
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-|0 0 1|
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 1
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 1 with 1's value
-|0 1 0|
-|0 1 0|
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-RECURSIVE SOLUTION... the damned proc is 2
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 1
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 1
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 1
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 1
-|0 1 0|
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 1 with 1's value
-|0 1 0|
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-P1 says that everyone is over! flags list is 1 1 1
-P2 says that everyone is over! flags list is 1 1 1
-P0 says that everyone is over! flags list is 1 1 1
-P0 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-P1 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-P2 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-About to synchronizeabout to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-About to synchronizeDoneabout to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-About to synchronizeDoneDone
-
-
-\n
-
-
-
-
-
-
-
-\n
-
-
-
-
-
-
-
-\n
-
-
-
-
-about to enter 'omp critical unclaimed'
-about to enter 'omp critical unclaimed'
-about to enter 'omp critical unclaimed'
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|1 0 0|
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 1
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 2
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-|0 0 1|
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 1
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 2
-|0 0 1|
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 2 with 2's value
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Answering 0 with 0's value
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 0 with 0's value
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 1 with 1's value
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 1 with 1's value
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-P1 says that everyone is over! flags list is 1 1 1
-P2 says that everyone is over! flags list is 1 1 1
-P0 says that everyone is over! flags list is 1 1 1
-P0 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-P1 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-P2 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-About to synchronizeabout to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-About to synchronizeAbout to synchronizeDoneDoneDone
-
-
-\n
-
-
-
-
-
-
-
-\n
-
-
-
-
-
-
-
-\n
-
-
-
-
-about to enter 'omp critical unclaimed'
-about to enter 'omp critical unclaimed'
-about to enter 'omp critical unclaimed'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
+ I am thread 3 (FOR WORKER) and I have finished doing my job ;-)
+This thread is a for worker that has ended :-)
 about to enter 'omp critical unclaimed'
 about to enter 'second branch of the end'
 |1 0 0|
+We effectively captured a vertex info request :-)
+Correctly performed MPI_Ssend w id 250589
+I am not the owner!!
+I am not the owner!!
+About to ask for the process of local elem ix: 0
+About to ask for the process of local elem ix: 0
+About to ask for the process of local elem ix: 0
+About to ask for the process of local elem ix: 0
+Obtained a new ix
+About to ask for the process of local elem ix: 1
+Sending and recieving (nonblocking): asking 0 for vertex w index: 2.000000 
+About to perform MPI_Ssend w id 620569
+I am not the owner!!
+I am not the owner!!
+I am not the owner!!
 Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-|0 0 1|
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 2 with 2's value
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|0 0 1|
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 2 with 2's value
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Just sent a message with status 0
-Answering 0 with 0's value
-|1 0 0|
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Sent and recieved correctly ;-)  (i=0)
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-Stuck at some special state B;-/ recieving 0 and flag 0
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 0 1|
-Just sent a message with status 0
-Answering 2 with 2's value
-I have supposedly sent this message to 1 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-|0 1 0|
-Just sent a message with status 0
-Answering 1 with 1's value
-I have supposedly sent this message to 0 with no status_flagstatus nor flagstatus 
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-Stuck at some special state B;-/ recieving 0 and flag 0
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-Stuck at some special state B;-/ recieving 0 and flag 0
-RECURSIVE SOLUTION... the damned proc is 0
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-|1 0 0|
-Just sent a message with status 0
-Answering 0 with 0's value
-I have supposedly sent this message to 2 with no status_flagstatus nor flagstatus 
-Sent and recieved correctly ;-)  (i=0)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-P0 says that everyone is over! flags list is 1 1 1
-P2 says that everyone is over! flags list is 1 1 1
-P1 says that everyone is over! flags list is 1 1 1
-P1 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-P0 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-P2 recieved consensus from all regarding that they are all over. Flags list is 4 4 4
-The cherry of the cake ;-)
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-about to enter 'omp critical unclaimed'
-about to enter 'second branch of the end'
-About to synchronizeAbout to synchronizeAbout to synchronizeDoneDoneDone
-
-
-\n
-
-
-
-
-
-
-
-\n
-
-
-
-
-
-
-
-\n
-
-
-
-
-End of script has been reached
+ANSWERED ONE MESSAGE!
+Answering 0 with 5's value
+We effectively answered asynchronously a vertex info request :-)
+ENDing answer_messages. Caught (R_tot)=1 requests, Answered (R_send)=1.
+ENDing answer_messages. Caught (R_tot)=1 requests, Answered (R_send)=1.
+ENDing answer_messages. Caught (R_tot)=1 requests, Answered (R_send)=1.
+ENDing answer_messages. Caught (R_tot)=1 requests, Answered (R_send)=1.
+ENDing answer_messages. Caught (R_tot)=1 requests, Answered (R_send)=1.
+ENDing answer_messages. Caught (R_tot)=1 requests, Answered (R_send)=1.
+ENDing answer_messages. Caught (R_tot)=1 requests, Answered (R_send)=1.
+ENDing answer_messages. Caught (R_tot)=1 requests, Answered (R_send)=1.
+ENDing answer_messages. Caught (R_tot)=1 requests, Answered (R_send)=1.
+ENDing answer_messages. Caught (R_tot)=1 requests, Answered (R_send)=1.
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---
+---answer_request heartbeat---

@@ -107,6 +107,12 @@ void answer_messages(ReferenceContainer &REF,int MYTHR) {
                 flagprobes[i] = 0;
             }
 
+            // Re-probe it :-)
+            probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
+            while (probe_status!=0){
+                probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
+            }
+
             // For next iteration
             ++i;
             if (i == MYPROC) ++i;
@@ -145,8 +151,8 @@ void answer_messages(ReferenceContainer &REF,int MYTHR) {
         mssleep(DT);
         ++ticks;
     }
+    printf("---answer_request heartbeat---\n");std::cout<<std::flush;
 };
-
 
 
 
@@ -156,6 +162,13 @@ void perform_requests(int NNodes,
                       ReferenceContainer REF,
                       unsigned long N,
                       OpenMPHelper &O) {
+
+    std::uniform_int_distribution<int> gen(92412,732532);
+    unsigned int SEED = std::stoi(std::getenv("SEED"));
+    std::mt19937 rng(SEED);
+    int randi = gen(rng);
+
+
     long ix;
     int total_processed=0;
     int atomic_helper;
@@ -168,14 +181,16 @@ void perform_requests(int NNodes,
     int tot_locals = 0;
     int sent_locally = 0;
 
-    // insert here required initialization
+    // Insert here required initialization
     std::list<long> all_indexes_seen;
-    if (BATCH<=0)error_report(min_batch_msg); // guard: we need a batch size of at least 1 :-)
+    if (BATCH<=0)error_report(min_batch_msg);
     bool waiting = false;
+    bool bypass = false;
     bool was_last_appearance = false;
     int special_index = -1;
     int rstatus = 0, sstatus = 0;
-    MPI_Request requests_send[BATCH], requests_recv[BATCH];
+    //MPI_Request requests_send[BATCH]; THIS HAS BEEN DISABLED AFTER THE LAST MIGRATION
+    MPI_Request requests_recv[BATCH];
     InfoVecElem results[BATCH];
     std::queue<int> QAvailable;
     std::list<int> QPend;
@@ -185,6 +200,9 @@ void perform_requests(int NNodes,
     double vval[BATCH], their_vix[BATCH];
     int ixlist[BATCH]; // this is our new helper in order to process various indexes asynchronously (=^-|)-|-/
     int owner[BATCH];
+    int retStatus=1;
+    int status_rstatus=1;
+    int counter=0,MAX_TRIES=20; // #HYPERPARAMS #HYPERPARAMETERS
 
 
 #pragma omp atomic read
@@ -194,38 +212,53 @@ void perform_requests(int NNodes,
     while (globalstatus) {
         // Perform the main task: ask for the required information!
         if (ix_update) {
-//            printf("About to ask for the process of local elem ix: %d\n",ix);
             auto itBeg = REF.p_ParHelper->data[ix].MissingA.begin();
             auto itEnd = REF.p_ParHelper->data[ix].MissingA.end();
             tot_locals  = 0;
             sent_locally = 0;
             total_processed = 0;
 
-            // race-condition unfriendly?
+            // race-condition unfriendly? Only extensive testing will help us decide :^|
             for (auto _it= itBeg; _it != itEnd; ++_it) {
+
+                PRINTF_DBG("About to ask for the process of local elem ix: %d\n",ix);
+
                 auto &thread = *_it;
                 tot_locals += itEnd - itBeg;
 
-//                std::cout << "A" << std::endl;
-//                std::cout << std::flush; // DEBUGGING
-                // DEBUG SECTION
+
                 for (auto it =  thread.begin();it != thread.end(); it++){
 
                     // retrieve data
                     owner[QAvailable.front()] = std::get<1>(*it);
                     their_vix[QAvailable.front()] = std::get<2>(*it);
 
-//                    std::cout << "B" << std::endl;
-//                    std::cout << std::flush; // DEBUGGING
-                    // Debug! :-)
-                    printf("Sending and recieving (nonblocking): asking %d for vertex w index: %f \n",
+                    // Debug Station
+                    PRINTF_DBG("Sending and recieving (nonblocking): asking %d for vertex w index: %f \n",
                            owner[QAvailable.front()], their_vix[QAvailable.front()]);
-                    std::cout  << std::flush; // DEBUGGING
+                    std::cout  << std::flush;
 
-                    // Send request for missing info
-                    send_nonblocking(owner[QAvailable.front()], // send a request (tag=-1) for some ix's vertex value
-                                     requests_send[QAvailable.front()],
-                                     their_vix[QAvailable.front()], VERTEXVAL_REQUEST_FLAG);
+
+
+                    // ***NEW WAY*** A
+                    // Send in a way that guarantees us that the message has been sent :-)
+                    // This should slow the script down but will 'increase' the guarantees of messages arriving
+                    while (retStatus != 0){
+                        randi = gen(rng);
+                        printf("About to perform MPI_Ssend w id %d\n", randi);
+                        retStatus = MPI_Ssend(&their_vix[QAvailable.front()], 1, MPI_DOUBLE, owner[QAvailable.front()], VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD);
+                        printf("Correctly performed MPI_Ssend w id %d\n", randi);
+                        std::cout << std::flush;
+                    }
+                    retStatus = 1;
+                    // ***OLD WAY*** A
+//                    send_nonblocking(owner[QAvailable.front()],
+//                                     requests_send[QAvailable.front()],
+//                                     their_vix[QAvailable.front()], VERTEXVAL_REQUEST_FLAG);
+
+
+
+                    // THIS IS CORRECT:
 
                     // Recieve the answer for the requested info, using tag = index
                     recv_nonblocking(owner[QAvailable.front()], // recieve the respone (tag=ix) for that  ix
@@ -235,59 +268,59 @@ void perform_requests(int NNodes,
                     // Store the result in our BATCH-sized temporal container:
                     // we are only lacking the exact vertex value which should be returned from the owner
                     results[QAvailable.front()] = std::make_tuple(0, // placeholder until we get the correct val
-                                                                  std::get<0>(*it),
+                                                                  std::get<0>(*it), // we are inaugurating this indexing model [:<)
                                                                   owner[QAvailable.front()] * N + their_vix[QAvailable.front()]);
 
-                    PRINTF_DBG("A\n");
-                    std::cout << std::flush;
-                    // Store the temporal results index that is requiring an answer
                     QPend.push_back(QAvailable.front());
-                    PRINTF_DBG("B\n");
                     std::cout << std::flush;
-                    // add to ixlist[QAvailable.front()] the ix
-                    // so that if we dont get the answer in this ix then we can do it in the future
                     ixlist[QAvailable.front()] = ix;
-                    PRINTF_DBG("C\n");
                     std::cout << std::flush;
-                    // Remove that last used element from QAvailable ;-)
                     QAvailable.pop();
-                    PRINTF_DBG("queue size is %d\n", QAvailable.size());
-                    std::cout << std::flush;
+
+
                     // If QAvailable is empty, devote ourselves to asynchronously waiting for
                     // answers to arrive. This indirectly means that our QPend has reached length BATCH.
                     if (QAvailable.empty()) {
                         waiting = true;
+
+                        // Debug Station
                         PRINTF_DBG("it IS FINALLY EMPTY\n");
                         std::cout << std::flush;
 
+
                         while (waiting) {
-                            sstatus = 0;
-                            rstatus = 0;
-                            printf("We are waiting to be responded :-( Qpends size is %d\n", QPend.size());
+
+                            PRINTF_DBG("We are waiting to be responded :-( Qpends size is %d\n", QPend.size());
                             std::cout << std::flush;
-                            //mssleep(150);
+
                             // Iterate through the pending indexes to see if one has been answered
                             auto i = QPend.begin();
-                            auto status_sstatus=1, status_rstatus=1;
                             while (i != QPend.end()) {
-                                // Check if the request of index *i has been recieved and if the answer
-                                // has or not already arrived.
-                                status_sstatus = MPI_Request_get_status(requests_send[*i], &sstatus, MPI_STATUS_IGNORE);
-                                while (status_sstatus!=0){
-                                    printf("fetching the status_sstatus failed :0 it yielded %d\n", status_sstatus);std::cout<<std::flush;
-                                    status_sstatus = MPI_Request_get_status(requests_send[*i], &sstatus, MPI_STATUS_IGNORE);
-                                }
-                                status_rstatus = MPI_Request_get_status(requests_recv[*i], &rstatus, MPI_STATUS_IGNORE);
-                                while (status_rstatus!=0){
-                                    printf("fetching the status_rstatus failed it yielded %d:0\n", status_rstatus);std::cout<<std::flush;
+
+                                rstatus = 0;
+                                status_rstatus = 1;
+                                counter=0;
+                                bypass = false;
+                                retStatus = 1;
+
+                                // Waiting for the answer to arrive with a timeout.
+                                while ((rstatus != 1) && (!bypass)){
                                     status_rstatus = MPI_Request_get_status(requests_recv[*i], &rstatus, MPI_STATUS_IGNORE);
+                                    while (status_rstatus!=0){
+                                        PRINTF_DBG("fetching the status_rstatus failed as it yielded %d:0\n", status_rstatus);std::cout<<std::flush;
+                                        status_rstatus = MPI_Request_get_status(requests_recv[*i], &rstatus, MPI_STATUS_IGNORE);
+                                    }
+                                    ++counter;
+                                    if ((counter>=MAX_TRIES) && (rstatus!=1)){ // we give one last chance to rstatus ;-D
+                                        // the message probably didnt arrive, so we will resend it :-)
+                                        bypass = true;
+                                        while (retStatus != 0){
+                                            retStatus = MPI_Ssend(&their_vix[*i], 1, MPI_DOUBLE, owner[*i], VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD);
+                                        }
+                                    }
                                 }
-                                // If it both arrived to them and was answered and came back, then
-                                // store that value and free one space in QPend while inserting the
-                                // new freed index into QAvailable.
-                                printf("sstatus = %d, rstatus = %d, status_sstatus =%d, status_rstatus=%d\n", sstatus, rstatus,status_sstatus,status_rstatus);
-                                std::cout << std::flush;
-                                if ((sstatus==1) && (rstatus==1)) {
+
+                                if (rstatus == 1) {
                                     // We keep track of the locally successfully sent and recieved
                                     // requests as to at last check if, for this index, we were able
                                     // to settle the issue and its ready for integration or not :-)
@@ -301,9 +334,9 @@ void perform_requests(int NNodes,
                                     // erase the waiting clause
                                     waiting = false;
                                     // Regresh the MPI Request objects ;-)
-                                    MPI_Request_free(&requests_send[*i]);
+                                    //MPI_Request_free(&requests_send[*i]);
                                     MPI_Request_free(&requests_recv[*i]);
-                                    requests_send[*i] = MPI_Request();
+                                    //requests_send[*i] = MPI_Request();
                                     requests_recv[*i] = MPI_Request();
                                     // QPend is a list so we need to remove this element as for it to not appear pending
                                     QPend.erase(i++);
@@ -333,8 +366,9 @@ void perform_requests(int NNodes,
                                     ++i;
                                 }
                             }
+
                             if (waiting){
-                                answer_messages<0, 1, BATCH>(REF, O.MY_THREAD_n); // only one lap and no delay, i.e. TIMETOL = 1, DT = 0
+                                //answer_messages<0, 1, BATCH>(REF, O.MY_THREAD_n); // #HYPERPARAMS #HYPERPARAMETERS
                             }
                         }
                         PRINTF_DBG("DISPATCHED CORRECTLY\n");
@@ -342,9 +376,7 @@ void perform_requests(int NNodes,
                     }
                 }
             }
-//            std::cout << "e" << std::endl;
-//            std::cout << std::flush; // DEBUGGING
-            // If we got answers to all sent messages then flag it globally as available for integration
+
             if (sent_locally == tot_locals){
                 PRINTF_DBG("We have effectively recieved the answer to all the sent msgs\n");
                 std::cout << std::flush;
@@ -355,7 +387,7 @@ void perform_requests(int NNodes,
                 ++total_processed;
             }
 
-
+//          *******************THE SAME SHOULD BE DONE FOR EDGES PLEASE********************
             // TIME FOR EDGES NOW...
             // Collect missing nodes+edges
             //****************************
@@ -379,30 +411,34 @@ void perform_requests(int NNodes,
 //            printf("Reporting so far having requested %d nodes... there are in total %d nodes\n",
 //                   total_processed, atomic_helper);
 //            std::cout << std::flush;
+//          *******************THE SAME SHOULD BE DONE FOR EDGES PLEASE********************
 
-            ix_update = false;
+
+
         } else {
+            // *************THIS IS WHAT HAPPENS IF THERE WAS NO INDEX UPDATE****************
             tot_locals  = 0;
             sent_locally = 0;
             total_processed = 0;
             // this is what happens if there was no index update haha ;-)
-            answer_messages<DT, TIMETOL, BATCH>(REF, O.MY_THREAD_n);
+            //answer_messages<DT, TIMETOL, BATCH>(REF, O.MY_THREAD_n); // #HYPERPARAMS #HYPERPARAMETERS
         }
-//        std::cout << "g" << std::endl;
-//        std::cout << std::flush; // DEBUGGING
-        // (Re-)Attempt to grab a new index :K
+
+
+//        ***SECOND SECTION: GRABBING NEW INDEXES AND CHECKING IF LOOPING STILL MAKES SENSE*******
+        ix_update = false;
 #pragma omp critical
 {
-            if (!REF.p_CHECKED->empty()) {
-                ix = REF.p_CHECKED->front();
-                REF.p_CHECKED->pop();
-                ix_update = true;
-                PRINTF_DBG("Obtained a new ix\n");
-                std::cout << std::flush;
-            }
+        if (!REF.p_CHECKED->empty()) {
+            ix = REF.p_CHECKED->front();
+            REF.p_CHECKED->pop();
+            ix_update = true;
+            PRINTF_DBG("Obtained a new ix\n");
+            std::cout << std::flush;
+        }
 }
-//        std::cout << "h" << std::endl;
-//        std::cout << std::flush; // DEBUGGING
+
+
         // Add to the number of totals processed the ones from previous lap :-)
         if (total_processed != 0) {
 #pragma omp atomic update
@@ -410,8 +446,7 @@ void perform_requests(int NNodes,
             PRINTF_DBG("Increased the TOT from global pool\n");
             std::cout << std::flush;
         }
-//        std::cout << "j" << std::endl;
-//        std::cout << std::flush; // DEBUGGING
+
 
         // if there was no available index, check if it is still worth looping.
         if (!ix_update) {
@@ -419,58 +454,107 @@ void perform_requests(int NNodes,
             atomic_helper = *(REF.p_TOT);
             globalstatus = (atomic_helper < NNodes);
         }
+
+    }
+
+    // ***************THIRD SECTION: END OF GLOBALSTATUS TRUE*****************************
+
+    // Untidy Debug Station
 //        std::cout << "k" << std::endl;
 //        std::cout << std::flush; // DEBUGGING
-    }
-    std::cout << "l" << std::endl;
+    std::cout << "-3rd section.-\n" << std::endl;
     std::cout << std::flush; // DEBUGGING
+
+
+
+
+    //          ********PROCESS REMAINING OPEN REQUESTS***************
     // One way or another being here means being done with the previous section :-)
     // If there are still pending messages then we should wait for them :-)
-    total_processed = 0;
+    //
     waiting = (QPend.size()>0);
     while (waiting) {
-        PRINTF_DBG("We are waiting before exiting, i.e. CLEANING! :-(\n");
-        std::cout << std::flush;
-        //mssleep(100);
+
+        // Iterate through the pending indexes to see if one has been answered
         auto i = QPend.begin();
         while (i != QPend.end()) {
-            MPI_Request_get_status(requests_send[*i], &sstatus, MPI_STATUS_IGNORE);
-            MPI_Request_get_status(requests_recv[*i], &rstatus, MPI_STATUS_IGNORE);
-            if ((sstatus==1) && (rstatus==1)) {
-                PRINTF_DBG("Recieved a response to our request: val %f\n", vval[*i]);
-                std::cout << std::flush;
+
+            // Initialize vars :-)
+            rstatus = 0;
+            status_rstatus = 1;
+            counter=0;
+            bypass = false;
+            retStatus = 1;
+
+            // Waiting for the answer to arrive with a timeout.
+            while ((rstatus != 1) && (!bypass)){
+                status_rstatus = MPI_Request_get_status(requests_recv[*i], &rstatus, MPI_STATUS_IGNORE);
+                while (status_rstatus!=0){
+                    PRINTF_DBG("fetching the status_rstatus failed as it yielded %d:0\n", status_rstatus);std::cout<<std::flush;
+                    status_rstatus = MPI_Request_get_status(requests_recv[*i], &rstatus, MPI_STATUS_IGNORE);
+                }
+                ++counter;
+                if ((counter>=MAX_TRIES) && (rstatus!=1)){ // we give one last chance to rstatus ;-D
+                    // the message probably didnt arrive, so we will resend it :-)
+                    bypass = true;
+                    while (retStatus != 0){
+                        retStatus = MPI_Ssend(&their_vix[*i], 1, MPI_DOUBLE, owner[*i], VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD);
+                    }
+                }
+            }
+
+            if (rstatus == 1) {
+                // We keep track of the locally successfully sent and recieved
+                // requests as to at last check if, for this index, we were able
+                // to settle the issue and its ready for integration or not :-)
                 std::get<0>(results[*i]) = vval[*i];
                 special_index = ixlist[*i];
                 (*REF.p_IntHelper)[special_index].ResultsPendProcess.push_back(results[*i]);
-                QAvailable.push(*i);
+
+                // Mini debug station
+                PRINTF_DBG("Recieved a response to our request: val %f for ix: %d\n", vval[*i], special_index);
+                std::cout << std::flush;
+
+                // Kill forever the MPI Request objects ;-)
+                MPI_Request_free(&requests_recv[*i]);
+
+                // QPend is a list so we need to remove this element as for it to not appear pending
                 QPend.erase(i++);
-                waiting = false;
-                // Now reinitializing the requests won't be necessary :-)
-//                requests_send[*i] = MPI_Request();
-//                requests_recv[*i] = MPI_Request();
-                was_last_appearance = true;
-                for (auto j = QPend.begin(); j != QPend.end(); ++j) {
-                    if (*j == special_index) {
-                        was_last_appearance = false;
+
+                // If this was 'special_index's last appearance, mark it available for integration :-)
+                // this is only valid if this so-called 'special_index' is different from the current one
+                if (special_index != ix) {
+                    was_last_appearance = true;
+                    for (auto j = QPend.begin(); j != QPend.end(); ++j) {
+                        if (*j == special_index) {
+                            was_last_appearance = false;
+                        }
                     }
-                }
-                if (was_last_appearance) {
-                    PRINTF_DBG("[LAST REMANENT] We have effectively recieved the answer to all the sent msgs\n");
-                    std::cout << std::flush;
+                    if (was_last_appearance) {
+                        PRINTF_DBG("We have effectively recieved the answer to all the sent msgs\n");
+                        std::cout << std::flush;
 #pragma critical
-                    {
-                        REF.p_READY_FOR_INTEGRATION->push(ix);
+                        {
+                            REF.p_READY_FOR_INTEGRATION->push(ix);
+                        }
+                        ++total_processed;
                     }
-                    ++total_processed;
                 }
             } else {
                 ++i;
             }
         }
+
+        waiting = (QPend.size()>0);
     }
-    // Update all the totals with the newfound information
+    PRINTF_DBG("DISPATCHED CORRECTLY THE REMAINING UNANSWERED REQUESTS :-)\n");
+    std::cout << std::flush;
+
+    // SUM TO THE GLOBAL TOTAL-OF-PROCESSED (i.e. "TOT")
 #pragma omp atomic update
     *(REF.p_TOT) += total_processed;
+
+    printf("Final termination of perform_requests :-)\n");std::cout<<std::flush;
 } // end of function
 
 

@@ -132,7 +132,6 @@ void single_evolution(Graph &g,
             // DEBUG. change for just 'else' !!!
             perform_requests<DT, TIMETOL, BATCH>(NVtot, REF, N_total_nodes,OmpHelper);
 
-
 //            //-----------------------BEGGINING----OF----DEBUGGING-----SECTION------------------------
 //            else
 //#pragma omp critical

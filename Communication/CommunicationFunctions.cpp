@@ -25,6 +25,8 @@ void irespond_value(ReferenceContainer &REF, double ix, int owner, MPI_Request &
         }
         }
     }
+    printf("[CRITICAL] THE NODE WAS NOT FOUND\n");std::cout<<std::flush;
+    exit(1);
 };
 
 
@@ -237,30 +239,15 @@ void sendReqForTest(int MYPROC, int i){
         owner = MYPROC -1;
     }
 
-    if (true){
-        MPI_Ssend(&vix, 1, MPI_DOUBLE, owner, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD);
+
+    MPI_Ssend(&vix, 1, MPI_DOUBLE, owner, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD);
 
 //        send_blocking(owner,
 //                         sReq,
 //                         vix, VERTEXVAL_REQUEST_FLAG);
-        printf("I have supposedly sent this message to %d with no status_flagstatus nor flagstatus \n",
+    printf("I have supposedly sent this message to %d with no status_flagstatus nor flagstatus \n",
                owner);
-    }
-    else {
-        send_nonblocking(owner,
-                         sReq,
-                         vix, VERTEXVAL_REQUEST_FLAG);
-        status_flagstatus = MPI_Request_get_status(sReq, &flagstatus, MPI_STATUS_IGNORE);
-        printf("I have supposedly sent this message to %d with status_flagstatus %d and flagstatus %d\n",
-               owner, status_flagstatus, flagstatus);
-        std::cout << std::flush;
-        while ((!(status_flagstatus == 0)) || (!(flagstatus == 1))) {
-            printf("Stuck at some special state A;-/\n");
-            status_flagstatus = MPI_Request_get_status(sReq, &flagstatus, MPI_STATUS_IGNORE);
-        }
-        //int statusFree = MPI_Request_free(&sReq);
-        //if (statusFree != 0)  printf("answer_messages failed to free one req :O it was%d\n", statusFree);
-    }
+
     recv_nonblocking(owner,
                      rReq, // flag = (int) index :-)
                      vval, (int) vix);
