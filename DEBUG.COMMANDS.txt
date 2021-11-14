@@ -1,0 +1,20 @@
+1) Launch three xterms to watch different processes:
+
+mpirun -x NNODES=30 -x TEST=1 -x SEED=21234 -x OMP_THREAD_LIMIT=5  -x  OMP_NESTED=true -n 3 xterm -e  gdb cmake-build-debug/cppprojct
+
+
+2) Launch three xterms and run in all
+
+mpirun -x NNODES=20 -x TEST=1 -x SEED=21234 -x OMP_THREAD_LIMIT=5  -x  OMP_NESTED=true -n 3 xterm -e  gdb  -ex run  cmake-build-debug/cppprojct
+
+3) Check what is the frequency of some error:
+
+python3 multiple_runs.py "mpirun -x NNODES=20 -x TEST=1 -x SEED=21234 -x OMP_THREAD_LIMIT=5  -x  OMP_NESTED=true -n 5  cmake-build-debug/cppprojct"
+
+4) Explore errors
+
+runs (3) for different configurations and stops when it finds an error
+
+5) A quick one-liner to check if it hangs after e.g. 20 repetitions...
+
+for run in {1..20} ; do mpirun -x NNODES=150 -x TEST=1 -x SEED=21234 -x OMP_THREAD_LIMIT=8  -x  OMP_NESTED=true -n 8   cmake-build-debug/cppprojct; done

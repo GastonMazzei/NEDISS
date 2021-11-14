@@ -4,6 +4,7 @@
 
 #ifndef GLOBAL_STANDARIZED_MESSAGES
 #define GLOBAL_STANDARIZED_MESSAGES
+#include <string>
 
 const std::string separator = "-------------------------------------";
 const std::string msg_prev = "[info][informal-test] about to run ";
@@ -22,5 +23,6 @@ const std::string LOGO = "************************************************\n"
 const std::string init_msg = "\n\n"+LOGO+"\n\n\n";
 const std::string min_subthread_msg = "[error] Minimum Required Subthreads are at least 1.";
 const std::string min_batch_msg = "[error] a batch size of at least 1 is required in the message handling interface.";
+const std::string architecture_and_maxtag = "[error] ";
 
 #endif

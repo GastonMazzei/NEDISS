@@ -17,6 +17,7 @@ void irespond_value(ReferenceContainer &REF, double ix, int owner, MPI_Request &
                 //send_nonblocking(owner, R, REF.placeholder, (int) ix);
                 send_nonblocking(owner, R, (*REF.p_g)[*v].value, (int) ix);
                 PRINTF_DBG("ANSWERED ONE MESSAGE!\n");
+                printf("Answering %d with %d's value\n",owner, (int) ix);
                 return;
         } else {
             PRINTF_DBG("I am not the owner!!\n");
@@ -34,11 +35,21 @@ void send_nonblocking(int owner, MPI_Request &r, double &ix, int TAG){
     // (C) TAG = 3 means sending in return a node's value
     // (D) TAG = 4 means sending in return both an edge and node's value
     //----------
-     MPI_Isend(&ix,
+    int answer;
+    answer = MPI_Isend(&ix,
               1,//count
               MPI_DOUBLE, // type
               owner, // destination
               TAG, MPI_COMM_WORLD, &r);
+    printf("Just sent a message with status %d\n", answer);
+    std::cout << std::flush;
+    if (answer!=0){
+        printf("Answer was a bad status, recursive reset\n");
+        printf("bypassed into direct exit: error code was %d\n",answer);
+        std::cout << std::flush;
+        exit(answer);
+        send_nonblocking(owner, r, ix, TAG);
+    }
 //    } else if ((TAG == 2) || (TAG == 4)) {
 //        MPI_Isend(&ix,
 //                  2,//count
@@ -52,32 +63,57 @@ void send_nonblocking(int owner, MPI_Request &r, double &ix, int TAG){
 //                  owner, // destination
 //                  TAG, MPI_COMM_WORLD, &r);
 //    }
-    PRINTF_DBG("sent ONE MESSAGE!\n");
+//    int flagstatus=0;
+//    MPI_Request_get_status(r, &flagstatus, MPI_STATUS_IGNORE);
+//    PRINTF_DBG("sent ONE MESSAGE! status of the request is: %d\n", flagstatus);
 };
 
 
 
+void recv_blocking(int owner, MPI_Request &r, double &result, int TAG){
+    int answer;
+    answer = MPI_Recv(&result,
+                       1,//count
+                       MPI_DOUBLE, // type
+                       owner, // destination
+                       TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
+    if (answer!=0) {
+        printf("Recieve was a bad status, recursive reset\n");
+        recv_blocking(owner, r, result, TAG);
+    }
+}
+
+void send_blocking(int owner, MPI_Request &r, double &ix, int TAG) {
+    int answer;
+    answer = MPI_Send(&ix,
+                       1,//count
+                       MPI_DOUBLE, // type
+                       owner, // destination
+                       TAG, MPI_COMM_WORLD);
+    printf("Just sent a (blocking) message with status %d\n", answer);
+    std::cout << std::flush;
+    if (answer != 0) {
+        printf("Answer was a bad status, recursive reset\n");
+        printf("bypassed into direct exit: error code was %d\n", answer);
+        std::cout << std::flush;
+        exit(answer);
+        send_nonblocking(owner, r, ix, TAG);
+    }
+}
+
 void recv_nonblocking(int owner, MPI_Request &r, double &result, int TAG){
-    MPI_Irecv(&result,
+    int answer;
+    answer = MPI_Irecv(&result,
                   1,//count
                   MPI_DOUBLE, // type
                   owner, // destination
                   TAG, MPI_COMM_WORLD, &r);
-    // HERE GOES SOME EDGE RECIEVING STRATEGY
-//    if ((TAG == 4) || (TAG == 2)) {
-//        MPI_Irecv(&result,
-//                  2,//count
-//                  MPI_DOUBLE, // type
-//                  owner, // destination
-//                  TAG, MPI_COMM_WORLD, &r);
-//        ++result;
-//        MPI_Irecv(&result,
-//                  2,//count
-//                  MPI_DOUBLE, // type
-//                  owner, // destination
-//                  TAG, MPI_COMM_WORLD, &r);
-//    }
-    PRINTF_DBG("recieved ONE MESSAGE!\n");
+
+    if (answer!=0){
+        printf("Recieve was a bad status, recursive reset\n");
+        recv_nonblocking(owner, r, result, TAG);
+    }
 };
 
 
@@ -96,8 +132,8 @@ void ask_for_node(int owner, double &vvalue, CommunicationHelper &H, int ix, Gra
     int unread = H.WORLD_SIZE[0]-1;
     std::vector<int> flag(H.WORLD_SIZE[0],0);
     for (int i=0; i<H.WORLD_SIZE[0]; i++) {
-        if  (i != H.WORLD_RANK[0]) {
-            MPI_Iprobe(i, 1, MPI_COMM_WORLD, &flag[i], MPI_STATUS_IGNORE);
+        if  (i != H.WORLD_RANK[0]) { // // TAAAAG IS INCORRECT TAG IS INCORRECT !!! WARNING
+            MPI_Iprobe(i, 1, MPI_COMM_WORLD, &flag[i], MPI_STATUS_IGNORE);// TAG 1 IS INCORRECT
         }
     }
 
@@ -153,6 +189,7 @@ void destroyRequest(MPI_Request &R, int &NERR){
     }
 }
 
+
 void destroyRequestWithoutCounter(MPI_Request &R){
     MPI_Status S;
     int flag=0;
@@ -161,6 +198,14 @@ void destroyRequestWithoutCounter(MPI_Request &R){
     MPI_Test_cancelled(&S, &flag);
     if (!flag){
         PRINTF_DBG("\n\n\n\nfailed to cancel a request! flag was %d :-(\n\n\n\n",flag);
+    }
+}
+
+void freeRequestWithoutCounter(MPI_Request &R){
+    int statusFree;
+    statusFree = MPI_Request_free(&R);
+    if (statusFree != 0){
+        PRINTF_DBG("\n\n\n\nfailed to FREE a request! status was %d :-(\n\n\n\n",statusFree);
     }
 }
 
@@ -176,35 +221,75 @@ int destroyRequestReturnInteger(MPI_Request &R){
 
 
 
-void sendReqForTest(int MYPROC){
+void sendReqForTest(int MYPROC, int i){
     // Send request for missing info
-    double vix = 0;
+    double vix = (double) MYPROC;
     double vval;
+    int status_flagstatus=1;
+    int MAXTRIES = 5;
+    int counter = 0;
+    int s_fs=0, s_fr=0;
     MPI_Request sReq, rReq;
     int owner, flagstatus;
     if (MYPROC==0){
-        owner = 1;
+        owner = 2;
     } else {
         owner = MYPROC -1;
     }
 
-    // send a request
-    send_nonblocking(owner,
-                     sReq,
-                     vix, 1);
+    if (true){
+        MPI_Ssend(&vix, 1, MPI_DOUBLE, owner, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD);
 
-    // recieve a request
+//        send_blocking(owner,
+//                         sReq,
+//                         vix, VERTEXVAL_REQUEST_FLAG);
+        printf("I have supposedly sent this message to %d with no status_flagstatus nor flagstatus \n",
+               owner);
+    }
+    else {
+        send_nonblocking(owner,
+                         sReq,
+                         vix, VERTEXVAL_REQUEST_FLAG);
+        status_flagstatus = MPI_Request_get_status(sReq, &flagstatus, MPI_STATUS_IGNORE);
+        printf("I have supposedly sent this message to %d with status_flagstatus %d and flagstatus %d\n",
+               owner, status_flagstatus, flagstatus);
+        std::cout << std::flush;
+        while ((!(status_flagstatus == 0)) || (!(flagstatus == 1))) {
+            printf("Stuck at some special state A;-/\n");
+            status_flagstatus = MPI_Request_get_status(sReq, &flagstatus, MPI_STATUS_IGNORE);
+        }
+        //int statusFree = MPI_Request_free(&sReq);
+        //if (statusFree != 0)  printf("answer_messages failed to free one req :O it was%d\n", statusFree);
+    }
     recv_nonblocking(owner,
                      rReq, // flag = (int) index :-)
                      vval, (int) vix);
+    mssleep(200);
+    status_flagstatus = MPI_Test(&rReq, &flagstatus, MPI_STATUS_IGNORE);
 
-    MPI_Request_get_status(sReq, &flagstatus, MPI_STATUS_IGNORE);
-    while (flagstatus!=1){
+    while ((!(status_flagstatus==0)) || (!(flagstatus==1))){
+        counter++;
+        printf("Stuck at some special state B;-/ recieving %d and flag %d\n",status_flagstatus, flagstatus);
+        status_flagstatus = MPI_Test(&rReq, &flagstatus, MPI_STATUS_IGNORE);
         mssleep(50);
-        MPI_Request_get_status(sReq, &flagstatus, MPI_STATUS_IGNORE);
+        if(counter >= MAXTRIES) {
+            status_flagstatus = 0;
+            flagstatus = 1;
+        }
     }
-    printf("\n\n\nWE WERE ANSWERED CORRECTLY ;-)\nval is : %f\nhehehe\n\n\n", vval);
-    std::cout << std::flush;
+
+    if (counter>=MAXTRIES){
+        MPI_Cancel(&rReq);
+        //MPI_Cancel(&sReq);
+        printf("RECURSIVE SOLUTION... the damned proc is %d\n",MYPROC);std::cout<<std::flush;
+        sendReqForTest(MYPROC, i);
+    }
+    else {
+        printf("Sent and recieved correctly ;-)  (i=%d)\n", i);
+        std::cout << std::flush;
+    }
+
+
 }
 
 

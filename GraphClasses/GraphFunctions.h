@@ -26,7 +26,7 @@ void contribute_to_integration(ReferenceContainer &REF);
 template<int DT, int TIMETOL, int BATCH>
 void answer_messages(ReferenceContainer &REF, int MYTHR);
 
-void sendReqForTest(int MYPROC);
+void sendReqForTest(int MYPROC, int i);
 
 template <int DT, int TIMETOL, int BATCH>
 void perform_requests(int NNodes,
@@ -55,6 +55,7 @@ void perform_requests(int NNodes,
 void register_to_value(Graph &g);
 
 void destroyRequestWithoutCounter(MPI_Request &R);
+void freeRequestWithoutCounter(MPI_Request &R);
 
 // Fully declared template
 template<typename DIFFEQ, typename SOLVER, int BATCH> // e.g. DIFFEQ = NoiselessKuramoto, SOLVER = EulerSolver<NoiselessKuramoto>
@@ -93,7 +94,7 @@ void single_evolution(Graph &g,
                            MapHelper);
 
     const int MAX_SUBTHR = 1;
-    const int TIMETOL = 5;//ComHelper.WORLD_SIZE[0] / BATCH + 1;
+    const int TIMETOL = 10;//ComHelper.WORLD_SIZE[0] / BATCH + 1;
     const int DT = 5;
     bool keep_responding = true;
 
@@ -119,17 +120,21 @@ void single_evolution(Graph &g,
             //for (int k=0; k<4; ++k) {
             while (atomic_bool) { // as long as we keep processing our own,
                 //                    we mantain at least one dispatcher alive :-)
+                //mssleep(50);printf("I am responding but nothing is happening (?\n");std::cout<<std::flush;
                 answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
 #pragma omp atomic read
                 atomic_bool = keep_responding;
             }
             if (!atomic_bool) PRINTF_DBG("OVER!  :O\n");
             PRINTF_DBG(" I am thread %d (MESSAGE ANSWERER) and I have finished doing my job ;-)\n",omp_get_thread_num());
-        } else {
-//            for (int i=0; i<5;++i) {
-//                sendReqForTest(REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n]);
-//            }
-            perform_requests<DT, TIMETOL, BATCH>(NVtot, REF, N_total_nodes,OmpHelper);
+        } else if (OmpHelper.MY_THREAD_n == 1) {// DEBUG. change for just 'else' !!!
+            //for (int i=0; i<1;++i) {
+            sendReqForTest(REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n], 0);
+               // answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+            //}
+#pragma omp atomic write
+            TOT = NVtot;
+            //perform_requests<DT, TIMETOL, BATCH>(NVtot, REF, N_total_nodes,OmpHelper);
             PRINTF_DBG(" I am thread %d (PERFORM REQUESTER) and I have finished doing my job ;-)\n",omp_get_thread_num());
         }
     }
@@ -238,13 +243,14 @@ void single_evolution(Graph &g,
 
     //mssleep(15000); // keep guys waiting so we focus on MPI debugging ;_)
 
-    // BYPASS for debugging**
+//    // BYPASS for debugging**
 //#pragma omp atomic write
 //    TOT = NVtot;
     // **********************
 
     //printf("I am a thread that  has  arrives to the end of the script :-)\n", ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n]);
     // The previous code is a race to this point :-) if you didnt arrived first move on lol
+    printf("about to enter 'omp critical unclaimed'\n"); std::cout << std::flush;
 #pragma omp critical
 {
             am_i_first = is_unclaimed;
@@ -289,6 +295,8 @@ void single_evolution(Graph &g,
         MPI_Request my_request[MAX_COUNTER]; // 5 requests
         int we_are_over[MAX_COUNTER][ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]];
         int recv_status[MAX_COUNTER][ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]];
+        int return_status_all2all = 1;
+        int return_status_getstatus = 1;
         std::set<int> ready;
 
         // Print for debug
@@ -298,6 +306,7 @@ void single_evolution(Graph &g,
         CHECKVAL = 1;
         while ((!is_everyone_over) || (!is_everyone_over_doubleChecked)) {
 
+            // Currently not enforcing it as we dont increase the counter ;-)
             if (counter >= MAX_COUNTER){
                 error_report("Max All2All instances exceeded");
             }
@@ -314,10 +323,31 @@ void single_evolution(Graph &g,
             ready = std::set<int>();
             ready.insert(ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n]);
 
-            PRINTF_DBG("New all2all with checkval 4"); // ampersand for recv_status after spotting RookieHPC's bug ;-)
-            MPI_Ialltoall(&we_are_over[counter], 1, MPI_INT, &recv_status[counter], 1, MPI_INT, MPI_COMM_WORLD, &my_request[counter]);
+            PRINTF_DBG("New all2all with checkval %d\n", CHECKVAL); // ampersand for recv_status after spotting RookieHPC's bug ;-)
+            return_status_all2all = MPI_Ialltoall(&we_are_over[counter], 1, MPI_INT, &recv_status[counter], 1, MPI_INT, MPI_COMM_WORLD, &my_request[counter]);
+            // Guarantee that the Iall2all is correctly generated
+            while (return_status_all2all != 0) {
+                printf("return_status_all2all failed... answering messages before reattempting'\n"); std::cout << std::flush;
+                // spend some time answering messages :-)
+                answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                // Reset the request
+                printf("about to free the necessary stuff in return status all2all\n"); std::cout << std::flush;
+                freeRequestWithoutCounter(my_request[counter]);
+                my_request[counter] = MPI_Request();
+                // Try again
+                printf("about to reattemptsending return_status_all2all\n"); std::cout << std::flush;
+                return_status_all2all = MPI_Ialltoall(&we_are_over[counter], 1, MPI_INT, &recv_status[counter], 1, MPI_INT, MPI_COMM_WORLD, &my_request[counter]);
+            }
 
-            MPI_Request_get_status(my_request[counter], &all2all_status, MPI_STATUS_IGNORE);
+            // Guarantee that the status is correctly captured
+            return_status_getstatus = MPI_Request_get_status(my_request[counter], &all2all_status, MPI_STATUS_IGNORE);
+            while (return_status_getstatus != 0){
+                printf("return status getstatus failed... answering messages before reattempting'\n"); std::cout << std::flush;
+                // spend some time answering messages :-)
+                answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                printf("about to reattempt status getstatus\n"); std::cout << std::flush;
+                return_status_getstatus = MPI_Request_get_status(my_request[counter], &all2all_status, MPI_STATUS_IGNORE);
+            }
 
             // check if they have all been recieved :-)
             while (all2all_status != 1){
@@ -336,11 +366,11 @@ void single_evolution(Graph &g,
             if (ready.size() == ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n]) {
                 if (is_everyone_over) {
                     is_everyone_over_doubleChecked = true;
-                    PRINTF_DBG("P%d recieved consensus from all regarding that they are all over. Flags list is %d %d %d\n",
+                    printf("P%d recieved consensus from all regarding that they are all over. Flags list is %d %d %d\n",
                            ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n],
                            recv_status[counter][0], recv_status[counter][1], recv_status[counter][2]);
                 } else {
-                    PRINTF_DBG("P%d says that everyone is over! flags list is %d %d %d\n",
+                    printf("P%d says that everyone is over! flags list is %d %d %d\n",
                            ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n],
                            recv_status[counter][0], recv_status[counter][1], recv_status[counter][2]);
                     is_everyone_over = true;
@@ -349,18 +379,24 @@ void single_evolution(Graph &g,
                 is_everyone_over = false;
                 is_everyone_over_doubleChecked = false;
                 // DEBUG MSG
-                PRINTF_DBG("P%d says that not everyone has finished! flags list is %d %d %d\n",
+                printf("P%d says that not everyone has finished! flags list is %d %d %d\n",
                        ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n],
                        recv_status[counter][0], recv_status[counter][1], recv_status[counter][2]);
             }
             // Finally destroy request
-            destroyRequestWithoutCounter(my_request[counter]);
-            ++counter;
+            //destroyRequestWithoutCounter(my_request[counter]);
+            freeRequestWithoutCounter(my_request[counter]);
+            // Instead of increasing the counter, we keep using the same address
+            my_request[counter] = MPI_Request();
+            //++counter;
         }
+        printf("The cherry of the cake ;-)\n");std::cout<<std::flush;
 #pragma omp atomic write
         keep_responding = false;
 
-    } else if (OmpHelper.MY_THREAD_n % 2 == 0) {
+    } else  //if (OmpHelper.MY_THREAD_n % 2 == 0)
+    {
+            printf("about to enter 'second branch of the end'\n"); std::cout << std::flush;
             // help answering messages ;-)
             bool atomic_bool;
 #pragma omp atomic read
@@ -382,6 +418,11 @@ void single_evolution(Graph &g,
         //register_to_value(g);
 } // end of the parallel construct
 PRINTF_DBG("exited");
+    printf("About to synchronize");std::cout<<std::flush;
+    MPI_Barrier(MPI_COMM_WORLD);
+    printf("Done");std::cout<<std::flush;
+    mssleep(200);
+    printf("\n\n\n\\n\n\n\n\n\n");
 }
 
 
