@@ -94,7 +94,7 @@ void single_evolution(Graph &g,
                            MapHelper);
 
     const int MAX_SUBTHR = 1;
-    const int TIMETOL = 10;//ComHelper.WORLD_SIZE[0] / BATCH + 1;
+    const int TIMETOL = 5;//ComHelper.WORLD_SIZE[0] / BATCH + 1;
     const int DT = 5;
     bool keep_responding = true;
 
@@ -131,6 +131,10 @@ void single_evolution(Graph &g,
         } else if (OmpHelper.MY_THREAD_n == 1) {
             // DEBUG. change for just 'else' !!!
             perform_requests<DT, TIMETOL, BATCH>(NVtot, REF, N_total_nodes,OmpHelper);
+            //printf("PERFORM_REQUEST HAS  ENDED! :-)");std::cout<<std::flush;
+            //sendReqForTest(REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n], 0);
+#pragma omp atomic write
+            TOT = NVtot;
 
 //            //-----------------------BEGGINING----OF----DEBUGGING-----SECTION------------------------
 //            else

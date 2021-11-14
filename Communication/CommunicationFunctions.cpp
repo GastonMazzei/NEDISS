@@ -228,6 +228,7 @@ void sendReqForTest(int MYPROC, int i){
     double vix = (double) MYPROC;
     double vval;
     int status_flagstatus=1;
+    int issend_status = 1;
     int MAXTRIES = 20; // HYPERPARAM
     int counter = 0;
     int s_fs=0, s_fr=0;
@@ -240,11 +241,17 @@ void sendReqForTest(int MYPROC, int i){
     }
 
 
-    MPI_Ssend(&vix, 1, MPI_DOUBLE, owner, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD);
+    issend_status = MPI_Issend(&vix, 1, MPI_DOUBLE, owner, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &sReq);
+    while (issend_status != 0){
+        issend_status = MPI_Issend(&vix, 1, MPI_DOUBLE, owner, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &sReq);
+    }
 
-//        send_blocking(owner,
-//                         sReq,
-//                         vix, VERTEXVAL_REQUEST_FLAG);
+    status_flagstatus = MPI_Test(&sReq, &flagstatus, MPI_STATUS_IGNORE);
+    while ((!(status_flagstatus==0)) || (!(flagstatus==1))){
+        status_flagstatus = MPI_Test(&sReq, &flagstatus, MPI_STATUS_IGNORE);
+        mssleep(50); // doing something here :-)
+    }
+
     printf("I have supposedly sent this message to %d with no status_flagstatus nor flagstatus \n",
                owner);
 
