@@ -226,7 +226,7 @@ void sendReqForTest(int MYPROC, int i){
     double vix = (double) MYPROC;
     double vval;
     int status_flagstatus=1;
-    int MAXTRIES = 5;
+    int MAXTRIES = 20; // HYPERPARAM
     int counter = 0;
     int s_fs=0, s_fr=0;
     MPI_Request sReq, rReq;
@@ -264,14 +264,14 @@ void sendReqForTest(int MYPROC, int i){
     recv_nonblocking(owner,
                      rReq, // flag = (int) index :-)
                      vval, (int) vix);
-    mssleep(200);
+    //mssleep(200);
     status_flagstatus = MPI_Test(&rReq, &flagstatus, MPI_STATUS_IGNORE);
 
     while ((!(status_flagstatus==0)) || (!(flagstatus==1))){
         counter++;
         printf("Stuck at some special state B;-/ recieving %d and flag %d\n",status_flagstatus, flagstatus);
         status_flagstatus = MPI_Test(&rReq, &flagstatus, MPI_STATUS_IGNORE);
-        mssleep(50);
+        //mssleep(50);
         if(counter >= MAXTRIES) {
             status_flagstatus = 0;
             flagstatus = 1;

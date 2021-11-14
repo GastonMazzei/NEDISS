@@ -99,6 +99,7 @@ void single_evolution(Graph &g,
     bool keep_responding = true;
 
     // For testing :-0
+    std::set<int> Working, Finished;
 //    CHECKED.push(0);
 //    CHECKED.push(1);
 //    TOT = NVtot - 2;
@@ -127,14 +128,31 @@ void single_evolution(Graph &g,
             }
             if (!atomic_bool) PRINTF_DBG("OVER!  :O\n");
             PRINTF_DBG(" I am thread %d (MESSAGE ANSWERER) and I have finished doing my job ;-)\n",omp_get_thread_num());
-        } else if (OmpHelper.MY_THREAD_n == 1) {// DEBUG. change for just 'else' !!!
-            //for (int i=0; i<1;++i) {
-            sendReqForTest(REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n], 0);
-               // answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
-            //}
-#pragma omp atomic write
-            TOT = NVtot;
-            //perform_requests<DT, TIMETOL, BATCH>(NVtot, REF, N_total_nodes,OmpHelper);
+        } else if (OmpHelper.MY_THREAD_n == 1) {
+            // DEBUG. change for just 'else' !!!
+            perform_requests<DT, TIMETOL, BATCH>(NVtot, REF, N_total_nodes,OmpHelper);
+
+
+//            //-----------------------BEGGINING----OF----DEBUGGING-----SECTION------------------------
+//            else
+//#pragma omp critical
+//{
+//            Working.insert(OmpHelper.MY_THREAD_n);
+//}
+//            for (int i=0; i<15;++i) {
+//                sendReqForTest(REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n], 0);
+//               // answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+//            }
+//#pragma omp critical
+//{
+//                Finished.insert(OmpHelper.MY_THREAD_n);
+//}
+//            // Assuming the work is thick enough as to act as a barrier for Working.insert :-)
+//            if (Working.size()==Finished.size()) {
+//#pragma omp atomic write
+//                TOT = NVtot;
+//            }
+            //-----------------------END----OF----DEBUGGING-----SECTION------------------------
             PRINTF_DBG(" I am thread %d (PERFORM REQUESTER) and I have finished doing my job ;-)\n",omp_get_thread_num());
         }
     }
@@ -421,7 +439,7 @@ PRINTF_DBG("exited");
     printf("About to synchronize");std::cout<<std::flush;
     MPI_Barrier(MPI_COMM_WORLD);
     printf("Done");std::cout<<std::flush;
-    mssleep(200);
+    mssleep(50);
     printf("\n\n\n\\n\n\n\n\n\n");
 }
 

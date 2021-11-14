@@ -36,8 +36,6 @@ void answer_messages(ReferenceContainer &REF,int MYTHR) {
     int NPROCS = REF.p_ComHelper->WORLD_SIZE[MYTHR];
     std::vector<MPI_Request> R_tot;
     std::vector<MPI_Request> R_send;
-//    R_tot.push_back(MPI_Request());
-//    R_send.push_back(MPI_Request());
     int NDISPATCHED = 0;
 
     // lay the probes for all the p rocs
@@ -77,158 +75,77 @@ void answer_messages(ReferenceContainer &REF,int MYTHR) {
 
     for (int tk = 0; tk < TIMETOL; ++tk) {
         for (int j = 0; j < BATCH; ++j) {
+            if (flagprobes[i] == 1) { // a message appears to be available! recieve it!
 
-            // re-probe this index ;-)
-//            probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
-//            while (probe_status != 0){
-//                probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
-//            }
-            // fake-probe this index :-<
-            // just to debug: in the future we should 'fake probe' just once in a while ;-)
-            //flagprobes[i] = 1;
+                // Print the first three elements in the asynchronous probe :-)
+                PRINTF_DBG("|%d %d %d|\n",flagprobes[0] , flagprobes[1] , flagprobes[2]);std::cout<<std::flush;
 
-            //printf("running inner loop\n");
-            if (flagprobes[i] == 1) { // a message is available! recieve it!
-                PRINTF_DBG("Entered flagprobes\n");
+                // Try to recieve it
                 R_tot.push_back(MPI_Request());
-
-                if (true) {
-                    recv_nonblocking(i, R_tot[R_tot.size() - 1], ix, VERTEXVAL_REQUEST_FLAG);
-
-                    printf("|%d %d %d|\n",flagprobes[0] , flagprobes[1] , flagprobes[2]);std::cout<<std::flush;
-
-// NONINVASIVE APPROACH (A)
-//                statusreq_status = MPI_Request_get_status(R_tot[R_tot.size() - 1], &status_localreq, MPI_STATUS_IGNORE);
-//                while (statusreq_status != 0){
-//                    mssleep(10); // HYPERPARAM
-//                    printf("I am not being able to get the status!\n");
-//                    statusreq_status = MPI_Request_get_status(R_tot[R_tot.size() - 1], &status_localreq, MPI_STATUS_IGNORE);
-//                }
-// INVASIVE APPROACH: (B)
+                recv_nonblocking(i, R_tot[R_tot.size() - 1], ix, VERTEXVAL_REQUEST_FLAG);
+                statusreq_status = MPI_Test(&R_tot[R_tot.size() - 1], &status_localreq, MPI_STATUS_IGNORE);
+                while (statusreq_status != 0) {
                     statusreq_status = MPI_Test(&R_tot[R_tot.size() - 1], &status_localreq, MPI_STATUS_IGNORE);
-                    while (statusreq_status != 0) {
-                        mssleep(10); // HYPERPARAM
-                        statusreq_status = MPI_Test(&R_tot[R_tot.size() - 1], &status_localreq, MPI_STATUS_IGNORE);
-                    }
-                } else {
-                    recv_blocking(i, R_tot[R_tot.size() - 1], ix, VERTEXVAL_REQUEST_FLAG);
-                    status_localreq = 1;
                 }
+
 
                 if (status_localreq == 1) { // If we were first to capture the message, proceed.
                     R_send.push_back(MPI_Request());
-                    //printf("We effectively captured a vertex info request :-)\n");
+                    PRINTF_DBG("We effectively captured a vertex info request :-)\n");
                     irespond_value(REF, ix, i, R_send[R_send.size() - 1], MYPROC);
                     ++NTOT;
-                    //printf("We effectively answered asynchronously a vertex info request :-)\n");
+                    PRINTF_DBG("We effectively answered asynchronously a vertex info request :-)\n");
                     NDISPATCHED++;
                 } else {
-                    //printf(
-                    //        "We were faced with a probe that indicated an incoming message but we couldnt capture it :o\n");
-                    //std::cout << std::flush;
+                    // MPI_Test didnt destroy the request, so explicitly free it
+                    statusFree = MPI_Request_free(&R_tot[R_tot.size() - 1]);
+                    PRINTF_DBG("We were faced with a probe that indicated an incoming message but we couldnt capture it :o\n");
                 }
 
-                // ONLY NECESSARY IF WE ARE IGNORING THE PROBE AND JUST TRYING JUST IN CASE
-                statusFree = MPI_Request_free(&R_tot[R_tot.size() - 1]);
-                //if (statusFree != 0)  printf("answer_messages failed to free one req :O it was%d\n", statusFree);
+                // Reset vars.
                 status_localreq = 0;
                 flagprobes[i] = 0;
-
-                // re-probe it
-//                probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
-//                while (probe_status != 0){
-//                    probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
-//                }
-
-                // --------------------USELESS... CROP IT..............................
-//                answered.insert(i); // it was answered, just not by us :-)
-//            }
-//            if (answered.size() == NPROCS) {
-//                // we should just refresh answered :-)
-//                answered = std::set<int>();
-//                answered.insert(MYPROC);
-//                // and reseed the probe :-)
-//                for (int i = 0; i < NPROCS; i++) {
-//                    flagprobes[i] = 0;
-//                    if (i != MYPROC) {
-//                        MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
-//                    }
-//                }
-//                // or maybe just return now, i.e. earlier.
-//                i = -1;
-
-            // USELES-------REMOVE-----
             }
 
-            //PRINTF_DBG("Arrived to C\n");
+            // For next iteration
             ++i;
             if (i == MYPROC) ++i;
             if (i >= NPROCS) {
-                //PRINTF_DBG("Entered D\n");
                 if (MYPROC!=0) {
                     i = 0;
                 } else {
                     i = 1;
                 }
             }
+        }
 
-            // USELES-------REMOVE-----
-//            while (answered.count(i) == 1) {
-//                //printf("Entered E\n");
-//                ++i;
-//                if (i == MYPROC) ++i;
-//                if (i >= NPROCS) {
-//                    i = 0;
-//                }
-//            }
-            // USELES-------REMOVE-----
+        // END OF THE BATCH... now we wait for all the sent requests. (In total they can be up to "Batch")
+        if (R_send.size() > 0) {
+            PRINTF_DBG("ENDing answer_messages. Caught (R_tot)=%d requests, Answered (R_send)=%d.\n",
+                       R_tot.size(),R_send.size());
 
-
-        } // END OF THE BATCH... (blocking) wait for the unmatched requests :-)
-        if ((R_tot.size() > 0) || (R_send.size() > 0)) {
-            PRINTF_DBG("ENDing answer_messages. Caught (R_tot)=%d requests, Answered (R_send)=%d.\n", R_tot.size(),
-                       R_send.size());
-            std::cout << std::flush;
             int status_of_getstatus = 1;
-            for (int i = 0; i < R_send.size(); ++i) { // we wait for our answers to arrive before descoping
-
-                // GET STATUS VERSIE
-//                status_of_getstatus = MPI_Request_get_status(R_send[i], &status_localreq, MPI_STATUS_IGNORE);
-//                while (status_of_getstatus != 0) {
-//                    status_of_getstatus = MPI_Request_get_status(R_send[i], &status_localreq, MPI_STATUS_IGNORE);
-//                    mssleep(5); // HYPERPARAM
-//                }
-                // TEST VERSIE
+            for (int i = 0; i < R_send.size(); ++i) {
                 status_of_getstatus = MPI_Test(&R_send[i], &status_localreq, MPI_STATUS_IGNORE);
                 while (status_of_getstatus != 0) {
                     printf("Failing to test a request, its returning %d\n", status_of_getstatus);
                     status_of_getstatus = MPI_Test(&R_send[i], &status_localreq, MPI_STATUS_IGNORE);
-                    mssleep(5); // HYPERPARAM
                 }
 
                 if (status_localreq == 0) {
-                    for (int jk=0;jk<100;++jk) printf("We are currently waiting for a send to be completed :-(\n");
-                    std::cout << std::flush;
+                    PRINTF_DBG("We are currently waiting for a send to be completed\n");
                     MPI_Wait(&R_send[i], MPI_STATUS_IGNORE);
+                    PRINTF_DBG("Successfully waited the request to be completed\n");
                 }
-                //destroyRequest(R_send[i], NERR);
-                PRINTF_DBG("Successfully waited the request to be completed\n");//, now we will attempt to free it.\n");
-                // ATTEMPTING TO FREE IS POINTLESS NOW, AS IT WAS A BLOCKING WAIT :-)
-//                std::cout << std::flush;
-//                statusFree = MPI_Request_free(&R_send[i]);
-//                PRINTF_DBG("Successfully finished answering that one request! ^.^ status of free: %d\n", statusFree);
-//                std::cout << std::flush;
             }
         }
+
         std::vector<MPI_Request> R_tot;
         std::vector<MPI_Request> R_send;
         mssleep(DT);
         ++ticks;
     }
-    //printf("ENDed answering\n");
 };
-
-
 
 
 
