@@ -17,7 +17,7 @@ void irespond_value(ReferenceContainer &REF, double ix, int owner, MPI_Request &
                 //send_nonblocking(owner, R, REF.placeholder, (int) ix);
                 send_nonblocking(owner, R, (*REF.p_g)[*v].value, (int) ix);
                 PRINTF_DBG("ANSWERED ONE MESSAGE!\n");
-                printf("Answering %d with %d's value\n",owner, (int) ix);
+                PRINTF_DBG("Answering %d with %d's value\n",owner, (int) ix);
                 return;
         } else {
             PRINTF_DBG("I am not the owner!!\n");
@@ -25,7 +25,7 @@ void irespond_value(ReferenceContainer &REF, double ix, int owner, MPI_Request &
         }
         }
     }
-    printf("[CRITICAL] THE NODE WAS NOT FOUND\n");std::cout<<std::flush;
+    PRINTF_DBG("[CRITICAL] THE NODE WAS NOT FOUND\n");std::cout<<std::flush;
     exit(1);
 };
 
@@ -43,11 +43,11 @@ void send_nonblocking(int owner, MPI_Request &r, double &ix, int TAG){
               MPI_DOUBLE, // type
               owner, // destination
               TAG, MPI_COMM_WORLD, &r);
-    printf("Just sent a message with status %d\n", answer);
+    PRINTF_DBG("Just sent a message with status %d\n", answer);
     std::cout << std::flush;
     if (answer!=0){
-        printf("Answer was a bad status, recursive reset\n");
-        printf("bypassed into direct exit: error code was %d\n",answer);
+        PRINTF_DBG("Answer was a bad status, recursive reset\n");
+        PRINTF_DBG("bypassed into direct exit: error code was %d\n",answer);
         std::cout << std::flush;
         exit(answer);
         send_nonblocking(owner, r, ix, TAG);
@@ -81,7 +81,7 @@ void recv_blocking(int owner, MPI_Request &r, double &result, int TAG){
                        TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
     if (answer!=0) {
-        printf("Recieve was a bad status, recursive reset\n");
+        PRINTF_DBG("Recieve was a bad status, recursive reset\n");
         recv_blocking(owner, r, result, TAG);
     }
 }
@@ -93,11 +93,11 @@ void send_blocking(int owner, MPI_Request &r, double &ix, int TAG) {
                        MPI_DOUBLE, // type
                        owner, // destination
                        TAG, MPI_COMM_WORLD);
-    printf("Just sent a (blocking) message with status %d\n", answer);
+    PRINTF_DBG("Just sent a (blocking) message with status %d\n", answer);
     std::cout << std::flush;
     if (answer != 0) {
-        printf("Answer was a bad status, recursive reset\n");
-        printf("bypassed into direct exit: error code was %d\n", answer);
+        PRINTF_DBG("Answer was a bad status, recursive reset\n");
+        PRINTF_DBG("bypassed into direct exit: error code was %d\n", answer);
         std::cout << std::flush;
         exit(answer);
         send_nonblocking(owner, r, ix, TAG);
@@ -113,7 +113,7 @@ void recv_nonblocking(int owner, MPI_Request &r, double &result, int TAG){
                   TAG, MPI_COMM_WORLD, &r);
 
     if (answer!=0){
-        printf("Recieve was a bad status, recursive reset\n");
+        PRINTF_DBG("Recieve was a bad status, recursive reset\n");
         recv_nonblocking(owner, r, result, TAG);
     }
 };
@@ -252,7 +252,7 @@ void sendReqForTest(int MYPROC, int i){
         mssleep(50); // doing something here :-)
     }
 
-    printf("I have supposedly sent this message to %d with no status_flagstatus nor flagstatus \n",
+    PRINTF_DBG("I have supposedly sent this message to %d with no status_flagstatus nor flagstatus \n",
                owner);
 
     recv_nonblocking(owner,
