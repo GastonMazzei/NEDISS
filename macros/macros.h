@@ -17,6 +17,13 @@
 #define VERTEXVAL_REQUEST_FLAG 25001
 #endif
 
+#if !defined(EDGEVAL_REQUEST_FLAG)
+#define EDGEVAL_REQUEST_FLAG 25000
+#endif
+
+#if !defined(OFFSET)
+#define OFFSET 12500
+#endif
 
 
 #endif //CPPPROJCT_MACROS_H

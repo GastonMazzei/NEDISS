@@ -6,7 +6,6 @@
 #include "CommunicationFunctions.h"
 #include "../Utils/global_standard_messages.h"
 
-// Keep building MPI with https://www.boost.org/doc/libs/1_77_0/doc/html/mpi/tutorial.html
 
 void irespond_value(ReferenceContainer &REF, double ix, int owner, MPI_Request & R, int MyNProc){
     auto vs = vertices(*REF.p_g);
@@ -30,13 +29,88 @@ void irespond_value(ReferenceContainer &REF, double ix, int owner, MPI_Request &
 };
 
 
+
+// OFFSET+ix[0] is the tag,
+// Then find values of the node ix[1] and the edge that connects
+// that node with the one indexed as ix[0] from the owner
+void irespond_value_edges(ReferenceContainer &REF,
+                          double *ix,
+                          int owner,
+                          MPI_Request & R,
+                          int MyNProc,
+                          double
+                          ){
+    // Iterate through nodes
+    bool found = false;
+    auto vs = vertices(*REF.p_g);
+    auto v = vs.first;
+    while ((v != vs.second) && (!found)){
+        if (get(REF.p_MapHelper->NodeOwner,*v)==MyNProc) {
+            // If I am the owner, test if this node has the index I'm looking for
+            if (get(get(boost::vertex_index, *(REF.p_g)), *v) == *(ix+1)) {
+                // If this is the node this code was aimed to, iterate through neighbrors
+                auto neighbors = boost::adjacent_vertices(*v, *REF.p_g);
+                auto n = neighbors.first;
+                while ((n != neighbors.second) && (!found)) {
+                    //Iterate through neighbors looking for the correct edge ;-)
+                    if (get(REF.p_MapHelper->NodeOwner, *n) == owner) {
+                        // If this neighbor is owned by the requester
+                        if (get(get(boost::vertex_index, *(REF.p_g)), *v) == *ix) {
+                            // If its index is the one the requester refered to
+                            found = true;
+                            printf("Found the requested node attached to the requested edge!\n");
+                            auto e = edge(*v, *n, *(REF.p_g));
+                            if (e.second != 1) {
+                                printf("[FATAL] Requested edge did not exist!!!");
+                                exit(1);
+                            }
+                            int TAG = OFFSET + *ix;
+                            // WARNING: we overwrite data on 'ix' to make use of the non-locally-scoped buffer
+                            *ix = (*(REF.p_g))[*v].value;
+                            *(ix + 1) = (*(REF.p_g))[e.first].value;
+                            send_nonblocking2(owner, R, (*ix), TAG);
+                        }
+                    }
+                    ++n;
+                }
+            }
+        }
+        ++v;
+    }
+    PRINTF_DBG("[CRITICAL] THE EDGE + NODE WAS NOT FOUND\n");std::cout<<std::flush;
+    exit(1);
+};
+
+
+
+
+
+
+
+void send_nonblocking2(int owner, MPI_Request &r, double &ix, int TAG){
+    int answer;
+    answer = MPI_Isend(&ix,
+                       2,//count
+                       MPI_DOUBLE, // type
+                       owner, // destination
+                       TAG, MPI_COMM_WORLD, &r);
+    PRINTF_DBG("Just sent a message with status %d\n", answer);
+    std::cout << std::flush;
+    if (answer!=0){
+        PRINTF_DBG("Answer was a bad status, recursive reset\n");
+        PRINTF_DBG("bypassed into direct exit: error code was %d\n",answer);
+        std::cout << std::flush;
+        exit(answer);
+        send_nonblocking2(owner, r, ix, TAG);
+    }
+};
+
+
+
+
+
+
 void send_nonblocking(int owner, MPI_Request &r, double &ix, int TAG){
-    // DEPRECATED!
-    // (A) TAG = 1 means asking for a node's value by sending one int
-    // (B) TAG = 2 means asking for an edge's value by sending two ints
-    // (C) TAG = 3 means sending in return a node's value
-    // (D) TAG = 4 means sending in return both an edge and node's value
-    //----------
     int answer;
     answer = MPI_Isend(&ix,
               1,//count
@@ -52,22 +126,6 @@ void send_nonblocking(int owner, MPI_Request &r, double &ix, int TAG){
         exit(answer);
         send_nonblocking(owner, r, ix, TAG);
     }
-//    } else if ((TAG == 2) || (TAG == 4)) {
-//        MPI_Isend(&ix,
-//                  2,//count
-//                  MPI_DOUBLE, // type
-//                  owner, // destination
-//                  TAG, MPI_COMM_WORLD, &r);
-//        ++ix;
-//        MPI_Isend(&ix,
-//                  2,//count
-//                  MPI_DOUBLE, // type
-//                  owner, // destination
-//                  TAG, MPI_COMM_WORLD, &r);
-//    }
-//    int flagstatus=0;
-//    MPI_Request_get_status(r, &flagstatus, MPI_STATUS_IGNORE);
-//    PRINTF_DBG("sent ONE MESSAGE! status of the request is: %d\n", flagstatus);
 };
 
 
@@ -103,6 +161,21 @@ void send_blocking(int owner, MPI_Request &r, double &ix, int TAG) {
         send_nonblocking(owner, r, ix, TAG);
     }
 }
+
+void recv_nonblocking2(int owner, MPI_Request &r, double & result, int TAG){
+    int answer;
+    answer = MPI_Irecv(&result,
+                       2,//count
+                       MPI_DOUBLE, // type
+                       owner, // destination
+                       TAG, MPI_COMM_WORLD, &r);
+
+    if (answer!=0){
+        PRINTF_DBG("Recieve was a bad status, recursive reset\n");
+        recv_nonblocking2(owner, r, result, TAG);
+    }
+};
+
 
 void recv_nonblocking(int owner, MPI_Request &r, double &result, int TAG){
     int answer;
