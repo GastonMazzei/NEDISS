@@ -11,12 +11,12 @@ void irespond_value(ReferenceContainer &REF, double ix, int owner, MPI_Request &
     auto vs = vertices(*REF.p_g);
     for (auto v = vs.first; v != vs.second; ++v){
         if (get(REF.p_MapHelper->NodeOwner,*v)==MyNProc) {
-            //printf("I am the owner! :-)");
-            if (get(get(boost::vertex_index, *(REF.p_g)), *v) == ix){
+            //printf("I am the owner! :-)");                        // NEW: added (int) in next line
+            if (get(get(boost::vertex_index, *(REF.p_g)), *v) == (int) ix){
                 //send_nonblocking(owner, R, REF.placeholder, (int) ix);
                 send_nonblocking(owner, R, (*REF.p_g)[*v].value, (int) ix);
                 PRINTF_DBG("ANSWERED ONE MESSAGE!\n");
-                PRINTF_DBG("Answering %d with %d's value\n",owner, (int) ix);
+                PRINTF_DBG("Answering %d with %d's value, which is %f\n",owner, (int) ix, (*REF.p_g)[*v].value);
                 return;
         } else {
             PRINTF_DBG("I am not the owner!!\n");
@@ -37,9 +37,7 @@ void irespond_value_edges(ReferenceContainer &REF,
                           double *ix,
                           int owner,
                           MPI_Request & R,
-                          int MyNProc,
-                          double
-                          ){
+                          int MyNProc){
     // Iterate through nodes
     bool found = false;
     auto vs = vertices(*REF.p_g);

@@ -299,11 +299,6 @@ void answer_messages_edges(ReferenceContainer &REF,int MYTHR) {
 
 
 
-// (1) asks through the edge channel for an index through the index pair, i.e.
-// std::get<0> is our node index (different from current)
-// get<1> is the owner
-// get<2> is their node index
-// (2) recieves on channel OFFSET+CURRENT INDEX
 
 
 
@@ -352,12 +347,13 @@ void perform_requests(int NNodes,
     for (int i = 0; i < BATCH; ++i){
         QAvailable.push(i);
     }
-    double vval[BATCH], their_vix[BATCH];
+    double vval[BATCH], their_vix[BATCH]; // node receptors
+    double vval2[BATCH][2], their_vix2[BATCH][2]; // node receptors
     int ixlist[BATCH]; // this is our new helper in order to process various indexes asynchronously (=^-|)-|-/
     int owner[BATCH];
     int retStatus=1;
     int status_rstatus=1;
-    int counter=0,MAX_TRIES=25; // #HYPERPARAMS #HYPERPARAMETERS
+    int counter=0,MAX_TRIES=3; // #HYPERPARAMS #HYPERPARAMETERS
     bool NONBLOCKING = true;
 
 #pragma omp atomic read
@@ -439,9 +435,16 @@ void perform_requests(int NNodes,
                         fsend[QAvailable.front()] = 1;
                     }
 
+                    // request for response
+                    requests_recv[QAvailable.front()] = MPI_Request();
+                    recv_nonblocking(owner[QAvailable.front()],
+                                     requests_recv[QAvailable.front()],
+                                     vval[QAvailable.front()],
+                                     (int) their_vix[QAvailable.front()]);
+                    areRecv[QAvailable.front()] = 1;
+
                     // fsend will monitor if it has arrived
                     frecv[QAvailable.front()] = 0;
-                    areRecv[QAvailable.front()] = 0;
                     myProbes[QAvailable.front()] = 0;
 
 
@@ -476,12 +479,19 @@ void perform_requests(int NNodes,
                             while (i != QPend.end()) {
 
                                 if (fsend[*i] != 1) {
+                                    int retstatus = 1;
+                                    while (retstatus != 0) {
+//                                        retstatus = MPI_Test(&requests_send[*i],
+//                                                             &fsend[*i],
+//                                                             MPI_STATUS_IGNORE);
+                                        retstatus = MPI_Request_get_status(requests_send[*i],
+                                                                     &fsend[*i],
+                                                                     MPI_STATUS_IGNORE);
+                                    }
+
                                     PRINTF_DBG("Case 1\n");std::cout<<std::flush;
                                     // If the message has not arrived
                                     // Update the value to check if it has not arrived
-                                    MPI_Test(&requests_send[*i],
-                                                 &fsend[*i],
-                                                 MPI_STATUS_IGNORE);
                                     PRINTF_DBG("Case 1.1\n");std::cout<<std::flush;
                                     if (fsend[*i] != 1){
                                         PRINTF_DBG("Case 1.2.1\n");std::cout<<std::flush;
@@ -509,7 +519,7 @@ void perform_requests(int NNodes,
                                     if (areRecv[*i] != 1) {
                                         PRINTF_DBG("Case 2.1.1\n");std::cout<<std::flush;
                                         //----------------------------
-                                        myProbes[*i] = 1; // hardcoded
+                                        //myProbes[*i] = 1; // hardcoded
                                         //----------------------------
                                         counter = 0;
                                         while ((myProbes[*i] != 1) && (counter < MAX_TRIES)){
@@ -523,9 +533,9 @@ void perform_requests(int NNodes,
                                                                        MPI_STATUS_IGNORE);
                                             }
                                             counter++;
-                                            //mssleep(DT);
                                         }
-                                        PRINTF_DBG("Case 2.3\n");std::cout<<std::flush;
+                                        PRINTF_DBG("Case 2.3 (probe and retstatus yielded %d %d)\n",
+                                                   myProbes[*i], retStatus);std::cout<<std::flush;
                                         if (myProbes[*i] == 1){
                                             retStatus = 1;
                                             PRINTF_DBG("Case 2.3.1\n");std::cout<<std::flush;
@@ -537,20 +547,34 @@ void perform_requests(int NNodes,
                                                              (int) their_vix[*i]);
                                             areRecv[*i] = 1;
                                             PRINTF_DBG("Case 2.3.3\n");std::cout<<std::flush;
+                                        } else {
+                                            // resend request :-(
+                                            fsend[*i] = 0;
                                         }
                                         PRINTF_DBG("Case 2.1-2-3\n");std::cout<<std::flush;
                                     } else if (areRecv[*i] == 1){
                                         PRINTF_DBG("Case 2.5\n");std::cout<<std::flush;
-                                        MPI_Test(&requests_recv[*i],
-                                                 &frecv[*i],
-                                                 MPI_STATUS_IGNORE);
+                                        int retstatus = 1;
+                                        while (retstatus != 0) {
+//                                            retstatus = MPI_Test(&requests_recv[*i],
+//                                                                 &frecv[*i],
+//                                                                 MPI_STATUS_IGNORE);
+                                            retstatus = MPI_Request_get_status(requests_recv[*i],
+                                                                 &frecv[*i],
+                                                                 MPI_STATUS_IGNORE);
+                                        }
                                         PRINTF_DBG("Case 2.4.1\n");std::cout<<std::flush;
                                         counter = 0;
                                         while ((frecv[*i] != 1) && (counter < MAX_TRIES)){
-                                            //PRINTF_DBG("Case 2.4.2\n");std::cout<<std::flush;
-                                            MPI_Test(&requests_recv[*i],
-                                                     &frecv[*i],
-                                                     MPI_STATUS_IGNORE);
+                                            retstatus = 1;
+                                            while (retstatus != 0) {
+//                                                retstatus = MPI_Test(&requests_recv[*i],
+//                                                                     &frecv[*i],
+//                                                                     MPI_STATUS_IGNORE);
+                                                retstatus = MPI_Request_get_status(requests_recv[*i],
+                                                                                   &frecv[*i],
+                                                                                   MPI_STATUS_IGNORE);
+                                            }
                                             counter++;
                                             //mssleep(DT);
                                         }
@@ -579,12 +603,15 @@ void perform_requests(int NNodes,
                                     PRINTF_DBG("Recieved a response to our request: val %f for ix: %d\n", vval[*i], special_index); std::cout << std::flush;
 
                                     // Clean
+                                    fsend[*i] = 0;
+                                    frecv[*i] = 0;
+                                    MPI_Cancel(&requests_send[*i]);
+                                    MPI_Cancel(&requests_recv[*i]);
                                     if (NONBLOCKING) MPI_Request_free(&requests_send[*i]);
                                     MPI_Request_free(&requests_recv[*i]);
                                     QAvailable.push(*i);
                                     // Erasing list index
                                     QPend.erase(i++);
-
 
 
                                 } else { // Index increase for the entire inner loop
@@ -607,6 +634,251 @@ void perform_requests(int NNodes,
 //          *******************THE SAME SHOULD BE DONE FOR EDGES PLEASE********************
 //          *******************THE SAME SHOULD BE DONE FOR EDGES PLEASE********************
 //          *******************THE SAME SHOULD BE DONE FOR EDGES PLEASE********************
+
+
+
+
+
+
+//          *******************NOW FOR EDGES************************************************
+
+//            auto itBegEdges = REF.p_ParHelper->data[ix].MissingB.begin();
+//            auto itEndEdges = REF.p_ParHelper->data[ix].MissingB.end();
+//            tot_locals  = 0;
+//            sent_locally = 0;
+//            total_processed = 0;
+//            localcounter = 0;
+//
+//            for (auto _it= itBegEdges; _it != itEndEdges; ++_it) {
+//                auto &thread = *_it;
+//                for (auto it =  thread.begin();it != thread.end(); it++) {
+//                    ++tot_locals;
+//                }
+//            }
+//            PRINTF_DBG("(EDGE CASE) Tot locals for index  %d is %d\n", ix, tot_locals);
+//            // race-condition unfriendly? Only extensive testing will help us decide [:^|-/<>
+//            for (auto _it= itBegEdges; _it != itEndEdges; ++_it) {
+//                PRINTF_DBG("(EDGE CASE) About to ask for the process of local elem ix: %d\n",ix);
+//                auto &thread = *_it;
+//                PRINTF_DBG("(EDGE CASE) SURVIVED 1 \n");
+//                for (auto it =  thread.begin();it != thread.end(); it++){
+//                    ++localcounter;
+//                    PRINTF_DBG("(EDGE CASE) SURVIVED 2 \n");
+//
+//                    // Retrieve data
+//                    owner[QAvailable.front()] = std::get<1>(*it);
+//                    their_vix2[QAvailable.front()][0] = std::get<0>(*it);
+//                    their_vix2[QAvailable.front()][1] = std::get<2>(*it);
+//                    // Build the result
+//                    results[QAvailable.front()] = std::make_tuple(0, // placeholder until we get the correct node val
+//                                                                  0, // placeholder until we get the correct edge val
+//                                                                  // we are inaugurating this indexing model [:<)
+//                                                                  owner[QAvailable.front()] * N + their_vix[QAvailable.front()]);
+//                    PRINTF_DBG("(EDGE CASE) SURVIVED 3 \n");
+//
+//                    // Asynchronously start a synchronized sending operation
+//                    if (NONBLOCKING) {
+//                        retStatus = 1;
+//                        requests_send[QAvailable.front()] = MPI_Request();
+//                        while (retStatus != 0) {
+//                            retStatus = MPI_Isend(&their_vix2[QAvailable.front()][0],//done  NEW STRUCT [0]
+//                                                  2, // NEW done 2
+//                                                  MPI_DOUBLE,
+//                                                  owner[QAvailable.front()],
+//                                                  VERTEXVAL_REQUEST_FLAG,
+//                                                  MPI_COMM_WORLD,
+//                                                  &requests_send[QAvailable.front()]);
+//                        }
+//                        fsend[QAvailable.front()] = 0;
+//                        MPI_Test(&requests_send[QAvailable.front()],
+//                                 &fsend[QAvailable.front()],
+//                                 MPI_STATUS_IGNORE);
+//                    } else {
+//                        PRINTF_DBG("Starting blocking ssend");
+//                        std::cout << std::flush;
+//                        MPI_Ssend(&their_vix2[QAvailable.front()][0], // NEW STRUCT [0]
+//                                  2, // NEW 2
+//                                  MPI_DOUBLE,
+//                                  owner[QAvailable.front()],
+//                                  VERTEXVAL_REQUEST_FLAG,
+//                                  MPI_COMM_WORLD);
+//                        PRINTF_DBG("Ending blocking ssend");
+//                        std::cout << std::flush;
+//                        fsend[QAvailable.front()] = 1;
+//                    }
+//
+//                    // fsend will monitor if it has arrived
+//                    frecv[QAvailable.front()] = 0;
+//                    areRecv[QAvailable.front()] = 0;
+//                    myProbes[QAvailable.front()] = 0;
+//
+//
+//                    // Prepare stuff  for the next iteration
+//                    QPend.push_back(QAvailable.front());
+//                    ixlist[QAvailable.front()] = ix;
+//                    QAvailable.pop();
+//                    PRINTF_DBG("SURVIVED 9 \n");
+//
+//                    // If QAvailable is empty, devote ourselves to asynchronously waiting for
+//                    // answers to arrive. This indirectly means that our QPend has reached length BATCH.
+//                    if ((QAvailable.empty()) || (localcounter == tot_locals)) {
+//
+//                        // Define a target  size that QPend is required to meet.
+//                        // a progressive emptying could be coded here :^)
+//                        int target_size = 0;
+//                        if (localcounter == tot_locals){
+//                            // If it is the last lap for this index,
+//                            // force the emptying of the container :-)
+//                            target_size = 0;
+//                        } else {
+//                            // If it is not the last lap, just free one
+//                            // element.
+//                            target_size = BATCH-1;
+//                        }
+//
+//
+//                        while (QPend.size() != target_size) {
+//
+//                            // Iterate through the indexes FIFO style, i.e. std::list travelling
+//                            auto i = QPend.begin();
+//                            while (i != QPend.end()) {
+//
+//                                if (fsend[*i] != 1) {
+//                                    PRINTF_DBG("Case 1\n");std::cout<<std::flush;
+//                                    // If the message has not arrived
+//                                    // Update the value to check if it has not arrived
+//                                    MPI_Test(&requests_send[*i],
+//                                             &fsend[*i],
+//                                             MPI_STATUS_IGNORE);
+//                                    PRINTF_DBG("Case 1.1\n");std::cout<<std::flush;
+//                                    if (fsend[*i] != 1){
+//                                        PRINTF_DBG("Case 1.2.1\n");std::cout<<std::flush;
+//                                        // If it still has not arrived, we will cancel it and resend it
+//                                        retStatus = MPI_Cancel(&requests_send[*i]);
+//                                        if (retStatus!=0) PRINTF_DBG("[warning] MPI_Cancel returned %d\n",retStatus);
+//                                        MPI_Request_free(&requests_send[*i]);
+//                                        requests_send[*i] = MPI_Request();
+//                                        PRINTF_DBG("Case 1.2.2\n");std::cout<<std::flush;
+//                                        retStatus = MPI_Isend(&their_vix2[*i][0], // NEW STRUCTURE
+//                                                              2, // NEW 2
+//                                                              MPI_DOUBLE,
+//                                                              owner[*i],
+//                                                              VERTEXVAL_REQUEST_FLAG,
+//                                                              MPI_COMM_WORLD,
+//                                                              &requests_send[*i]);
+//                                        if (retStatus!=0) PRINTF_DBG("[warning] MPI_Isend returned %d\n",retStatus);
+//                                        PRINTF_DBG("Case 1.2.3\n");std::cout<<std::flush;
+//                                    }
+//                                    PRINTF_DBG("Case 1.3\n");std::cout<<std::flush;
+//                                }
+//                                if ((fsend[*i] == 1) && (frecv[*i] != 1)){
+//                                    PRINTF_DBG("Case 2\n");std::cout<<std::flush;
+//                                    // If it has now arrived, check if there is a started reception
+//                                    if (areRecv[*i] != 1) {
+//                                        PRINTF_DBG("Case 2.1.1\n");std::cout<<std::flush;
+//                                        //----------------------------
+//                                        myProbes[*i] = 1; // hardcoded
+//                                        //----------------------------
+//                                        counter = 0;
+//                                        while ((myProbes[*i] != 1) && (counter < MAX_TRIES)){
+//                                            if (counter == 0) PRINTF_DBG("Case 2.2.1 (first lap)\n");std::cout<<std::flush;
+//                                            retStatus = 1;
+//                                            while (retStatus != 0){
+//                                                retStatus = MPI_Iprobe(owner[*i],
+//                                                                       (int) (OFFSET + their_vix2[*i][0]), // done
+//                                                                       //(int) their_vix[*i], // NEW TAG
+//                                                                       MPI_COMM_WORLD,
+//                                                                       &myProbes[*i],
+//                                                                       MPI_STATUS_IGNORE);
+//                                            }
+//                                            counter++;
+//                                            //mssleep(DT);
+//                                        }
+//                                        PRINTF_DBG("Case 2.3\n");std::cout<<std::flush;
+//                                        if (myProbes[*i] == 1){
+//                                            retStatus = 1;
+//                                            PRINTF_DBG("Case 2.3.1\n");std::cout<<std::flush;
+//                                            requests_recv[*i] = MPI_Request();
+//                                            PRINTF_DBG("Case 2.3.2\n");std::cout<<std::flush;
+//                                            recv_nonblocking2(owner[*i], // done NEW FUNCTION
+//                                                             requests_recv[*i],
+//                                                             vval2[*i][0], // done NEW CONTAINER X2
+//                                                              (int) (OFFSET + their_vix2[*i][0])); //NEW TAG: done
+//                                                             //(int) their_vix[*i]);
+//                                            areRecv[*i] = 1;
+//                                            PRINTF_DBG("Case 2.3.3\n");std::cout<<std::flush;
+//                                        }
+//                                        PRINTF_DBG("Case 2.1-2-3\n");std::cout<<std::flush;
+//                                    } else if (areRecv[*i] == 1){
+//                                        PRINTF_DBG("Case 2.5\n");std::cout<<std::flush;
+//                                        MPI_Test(&requests_recv[*i],
+//                                                 &frecv[*i],
+//                                                 MPI_STATUS_IGNORE);
+//                                        PRINTF_DBG("Case 2.4.1\n");std::cout<<std::flush;
+//                                        counter = 0;
+//                                        while ((frecv[*i] != 1) && (counter < MAX_TRIES)){
+//                                            //PRINTF_DBG("Case 2.4.2\n");std::cout<<std::flush;
+//                                            MPI_Test(&requests_recv[*i],
+//                                                     &frecv[*i],
+//                                                     MPI_STATUS_IGNORE);
+//                                            counter++;
+//                                            //mssleep(DT);
+//                                        }
+//                                        PRINTF_DBG("Case 2.5\n");std::cout<<std::flush;
+//                                        if (frecv[*i] != 1){
+//                                            PRINTF_DBG("Case 2.6.1\n");std::cout<<std::flush;
+//                                            // If it still has not arrived, we will cancel it and resend it
+//                                            retStatus = MPI_Cancel(&requests_recv[*i]);
+//                                            if (retStatus!=0) PRINTF_DBG("[warning] MPI_Cancel returned %d\n",retStatus);
+//                                            MPI_Request_free(&requests_recv[*i]);
+//                                            frecv[*i] = 0;
+//                                            myProbes[*i] = 0;
+//                                            PRINTF_DBG("Case 2.6.2\n");std::cout<<std::flush;
+//                                        }
+//                                    }
+//                                }
+//
+//                                if ((fsend[*i] == 1) && (frecv[*i] == 1)){
+//                                    PRINTF_DBG("(EDGES) Case 3\n");std::cout<<std::flush;
+//                                    // If it has arrived, store it
+//                                    std::get<0>(results[*i]) = vval2[*i][0]; // DONE NEW: NEW X2 STRUCTURE AND RESULTS
+//                                    std::get<1>(results[*i]) = vval2[*i][1];
+//                                    special_index = ixlist[*i];
+//                                    (*REF.p_IntHelper)[special_index].ResultsPendProcess.push_back(results[*i]);
+//
+//                                    // Debug station // NEW STRUCTURE
+//                                    PRINTF_DBG("(EDGES) Recieved a response to our request: val %f %f\n", vval2[*i][0], vval2[*i][1]); std::cout << std::flush;
+//
+//                                    // Clean
+//                                    fsend[*i] = 0;
+//                                    frecv[*i] = 0;
+//                                    if (NONBLOCKING) MPI_Request_free(&requests_send[*i]);
+//                                    MPI_Request_free(&requests_recv[*i]);
+//                                    QAvailable.push(*i);
+//                                    // Erasing list index
+//                                    QPend.erase(i++);
+//
+//
+//
+//                                } else { // Index increase for the entire inner loop
+//                                    ++i;
+//                                }
+//
+//                                // End of one iteration
+//                            }  // End of all iterations
+//                            // Now "QPend.size() != target_size" will determine if the while continues.
+//                            PRINTF_DBG("About to compute 'QPend.size() != target_size', which yields: %d\n", QPend.size() != target_size); std::cout<< std::flush;
+//                            // Optional:
+//                            //if (QPend.size() == BATCH) answer_messages_edges<0, 1, BATCH>(REF, O.MY_THREAD_n);
+//                        }
+//                    }
+//                    // Debug station
+//                    PRINTF_DBG("DISPATCHED CORRECTLY\n");
+//                    std::cout << std::flush;
+//                }
+//            }
+//          *******************END OF FOR EDGES*********************************************
+
 
 #pragma critical
 {

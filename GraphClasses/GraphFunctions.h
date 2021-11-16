@@ -26,6 +26,11 @@ void contribute_to_integration(ReferenceContainer &REF);
 template<int DT, int TIMETOL, int BATCH>
 void answer_messages(ReferenceContainer &REF, int MYTHR);
 
+
+template<int DT, int TIMETOL, int BATCH>
+void answer_messages_edges(ReferenceContainer &REF,int MYTHR);
+
+
 void sendReqForTest(int MYPROC, int i);
 
 template <int DT, int TIMETOL, int BATCH>
@@ -122,6 +127,7 @@ void single_evolution(Graph &g,
             while (atomic_bool) { // as long as we keep processing our own,
                 //                    we mantain at least one dispatcher alive :-)
                 answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                //answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
 #pragma omp atomic read
                 atomic_bool = keep_responding;
             }
@@ -276,6 +282,7 @@ void single_evolution(Graph &g,
         while (!are_we_over){
             // 1) Answer some messages
             answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+            //answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
             // 2) Re-check if we are over
 #pragma omp atomic read
             atomical_int = TOT;
@@ -332,6 +339,7 @@ void single_evolution(Graph &g,
                 PRINTF_DBG("return_status_all2all failed... answering messages before reattempting'\n"); std::cout << std::flush;
                 // spend some time answering messages :-)
                 answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                //answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
                 // Reset the request
                 PRINTF_DBG("about to free the necessary stuff in return status all2all\n"); std::cout << std::flush;
                 freeRequestWithoutCounter(my_request[counter]);
@@ -347,6 +355,8 @@ void single_evolution(Graph &g,
                 PRINTF_DBG("return status getstatus failed... answering messages before reattempting'\n"); std::cout << std::flush;
                 // spend some time answering messages :-)
                 answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                //answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+
                 PRINTF_DBG("about to reattempt status getstatus\n"); std::cout << std::flush;
                 return_status_getstatus = MPI_Request_get_status(my_request[counter], &all2all_status, MPI_STATUS_IGNORE);
             }
@@ -354,6 +364,8 @@ void single_evolution(Graph &g,
             // check if they have all been recieved :-)
             while (all2all_status != 1){
                 answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                //answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+
                 MPI_Request_get_status(my_request[counter], &all2all_status, MPI_STATUS_IGNORE);
             }
 
@@ -408,6 +420,8 @@ void single_evolution(Graph &g,
                 //printf("A for worker that is finally responding messages says that we are not over with TOT\n");
                 // 1) Answer some messages
                 answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                //answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+
                 // 2) Re-check if we are over
 #pragma omp atomic read
                 atomic_bool = keep_responding;
