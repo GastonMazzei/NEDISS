@@ -99,7 +99,8 @@ void single_evolution(Graph &g,
                            MapHelper);
 
     const int MAX_SUBTHR = 1;
-    const int TIMETOL = 5;//ComHelper.WORLD_SIZE[0] / BATCH + 1;
+    const int TIMETOL = 5;
+    //ComHelper.WORLD_SIZE[0] / BATCH + 1;
     const int DT = 5;
     bool keep_responding = true;
 
@@ -119,6 +120,29 @@ void single_evolution(Graph &g,
 
 
     if (OmpHelper.MY_THREAD_n < SplitCoef){
+
+
+        // SECTION OF NON-FOR-WORKERS :-)
+
+        // EXPERIMENTAL:
+//        if (OmpHelper.MY_THREAD_n == 0){
+//            perform_requests<DT, TIMETOL, BATCH>(NVtot, REF, N_total_nodes,OmpHelper);
+//        } else  if (OmpHelper.MY_THREAD_n == 1){
+//            bool atomic_bool;
+//#pragma omp atomic read
+//            atomic_bool = keep_responding;
+//            //for (int k=0; k<4; ++k) {
+//            while (atomic_bool) { // as long as we keep processing our own,
+//                //                    we mantain at least one dispatcher alive :-)
+//                answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+//                //answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+//#pragma omp atomic read
+//                atomic_bool = keep_responding;
+//            }
+//        }
+
+
+            // CLASSICAL
         if (OmpHelper.MY_THREAD_n % (MAX_SUBTHR + 1) == 0) {
             bool atomic_bool;
 #pragma omp atomic read
@@ -143,6 +167,11 @@ void single_evolution(Graph &g,
 
             PRINTF_DBG(" I am thread %d (PERFORM REQUESTER) and I have finished doing my job ;-)\n",omp_get_thread_num());
         }
+
+
+
+
+
     }
     else {
         unsigned long NLocals, NInedges, M, rank, NOwned;

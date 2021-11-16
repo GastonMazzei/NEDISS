@@ -5,7 +5,26 @@
 
 #include "CommunicationFunctions.h"
 #include "../Utils/global_standard_messages.h"
-
+void respond_value(ReferenceContainer &REF, double ix, int owner, int MyNProc){
+    auto vs = vertices(*REF.p_g);
+    for (auto v = vs.first; v != vs.second; ++v){
+        if (get(REF.p_MapHelper->NodeOwner,*v)==MyNProc) {
+            //printf("I am the owner! :-)");                        // NEW: added (int) in next line
+            if (get(get(boost::vertex_index, *(REF.p_g)), *v) == (int) ix){
+                printf("About to respond synchronically and blockingly\n"); std::cout<<std::flush;
+                MPI_Ssend(&(*REF.p_g)[*v].value, 1, MPI_DOUBLE, owner, (int) ix, MPI_COMM_WORLD);
+                PRINTF_DBG("ANSWERED ONE MESSAGE!\n");
+                PRINTF_DBG("Answering %d with %d's value, which is %f\n",owner, (int) ix, (*REF.p_g)[*v].value);
+                return;
+            } else {
+                PRINTF_DBG("I am not the owner!!\n");
+                std::cout  << std::flush;
+            }
+        }
+    }
+    PRINTF_DBG("[CRITICAL] THE NODE WAS NOT FOUND\n");std::cout<<std::flush;
+    exit(1);
+};
 
 void irespond_value(ReferenceContainer &REF, double ix, int owner, MPI_Request & R, int MyNProc){
     auto vs = vertices(*REF.p_g);
