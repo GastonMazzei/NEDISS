@@ -1,0 +1,55 @@
+Hi! (fun1)
+Hi! (fun2)
+Hi! (fun2)
+Hi! (fun1)
+Tag and source for Proc 1 are 25001 and 0Recieved! 0
+Sent! 0
+Sent! 0
+Recieved! 0
+Tag and source for Proc 1 are 25001 and 0Recieved! 1
+Sent! 1
+Recieved! 5
+Sent! 5
+Tag and source for Proc 1 are 25001 and 0Recieved! 2
+Sent! 2
+Recieved! 10
+Sent! 10
+Sent! 3
+Recieved! 15
+Tag and source for Proc 1 are 25001 and 0Recieved! 3
+Sent! 15
+Tag and source for Proc 1 are 25001 and 0Recieved! 4
+Sent! 4
+Recieved! 20
+Sent! 20
+Tag and source for Proc 1 are 25001 and 0Recieved! 5
+Sent! 5
+Recieved! 25
+Sent! 25
+Tag and source for Proc 1 are 25001 and 0Recieved! 6
+Sent! 6
+Recieved! 30
+Sent! 30
+Tag and source for Proc 1 are 25001 and 0Recieved! 7
+Sent! 7
+Recieved! 35
+Sent! 35
+Sent! 8
+Recieved! 40
+Tag and source for Proc 1 are 25001 and 0Recieved! 8
+Sent! 40
+Sent! 9
+Tag and source for Proc 1 are 25001 and 0Recieved! 9
+Sent! 45
+Recieved! 45
+Tag and source for Proc 1 are 9999 and 0Recieved! 1
+Finished the loopfinished 1 of 2 extra loopsTag and source for Proc 0 are 25001 and 1Recieved! 0
+Sent! 0
+Recieved! 0
+Sent! 0
+Tag and source for Proc 0 are 10 and 1Recieved! 50
+Sent! 50
+Tag and source for Proc 1 are 1 and 0Recieved! 5
+Sent! 5
+Tag and source for Proc 0 are 25001 and 1Recieved! 1
+Sent! 1

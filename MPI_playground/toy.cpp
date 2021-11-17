@@ -49,6 +49,7 @@ void fun2(int &ready){
 	MPI_Request R[L];
 	int buffer[L];
 	int response[L];
+
 	for (int i=0; i<L; ++i){
 		Q.push(i);
 	}
@@ -57,18 +58,19 @@ void fun2(int &ready){
 		i = Q.front();
 		buffer[i] = i;
 		Q.pop();
-		MPI_Ssend(&buffer[i], 1, MPI_INT,(int) ( (world_rank + 1) % world_size), 25001, MPI_COMM_WORLD);
-	    printf("Sent! %d\n", buffer[i]);
+		MPI_Ssend(&buffer[i], 1, MPI_INT,(int) ( (world_rank + 1) % world_size), 2501, MPI_COMM_WORLD);
+	    printf("Sent! now about to recieve :-) %d\n", buffer[i]);
 		MPI_Recv(&response[i], 1, MPI_INT, (int) ( (world_rank + 1) % world_size), i, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 	    printf("Recieved! %d\n", response[i]);
 	}
-	int newval=1;
-
-	MPI_Ssend(&newval, 1, MPI_INT,(int) ( (world_rank + 1) % world_size), 9999, MPI_COMM_WORLD);
-    MPI_Recv(&newval, 1, MPI_INT, (int) ( (world_rank + 1) % world_size), 1000, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-	printf("ENDED!");
-#pragma omp atomic write 
-	ready = 1;
+//	int newval=1;
+//	printf("Finished the loop");
+//	MPI_Ssend(&newval, 1, MPI_INT,(int) ( (world_rank + 1) % world_size), 9999, MPI_COMM_WORLD);
+//    	printf("finished 1 of 2 extra loops");
+//	MPI_Recv(&newval, 1, MPI_INT, (int) ( (world_rank + 1) % world_size), 1000, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+//	printf("ENDED!");
+//#pragma omp atomic write
+//	ready = 1;
 	return;
 }
 
@@ -79,56 +81,38 @@ void fun1(int &ready){
 	MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
 	printf("Hi! (fun1)\n");
-	// Build
-	int V[world_size];
-	int bigger_V[L];
-	MPI_Request R[world_size];
-	int buffer[L];
-	int answers[L];
-	int j = 0;
-	int atomic_int;
-	int statusflag = 0;
-	bool first = true;
-
-//	for (int i=0; i<L; ++i) {
-//        MPI_Recv(&buffer[i], 1, MPI_INT, (int) ( (world_rank + 1) % world_size), 25001, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-//        answers[i] = i*5;
-//        MPI_Ssend(&answers[i], 1, MPI_INT,(int) ( (world_rank + 1) % world_size), i, MPI_COMM_WORLD);
-//    }
-
-    int i = 0;
-    int flag=0;
-	atomic_int = 0;
-	while (atomic_int != 1){
-	    MPI_Status status;
-	    MPI_Iprobe(MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &flag, &status);
-	    int counter = 0;
-        while ((flag != 1) && (counter < 20)){
-            MPI_Iprobe(MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &flag, &status);
-            mssleep(80);
-            counter ++;
+	std::vector<int> buffer;
+	std::vector<int> answers;
+    int t=0, TIMEOUT = 20, DT=1;
+    int flag = 0;
+    int i=0;
+    MPI_Request R;
+    int TRIES=0;
+    while (TRIES < 3){
+        MPI_Status status;
+        if ((flag == 1) || (i==0)) {
+            R = MPI_Request();
+            buffer.push_back(0);
+            MPI_Irecv(&buffer[i], 1, MPI_INT,
+                      MPI_ANY_SOURCE,
+                      2501, MPI_COMM_WORLD, &R);
         }
-        if (counter <20) {
-            if (status.MPI_TAG == 999){
-                printf("Sending this special guy ;-)\n");
-                int local = 1;
-                MPI_Recv(&local, 1, MPI_INT, status.MPI_SOURCE, status.MPI_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-                MPI_Ssend(&local, 1, MPI_INT, status.MPI_SOURCE, 1000, MPI_COMM_WORLD);
-                --i;
-            } else {
-                printf("Tag and source for Proc %d are %d and %d", world_rank, status.MPI_TAG, status.MPI_SOURCE);
-                MPI_Recv(&buffer[i], 1, MPI_INT, status.MPI_SOURCE, status.MPI_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-                printf("Recieved! %d\n", buffer[i]);
-                answers[i] = i * 5;
-                MPI_Ssend(&answers[i], 1, MPI_INT, status.MPI_SOURCE, i, MPI_COMM_WORLD);
-                printf("Sent! %d\n", answers[i]);
-            }
+        MPI_Request_get_status(R, &flag, &status);
+        while ((flag != 1) && (t<TIMEOUT)){
+            MPI_Request_get_status(R, &flag, &status);
+            ++t;
+            mssleep(DT);
+            //printf("what  is happening here");
         }
-#pragma omp atomic read
-        atomic_int = ready;
-        ++i;
-	}
-
+        if (t>=TIMEOUT) ++TRIES;
+        t=0;
+        if (flag == 1){
+            answers.push_back(0);
+            answers[i] = i*5;
+            MPI_Ssend(&answers[i], 1, MPI_INT, status.MPI_SOURCE, buffer[i], MPI_COMM_WORLD);
+            ++i;
+        }
+    }
 	return;
 }
 
@@ -140,11 +124,11 @@ int main(int argc, char** argv){
 	int provided;
 	MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &provided);
 
-#pragma omp parallel num_threads(2)
+#pragma omp parallel num_threads(5)
 {
 long MYNUM = omp_get_thread_num();	
 
-	if (MYNUM == 0){
+	if (MYNUM != 0){
 		fun1(ready);
 	}
 	else {
