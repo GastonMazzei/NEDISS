@@ -99,9 +99,9 @@ void single_evolution(Graph &g,
                            MapHelper);
 
     const int MAX_SUBTHR = 1;
-    const int TIMETOL = 5;
+    const int TIMETOL = 20;
     //ComHelper.WORLD_SIZE[0] / BATCH + 1;
-    const int DT = 5;
+    const int DT = 1;
     bool keep_responding = true;
 
     // For testing :-0
@@ -318,7 +318,7 @@ void single_evolution(Graph &g,
             are_we_over = (atomical_int >= NVtot); // TODO: same here ;-).
             ++notreadyyet;
         }
-        PRINTF_DBG("\n\n\n\n\n\n\WE WERE OVERRR\n\n\n\n");
+        PRINTF_DBG("\n\n\n\n\n\n\WE WERE OVERRR NVtot and TOT are: %d & %d\n\n\n\n", NVtot, TOT);
         PRINTF_DBG("Before being ready, we waited for %d laps!\n", notreadyyet);
         std::cout << std::flush;
 

@@ -5,6 +5,21 @@
 
 #include "CommunicationFunctions.h"
 #include "../Utils/global_standard_messages.h"
+
+void build_answer(double &answer, ReferenceContainer &REF, double ix, int owner, int MyNProc){
+    auto vs = vertices(*REF.p_g);
+    for (auto v = vs.first; v != vs.second; ++v){
+        if (get(REF.p_MapHelper->NodeOwner,*v)==MyNProc) {
+            if (get(get(boost::vertex_index, *(REF.p_g)), *v) == (int) ix){
+                answer = (*REF.p_g)[*v].value;
+                return;
+            }
+        }
+    }
+    PRINTF_DBG("[CRITICAL] THE NODE WAS NOT FOUND\n");std::cout<<std::flush;
+    exit(1);
+}
+
 void respond_value(ReferenceContainer &REF, double ix, int owner, int MyNProc){
     auto vs = vertices(*REF.p_g);
     for (auto v = vs.first; v != vs.second; ++v){

@@ -128,7 +128,7 @@ int main(int argc, char** argv){
 {
 long MYNUM = omp_get_thread_num();	
 
-	if (MYNUM != 0){
+	if (MYNUM == 0){
 		fun1(ready);
 	}
 	else {
