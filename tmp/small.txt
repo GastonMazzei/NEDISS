@@ -1,0 +1,200 @@
+About to send one!
+Correctly sent one!
+[PR] Correctly recieved!
+[PR] About to ask for one node!
+[PR] Asked!
+[PR] About to recv!
+About to send one!
+Correctly sent one!
+[PR] Correctly recieved!
+TOT=313, NNodes=312, ix_update=0, total_processed=1, ix=155
+Final termination of perform_requests :-)
+ I am thread 1 (PERFORM REQUESTER) and I have finished doing my job ;-)
+about to enter 'omp critical unclaimed'
+about to enter 'second branch of the end'
+so far I keep responding ^.^
+so far I keep responding ^.^
+so far I keep responding ^.^
+not ready yet!
+not ready yet!
+
+
+
+
+
+
+WE WERE OVERRR NVtot and TOT are: 313 & 314
+
+
+
+Before being ready, we waited for 14 laps!
+so far I keep responding ^.^
+so far I keep responding ^.^
+not ready yet!
+so far I keep responding ^.^
+so far I keep responding ^.^
+so far I keep responding ^.^
+not ready yet!
+
+
+
+
+
+
+WE WERE OVERRR NVtot and TOT are: 312 & 313
+
+
+
+Before being ready, we waited for 15 laps!
+so far I keep responding ^.^
+so far I keep responding ^.^
+so far I keep responding ^.^
+not ready yet!
+
+
+
+
+
+
+WE WERE OVERRR NVtot and TOT are: 312 & 313
+
+
+
+Before being ready, we waited for 16 laps!
+The (FIRST) cherry of the cake ;-)
+The (FIRST) cherry of the cake ;-)
+The (FIRST) cherry of the cake ;-)
+The (FIRST) cherry of the cake ;-)
+The (FIRST) cherry of the cake ;-)
+The (FIRST) cherry of the cake ;-)
+The (FIRST) cherry of the cake ;-)
+The (FIRST) cherry of the cake ;-)
+so far I keep responding ^.^
+so far I keep responding ^.^
+so far I keep responding ^.^
+so far I keep responding ^.^
+so far I keep responding ^.^
+so far I keep responding ^.^
+OVER!  :O
+ I am thread 0 (MESSAGE ANSWERER) and I have finished doing my job ;-)
+about to enter 'omp critical unclaimed'
+about to enter 'second branch of the end'
+OVER!  :O
+ I am thread 0 (MESSAGE ANSWERER) and I have finished doing my job ;-)
+about to enter 'omp critical unclaimed'
+about to enter 'second branch of the end'
+so far I keep responding ^.^
+so far I keep responding ^.^
+OVER!  :O
+ I am thread 0 (MESSAGE ANSWERER) and I have finished doing my job ;-)
+about to enter 'omp critical unclaimed'
+about to enter 'second branch of the end'
+OVER!  :O
+ I am thread 0 (MESSAGE ANSWERER) and I have finished doing my job ;-)
+about to enter 'omp critical unclaimed'
+about to enter 'second branch of the end'
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 1
+active (total) are 1 and finalized are 1
+active (total) are 1 and finalized are 1
+active (total) are 1 and finalized are 1
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+OVER!  :O
+ I am thread 0 (MESSAGE ANSWERER) and I have finished doing my job ;-)
+about to enter 'omp critical unclaimed'
+about to enter 'second branch of the end'
+OVER!  :O
+ I am thread 0 (MESSAGE ANSWERER) and I have finished doing my job ;-)
+about to enter 'omp critical unclaimed'
+about to enter 'second branch of the end'
+OVER!  :O
+ I am thread 0 (MESSAGE ANSWERER) and I have finished doing my job ;-)
+about to enter 'omp critical unclaimed'
+about to enter 'second branch of the end'
+OVER!  :O
+ I am thread 0 (MESSAGE ANSWERER) and I have finished doing my job ;-)
+about to enter 'omp critical unclaimed'
+about to enter 'second branch of the end'
+active (total) are 1 and finalized are 1
+active (total) are 1 and finalized are 1
+active (total) are 1 and finalized are 1
+active (total) are 1 and finalized are 1
+The (SECOND) cherry of the cake (-;
+exitedAbout to synchronizeDone
+
+
+\n
+
+
+
+
+The (SECOND) cherry of the cake (-;
+exitedAbout to synchronizeDone
+
+
+\n
+
+
+
+
+The (SECOND) cherry of the cake (-;
+The (SECOND) cherry of the cake (-;
+exitedAbout to synchronizeDone
+
+
+\n
+
+
+
+
+The (SECOND) cherry of the cake (-;
+exitedAbout to synchronizeDone
+
+
+\n
+
+
+
+
+The (SECOND) cherry of the cake (-;
+exitedAbout to synchronizeDone
+
+
+\n
+
+
+
+
+The (SECOND) cherry of the cake (-;
+exitedAbout to synchronizeDone
+
+
+\n
+
+
+
+
+The (SECOND) cherry of the cake (-;
+exitedAbout to synchronizeDone
+
+
+\n
+
+
+
+
+exitedAbout to synchronizeDone
+
+
+\n
+
+
+
+
+[info][informal-test] (apparent) success 'single_kuramoto_evolution' with runge kutta (3 of 3) informs: barrier has been successfully applied!
+[info][informal-test] about to run 'showVertex'
+[info][informal-test] (apparent) success 'showVertex' informs: barrier has been successfully applied!
+[info][informal-test] (apparent) success 'test_Ring_graph_singlestep_evolution'
+End of script has been reached

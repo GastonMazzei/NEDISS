@@ -20,6 +20,8 @@ void build_answer(double &answer, ReferenceContainer &REF, double ix, int owner,
     exit(1);
 }
 
+
+
 void respond_value(ReferenceContainer &REF, double ix, int owner, int MyNProc){
     auto vs = vertices(*REF.p_g);
     for (auto v = vs.first; v != vs.second; ++v){

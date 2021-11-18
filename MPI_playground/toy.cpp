@@ -63,14 +63,8 @@ void fun2(int &ready){
 		MPI_Recv(&response[i], 1, MPI_INT, (int) ( (world_rank + 1) % world_size), i, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 	    printf("Recieved! %d\n", response[i]);
 	}
-//	int newval=1;
-//	printf("Finished the loop");
-//	MPI_Ssend(&newval, 1, MPI_INT,(int) ( (world_rank + 1) % world_size), 9999, MPI_COMM_WORLD);
-//    	printf("finished 1 of 2 extra loops");
-//	MPI_Recv(&newval, 1, MPI_INT, (int) ( (world_rank + 1) % world_size), 1000, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-//	printf("ENDED!");
-//#pragma omp atomic write
-//	ready = 1;
+#pragma omp atomic update
+    ++ready;
 	return;
 }
 
@@ -113,9 +107,23 @@ void fun1(int &ready){
             ++i;
         }
     }
+#pragma omp atomic update
+    ++ready;
 	return;
 }
 
+void run_sync(int &ready){
+    int tmp;
+#pragma omp atomic read
+    tmp = ready;
+    while (tmp != 2){
+        printf("not ready yet! :-)\n");
+        mssleep(50);
+#pragma omp atomic read
+        tmp = ready;
+        printf("Checking again if it's ready!\n");
+    }
+}
 
 
 
@@ -124,17 +132,20 @@ int main(int argc, char** argv){
 	int provided;
 	MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &provided);
 
-#pragma omp parallel num_threads(5)
+#pragma omp parallel num_threads(3)
 {
 long MYNUM = omp_get_thread_num();	
 
 	if (MYNUM == 0){
 		fun1(ready);
 	}
-	else {
+	else if (MYNUM == 1) {
 		fun2(ready);
+	} else {
+	    run_sync(ready);
 	}
 
 }
+MPI_Barrier(MPI_COMM_WORLD);
 MPI_Finalize();
 }
