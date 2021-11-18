@@ -81,10 +81,12 @@ ReferenceContainer::ReferenceContainer(ParallelHelper &ParHelper,
                                        IntegrationHelper & IntHelper,
                                        int & TOT,
                                        int & PENDING_INT,
-                                       MappingHelper & MapHelper){
+                                       MappingHelper & MapHelper,
+                                       bool keepResponding){
     p_ParHelper = &ParHelper;
     p_ComHelper = &ComHelper;
     p_MapHelper = &MapHelper;
+    p_keepResponding = &keepResponding;
     p_PENDING_INT = &PENDING_INT;
     p_g = &g;
     p_CHECKED = &CHECKED;

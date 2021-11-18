@@ -22,6 +22,59 @@ void build_answer(double &answer, ReferenceContainer &REF, double ix, int owner,
 
 
 
+<<<<<<< HEAD
+=======
+
+void build_answer_edges(double * answer, ReferenceContainer &REF, double * ix, int owner, int MyNProc){
+
+    // Iterate through nodes
+    bool found = false;
+    auto vs = vertices(*REF.p_g);
+    auto v = vs.first;
+    while ((v != vs.second) && (!found)){
+        if (get(REF.p_MapHelper->NodeOwner,*v)==MyNProc) {
+
+            // If I am the owner, test if this node has the index I'm looking for
+            if (get(get(boost::vertex_index, *(REF.p_g)), *v) == *(ix+1)) {
+
+                // If this is the node this code was aimed to, iterate through neighbrors
+                auto neighbors = boost::adjacent_vertices(*v, *REF.p_g);
+                auto n = neighbors.first;
+                while ((n != neighbors.second) && (!found)) {
+
+                    //Iterate through neighbors looking for the correct edge ;-)
+                    if (get(REF.p_MapHelper->NodeOwner, *n) == owner) {
+
+                        // If this neighbor is owned by the requester
+                        if (get(get(boost::vertex_index, *(REF.p_g)), *v) == *ix) {
+
+                            // If its index is the one the requester refered to
+                            found = true;
+                            printf("Found the requested node attached to the requested edge!\n");
+                            auto e = edge(*v, *n, *(REF.p_g));
+                            if (e.second != 1) {
+                                printf("[FATAL] Requested edge did not exist!!!");
+                                exit(1);
+                            }
+                            int TAG = OFFSET + *ix;
+                            *answer = (*(REF.p_g))[*v].value;
+                            *(answer + 1) = (*(REF.p_g))[e.first].value;
+                        }
+                    }
+                    ++n;
+                }
+            }
+        }
+        ++v;
+    }
+    PRINTF_DBG("[CRITICAL] THE NODE WAS NOT FOUND\n");std::cout<<std::flush;
+    exit(1);
+}
+
+
+
+
+>>>>>>> 65ccd9ca8f10c161f228e26fb12ab3582524caa1
 void respond_value(ReferenceContainer &REF, double ix, int owner, int MyNProc){
     auto vs = vertices(*REF.p_g);
     for (auto v = vs.first; v != vs.second; ++v){
@@ -66,54 +119,6 @@ void irespond_value(ReferenceContainer &REF, double ix, int owner, MPI_Request &
 
 
 
-// OFFSET+ix[0] is the tag,
-// Then find values of the node ix[1] and the edge that connects
-// that node with the one indexed as ix[0] from the owner
-void irespond_value_edges(ReferenceContainer &REF,
-                          double *ix,
-                          int owner,
-                          MPI_Request & R,
-                          int MyNProc){
-    // Iterate through nodes
-    bool found = false;
-    auto vs = vertices(*REF.p_g);
-    auto v = vs.first;
-    while ((v != vs.second) && (!found)){
-        if (get(REF.p_MapHelper->NodeOwner,*v)==MyNProc) {
-            // If I am the owner, test if this node has the index I'm looking for
-            if (get(get(boost::vertex_index, *(REF.p_g)), *v) == *(ix+1)) {
-                // If this is the node this code was aimed to, iterate through neighbrors
-                auto neighbors = boost::adjacent_vertices(*v, *REF.p_g);
-                auto n = neighbors.first;
-                while ((n != neighbors.second) && (!found)) {
-                    //Iterate through neighbors looking for the correct edge ;-)
-                    if (get(REF.p_MapHelper->NodeOwner, *n) == owner) {
-                        // If this neighbor is owned by the requester
-                        if (get(get(boost::vertex_index, *(REF.p_g)), *v) == *ix) {
-                            // If its index is the one the requester refered to
-                            found = true;
-                            printf("Found the requested node attached to the requested edge!\n");
-                            auto e = edge(*v, *n, *(REF.p_g));
-                            if (e.second != 1) {
-                                printf("[FATAL] Requested edge did not exist!!!");
-                                exit(1);
-                            }
-                            int TAG = OFFSET + *ix;
-                            // WARNING: we overwrite data on 'ix' to make use of the non-locally-scoped buffer
-                            *ix = (*(REF.p_g))[*v].value;
-                            *(ix + 1) = (*(REF.p_g))[e.first].value;
-                            send_nonblocking2(owner, R, (*ix), TAG);
-                        }
-                    }
-                    ++n;
-                }
-            }
-        }
-        ++v;
-    }
-    PRINTF_DBG("[CRITICAL] THE EDGE + NODE WAS NOT FOUND\n");std::cout<<std::flush;
-    exit(1);
-};
 
 
 

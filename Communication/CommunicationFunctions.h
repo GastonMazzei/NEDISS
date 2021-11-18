@@ -233,7 +233,7 @@ void perform_requests(int NNodes,
                 }
             }
 
-                    // race-condition unfriendly? Only extensive testing will help us decide :^|
+            // race-condition unfriendly? Only extensive testing will help us decide :^|
             for (auto _it= itBeg; _it != itEnd; ++_it) {
                 auto &thread = *_it;
                 for (auto it =  thread.begin();it != thread.end(); it++){
@@ -244,9 +244,15 @@ void perform_requests(int NNodes,
                     their_vix[QAvailable.front()] = std::get<2>(*it);
                     // Build the result
                     results[QAvailable.front()] = std::make_tuple(0, // placeholder until we get the correct val
+<<<<<<< HEAD
                                                       std::get<0>(*it), // we are inaugurating this indexing model [:<)
                                                       owner[QAvailable.front()] * N + their_vix[QAvailable.front()]);
                     PRINTF_DBG("[PR] About to ask for one node!\n");std::cout<<std::flush;
+=======
+                                                                  std::get<0>(*it), // we are inaugurating this indexing model [:<)
+                                                                  owner[QAvailable.front()] * N + their_vix[QAvailable.front()]);
+                    printf("[PR] About to ask for one node!\n");std::cout<<std::flush;
+>>>>>>> 65ccd9ca8f10c161f228e26fb12ab3582524caa1
                     MPI_Ssend(&their_vix[QAvailable.front()],
                               1,
                               MPI_DOUBLE,
@@ -540,9 +546,9 @@ void perform_requests(int NNodes,
 
 
 #pragma critical
-{
-            REF.p_READY_FOR_INTEGRATION->push(ix);
-}
+            {
+                REF.p_READY_FOR_INTEGRATION->push(ix);
+            }
             ++total_processed;
 
         } else {
@@ -554,13 +560,13 @@ void perform_requests(int NNodes,
         }
         ix_update = false;
 #pragma omp critical
-{
-        if (!REF.p_CHECKED->empty()) {
-            ix = REF.p_CHECKED->front();
-            REF.p_CHECKED->pop();
-            ix_update = true;
+        {
+            if (!REF.p_CHECKED->empty()) {
+                ix = REF.p_CHECKED->front();
+                REF.p_CHECKED->pop();
+                ix_update = true;
+            }
         }
-}
         // Add to the number of totals processed the ones from previous lap :-)
         if (total_processed != 0) {
 #pragma omp atomic update
@@ -574,8 +580,12 @@ void perform_requests(int NNodes,
             globalstatus = (atomic_helper < NNodes); // this should be a strict equality but its buggy :^(
         }
         PRINTF_DBG("TOT=%d, NNodes=%d, ix_update=%d, total_processed=%d, ix=%d\n",
+<<<<<<< HEAD
                atomic_helper, NNodes, ix_update, total_processed, ix);std::cout<<std::flush;
         if (globalstatus && (!ix_update)) mssleep(5);
+=======
+                   atomic_helper, NNodes, ix_update, total_processed, ix);std::cout<<std::flush;
+>>>>>>> 65ccd9ca8f10c161f228e26fb12ab3582524caa1
     }
     PRINTF_DBG("Final termination of perform_requests :-)\n");std::cout<<std::flush;
 
