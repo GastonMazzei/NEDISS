@@ -31,148 +31,6 @@ void irespond_value_edges(ReferenceContainer &REF, double *ix, int owner, MPI_Re
 void send_nonblocking2(int owner, MPI_Request &r, double &ix, int TAG);
 void build_answer(double &answer, ReferenceContainer &REF, double ix, int owner, int MyNProc);
 
-// OLD ANSWER MESSAGES
-//
-//template<int DT, int TIMETOL, int BATCH>
-//void answer_messages(ReferenceContainer &REF,int MYTHR) {
-//
-//    int MYPROC = REF.p_ComHelper->WORLD_RANK[MYTHR];
-//    int NPROCS = REF.p_ComHelper->WORLD_SIZE[MYTHR];
-//    std::vector<MPI_Request> R_tot;
-//    std::vector<MPI_Request> R_send;
-//    std::vector<double> ix;
-//    int NDISPATCHED = 0;
-//
-//    // lay the probes for all the p rocs
-//    int flagprobes[NPROCS];
-//    int probe_status = 1;
-//    int statusreq_status = 1;
-//    for (int i = 0; i < NPROCS; i++) {
-//        flagprobes[i] = 0;
-//        if (i != MYPROC) {
-//            probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
-//            while (probe_status!=0){
-//                probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
-//            }
-//        }
-//    }
-//
-//    // initialize auxiliary variables
-//    std::uniform_int_distribution<int> gen(0, NPROCS - 1);   // This three lines could be
-//    unsigned int SEED = std::stoi(std::getenv("SEED"));   // encapsulated inside REF
-//    std::mt19937 rng(SEED);                              // :-) and we make it 'more efficient' lol
-//    int ticks = 0;
-//    std::set<int> answered;
-//    answered.insert(MYPROC);
-//    //double ix;
-//    int i = gen(rng); // initial processor to which check if we can respond to
-//    if (i == MYPROC){
-//        ++i;
-//        if (i>=NPROCS){
-//            i=0;
-//        }
-//    }
-//    int statusFree = 0;
-//    int NTOT = 0;
-//    int status = 0;
-//    int status_localreq = 0;
-//    int NERR = 0;
-//
-//    for (int tk = 0; tk < TIMETOL; ++tk) {
-//        for (int j = 0; j < BATCH; ++j) {
-//            // Re-probe it :-)
-//            probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
-//            while (probe_status!=0){
-//                probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
-//            }
-//
-//            if (flagprobes[i] == 1) { // a message appears to be available! recieve it!
-//
-//                // Print the first three elements in the asynchronous probe :-)
-//                PRINTF_DBG("|%d %d %d|\n",flagprobes[0] , flagprobes[1] , flagprobes[2]);std::cout<<std::flush;
-//
-//                // Try to recieve it
-//                R_tot.push_back(MPI_Request());
-//                ix.push_back((double) 0);
-//                recv_nonblocking(i, R_tot[R_tot.size() - 1], ix[R_tot.size() - 1], VERTEXVAL_REQUEST_FLAG);
-//
-//                status_localreq = 0;
-//                int localtimecounter = 0;
-//                while ((status_localreq != 1) && (localtimecounter < TIMETOL)){
-//                    statusreq_status = MPI_Test(&R_tot[R_tot.size() - 1], &status_localreq, MPI_STATUS_IGNORE);
-//                    while (statusreq_status != 0) {
-//                        statusreq_status = MPI_Test(&R_tot[R_tot.size() - 1], &status_localreq, MPI_STATUS_IGNORE);
-//                    }
-//                    localtimecounter++;
-//                    //mssleep(DT);
-//                }
-//
-//
-//                if (status_localreq == 1) { // If we were first to capture the message, proceed.
-//                    R_send.push_back(MPI_Request());
-//                    PRINTF_DBG("We effectively captured a vertex info request :-)\n");
-//                    irespond_value(REF, ix[R_tot.size() - 1], i, R_send[R_send.size() - 1], MYPROC);
-//                    ++NTOT;
-//                    PRINTF_DBG("We effectively answered asynchronously a vertex info request :-)\n");
-//                    NDISPATCHED++;
-//                } else {
-//                    // MPI_Test didnt destroy the request, so explicitly free it
-//                    statusFree = MPI_Request_free(&R_tot[R_tot.size() - 1]);
-//                    PRINTF_DBG("We were faced with a probe that indicated an incoming message but we couldnt capture it :o\n");
-//                }
-//
-//                // Reset vars.
-//                status_localreq = 0;
-//                flagprobes[i] = 0;
-//            }
-//
-//
-//
-//            // For next iteration
-//            ++i;
-//            if (i == MYPROC) ++i;
-//            if (i >= NPROCS) {
-//                if (MYPROC!=0) {
-//                    i = 0;
-//                } else {
-//                    i = 1;
-//                }
-//            }
-//        }
-//
-//        // END OF THE BATCH... now we wait for all the sent requests. (In total they can be up to "Batch")
-//        if (R_send.size() > 0) {
-//
-//            // WHY NOT JUST WAITALL
-//
-//            PRINTF_DBG("ENDing answer_messages. Caught (R_tot)=%d requests, Answered (R_send)=%d.\n",
-//                       R_tot.size(),R_send.size());
-//
-////            int status_of_getstatus = 1;
-////            for (int i = 0; i < R_send.size(); ++i) {
-////                status_of_getstatus = MPI_Test(&R_send[i], &status_localreq, MPI_STATUS_IGNORE);
-////                while (status_of_getstatus != 0) {
-////                    PRINTF_DBG("Failing to test a request, its returning %d\n", status_of_getstatus);
-////                    status_of_getstatus = MPI_Test(&R_send[i], &status_localreq, MPI_STATUS_IGNORE);
-////                }
-////
-////                if (status_localreq == 0) {
-////                    PRINTF_DBG("We are currently waiting for a send to be completed\n");
-////                    MPI_Wait(&R_send[i], MPI_STATUS_IGNORE);
-////                    PRINTF_DBG("Successfully waited the request to be completed\n");
-////                }
-////            }
-//        }
-//
-//        std::vector<MPI_Request> R_tot;
-//        std::vector<MPI_Request> R_send;
-//        std::vector<double> ix;
-//        //mssleep(DT);
-//        ++ticks;
-//    }
-//    //printf("---answer_request heartbeat---\n");std::cout<<std::flush;
-//};
-
 
 
 template<int DT, int TIMETOL, int BATCH>
@@ -200,66 +58,102 @@ void answer_messages(ReferenceContainer &REF,int MYTHR) {
     while (TRIES < 3){
         MPI_Status status;
         if ((flag == 1) || firstlap) {
+            flag = 0;
             buffer = -9995.0;
             R = MPI_Request();
-            MPI_Irecv(&buffer, 1, MPI_DOUBLE,
-                      MPI_ANY_SOURCE,
-                      VERTEXVAL_REQUEST_FLAG,
-                      MPI_COMM_WORLD,
-                      &R);
-//            MPI_Improbe(MPI_ANY_SOURCE, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD,
-//                    &flag, &message, &status);
+            M = MPI_Message();
+            S = MPI_Status();
+
+            MPI_Improbe(MPI_ANY_SOURCE, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD,
+                    &flag, &M, &status);
         }
         if (firstlap) firstlap = false;
-        MPI_Request_get_status(R, &flag, &status);
+
         while ((flag != 1) && (t<TIMETOL)){
-            MPI_Request_get_status(R, &flag, &status);
+
+            MPI_Improbe(MPI_ANY_SOURCE, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD,
+                        &flag, &M, &status);
             ++t;
             mssleep(DT);
         }
         if (t>=TIMETOL) ++TRIES;
         t=0;
         if (flag == 1){
-            build_answer(answer, REF, buffer, status.MPI_SOURCE, MYPROC);
+            MPI_Mrecv(&buffer, 1, MPI_DOUBLE, &M, &S);
+            build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
             PRINTF_DBG("About to send one!\n");std::cout<<std::flush;
-            MPI_Ssend(&answer, 1, MPI_DOUBLE, status.MPI_SOURCE, (int) buffer, MPI_COMM_WORLD);
+            MPI_Ssend(&answer, 1, MPI_DOUBLE, S.MPI_SOURCE, (int) buffer, MPI_COMM_WORLD);
             PRINTF_DBG("Correctly sent one!\n");std::cout<<std::flush;
         }
     }
-    int flag1=-437, flag2=-437;
-    MPI_Status status1, status2;
-    status1.MPI_ERROR = -999;
-    status2.MPI_ERROR = -999;
-    MPI_Test(&R, &flag1, &status1);
-    if (flag1 != 1){
-        MPI_Cancel(&R);
-        MPI_Test_cancelled(&status2, &flag2);
-    }
-    if ((flag1 == 1) || ((flag1!=1) && (flag2!=1))) {
+};
 
-        if (flag1 == 1) {
-            build_answer(answer, REF, buffer, status1.MPI_SOURCE, MYPROC);
-            printf("A request failed to be cancelled, we are assuming we recieved it! we computed val = %f, recieved buffer = %f ; flags12 = %d %d ;  source = %d ; tag = %d; error = %d\n",
-                   answer, buffer, flag1, flag2, status1.MPI_SOURCE, status1.MPI_TAG, status1.MPI_ERROR);
-            std::cout << std::flush;
 
-            MPI_Ssend(&answer, 1, MPI_DOUBLE, status1.MPI_SOURCE, (int) buffer, MPI_COMM_WORLD);
 
-            printf("Completed!\n");
-            std::cout << std::flush;
 
-        } else {
-            printf("A request failed to be cancelled: will ignore it. Recieved buffer = %f ; flags12 = %d %d ;  source = %d ; tag = %d ; status error = %d. Look at status 1: source %d tag %d error %d\n",
-                   buffer, flag1, flag2, status2.MPI_SOURCE, status2.MPI_TAG, status2.MPI_ERROR,status1.MPI_SOURCE, status1.MPI_TAG, status1.MPI_ERROR);
-            std::cout << std::flush;
+
+
+template<int DT, int TIMETOL, int BATCH>
+void answer_messages_edges(ReferenceContainer &REF,int MYTHR) {
+
+    int MYPROC = REF.p_ComHelper->WORLD_RANK[MYTHR];
+    int NPROCS = REF.p_ComHelper->WORLD_SIZE[MYTHR];
+    int NDISPATCHED = 0;
+    int flag;
+    int probe_status = 1;
+    double ix;
+    int statusreq_status = 1;
+    double buffer[2];
+    double answer[2];
+    int ticks = 0;
+    int statusFree = 0;
+    int NTOT = 0;
+    int NERR = 0;
+    MPI_Message M;
+    MPI_Status  S;
+    MPI_Request R;
+    int TRIES=0;
+    int t=0;
+    bool firstlap=true;
+    while (TRIES < 3){
+        MPI_Status status;
+        if ((flag == 1) || firstlap) {
+            flag = 0;
+            buffer = -9995.0;
+            R = MPI_Request();
+            M = MPI_Message();
+            S = MPI_Status();
+
+            MPI_Improbe(MPI_ANY_SOURCE, EDGEVAL_REQUEST_FLAG, MPI_COMM_WORLD,
+                        &flag, &M, &status);
         }
-        // Strategy 2B: responding asynchronously just in case?
-//        printf("A request failed to be cancelled, we are assuming we recieved it! (async answer)\n");std::cout<<std::flush;
-//        build_answer(answer, REF, buffer, status.MPI_SOURCE, MYPROC);
-//        MPI_Ssend(&answer, 1, MPI_DOUBLE, status.MPI_SOURCE, (int) buffer, MPI_COMM_WORLD);
+        if (firstlap) firstlap = false;
 
+        while ((flag != 1) && (t<TIMETOL)){
+
+            MPI_Improbe(MPI_ANY_SOURCE, EDGEVAL_REQUEST_FLAG, MPI_COMM_WORLD,
+                        &flag, &M, &status);
+            ++t;
+            mssleep(DT);
+        }
+        if (t>=TIMETOL) ++TRIES;
+        t=0;
+        if (flag == 1){
+            MPI_Mrecv(&buffer[0], 2, MPI_DOUBLE, &M, &S);
+            build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
+            PRINTF_DBG("About to send one!\n");std::cout<<std::flush;
+            MPI_Ssend(&answer[0],
+                      2,
+                      MPI_DOUBLE,
+                      S.MPI_SOURCE,
+                      (int) ((int) buffer[0] + (int) OFFSET),
+                      MPI_COMM_WORLD);
+            PRINTF_DBG("Correctly sent one!\n");std::cout<<std::flush;
+        }
     }
 };
+
+
 
 
 

@@ -144,10 +144,7 @@ void single_evolution(Graph &g,
                 //answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
 #pragma omp atomic read
                 atomic_bool = keep_responding;
-
-                mssleep(300);
-                printf("so far I keep responding ^.^ keep_responding is %d\n", atomic_bool);
-
+                mssleep(DT);
             }
 #pragma omp atomic update
             ++finalized_responders;
@@ -318,7 +315,7 @@ void single_evolution(Graph &g,
             atomical_int = TOT;
             are_we_over = (atomical_int >= NVtot); // TODO: same here ;-).
             ++notreadyyet;
-            mssleep(10);
+            mssleep(DT);
             PRINTF_DBG("not ready yet!\n");
         }
 
@@ -333,7 +330,7 @@ void single_evolution(Graph &g,
 #pragma omp atomic read
             aux2 = request_performers_ended;
             are_we_over = (aux1 == aux2);
-            mssleep(1);
+            mssleep(DT);
 //            printf("Padded lap in order to graciously terminate local performance_requests ;-)\n");
         }
 
@@ -364,7 +361,7 @@ void single_evolution(Graph &g,
         auxy2 = finalized_responders;
         int jh=0,jmax=1000;
         while (auxy1 > auxy2){
-            mssleep(5);
+            mssleep(DT);
 #pragma omp atomic read
             auxy2 = finalized_responders;
 #pragma omp atomic read
