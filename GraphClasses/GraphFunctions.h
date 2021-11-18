@@ -463,7 +463,7 @@ void single_evolution(Graph &g,
 PRINTF_DBG("exited");
     PRINTF_DBG("About to synchronize");std::cout<<std::flush;
     MPI_Barrier(MPI_COMM_WORLD);
-    printf("Done");std::cout<<std::flush;
+    printf("-^-Anti-Deadlock-Heartbeat-^-");std::cout<<std::flush;
     PRINTF_DBG("\n\n\n\\n\n\n\n\n\n");
 }
 
