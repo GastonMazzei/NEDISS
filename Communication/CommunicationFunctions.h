@@ -29,7 +29,148 @@ void respond_value(ReferenceContainer &REF, double ix, int owner, int MyNProc);
 void irespond_value_edges(ReferenceContainer &REF, double *ix, int owner, MPI_Request & R, int MyNProc);
 void send_nonblocking2(int owner, MPI_Request &r, double &ix, int TAG);
 void build_answer(double &answer, ReferenceContainer &REF, double ix, int owner, int MyNProc);
-void build_answer_edges(double * answer, ReferenceContainer &REF, double * ix, int owner, int MyNProc);
+
+// OLD ANSWER MESSAGES
+//
+//template<int DT, int TIMETOL, int BATCH>
+//void answer_messages(ReferenceContainer &REF,int MYTHR) {
+//
+//    int MYPROC = REF.p_ComHelper->WORLD_RANK[MYTHR];
+//    int NPROCS = REF.p_ComHelper->WORLD_SIZE[MYTHR];
+//    std::vector<MPI_Request> R_tot;
+//    std::vector<MPI_Request> R_send;
+//    std::vector<double> ix;
+//    int NDISPATCHED = 0;
+//
+//    // lay the probes for all the p rocs
+//    int flagprobes[NPROCS];
+//    int probe_status = 1;
+//    int statusreq_status = 1;
+//    for (int i = 0; i < NPROCS; i++) {
+//        flagprobes[i] = 0;
+//        if (i != MYPROC) {
+//            probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
+//            while (probe_status!=0){
+//                probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
+//            }
+//        }
+//    }
+//
+//    // initialize auxiliary variables
+//    std::uniform_int_distribution<int> gen(0, NPROCS - 1);   // This three lines could be
+//    unsigned int SEED = std::stoi(std::getenv("SEED"));   // encapsulated inside REF
+//    std::mt19937 rng(SEED);                              // :-) and we make it 'more efficient' lol
+//    int ticks = 0;
+//    std::set<int> answered;
+//    answered.insert(MYPROC);
+//    //double ix;
+//    int i = gen(rng); // initial processor to which check if we can respond to
+//    if (i == MYPROC){
+//        ++i;
+//        if (i>=NPROCS){
+//            i=0;
+//        }
+//    }
+//    int statusFree = 0;
+//    int NTOT = 0;
+//    int status = 0;
+//    int status_localreq = 0;
+//    int NERR = 0;
+//
+//    for (int tk = 0; tk < TIMETOL; ++tk) {
+//        for (int j = 0; j < BATCH; ++j) {
+//            // Re-probe it :-)
+//            probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
+//            while (probe_status!=0){
+//                probe_status = MPI_Iprobe(i, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
+//            }
+//
+//            if (flagprobes[i] == 1) { // a message appears to be available! recieve it!
+//
+//                // Print the first three elements in the asynchronous probe :-)
+//                PRINTF_DBG("|%d %d %d|\n",flagprobes[0] , flagprobes[1] , flagprobes[2]);std::cout<<std::flush;
+//
+//                // Try to recieve it
+//                R_tot.push_back(MPI_Request());
+//                ix.push_back((double) 0);
+//                recv_nonblocking(i, R_tot[R_tot.size() - 1], ix[R_tot.size() - 1], VERTEXVAL_REQUEST_FLAG);
+//
+//                status_localreq = 0;
+//                int localtimecounter = 0;
+//                while ((status_localreq != 1) && (localtimecounter < TIMETOL)){
+//                    statusreq_status = MPI_Test(&R_tot[R_tot.size() - 1], &status_localreq, MPI_STATUS_IGNORE);
+//                    while (statusreq_status != 0) {
+//                        statusreq_status = MPI_Test(&R_tot[R_tot.size() - 1], &status_localreq, MPI_STATUS_IGNORE);
+//                    }
+//                    localtimecounter++;
+//                    //mssleep(DT);
+//                }
+//
+//
+//                if (status_localreq == 1) { // If we were first to capture the message, proceed.
+//                    R_send.push_back(MPI_Request());
+//                    PRINTF_DBG("We effectively captured a vertex info request :-)\n");
+//                    irespond_value(REF, ix[R_tot.size() - 1], i, R_send[R_send.size() - 1], MYPROC);
+//                    ++NTOT;
+//                    PRINTF_DBG("We effectively answered asynchronously a vertex info request :-)\n");
+//                    NDISPATCHED++;
+//                } else {
+//                    // MPI_Test didnt destroy the request, so explicitly free it
+//                    statusFree = MPI_Request_free(&R_tot[R_tot.size() - 1]);
+//                    PRINTF_DBG("We were faced with a probe that indicated an incoming message but we couldnt capture it :o\n");
+//                }
+//
+//                // Reset vars.
+//                status_localreq = 0;
+//                flagprobes[i] = 0;
+//            }
+//
+//
+//
+//            // For next iteration
+//            ++i;
+//            if (i == MYPROC) ++i;
+//            if (i >= NPROCS) {
+//                if (MYPROC!=0) {
+//                    i = 0;
+//                } else {
+//                    i = 1;
+//                }
+//            }
+//        }
+//
+//        // END OF THE BATCH... now we wait for all the sent requests. (In total they can be up to "Batch")
+//        if (R_send.size() > 0) {
+//
+//            // WHY NOT JUST WAITALL
+//
+//            PRINTF_DBG("ENDing answer_messages. Caught (R_tot)=%d requests, Answered (R_send)=%d.\n",
+//                       R_tot.size(),R_send.size());
+//
+////            int status_of_getstatus = 1;
+////            for (int i = 0; i < R_send.size(); ++i) {
+////                status_of_getstatus = MPI_Test(&R_send[i], &status_localreq, MPI_STATUS_IGNORE);
+////                while (status_of_getstatus != 0) {
+////                    PRINTF_DBG("Failing to test a request, its returning %d\n", status_of_getstatus);
+////                    status_of_getstatus = MPI_Test(&R_send[i], &status_localreq, MPI_STATUS_IGNORE);
+////                }
+////
+////                if (status_localreq == 0) {
+////                    PRINTF_DBG("We are currently waiting for a send to be completed\n");
+////                    MPI_Wait(&R_send[i], MPI_STATUS_IGNORE);
+////                    PRINTF_DBG("Successfully waited the request to be completed\n");
+////                }
+////            }
+//        }
+//
+//        std::vector<MPI_Request> R_tot;
+//        std::vector<MPI_Request> R_send;
+//        std::vector<double> ix;
+//        //mssleep(DT);
+//        ++ticks;
+//    }
+//    //printf("---answer_request heartbeat---\n");std::cout<<std::flush;
+//};
 
 
 
@@ -38,14 +179,22 @@ void answer_messages(ReferenceContainer &REF,int MYTHR) {
 
     int MYPROC = REF.p_ComHelper->WORLD_RANK[MYTHR];
     int NPROCS = REF.p_ComHelper->WORLD_SIZE[MYTHR];
+    int NDISPATCHED = 0;
     int flag;
+    int probe_status = 1;
+    double ix;
+    int statusreq_status = 1;
     double buffer;
     double answer;
+    int ticks = 0;
+    int statusFree = 0;
+    int NTOT = 0;
+    int NERR = 0;
+
     MPI_Request R;
     int TRIES=0;
     int t=0;
     bool firstlap=true;
-
     while (TRIES < 3){
         MPI_Status status;
         if ((flag == 1) || firstlap) {
@@ -78,8 +227,7 @@ void answer_messages(ReferenceContainer &REF,int MYTHR) {
     MPI_Test_cancelled(&status, &flag);
     if (flag!=1) {
         //MPI_Wait(&R, MPI_STATUS_IGNORE)
-        printf("A request failed to be cancelled, we are assuming we recieved it!\n");
-        std::cout<<std::flush;
+        printf("A request failed to be cancelled, we are assuming we recieved it!\n");std::cout<<std::flush;
         build_answer(answer, REF, buffer, status.MPI_SOURCE, MYPROC);
         MPI_Ssend(&answer, 1, MPI_INT, status.MPI_SOURCE, (int) buffer, MPI_COMM_WORLD);
     }
@@ -87,74 +235,138 @@ void answer_messages(ReferenceContainer &REF,int MYTHR) {
 
 
 
-
-
-
-
-
-
 template<int DT, int TIMETOL, int BATCH>
 void answer_messages_edges(ReferenceContainer &REF,int MYTHR) {
+    // (1) recieve two numbers: my and the other's node index :K
+    // (2) send through channel OFFSET+OWNER_INDEX  [vertexval, edgeval]
 
     int MYPROC = REF.p_ComHelper->WORLD_RANK[MYTHR];
     int NPROCS = REF.p_ComHelper->WORLD_SIZE[MYTHR];
-    int flag;
-    double buffer[2];
-    double answer[2];
-    MPI_Request R;
-    int TRIES=0;
-    int t=0;
-    bool firstlap=true;
+    std::vector<MPI_Request> R_tot;
+    std::vector<MPI_Request> R_send;
+    int NDISPATCHED = 0;
 
-    while (TRIES < 3){
-        MPI_Status status;
-        if ((flag == 1) || firstlap) {
-            R = MPI_Request();
-            MPI_Irecv(&buffer,
-                      2,
-                      MPI_DOUBLE,
-                      MPI_ANY_SOURCE,
-                      EDGEVAL_REQUEST_FLAG,
-                      MPI_COMM_WORLD,
-                      &R);
-        }
-        if (firstlap) firstlap = false;
-        MPI_Request_get_status(R, &flag, &status);
-        while ((flag != 1) && (t<TIMETOL)){
-            MPI_Request_get_status(R, &flag, &status);
-            ++t;
-            mssleep(DT);
-        }
-        if (t>=TIMETOL) ++TRIES;
-        t=0;
-        if (flag == 1){
-            build_answer_edges(&answer[0], REF, &buffer[0], status.MPI_SOURCE, MYPROC);
-            printf("About to send one!\n");std::cout<<std::flush;
-            MPI_Ssend(&answer,
-                      2,
-                      MPI_DOUBLE,
-                      status.MPI_SOURCE,
-                      (int) (buffer[0] + OFFSET),
-                      MPI_COMM_WORLD);
-            printf("Correctly sent one!\n");std::cout<<std::flush;
+    // lay the probes for all the p rocs
+    int flagprobes[NPROCS];
+    int probe_status = 1;
+    int statusreq_status = 1;
+    for (int i = 0; i < NPROCS; i++) {
+        flagprobes[i] = 0;
+        if (i != MYPROC) {
+            probe_status = MPI_Iprobe(i, EDGEVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
+            while (probe_status!=0){
+                probe_status = MPI_Iprobe(i, EDGEVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
+            }
         }
     }
-    MPI_Cancel(&R);
-    MPI_Status status;
-    MPI_Request_get_status(R, &flag, &status);
-    MPI_Test_cancelled(&status, &flag);
-    if (flag!=1) {
-        //MPI_Wait(&R, MPI_STATUS_IGNORE)
-        printf("A request failed to be cancelled, we are assuming we recieved it!\n");
-        std::cout<<std::flush;
-        build_answer_edges(&answer[0], REF, &buffer[0], status.MPI_SOURCE, MYPROC);
-        MPI_Ssend(&answer,
-                  2,
-                  MPI_DOUBLE,
-                  status.MPI_SOURCE,
-                  (int) (buffer[0] + OFFSET),
-                  MPI_COMM_WORLD);
+
+    // initialize auxiliary variables
+    std::uniform_int_distribution<int> gen(0, NPROCS - 1);   // This three lines could be
+    unsigned int SEED = std::stoi(std::getenv("SEED"));   // encapsulated inside REF
+    std::mt19937 rng(SEED);                              // :-) and we make it 'more efficient' lol
+    int ticks = 0;
+    std::set<int> answered;
+    answered.insert(MYPROC);
+    double ix[2];
+    int i = gen(rng); // initial processor to which check if we can respond to
+    if (i == MYPROC){
+        ++i;
+        if (i>=NPROCS){
+            i=0;
+        }
     }
+    int statusFree = 0;
+    int NTOT = 0;
+    int status = 0;
+    int status_localreq = 0;
+    int NERR = 0;
+
+    for (int tk = 0; tk < TIMETOL; ++tk) {
+        for (int j = 0; j < BATCH; ++j) {
+            if (flagprobes[i] == 1) { // a message appears to be available! recieve it!
+
+                // Print the first three elements in the asynchronous probe :-)
+                PRINTF_DBG("|%d %d %d|\n",flagprobes[0] , flagprobes[1] , flagprobes[2]);std::cout<<std::flush;
+
+                // Try to recieve it
+                R_tot.push_back(MPI_Request());
+                recv_nonblocking2(i, R_tot[R_tot.size() - 1], ix[0], EDGEVAL_REQUEST_FLAG);
+
+                status_localreq = 0;
+                int localtimecounter = 0;
+                while ((status_localreq != 1) && (localtimecounter < TIMETOL)){
+                    statusreq_status = MPI_Test(&R_tot[R_tot.size() - 1], &status_localreq, MPI_STATUS_IGNORE);
+                    while (statusreq_status != 0) {
+                        statusreq_status = MPI_Test(&R_tot[R_tot.size() - 1], &status_localreq, MPI_STATUS_IGNORE);
+                    }
+                    localtimecounter++;
+                    //mssleep(DT);
+                }
+
+
+                if (status_localreq == 1) { // If we were first to capture the message, proceed.
+                    R_send.push_back(MPI_Request());
+                    PRINTF_DBG("We effectively captured a vertex info request :-)\n");
+                    irespond_value_edges(REF, &ix[0], i, R_send[R_send.size() - 1], MYPROC);
+                    ++NTOT;
+                    PRINTF_DBG("We effectively answered asynchronously a vertex info request :-)\n");
+                    NDISPATCHED++;
+                } else {
+                    // MPI_Test didnt destroy the request, so explicitly free it
+                    statusFree = MPI_Request_free(&R_tot[R_tot.size() - 1]);
+                    PRINTF_DBG("We were faced with a probe that indicated an incoming message but we couldnt capture it :o\n");
+                }
+
+                // Reset vars.
+                status_localreq = 0;
+                flagprobes[i] = 0;
+            }
+
+            // Re-probe it :-)
+            probe_status = MPI_Iprobe(i, EDGEVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
+            while (probe_status!=0){
+                probe_status = MPI_Iprobe(i, EDGEVAL_REQUEST_FLAG, MPI_COMM_WORLD, &flagprobes[i], MPI_STATUS_IGNORE);
+            }
+
+            // For next iteration
+            ++i;
+            if (i == MYPROC) ++i;
+            if (i >= NPROCS) {
+                if (MYPROC!=0) {
+                    i = 0;
+                } else {
+                    i = 1;
+                }
+            }
+        }
+
+        // END OF THE BATCH... now we wait for all the sent requests. (In total they can be up to "Batch")
+        if (R_send.size() > 0) {
+            PRINTF_DBG("ENDing answer_messages_edges. Caught (R_tot)=%d requests, Answered (R_send)=%d.\n",
+                       R_tot.size(),R_send.size());
+
+            int status_of_getstatus = 1;
+            for (int i = 0; i < R_send.size(); ++i) {
+                status_of_getstatus = MPI_Test(&R_send[i], &status_localreq, MPI_STATUS_IGNORE);
+                while (status_of_getstatus != 0) {
+                    PRINTF_DBG("Failing to test a request, its returning %d\n", status_of_getstatus);
+                    status_of_getstatus = MPI_Test(&R_send[i], &status_localreq, MPI_STATUS_IGNORE);
+                }
+
+                if (status_localreq == 0) {
+                    PRINTF_DBG("[AM] We are currently waiting for a send to be completed\n");
+                    MPI_Wait(&R_send[i], MPI_STATUS_IGNORE);
+                    PRINTF_DBG("[AM] Successfully waited the request to be completed\n");
+                }
+            }
+        }
+
+        std::vector<MPI_Request> R_tot;
+        std::vector<MPI_Request> R_send;
+        //mssleep(DT);
+        ++ticks;
+    }
+    //printf("---answer_request heartbeat---\n");std::cout<<std::flush;
 };
 
 
@@ -233,7 +445,7 @@ void perform_requests(int NNodes,
                 }
             }
 
-                    // race-condition unfriendly? Only extensive testing will help us decide :^|
+            // race-condition unfriendly? Only extensive testing will help us decide :^|
             for (auto _it= itBeg; _it != itEnd; ++_it) {
                 auto &thread = *_it;
                 for (auto it =  thread.begin();it != thread.end(); it++){
@@ -244,8 +456,8 @@ void perform_requests(int NNodes,
                     their_vix[QAvailable.front()] = std::get<2>(*it);
                     // Build the result
                     results[QAvailable.front()] = std::make_tuple(0, // placeholder until we get the correct val
-                                                      std::get<0>(*it), // we are inaugurating this indexing model [:<)
-                                                      owner[QAvailable.front()] * N + their_vix[QAvailable.front()]);
+                                                                  std::get<0>(*it), // we are inaugurating this indexing model [:<)
+                                                                  owner[QAvailable.front()] * N + their_vix[QAvailable.front()]);
                     printf("[PR] About to ask for one node!\n");std::cout<<std::flush;
                     MPI_Ssend(&their_vix[QAvailable.front()],
                               1,
@@ -540,9 +752,9 @@ void perform_requests(int NNodes,
 
 
 #pragma critical
-{
-            REF.p_READY_FOR_INTEGRATION->push(ix);
-}
+            {
+                REF.p_READY_FOR_INTEGRATION->push(ix);
+            }
             ++total_processed;
 
         } else {
@@ -554,13 +766,13 @@ void perform_requests(int NNodes,
         }
         ix_update = false;
 #pragma omp critical
-{
-        if (!REF.p_CHECKED->empty()) {
-            ix = REF.p_CHECKED->front();
-            REF.p_CHECKED->pop();
-            ix_update = true;
+        {
+            if (!REF.p_CHECKED->empty()) {
+                ix = REF.p_CHECKED->front();
+                REF.p_CHECKED->pop();
+                ix_update = true;
+            }
         }
-}
         // Add to the number of totals processed the ones from previous lap :-)
         if (total_processed != 0) {
 #pragma omp atomic update
@@ -574,7 +786,7 @@ void perform_requests(int NNodes,
             globalstatus = (atomic_helper < NNodes); // this should be a strict equality but its buggy :^(
         }
         PRINTF_DBG("TOT=%d, NNodes=%d, ix_update=%d, total_processed=%d, ix=%d\n",
-               atomic_helper, NNodes, ix_update, total_processed, ix);std::cout<<std::flush;
+                   atomic_helper, NNodes, ix_update, total_processed, ix);std::cout<<std::flush;
     }
     PRINTF_DBG("Final termination of perform_requests :-)\n");std::cout<<std::flush;
 

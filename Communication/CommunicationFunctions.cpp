@@ -21,6 +21,8 @@ void build_answer(double &answer, ReferenceContainer &REF, double ix, int owner,
 }
 
 
+
+
 void build_answer_edges(double * answer, ReferenceContainer &REF, double * ix, int owner, int MyNProc){
 
     // Iterate through nodes

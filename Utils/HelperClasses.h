@@ -79,6 +79,7 @@ struct ReferenceContainer {
     MappingHelper * p_MapHelper;
     Graph * p_g;
     int * p_TOT;
+    bool * p_keepResponding;
     int * p_PENDING_INT;
     std::queue<long> * p_CHECKED;
     std::queue<long> * p_READY_FOR_INTEGRATION;
@@ -90,7 +91,8 @@ struct ReferenceContainer {
                        IntegrationHelper & IntHelper,
                        int & TOT,
                        int & PENDING_INT,
-                       MappingHelper & MapHelper);
+                       MappingHelper & MapHelper,
+                       bool keepResponding);
 };
 
 
