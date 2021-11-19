@@ -20,7 +20,7 @@ void GeneralDifferentialEquation::UpdateFlowSpecs(std::vector<double> &T1,
                                         std::vector<double> &T2,
                                         std::vector<double> &T3,
                                         std::vector<double> &T4,
-                                        int &N){
+                                        int N){
     Specs.N = N;
     Specs.T1 = T1;
     Specs.T2 = T2;

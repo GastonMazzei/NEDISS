@@ -48,7 +48,7 @@ public:
                                  std::vector<double> &T2,
                                  std::vector<double> &T3,
                                  std::vector<double> &T4,
-                                 int &N);
+                                 int N);
     void Reset(); // reset result to 0
     void BuildForSolver();
 };

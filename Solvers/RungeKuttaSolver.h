@@ -20,7 +20,8 @@ public:
                   std::vector<double> &d,
                   Equation &E,//auto F,// ScalarFlow &F,
                   FlowSpecs &Specs,
-                  double &answer);
+                  double &answer,
+                  double * P);
 };
 
 
@@ -34,10 +35,18 @@ void RungeKuttaSolver<Equation>::evolve(double t,
                                      std::vector<double> &d,
                                      Equation &E,//ScalarFlow &F,
                                      FlowSpecs &Specs,
-                                     double &answer){
-
+                                     double &answer,
+                                     double * P){
+    //E.Field();
     answer = 1.1;
 }
 
+//double t, double a, std::vector<double> &b,
+//std::vector<double> &c,
+//        std::vector<double> &d){
+//// a: central value
+//// b: own parameters
+//// c: neighbor values
+//// d: interactions
 
 #endif //CPPPROJCT_RUNGEKUTTASOLVER_H

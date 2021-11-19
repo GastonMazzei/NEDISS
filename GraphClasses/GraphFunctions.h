@@ -105,7 +105,7 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
             PRINTF_DBG("Finished building vectors! :-)\n");
             // Write the new value in the temporal register
             PRINTF_DBG("Integrating: temporal register was: %f", (*REF.p_g)[*v].temporal_register);
-            double result = 999.0;
+            double result = -420.;
             solver.evolve((*REF.p_IntHelper)[ix].centralValue,
                                           (*REF.p_IntHelper)[ix].centralParams,
                                           neighborValues,
@@ -543,6 +543,8 @@ void single_evolution(Graph &g,
     PRINTF_DBG("exited");
     PRINTF_DBG("About to synchronize");std::cout<<std::flush;
     MPI_Barrier(MPI_COMM_WORLD);
+    PRINTF_DBG("About to increase time by h\n");
+    solver.EvolveTime();
     PRINTF_DBG("Done");
     printf("-^-^-H-E-A-R-T-B-E-A-T-^-^-");
     PRINTF_DBG("\n\n\n\\n\n\n\n\n\n");std::cout<<std::flush;

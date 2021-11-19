@@ -12,7 +12,7 @@
 class NoiselessKuramoto : public GeneralDifferentialEquation {
 public:
     NoiselessKuramoto(): GeneralDifferentialEquation(0){};
-    double Field(double t, double a, std::vector<double> &b,
+    void Field(double t, double a, std::vector<double> &b,
                  std::vector<double> &c,
                  std::vector<double> &d);
 };

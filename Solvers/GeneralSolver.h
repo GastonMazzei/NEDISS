@@ -81,6 +81,10 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype){
         Params[3] = 0;
     } else if (type == "eu") {
         deg = 1;
+        Params[0] = 1;
+        Params[1] = 0;
+        Params[2] = 0;
+        Params[3] = 0;
     } else if (type != "eu") {
         error_report("Only support for Integration is available for the following methods:" + methods_str);
     }
@@ -90,6 +94,10 @@ template <typename DIFFEQ, typename SOLVER>
 GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(){
     type = "eu";
     deg = 1;
+    Params[0] = 1;
+    Params[1] = 0;
+    Params[2] = 0;
+    Params[3] = 0;
 }
 
 template <typename DIFFEQ, typename SOLVER>
@@ -106,7 +114,15 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d) {
         Params[1] = 0.5;
         Params[2] = 0;
         Params[3] = 0;
-    } else if (type != "eu") {
+    } else if (type == "eu") {
+        // Euler order 1 :-)
+        Params[0] = 1;
+        Params[1] = 0;
+        Params[2] = 0;
+        Params[3] = 0;
+        if (d!=1) printf("\n\n[WARNING]\n\nEULER IS ONLY AVAILABLE FOR ORDER 1, DEFAULTING.\n\n");
+        std::cout<<std::flush;
+    } else {
         error_report("Only support for Integration is available for the following methods:" + methods_str);
     }
 };
@@ -135,7 +151,7 @@ void GeneralSolver<DIFFEQ, SOLVER>::evolve(double a,
                                              std::vector<double> &d,
                                              double &answer){
     return Solver.evolve(T.t, T.h, a, b, c, d, DifferentialEquation,
-                         DifferentialEquation.Specs, answer);
+                         DifferentialEquation.Specs, answer, &Params[0]);
 }
 
 template <typename DIFFEQ, typename SOLVER>

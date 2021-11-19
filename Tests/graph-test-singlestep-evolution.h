@@ -77,6 +77,10 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
 
 
     } else if (SOLVER == 1) {
+
+        // Please note that:
+        // DifferentialEquation has
+
         double t[4] = {1,2,2,1};
         GeneralSolver<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>> S_rk("rk",4, t) ;
 
