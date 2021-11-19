@@ -12,29 +12,31 @@ template <typename Equation>
 class RungeKuttaSolver {
 public:
     RungeKuttaSolver(){};
-    double evolve(double t,
+    void evolve(double t,
                   double h,
                   double a,
                   std::vector<double> &b,
                   std::vector<double> &c,
                   std::vector<double> &d,
                   Equation &E,//auto F,// ScalarFlow &F,
-                  FlowSpecs &Specs);
+                  FlowSpecs &Specs,
+                  double &answer);
 };
 
 
 
 template <typename Equation>
-double RungeKuttaSolver<Equation>::evolve(double t,
+void RungeKuttaSolver<Equation>::evolve(double t,
                                      double h,
                                      double a,
                                      std::vector<double> &b,
                                      std::vector<double> &c,
                                      std::vector<double> &d,
                                      Equation &E,//ScalarFlow &F,
-                                     FlowSpecs &Specs){
+                                     FlowSpecs &Specs,
+                                     double &answer){
 
-    return 1.0;
+    answer = 1.1;
 }
 
 

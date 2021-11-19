@@ -79,23 +79,38 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
             }
 
             // Join the data as required by the integrator
+
             std::vector<double> neighborValues;
             std::vector<double> edgeValues;
             neighborValues.resize((*REF.p_IntHelper)[ix].ResultsPendProcess.size());
             edgeValues.resize((*REF.p_IntHelper)[ix].ResultsPendProcess.size());
+            std::vector<InfoVecElem> temp;
+            temp.resize((*REF.p_IntHelper)[ix].ResultsPendProcess.size());
             int _it = 0;
             for (auto const& it : (*REF.p_IntHelper)[ix].ResultsPendProcess) {
-                neighborValues[_it] = std::get<0>(it);
-                edgeValues[_it] = std::get<1>(it);
+                temp[_it]  = it;
                 _it++;
             }
-
+            std::sort(temp.begin(),
+                      temp.end(),
+                      [](InfoVecElem &t1, InfoVecElem &t2) {
+                          return std::get<2>(t1) > std::get<2>(t2);
+                      }
+            );
+            PRINTF_DBG("Finished sorting! :-)\n");
+            for (int j=0; j<temp.size(); ++j){
+                neighborValues[j] = std::get<0>(temp[j]);
+                edgeValues[j] = std::get<1>(temp[j]);
+            }
+            PRINTF_DBG("Finished building vectors! :-)\n");
             // Write the new value in the temporal register
             PRINTF_DBG("Integrating: temporal register was: %f", (*REF.p_g)[*v].temporal_register);
-            double result = solver.evolve((*REF.p_IntHelper)[ix].centralValue,
+            double result = 999.0;
+            solver.evolve((*REF.p_IntHelper)[ix].centralValue,
                                           (*REF.p_IntHelper)[ix].centralParams,
                                           neighborValues,
-                                          edgeValues);
+                                          edgeValues,
+                                          result);
             PRINTF_DBG("Integrating: temporal result was: %f", result);
             (*REF.p_g)[*v].temporal_register = result;
             PRINTF_DBG("Integrating: now it is: %f", (*REF.p_g)[*v].temporal_register);
@@ -267,7 +282,9 @@ void single_evolution(Graph &g,
                 ++i;
 
                 // Capture the central node's values
+                PRINTF_DBG("Accesing values 1\n");std::cout<<std::flush;
                 IntHelper[i].centralValue = g[*v].value;
+                PRINTF_DBG("Accesing values 2\n");std::cout<<std::flush;
                 IntHelper[i].centralParams = g[*v].params;
                 IntHelper[i].build(g, *v, MapHelper, NOwned, rank, NLocals, M);
                 if (NOwned == rank){
@@ -292,8 +309,16 @@ void single_evolution(Graph &g,
                          n != neighbors.first + OmpHelperN.MY_OFFSET_n + OmpHelperN.MY_LENGTH_n; ++n) {
                         auto local_e = edge(*v, *n, g).first;
                         auto local_v = *n;
-                        if (get(MapHelper.Local, *n) == 1) { // Case (1): locally available elements ;-)
-                            if (edge(*v, *n, g).second == 1) {
+                //if (get(MapHelper.Local, *n) == 1) { // Case (1): locally available elements ;-)
+                if (REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n] == get(get(boost::vertex_owner, g), local_v)) {
+                        if (edge(*v, *n, g).second == 1) {
+                                PRINTF_DBG("Accesing values 3: are we the owner? Nowner: %d, we: %d, Vowner %d, Eowner: %d (<-temp placeholder) MapHelper.Local applied to neighbor yields: %d\n",
+						get(get(boost::vertex_owner, g), local_v),
+						process_id(g.process_group()),
+						get(get(boost::vertex_owner, g),*v),
+						0,
+						get(MapHelper.Local, *n));std::cout<<std::flush;
+
 #pragma omp critical         // Just store the results directly in the results.
                                 // we can probably afford being critical as there is
                                 // MPI communication overhead in other threads.
@@ -308,6 +333,8 @@ void single_evolution(Graph &g,
                             } else { error_report("Push back mechanism for local nodes has failed"); };
                         } else { // Case (2.A): We 'see' this neighbor because it is connected
                             // via an edge that we own. Get the edge and record who is the other node's owner
+                            PRINTF_DBG("Accesing values 4\n");std::cout<<std::flush;
+
 #pragma omp critical
                             {
                                 ParHelper.data[i].MissingA[OmpHelperN.MY_THREAD_n].emplace_back(g[local_e].value,
@@ -373,15 +400,6 @@ void single_evolution(Graph &g,
             PRINTF_DBG("This thread is a for worker that has ended :-)\n");
         }
 
-        //mssleep(15000); // keep guys waiting so we focus on MPI debugging ;_)
-
-//    // BYPASS for debugging**
-//#pragma omp atomic write
-//    TOT = NVtot;
-        // **********************
-
-        //printf("I am a thread that  has  arrives to the end of the script :-)\n", ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n]);
-        // The previous code is a race to this point :-) if you didnt arrived first move on lol
         PRINTF_DBG("about to enter 'omp critical unclaimed'\n"); std::cout << std::flush;
 #pragma omp critical
         {
@@ -427,7 +445,6 @@ void single_evolution(Graph &g,
                 aux2 = request_performers_ended;
                 are_we_over = (aux1 == aux2);
                 mssleep(DT);
-    //            printf("Padded lap in order to graciously terminate local performance_requests ;-)\n");
             }
 
             PRINTF_DBG("\n\n\n\n\n\n\WE WERE OVERRR NVtot and TOT are: %d & %d\n\n\n\n", NVtot, TOT);
@@ -481,12 +498,8 @@ void single_evolution(Graph &g,
                 later_mark_finalized = true;
                 }
             while (atomic_bool){
-            //for (int k=0;k<50;++k){
-                //printf("A for worker that is finally responding messages says that we are not over with TOT\n");
-                // 1) Answer some messages
                 answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
                 answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
-
                 // 2) Re-check if we are over
 #pragma omp atomic read
                 atomic_bool = keep_responding;

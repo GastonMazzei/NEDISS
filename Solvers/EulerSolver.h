@@ -11,29 +11,31 @@ template <typename Equation>
 class EulerSolver {
 public:
     EulerSolver(){};
-    double evolve(double t,
+    void evolve(double t,
                   double h,
                   double a,
                   std::vector<double> &b,
                   std::vector<double> &c,
                   std::vector<double> &d,
                   Equation &E,//auto F,// ScalarFlow &F,
-                  FlowSpecs &Specs);
+                  FlowSpecs &Specs,
+                  double &answer);
 };
 
 
 
 template <typename Equation>
-double EulerSolver<Equation>::evolve(double t,
+void EulerSolver<Equation>::evolve(double t,
                            double h,
                            double a,
                            std::vector<double> &b,
                            std::vector<double> &c,
                            std::vector<double> &d,
                            Equation &E,//ScalarFlow &F,
-                           FlowSpecs &Specs){
+                           FlowSpecs &Specs,
+                           double &answer){
 
-    return 1.0;
+    answer = 1.1;
 }
 
 #endif //CPPPROJCT_EULERSOLVER_H

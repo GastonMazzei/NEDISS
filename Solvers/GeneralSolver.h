@@ -42,10 +42,11 @@ public:
 
 
     // main function: evolver
-    double evolve(double a,
+    void evolve(double a,
                 std::vector<double> &b,
                 std::vector<double> &c,
-                std::vector<double> &d);
+                std::vector<double> &d,
+                double &answer);
 
     // Configuration specific to the time structure :-)
     TimeStructure T;
@@ -128,12 +129,13 @@ void GeneralSolver<DIFFEQ, SOLVER>::EvolveTime(){
 
 
 template <typename DIFFEQ, typename SOLVER>
-double GeneralSolver<DIFFEQ, SOLVER>::evolve(double a,
+void GeneralSolver<DIFFEQ, SOLVER>::evolve(double a,
                                              std::vector<double> &b,
                                              std::vector<double> &c,
-                                             std::vector<double> &d){
+                                             std::vector<double> &d,
+                                             double &answer){
     return Solver.evolve(T.t, T.h, a, b, c, d, DifferentialEquation,
-                         DifferentialEquation.Specs);
+                         DifferentialEquation.Specs, answer);
 }
 
 template <typename DIFFEQ, typename SOLVER>
