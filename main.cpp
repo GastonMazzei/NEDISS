@@ -57,21 +57,25 @@ int main(int argc, char** argv)
     const int BATCH = 1; // Keep batch at 1: increasing it enables sending messages of size bigger than 1, but it is not fully implemented in CommunicationFunctions.h.
     const double ErdosRenyiProba = 0.5;
     const int TESTN = std::stoi(std::getenv("TEST"));
+    // Solvers: 0 is Euler, 1 is RungeKutta
+    const int SOLVER = std::stoi(std::getenv("SOLVER"));
+    // Topology: 0 is Ring, 1 is Clique, 2 is Erdos-Renyi
+    const int TOPOLOGY = std::stoi(std::getenv("TOPOLOGY"));
 
     if (TESTN == 0){
         // TEST INITIALIZATION OF ALL NETWORKS INCLUDING THEIR ATTRIBUTES
-        graph_tests_init(SEED, NNodes, ErdosRenyiProba);
+        graph_tests_init(SOLVER, TOPOLOGY, SEED, NNodes, ErdosRenyiProba);
     } else if (TESTN == 1) {
         // TEST SINGLESTEP EVOLUTION 'A COUPLE' OF TIMES
         graph_tests_singlestep_evolution<BATCH>(SEED,
                                             NNodes,
-                                            ErdosRenyiProba);
+                                            ErdosRenyiProba, SOLVER, TOPOLOGY);
     } else if (TESTN == 2){
         // TEST SINGLESTEP EVOLUTION SEVERAL THOUSAND TIMES
         central_test_long_singlestep_run<BATCH>(SEED,
-                                            NNodes,
-                                            ErdosRenyiProba,
-                                            NRUNS);
+                                                NNodes,
+                                                ErdosRenyiProba,
+                                                NRUNS, SOLVER, TOPOLOGY);
 
     }
 

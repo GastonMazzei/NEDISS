@@ -62,7 +62,7 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
 
         if (wait) {
             mssleep(DT);
-            printf("(NOTHING TO INT)\n");std::cout<< std::flush;
+            PRINTF_DBG("(NOTHING TO INT)\n");std::cout<< std::flush;
         } else {
             ++totlaps;
             // Locate the graph vertex :-)

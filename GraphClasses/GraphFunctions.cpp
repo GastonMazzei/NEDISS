@@ -63,9 +63,9 @@ void register_to_value(Graph &g){
     auto start = vs.first ;
     auto end = vs.second;
     for (auto v = start; v != end; ++v) {
-        printf("\nval and temp were: %f %f\n",g[*v].value, g[*v].temporal_register);
+        PRINTF_DBG("\nval and temp were: %f %f\n",g[*v].value, g[*v].temporal_register);
         g[*v].value = g[*v].temporal_register;
-        printf("now are: %f %f\n\n",g[*v].value, g[*v].temporal_register);
+        PRINTF_DBG("now are: %f %f\n\n",g[*v].value, g[*v].temporal_register);
         localtackled++;
     }
 #pragma omp atomic update

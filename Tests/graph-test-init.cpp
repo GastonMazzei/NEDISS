@@ -11,22 +11,29 @@
 
 
 
-void graph_tests_init(unsigned int SEED, int N, double p){
+void graph_tests_init(int SOLVER, int TOPOLOGY, unsigned int SEED, int N, double p){
     // ---CONSTRUCTOR AND INITIALIZATION DEBUGGING---
 
-    // Clique Network
-    reproductibility_lock(SEED);
-    CliqueGraphObject G1(N);
-    test_graph_init<200, CliqueGraphObject>(G1, "Clique");
+    if (TOPOLOGY == 0) {
 
-    // Ring Network
-    reproductibility_lock(SEED);
-    RingGraphObject G2(N);
-    test_graph_init<200, RingGraphObject>(G2, "Ring");
+        // Ring Network
+        reproductibility_lock(SEED);
+        RingGraphObject G2(N);
+        test_graph_init<200, RingGraphObject>(G2, "Ring");
 
+    } else if (TOPOLOGY == 1) {
 
-    // Erdos Renyi Network
-    reproductibility_lock(SEED);
-    ErdosRenyiGraphObject G3(N, p);
-    test_graph_init<200, ErdosRenyiGraphObject>(G3, "ErdosRenyi");
+        // Clique Network
+        reproductibility_lock(SEED);
+        CliqueGraphObject G1(N);
+        test_graph_init<200, CliqueGraphObject>(G1, "Clique");
+
+    } else if (TOPOLOGY == 3) {
+
+        // Erdos Renyi Network
+        reproductibility_lock(SEED);
+        ErdosRenyiGraphObject G3(N, p);
+        test_graph_init<200, ErdosRenyiGraphObject>(G3, "ErdosRenyi");
+
+    }
 }
