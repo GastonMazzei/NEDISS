@@ -20,8 +20,8 @@
 
 
 template<typename DIFFEQ, typename SOLVER>
-void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> &solver){
-
+void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> &solver, int MYPROC){
+    PRINTF_DBG("Starting the contribution to int\n");std::cout<< std::flush;
     // Define timeout utilities
     const int DT= 5;
     int totlaps=0;
@@ -47,12 +47,10 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
 
     // Main loop
     while (keepGoing) {
-        ++totlaps;
-
         // Fetch the data
 #pragma omp critical
         {
-            if (!REF.p_READY_FOR_INTEGRATION->first.empty()){
+            if (!REF.p_READY_FOR_INTEGRATION->second.empty()){
                 ix = REF.p_READY_FOR_INTEGRATION->first.front();
                 uix = REF.p_READY_FOR_INTEGRATION->second.front();
                 REF.p_READY_FOR_INTEGRATION->first.pop();
@@ -64,7 +62,9 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
 
         if (wait) {
             mssleep(DT);
+            printf("(NOTHING TO INT)\n");std::cout<< std::flush;
         } else {
+            ++totlaps;
             // Locate the graph vertex :-)
             PRINTF_DBG("starting to locate this ix: %lu\n",uix);
             v = start;
@@ -91,12 +91,14 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
             }
 
             // Write the new value in the temporal register
-            printf("Integrating: temporal register was: %f", (*REF.p_g)[*v].temporal_register);
-            (*REF.p_g)[*v].temporal_register = solver.evolve((*REF.p_IntHelper)[ix].centralValue,
-                                                             (*REF.p_IntHelper)[ix].centralParams,
-                                                             neighborValues,
-                                                             edgeValues);
-            printf("Integrating: now it is: %f", (*REF.p_g)[*v].temporal_register);
+            PRINTF_DBG("Integrating: temporal register was: %f", (*REF.p_g)[*v].temporal_register);
+            double result = solver.evolve((*REF.p_IntHelper)[ix].centralValue,
+                                          (*REF.p_IntHelper)[ix].centralParams,
+                                          neighborValues,
+                                          edgeValues);
+            PRINTF_DBG("Integrating: temporal result was: %f", result);
+            (*REF.p_g)[*v].temporal_register = result;
+            PRINTF_DBG("Integrating: now it is: %f", (*REF.p_g)[*v].temporal_register);
 
             // Decrease the global value of pending integration
 //#pragma omp critical
@@ -117,7 +119,7 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
         // Recompute the status of 'KeepGoing'
         keepGoing = (remaining != 0);
     }
-    printf("In total performed %d laps!\n",totlaps);std::cout<<std::flush;
+    PRINTF_DBG("In total this thread of PROC %d performed %d laps!\n",MYPROC, totlaps);std::cout<<std::flush;
 }
 
 
@@ -495,12 +497,33 @@ void single_evolution(Graph &g,
                 finalized_responders++;
             }
         }
-        printf("starting to contribute\n");std::cout<<std::flush;
-        contribute_to_integration(REF, solver);
-        printf("ending to contribute\n");std::cout<<std::flush;
+
+        // Integration section
+        PRINTF_DBG("starting to contribute\n");std::cout<<std::flush;
+        int auxv1,auxv2;
+#pragma omp atomic read
+        auxv1 = request_performers;
+#pragma omp atomic read
+        auxv2 = request_performers_ended;
+        bool keep_integrating = (auxv1 > auxv2);
+        while (keep_integrating) {
+            contribute_to_integration(REF, solver,
+                                      REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n]);
+#pragma omp atomic read
+            auxv1 = request_performers;
+#pragma omp atomic read
+            auxv2 = request_performers_ended;
+            keep_integrating = (auxv1 > auxv2);
+            mssleep(DT);
+        }
+        contribute_to_integration(REF, solver,
+                                  REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n]);
+        PRINTF_DBG("ending to contribute\n");std::cout<<std::flush;
+
+
 } // end of the parallel construct
 
-    printf("starting to swap register\n");std::cout<<std::flush;
+    PRINTF_DBG("starting to swap register\n");std::cout<<std::flush;
     // Swap temporal and main registers
     register_to_value(g);
 
