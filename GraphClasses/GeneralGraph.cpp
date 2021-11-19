@@ -9,6 +9,7 @@
 #include "../Utils/adequate_synchronization.h"
 #include "../Utils/memory_management.h"
 #include "../Utils/msleep.h"
+#include <iomanip>
 
 using namespace boost;
 using namespace std;
@@ -40,9 +41,9 @@ void CommonGraphObjectClass::showVertex(Graph &g) {
     vertex_iterator v, v_end;
     for (boost::tie(v, v_end) = vertices(g); v != v_end; ++v) {
         if (g[*v].params.size() > 0) {
-            std::cout << "node w/ value " << g[*v].value << " and first param " << g[*v].params[0] << std::endl;
+            std::cout << "node w/ value " << std::setprecision (15)  << g[*v].value << " and first param " << g[*v].params[0] << std::endl;
         } else {
-            std::cout << "node w/ value " << g[*v].value << std::endl;
+            std::cout << "node w/ value " <<  std::setprecision (15)  << g[*v].value << std::endl;
         }
     }
 }

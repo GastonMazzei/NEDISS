@@ -51,6 +51,7 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
 #pragma omp critical
         {
             if (!REF.p_READY_FOR_INTEGRATION->second.empty()){
+                std::cout << REF.p_READY_FOR_INTEGRATION->second.size() << " and " << REF.p_READY_FOR_INTEGRATION->first.size() << " ARE THE QUEUE SIZES!" << std::endl;
                 ix = REF.p_READY_FOR_INTEGRATION->first.front();
                 uix = REF.p_READY_FOR_INTEGRATION->second.front();
                 REF.p_READY_FOR_INTEGRATION->first.pop();
@@ -67,6 +68,7 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
             ++totlaps;
             // Locate the graph vertex :-)
             PRINTF_DBG("starting to locate this ix: %lu\n",uix);
+            std::cout << "Ixs: " << ix << " and " << uix <<std::endl;
             v = start;
             while (!is_in) {
                 currentuix = (unsigned long) get(get(boost::vertex_index, *(REF.p_g)), *v);
@@ -86,17 +88,37 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
             edgeValues.resize((*REF.p_IntHelper)[ix].ResultsPendProcess.size());
             std::vector<InfoVecElem> temp;
             temp.resize((*REF.p_IntHelper)[ix].ResultsPendProcess.size());
+
             int _it = 0;
-            for (auto const& it : (*REF.p_IntHelper)[ix].ResultsPendProcess) {
-                temp[_it]  = it;
-                _it++;
+            auto it = (*REF.p_IntHelper)[ix].ResultsPendProcess.begin();
+            auto end = (*REF.p_IntHelper)[ix].ResultsPendProcess.end();
+            int oldsize = (*REF.p_IntHelper)[ix].ResultsPendProcess.size();
+            std::set<int> seen;
+            while (it != end){
+                int elemix = std::get<2>(*it);
+                const bool is_in = seen.find(elemix) != seen.end();
+                if (!is_in) {
+                    printf("First appearance of ix: %d for proc: %d. vals are %f & %f\n",ix, MYPROC, std::get<0>(*it), std::get<1>(*it));std::cout<<std::flush;
+                    temp[_it] = *it;
+                    _it++;
+                    seen.insert(elemix);
+                } else {
+                    printf("NOT First appearance of ix: %d for proc: %d. vals are %f & %f\n",ix, MYPROC, std::get<0>(*it), std::get<1>(*it));std::cout<<std::flush;
+                }
+                (*REF.p_IntHelper)[ix].ResultsPendProcess.erase(it++);
             }
+            temp.resize(_it);
+//            for (auto const& it : (*REF.p_IntHelper)[ix].ResultsPendProcess) {
+//                temp[_it]  = it;
+//                _it++;
+//            }
             std::sort(temp.begin(),
                       temp.end(),
                       [](InfoVecElem &t1, InfoVecElem &t2) {
                           return std::get<2>(t1) > std::get<2>(t2);
                       }
             );
+            std::cout << "Temp size is: " << temp.size() << " and the container size is: " << (*REF.p_IntHelper)[ix].ResultsPendProcess.size() << " but it was " << oldsize << std::endl;
             PRINTF_DBG("Finished sorting! :-)\n");
             for (int j=0; j<temp.size(); ++j){
                 neighborValues[j] = std::get<0>(temp[j]);
@@ -388,9 +410,6 @@ void single_evolution(Graph &g,
 #pragma omp critical
                     {
                         CHECKED.first.push(i); // Adding the index to the list of checked indexes ;-)
-                    }
-#pragma omp critical
-                    {
                         CHECKED.second.push(ui); // Adding the index to the list of checked indexes ;-)
                     }
                     PRINTF_DBG("Added ix %d to CHECKED\n", i);std::cout<<std::flush;

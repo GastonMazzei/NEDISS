@@ -388,7 +388,7 @@ void perform_requests(int NNodes,
         ix_update = false;
 #pragma omp critical
         {
-            if (!(*REF.p_CHECKED).first.empty()) {
+            if (!(*REF.p_CHECKED).first.empty()) { // Assuming they have both the same length
                 ix = (*REF.p_CHECKED).first.front();
                 uix = (*REF.p_CHECKED).second.front();
                 (*REF.p_CHECKED).first.pop();

@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+/home/m4zz31/cppprojct/Communication/CommunicationFunctions.cpp
+CommunicationFunctions.h
+/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
+../Utils/global_standard_messages.h
+/home/m4zz31/cppprojct/Utils/global_standard_messages.h
+
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
 ../macros/macros.h
 /home/m4zz31/cppprojct/macros/macros.h
@@ -114,6 +120,12 @@ boost/graph/erdos_renyi_generator.hpp
 boost/range/adaptors.hpp
 -
 
+/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp
+GraphFunctions.h
+/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
+cassert
+-
+
 /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
 ../macros/macros.h
 /home/m4zz31/cppprojct/macros/macros.h
@@ -146,23 +158,9 @@ boost/mpi/environment.hpp
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
-/home/m4zz31/cppprojct/Solvers/EulerSolver.cpp
-EulerSolver.h
-/home/m4zz31/cppprojct/Solvers/EulerSolver.h
-
 /home/m4zz31/cppprojct/Solvers/EulerSolver.h
 GeneralSolver.h
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
-
-/home/m4zz31/cppprojct/Solvers/GeneralSolver.cpp
-GeneralSolver.h
-/home/m4zz31/cppprojct/Solvers/GeneralSolver.h
-EulerSolver.h
-/home/m4zz31/cppprojct/Solvers/EulerSolver.h
-RungeKuttaSolver.h
-/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
-../Utils/error.h
-/home/m4zz31/cppprojct/Utils/error.h
 
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
 functional
