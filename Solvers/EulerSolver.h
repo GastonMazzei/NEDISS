@@ -37,6 +37,11 @@ void EulerSolver<Equation>::evolve(double t,
                            double &answer,
                            double * P){
 
+    // OVERWRITE: testing number of errors!
+//    answer = a+1;
+//    return;
+    // -------END--OF--DEBUGGIN!
+
     // Initialize auxiliary vectors
     std::vector<double> T1={0},T2={1},T3={0},T4={1}; // Any val.
     answer = 0;

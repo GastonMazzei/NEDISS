@@ -6,12 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/m4zz31/cppprojct/Communication/CommunicationFunctions.cpp
-CommunicationFunctions.h
-/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
-../Utils/global_standard_messages.h
-/home/m4zz31/cppprojct/Utils/global_standard_messages.h
-
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
 ../macros/macros.h
 /home/m4zz31/cppprojct/macros/macros.h
@@ -36,14 +30,6 @@ iterator
 random
 -
 
-/home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.cpp
-GeneralDifferentialEquation.h
-/home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
-../Utils/error.h
-/home/m4zz31/cppprojct/Utils/error.h
-cassert
--
-
 /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
 functional
 -
@@ -51,20 +37,6 @@ vector
 -
 ../Utils/differential_equations_aux.h
 /home/m4zz31/cppprojct/Utils/differential_equations_aux.h
-
-/home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.cpp
-NoiselessKuramoto.h
-/home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.h
-GeneralDifferentialEquation.h
-/home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
-cmath
--
-cassert
--
-utility
--
-vector
--
 
 /home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.h
 GeneralDifferentialEquation.h
@@ -142,12 +114,6 @@ boost/graph/erdos_renyi_generator.hpp
 boost/range/adaptors.hpp
 -
 
-/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp
-GraphFunctions.h
-/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
-cassert
--
-
 /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
 ../macros/macros.h
 /home/m4zz31/cppprojct/macros/macros.h
@@ -205,10 +171,6 @@ functional
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 ../DifferentialEquations/GeneralDifferentialEquation.h
 /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
-
-/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.cpp
-RungeKuttaSolver.h
-/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
 
 /home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
 GeneralSolver.h
