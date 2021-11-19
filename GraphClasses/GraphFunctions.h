@@ -19,8 +19,107 @@
 #include "../Communication/CommunicationFunctions.h"
 
 
+template<typename DIFFEQ, typename SOLVER>
+void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> &solver){
 
-void contribute_to_integration(ReferenceContainer &REF);
+    // Define timeout utilities
+    const int DT= 5;
+    int totlaps=0;
+    // Build a graph vertex iterator
+    auto vs = vertices(*REF.p_g);
+    auto start = vs.first;
+    auto end = vs.second;
+    auto v = start;
+
+    // Define relevant variables
+    bool keepGoing = true;
+    bool is_in = false;
+    long * i;
+    int remaining;
+    long ix, currentuix;
+    unsigned long uix;
+    bool wait = false;
+
+#pragma omp critical
+    {
+        remaining = *(REF.p_PENDING_INT);
+    }
+
+    // Main loop
+    while (keepGoing) {
+        ++totlaps;
+
+        // Fetch the data
+#pragma omp critical
+        {
+            if (!REF.p_READY_FOR_INTEGRATION->first.empty()){
+                ix = REF.p_READY_FOR_INTEGRATION->first.front();
+                uix = REF.p_READY_FOR_INTEGRATION->second.front();
+                REF.p_READY_FOR_INTEGRATION->first.pop();
+                REF.p_READY_FOR_INTEGRATION->second.pop();
+            } else {
+                wait = true;
+            }
+        }
+
+        if (wait) {
+            mssleep(DT);
+        } else {
+            // Locate the graph vertex :-)
+            PRINTF_DBG("starting to locate this ix: %lu\n",uix);
+            v = start;
+            while (!is_in) {
+                currentuix = (unsigned long) get(get(boost::vertex_index, *(REF.p_g)), *v);
+                if (currentuix == uix){
+                    is_in = true;
+                } else {
+                    v++;
+                }
+                if (v == end) exit(1);
+            }
+
+            // Join the data as required by the integrator
+            std::vector<double> neighborValues;
+            std::vector<double> edgeValues;
+            neighborValues.resize((*REF.p_IntHelper)[ix].ResultsPendProcess.size());
+            edgeValues.resize((*REF.p_IntHelper)[ix].ResultsPendProcess.size());
+            int _it = 0;
+            for (auto const& it : (*REF.p_IntHelper)[ix].ResultsPendProcess) {
+                neighborValues[_it] = std::get<0>(it);
+                edgeValues[_it] = std::get<1>(it);
+                _it++;
+            }
+
+            // Write the new value in the temporal register
+            printf("Integrating: temporal register was: %f", (*REF.p_g)[*v].temporal_register);
+            (*REF.p_g)[*v].temporal_register = solver.evolve((*REF.p_IntHelper)[ix].centralValue,
+                                                             (*REF.p_IntHelper)[ix].centralParams,
+                                                             neighborValues,
+                                                             edgeValues);
+            printf("Integrating: now it is: %f", (*REF.p_g)[*v].temporal_register);
+
+            // Decrease the global value of pending integration
+//#pragma omp critical
+//{
+//            *(REF.p_PENDING_INT)--;
+//}
+        }
+        wait = false;
+
+        // Communicate with other threads to see if we need to keep going
+#pragma omp critical
+{
+        remaining = REF.p_READY_FOR_INTEGRATION->first.size();
+}
+
+        PRINTF_DBG("There are %d remaining vals to integrate...\n", remaining);std::cout<<std::flush;
+
+        // Recompute the status of 'KeepGoing'
+        keepGoing = (remaining != 0);
+    }
+    printf("In total performed %d laps!\n",totlaps);std::cout<<std::flush;
+}
+
 
 template<int DT, int TIMETOL, int BATCH>
 void answer_messages(ReferenceContainer &REF, int MYTHR);
@@ -80,7 +179,8 @@ void single_evolution(Graph &g,
     int PENDING_INT = NVtot;
 
 
-    std::queue<long> CHECKED, READY_FOR_INTEGRATION;
+    std::pair<std::queue<long>, std::queue<unsigned long>> CHECKED;
+    std::pair<std::queue<long>, std::queue<unsigned long>> READY_FOR_INTEGRATION;
 
     NT = ComHelper.NUM_THREADS;
     auto vs = vertices(g);
@@ -109,11 +209,9 @@ void single_evolution(Graph &g,
     int request_performers=0;
     int request_performers_ended=0;
 
-    // For testing :-0
+    // for tests
     std::set<int> Working, Finished;
-//    CHECKED.push(0);
-//    CHECKED.push(1);
-//    TOT = NVtot - 2;
+
 
 
 #pragma omp parallel firstprivate(NVtot, vs, NT, N_total_nodes, REF, MAX_SUBTHR, TIMETOL, DT) // Node iterators have random access ;-)
@@ -145,7 +243,7 @@ void single_evolution(Graph &g,
 #pragma omp atomic update
                 ++finalized_responders;
 
-                if (!atomic_bool) printf("OVER!  :O\n");
+                if (!atomic_bool) PRINTF_DBG("OVER!  :O\n");
                 PRINTF_DBG(" I am thread %d (MESSAGE ANSWERER) and I have finished doing my job ;-)\n",omp_get_thread_num());
 
             } else {
@@ -158,6 +256,7 @@ void single_evolution(Graph &g,
         } else {
             unsigned long NLocals, NInedges, M, rank, NOwned;
             long i=-1;
+            unsigned long ui =0;
 
             bool ready4int = false;
             i += OmpHelper.MY_OFFSET_n;
@@ -174,10 +273,17 @@ void single_evolution(Graph &g,
                 } else {
                     ready4int = false;
                 };
-
+                if (get(MapHelper.NodeOwner,*v) != REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n]){
+                    // we are treating a node which we dont own, please ignore it
+                    PRINTF_DBG("\n\n\nIGNORING NODE THAT IS NOT OURS!\n\n\n\n");std::cout<<std::flush;
+                    //++v;
+                    exit(1);
+                } else {
+                    ui = ((unsigned long) get(get(boost::vertex_index, g), *v));
+                }
                 auto neighbors = boost::adjacent_vertices(*v, g);
                 auto in_edges = boost::in_edges(*v, g);
-#pragma omp parallel firstprivate(i, v, M, neighbors, NLocals, NInedges, NOwned, N_total_nodes)
+#pragma omp parallel firstprivate(i, v, M, neighbors, NLocals, NInedges, NOwned, N_total_nodes, solver)
                 {
                     OpenMPHelper OmpHelperN(NLocals, 0);
                     for (auto n = neighbors.first + OmpHelperN.MY_OFFSET_n;
@@ -243,7 +349,8 @@ void single_evolution(Graph &g,
                 if (ready4int){
 #pragma omp critical
                     {
-                        READY_FOR_INTEGRATION.push(i);
+                        READY_FOR_INTEGRATION.first.push(i);
+                        READY_FOR_INTEGRATION.second.push(ui);
                     }
 #pragma omp atomic update
                     ++TOT;
@@ -251,7 +358,11 @@ void single_evolution(Graph &g,
                 } else {
 #pragma omp critical
                     {
-                        CHECKED.push(i); // Adding the index to the list of checked indexes ;-)
+                        CHECKED.first.push(i); // Adding the index to the list of checked indexes ;-)
+                    }
+#pragma omp critical
+                    {
+                        CHECKED.second.push(ui); // Adding the index to the list of checked indexes ;-)
                     }
                     PRINTF_DBG("Added ix %d to CHECKED\n", i);std::cout<<std::flush;
                 }
@@ -284,119 +395,121 @@ void single_evolution(Graph &g,
             int atomical_int;
             bool are_we_over = false;
 
-        // While our Process is not over, I am the official responder :-)
-#pragma omp atomic read
-        atomical_int = TOT;
-        PRINTF_DBG("Already checking if we are over, proc %d\n", ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n]);
-        are_we_over = (atomical_int >= NVtot); // TODO: bug. it should be exactly equal (looks at perform_requests)
-        int notreadyyet=0;
-
-        // FIRST are we over: checking that all nodes have been processed
-        while (!are_we_over){
-            // Re-check if we are over
+            // While our Process is not over, I am the official responder :-)
 #pragma omp atomic read
             atomical_int = TOT;
-            are_we_over = (atomical_int >= NVtot); // TODO: same here ;-).
-            ++notreadyyet;
-            mssleep(DT);
-            PRINTF_DBG("not ready yet!\n");
-        }
+            PRINTF_DBG("Already checking if we are over, proc %d\n", ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n]);
+            are_we_over = (atomical_int >= NVtot); // TODO: bug. it should be exactly equal (looks at perform_requests)
+            int notreadyyet=0;
 
-        // SECOND are we over: checking that all perform requesters have exited
-        int aux1,aux2;
+            // FIRST are we over: checking that all nodes have been processed
+            while (!are_we_over){
+                // Re-check if we are over
 #pragma omp atomic read
-        aux1 = request_performers;
+                atomical_int = TOT;
+                are_we_over = (atomical_int >= NVtot); // TODO: same here ;-).
+                ++notreadyyet;
+                mssleep(DT);
+                PRINTF_DBG("not ready yet!\n");
+            }
+
+            // SECOND are we over: checking that all perform requesters have exited
+            int aux1,aux2;
 #pragma omp atomic read
-        aux2 = request_performers_ended;
-        are_we_over = (aux1 == aux2);
-        while (!are_we_over){
+            aux1 = request_performers;
 #pragma omp atomic read
             aux2 = request_performers_ended;
             are_we_over = (aux1 == aux2);
-            mssleep(DT);
-//            printf("Padded lap in order to graciously terminate local performance_requests ;-)\n");
-        }
+            while (!are_we_over){
+#pragma omp atomic read
+                aux2 = request_performers_ended;
+                are_we_over = (aux1 == aux2);
+                mssleep(DT);
+    //            printf("Padded lap in order to graciously terminate local performance_requests ;-)\n");
+            }
 
-        PRINTF_DBG("\n\n\n\n\n\n\WE WERE OVERRR NVtot and TOT are: %d & %d\n\n\n\n", NVtot, TOT);
-        PRINTF_DBG("Before being ready, we waited for %d laps!\n", notreadyyet);
-        std::cout << std::flush;
+            PRINTF_DBG("\n\n\n\n\n\n\WE WERE OVERRR NVtot and TOT are: %d & %d\n\n\n\n", NVtot, TOT);
+            PRINTF_DBG("Before being ready, we waited for %d laps!\n", notreadyyet);
+            std::cout << std::flush;
 
 
-        int worldsize = ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n];
-        int worldrank = ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n];
+            int worldsize = ComHelper.WORLD_SIZE[OmpHelper.MY_THREAD_n];
+            int worldrank = ComHelper.WORLD_RANK[OmpHelper.MY_THREAD_n];
 
-        printf("\nabout to 1st barrier says P:%d\n", worldrank);std::cout<<std::flush;
-        MPI_Barrier(MPI_COMM_WORLD);
+            PRINTF_DBG("\nabout to 1st barrier says P:%d\n", worldrank);std::cout<<std::flush;
+            MPI_Barrier(MPI_COMM_WORLD);
 
-        PRINTF_DBG("The (FIRST) cherry of the cake ;-)\n");std::cout<<std::flush;
+            PRINTF_DBG("The (FIRST) cherry of the cake ;-)\n");std::cout<<std::flush;
 #pragma omp atomic write
-        keep_responding = false;
+            keep_responding = false;
 
-        bool readme;
+            bool readme;
 #pragma omp atomic read
-        readme = keep_responding;
-        printf("keep_responding was now set as %d\n",readme);std::cout<<std::flush;
+            readme = keep_responding;
+            PRINTF_DBG("keep_responding was now set as %d\n",readme);std::cout<<std::flush;
 
-        int auxy1, auxy2;
-#pragma omp atomic read
-        auxy1 = active_responders;
-#pragma omp atomic read
-        auxy2 = finalized_responders;
-        int jh=0,jmax=1000;
-        while (auxy1 > auxy2){
-            mssleep(DT);
-#pragma omp atomic read
-            auxy2 = finalized_responders;
+            int auxy1, auxy2;
 #pragma omp atomic read
             auxy1 = active_responders;
-            PRINTF_DBG("active (total) are %d and finalized are %d\n", auxy1, auxy2);
-            jh++;
-            if (jh>jmax) printf("active (total) are %d and finalized are %d\n", auxy1, auxy2);
-        }
-        printf("\nabout to 2nd barrier says P:%d\n", worldrank);std::cout<<std::flush;
-        MPI_Barrier(MPI_COMM_WORLD);
-        printf("\nEnded barrier says P:%d\n", worldrank);std::cout<<std::flush;
-
-        PRINTF_DBG("The (SECOND) cherry of the cake (-;\n");std::cout<<std::flush;
-
-    } else
-    {
-        int atomic_bool;
-        bool later_mark_finalized = false;
-        if (atomic_bool){
-#pragma omp atomic update
-            active_responders ++;
-            later_mark_finalized = true;
-        }
-        while (atomic_bool){
-        //for (int k=0;k<50;++k){
-            //printf("A for worker that is finally responding messages says that we are not over with TOT\n");
-            // 1) Answer some messages
-            answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
-            answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
-
-            // 2) Re-check if we are over
 #pragma omp atomic read
-            atomic_bool = keep_responding;
-            PRINTF_DBG("so far I keep responding U.u cuz keep responding was %d\n", atomic_bool);
-        }
-        if (later_mark_finalized) {
+            auxy2 = finalized_responders;
+            int jh=0,jmax=1000;
+            while (auxy1 > auxy2){
+                mssleep(DT);
+#pragma omp atomic read
+                auxy2 = finalized_responders;
+#pragma omp atomic read
+                auxy1 = active_responders;
+                PRINTF_DBG("active (total) are %d and finalized are %d\n", auxy1, auxy2);
+                jh++;
+                if (jh>jmax) PRINTF_DBG("active (total) are %d and finalized are %d\n", auxy1, auxy2);
+            }
+            PRINTF_DBG("\nabout to 2nd barrier says P:%d\n", worldrank);std::cout<<std::flush;
+            MPI_Barrier(MPI_COMM_WORLD);
+            PRINTF_DBG("\nEnded barrier says P:%d\n", worldrank);std::cout<<std::flush;
+
+            PRINTF_DBG("The (SECOND) cherry of the cake (-;\n");std::cout<<std::flush;
+
+        } else if (OmpHelper.MY_THREAD_n % 2 == 0) {
+            int atomic_bool;
+            bool later_mark_finalized = false;
+            if (atomic_bool){
 #pragma omp atomic update
-            finalized_responders++;
+                active_responders ++;
+                later_mark_finalized = true;
+                }
+            while (atomic_bool){
+            //for (int k=0;k<50;++k){
+                //printf("A for worker that is finally responding messages says that we are not over with TOT\n");
+                // 1) Answer some messages
+                answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+
+                // 2) Re-check if we are over
+#pragma omp atomic read
+                atomic_bool = keep_responding;
+                PRINTF_DBG("so far I keep responding U.u cuz keep responding was %d\n", atomic_bool);
+            }
+            if (later_mark_finalized) {
+#pragma omp atomic update
+                finalized_responders++;
+            }
         }
-    }
-        contribute_to_integration(REF); // dont help answering messages ;-)
-        // NOW CALL THIS!
-        // register_to_value(g);
-
-
+        printf("starting to contribute\n");std::cout<<std::flush;
+        contribute_to_integration(REF, solver);
+        printf("ending to contribute\n");std::cout<<std::flush;
 } // end of the parallel construct
+
+    printf("starting to swap register\n");std::cout<<std::flush;
+    // Swap temporal and main registers
+    register_to_value(g);
+
     PRINTF_DBG("exited");
     PRINTF_DBG("About to synchronize");std::cout<<std::flush;
     MPI_Barrier(MPI_COMM_WORLD);
-    printf("Done");std::cout<<std::flush;
-    PRINTF_DBG("\n\n\n\\n\n\n\n\n\n");
-
+    PRINTF_DBG("Done");
+    printf("-^-^-H-E-A-R-T-B-E-A-T-^-^-");
+    PRINTF_DBG("\n\n\n\\n\n\n\n\n\n");std::cout<<std::flush;
 }
 
 

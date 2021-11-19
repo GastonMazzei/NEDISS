@@ -76,13 +76,14 @@ void IntegrationCell::build(Graph &g, VD v, MappingHelper &Map,
 ReferenceContainer::ReferenceContainer(ParallelHelper &ParHelper,
                                        CommunicationHelper &ComHelper,
                                        Graph & g,
-                                       std::queue<long> & CHECKED,
-                                       std::queue<long> & READY_FOR_INTEGRATION,
+                                       std::pair<std::queue<long>, std::queue<unsigned long>> & CHECKED,
+                                       std::pair<std::queue<long>, std::queue<unsigned long>> & READY_FOR_INTEGRATION,
                                        IntegrationHelper & IntHelper,
                                        int & TOT,
                                        int & PENDING_INT,
                                        MappingHelper & MapHelper,
                                        bool keepResponding){
+
     p_ParHelper = &ParHelper;
     p_ComHelper = &ComHelper;
     p_MapHelper = &MapHelper;

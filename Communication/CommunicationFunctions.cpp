@@ -7,7 +7,6 @@
 #include "../Utils/global_standard_messages.h"
 
 void build_answer_edges(double * answer, ReferenceContainer &REF, double * ix, int owner, int MyNProc){
-    printf("We are being requested for ixs %f and %f\n", *ix, *(ix+1));std::cout<<std::flush;
     // Iterate through nodes
     bool found = false;
     auto vs = vertices(*REF.p_g);
@@ -31,7 +30,7 @@ void build_answer_edges(double * answer, ReferenceContainer &REF, double * ix, i
 
                             // If its index is the one the requester refered to
                             found = true;
-                            printf("Found the requested node attached to the requested edge!\n");
+                            PRINTF_DBG("Found the requested node attached to the requested edge!\n");
                             auto e = edge(*v, *n, *(REF.p_g));
                             if (e.second != 1) {
                                 printf("[FATAL] Requested edge did not exist!!!");
@@ -428,7 +427,7 @@ void sendReqForTest(int MYPROC, int i){
 
     while ((!(status_flagstatus==0)) || (!(flagstatus==1))){
         counter++;
-        printf("Stuck at some special state B;-/ recieving %d and flag %d\n",status_flagstatus, flagstatus);
+        PRINTF_DBG("Stuck at some special state B;-/ recieving %d and flag %d\n",status_flagstatus, flagstatus);
         status_flagstatus = MPI_Test(&rReq, &flagstatus, MPI_STATUS_IGNORE);
         //mssleep(50);
         if(counter >= MAXTRIES) {
@@ -440,11 +439,11 @@ void sendReqForTest(int MYPROC, int i){
     if (counter>=MAXTRIES){
         MPI_Cancel(&rReq);
         //MPI_Cancel(&sReq);
-        printf("RECURSIVE SOLUTION... the damned proc is %d\n",MYPROC);std::cout<<std::flush;
+        PRINTF_DBG("RECURSIVE SOLUTION... the damned proc is %d\n",MYPROC);std::cout<<std::flush;
         sendReqForTest(MYPROC, i);
     }
     else {
-        printf("Sent and recieved correctly ;-)  (i=%d)\n", i);
+        PRINTF_DBG("Sent and recieved correctly ;-)  (i=%d)\n", i);
         std::cout << std::flush;
     }
 

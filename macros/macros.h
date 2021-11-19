@@ -25,5 +25,6 @@
 #define OFFSET 12500
 #endif
 
+//#define ASSERTS
 
 #endif //CPPPROJCT_MACROS_H

@@ -169,6 +169,7 @@ void perform_requests(int NNodes,
     int randi = gen(rng);
 
     long ix;
+    unsigned long uix;
     int total_processed=0;
     int atomic_helper;
 
@@ -288,21 +289,12 @@ void perform_requests(int NNodes,
                 }
             }
 
-//          *******************THE SAME SHOULD BE DONE FOR EDGES PLEASE********************
-//          *******************THE SAME SHOULD BE DONE FOR EDGES PLEASE********************
-//          *******************THE SAME SHOULD BE DONE FOR EDGES PLEASE********************
-
-            printf("Starting the dangerous section :-(\n"); std::cout<<std::flush;
-
             auto itBegE = REF.p_ParHelper->data[ix].MissingB.begin();
             auto itEndE = REF.p_ParHelper->data[ix].MissingB.end();
             tot_locals  = 0;
             sent_locally = 0;
             total_processed = 0;
             localcounter = 0;
-
-            printf("1\n"); std::cout<<std::flush;
-
 
             for (auto _it= itBegE; _it != itEndE; ++_it) {
                 auto &thread = *_it;
@@ -311,14 +303,14 @@ void perform_requests(int NNodes,
                 }
             }
 
-            printf("2\n"); std::cout<<std::flush;
+
 
             // race-condition unfriendly? Only extensive testing will help us decide :^|
             for (auto _it= itBegE; _it != itEndE; ++_it) {
                 auto &thread = *_it;
                 for (auto it =  thread.begin();it != thread.end(); it++){
                     ++localcounter;
-                    printf("3\n"); std::cout<<std::flush;
+
 
                     // Retrieve data
                     owner[QAvailable.front()] = (int) std::get<1>(*it);
@@ -330,16 +322,16 @@ void perform_requests(int NNodes,
                             // we are inaugurating this indexing model [:<)
                                                                   owner[QAvailable.front()] * N + (int) their_vix2[QAvailable.front()][1]);
 
-                    printf("4\n"); std::cout<<std::flush;
+
                     PRINTF_DBG("[PR] About to ask for one node and edge!\n");std::cout<<std::flush;
-                    printf("About to send ixs %f and %f\n",their_vix2[QAvailable.front()][0], their_vix2[QAvailable.front()][1]);std::cout<<std::flush;
+                    PRINTF_DBG("About to send ixs %f and %f\n",their_vix2[QAvailable.front()][0], their_vix2[QAvailable.front()][1]);std::cout<<std::flush;
                     MPI_Ssend(&their_vix2[QAvailable.front()][0],
                               2,
                               MPI_DOUBLE,
                               owner[QAvailable.front()],
                               EDGEVAL_REQUEST_FLAG, MPI_COMM_WORLD);
                     PRINTF_DBG("[PR] Asked!\n");std::cout<<std::flush;
-                    printf("5\n"); std::cout<<std::flush;
+
                     PRINTF_DBG("[PR] About to recv!\n");std::cout<<std::flush;
                     MPI_Recv(&vval2[QAvailable.front()][0],
                              2,
@@ -349,7 +341,7 @@ void perform_requests(int NNodes,
                              MPI_COMM_WORLD,
                              MPI_STATUS_IGNORE);
                     PRINTF_DBG("[PR] Correctly recieved!\n");std::cout<<std::flush;
-                    printf("6\n"); std::cout<<std::flush;
+
                     // Prepare stuff  for the next iteration
                     QPend.push_back(QAvailable.front());
                     QAvailable.pop();
@@ -361,7 +353,7 @@ void perform_requests(int NNodes,
                         } else {
                             target_size = BATCH-1;
                         }
-                        printf("7\n"); std::cout<<std::flush;
+
                         while (QPend.size() != target_size) {
                             auto i = QPend.begin();
                             while (i != QPend.end()) {
@@ -372,7 +364,7 @@ void perform_requests(int NNodes,
                                 QAvailable.push(*i);
                                 QPend.erase(i++);
                             }
-                            printf("8\n"); std::cout<<std::flush;
+
                         }
                     }
                 }
@@ -381,7 +373,8 @@ void perform_requests(int NNodes,
 
 #pragma critical
             {
-                REF.p_READY_FOR_INTEGRATION->push(ix);
+                (*REF.p_READY_FOR_INTEGRATION).first.push(ix);
+                (*REF.p_READY_FOR_INTEGRATION).second.push(uix);
             }
             ++total_processed;
 
@@ -395,9 +388,11 @@ void perform_requests(int NNodes,
         ix_update = false;
 #pragma omp critical
         {
-            if (!REF.p_CHECKED->empty()) {
-                ix = REF.p_CHECKED->front();
-                REF.p_CHECKED->pop();
+            if (!(*REF.p_CHECKED).first.empty()) {
+                ix = (*REF.p_CHECKED).first.front();
+                uix = (*REF.p_CHECKED).second.front();
+                (*REF.p_CHECKED).first.pop();
+                (*REF.p_CHECKED).second.pop();
                 ix_update = true;
             }
         }

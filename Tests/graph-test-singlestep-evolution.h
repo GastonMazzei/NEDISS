@@ -53,10 +53,10 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
     adsync_message_barrier<T>(msg_post + "'reportNodes'", G.g);
 
 
-    // Show nodes
-//    adsync_message<T>(msg_prev + "'showVertex'", G.g);
-//    G.showVertex(G.g);
-//    adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
+//     Show nodes
+    adsync_message<T>(msg_prev + "'showVertex'", G.g);
+    G.showVertex(G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
 
     if (true) {
         // Test several kuramoto evolutions with Euler
@@ -91,7 +91,7 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
 
     // Show nodes
     adsync_message<T>(msg_prev + "'showVertex'", G.g);
-    //G.showVertex(G.g);
+    G.showVertex(G.g);
     adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
 
     // Print in command what test is it

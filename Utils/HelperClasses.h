@@ -81,13 +81,13 @@ struct ReferenceContainer {
     int * p_TOT;
     bool * p_keepResponding;
     int * p_PENDING_INT;
-    std::queue<long> * p_CHECKED;
-    std::queue<long> * p_READY_FOR_INTEGRATION;
+    std::pair<std::queue<long>, std::queue<unsigned long>> * p_CHECKED;
+    std::pair<std::queue<long>, std::queue<unsigned long>> * p_READY_FOR_INTEGRATION;
     ReferenceContainer(ParallelHelper &ParHelper,
                        CommunicationHelper &ComHelper,
                        Graph & g,
-                       std::queue<long> & CHECKED,
-                       std::queue<long> & READY_FOR_INTEGRATION,
+                       std::pair<std::queue<long>, std::queue<unsigned long>> & CHECKED,
+                       std::pair<std::queue<long>, std::queue<unsigned long>> & READY_FOR_INTEGRATION,
                        IntegrationHelper & IntHelper,
                        int & TOT,
                        int & PENDING_INT,
