@@ -54,7 +54,6 @@ int main(int argc, char** argv)
     // Testing Section ;-)
     const unsigned long NNodes = std::stoi(std::getenv("NNODES")); //12345;200;
     certify_tagMax_compliant(tagMaxFlag, *tag_ub, NNodes, size, VERTEXVAL_REQUEST_FLAG);
-    const int NRUNS = 500;
     const int BATCH = 1; // Keep batch at 1: increasing it enables sending messages of size bigger than 1, but it is not fully implemented in CommunicationFunctions.h.
     const double ErdosRenyiProba = 0.5;
     const int TESTN = std::stoi(std::getenv("TEST"));
@@ -73,6 +72,7 @@ int main(int argc, char** argv)
                                             ErdosRenyiProba, SOLVER, TOPOLOGY);
     } else if (TESTN == 2){
         // TEST SINGLESTEP EVOLUTION SEVERAL THOUSAND TIMES
+        const int NRUNS = std::stoi(std::getenv("NRUNS")); ;
         central_test_long_singlestep_run<BATCH>(SEED,
                                                 NNodes,
                                                 ErdosRenyiProba,

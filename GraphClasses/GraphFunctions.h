@@ -39,6 +39,7 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
     long ix;
     unsigned long uix, currentuix;
     bool wait = false;
+    std::vector<InfoVecElem> temp;
 
 #pragma omp critical
     {
@@ -51,7 +52,7 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
 #pragma omp critical
         {
             if (!REF.p_READY_FOR_INTEGRATION->second.empty()){
-                std::cout << REF.p_READY_FOR_INTEGRATION->second.size() << " and " << REF.p_READY_FOR_INTEGRATION->first.size() << " ARE THE QUEUE SIZES!" << std::endl;
+//                std::cout << REF.p_READY_FOR_INTEGRATION->second.size() << " and " << REF.p_READY_FOR_INTEGRATION->first.size() << " ARE THE QUEUE SIZES!" << std::endl;
                 ix = REF.p_READY_FOR_INTEGRATION->first.front();
                 uix = REF.p_READY_FOR_INTEGRATION->second.front();
                 REF.p_READY_FOR_INTEGRATION->first.pop();
@@ -68,20 +69,31 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
             ++totlaps;
             // Locate the graph vertex :-)
             PRINTF_DBG("starting to locate this uix: %lu\n",uix);
-            std::cout << "Ixs: " << ix << " and " << uix <<std::endl;
-            v = start;
+//            std::cout << "Ixs: " << ix << " and " << uix <<std::endl;
+            v = vertices(*REF.p_g).first;
+            is_in =  false;
             while (!is_in) {
-                currentuix = (unsigned long) get(get(boost::vertex_index, *(REF.p_g)), *v);
-                if (currentuix == uix) {
-                    is_in = true;
-                } else {
-                    v++;
-                }
-                if (v == end) exit(1);
+//                std::cout << "v Element shows having index " <<
+//                      get(get(boost::vertex_index, *(REF.p_g)), *v) <<
+//                      " and being owned by " <<
+//                      get(get(boost::vertex_owner, *(REF.p_g)), *v) << " while we  are proc: " <<
+//                      MYPROC << " and looking for IX: "<<ix << " and UIX: " << uix << std::endl;
+
+                if (get(get(boost::vertex_owner, *(REF.p_g)), *v) == MYPROC) {
+                    currentuix = (unsigned long) get(get(boost::vertex_index, *(REF.p_g)), *v);
+                    if (currentuix == uix) {
+                        is_in = true;
+                    } else {
+                        v++;
+                    }
+                } else ++v;
+                if (v == end) {
+                    std::cout << "[CRITICAL] Failed to found ix!!!" << std::endl;
+                };
             }
 
             // Join the data as required by the integrator
-            std::vector<InfoVecElem> temp;
+            temp = std::vector<InfoVecElem>();
             temp.resize((*REF.p_IntHelper)[ix].ResultsPendProcess.size());
             int _it = 0;
             auto it = (*REF.p_IntHelper)[ix].ResultsPendProcess.begin();
@@ -91,7 +103,12 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
             while (it != end){
                 unsigned long elemix = std::get<2>(*it);
                 const bool is_in = seen.find(elemix) != seen.end(); //CHECKPOINT
-                printf("Std output uix: %lu ix: %ld proc: %d. vals are %f , %f , %lu\n",uix, ix, MYPROC, std::get<0>(*it), std::get<1>(*it), std::get<2>(*it));std::cout<<std::flush;
+
+                PRINTF_DBG("Std output uix: %lu ix: %ld proc: %d. vals are %f , %f , %lu\n",
+                       uix, ix, MYPROC,
+                       std::get<0>(*it), std::get<1>(*it), std::get<2>(*it));
+                std::cout<<std::flush;
+
                 if (!is_in) {
                     //printf("First appearance of ix: %l for proc: %d. vals are %f & %f\n",ix, MYPROC, std::get<0>(*it), std::get<1>(*it));std::cout<<std::flush;
                     temp[_it] = *it;
@@ -111,7 +128,7 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
                           return std::get<2>(t1) > std::get<2>(t2);
                       }
             );
-            std::cout << "Temp size is: " << temp.size() << " and the container size is: " << (*REF.p_IntHelper)[ix].ResultsPendProcess.size() << " but it was " << oldsize << std::endl;
+//            std::cout << "Temp size is: " << temp.size() << " and the container size is: " << (*REF.p_IntHelper)[ix].ResultsPendProcess.size() << " but it was " << oldsize << std::endl;
             PRINTF_DBG("Finished sorting! :-)\n");
 
 
@@ -127,28 +144,42 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
                 neighborValues[j] = std::get<0>(temp[j]);
                 edgeValues[j] = std::get<1>(temp[j]);
             }
-            printf("Finished building vectors! :-) their sizes are %d (neigh) and %d (edg). ix %ld proc %d.\n",
-                   neighborValues.size(), edgeValues.size(), ix, MYPROC);
+//            printf("Finished building vectors! :-) their sizes are %d (neigh) and %d (edg). ix %ld proc %d.\n",
+//                   neighborValues.size(), edgeValues.size(), ix, MYPROC);
 
             // Write the new value in the temporal register
             double result = -420.;
-            printf("BEFORE Integrating: result was %f, IntHelper central value was: %f, real value was %f, temporal register was: %f. ix %ld proc %d.\n",
-                   result,
-                   (*REF.p_IntHelper)[ix].centralValue,
-                   (*REF.p_g)[*v].value,
-                   (*REF.p_g)[*v].temporal_register, ix, MYPROC);
-            solver.evolve((*REF.p_IntHelper)[ix].centralValue,
-                                          (*REF.p_IntHelper)[ix].centralParams,
-                                          neighborValues,
-                                          edgeValues,
-                                          result);
+//            std::cout << "BEFORE Integrating: result was " <<
+//                              result<<
+//                              " IntHelper central value was "<<
+//                            (*REF.p_IntHelper)[ix].centralValue<<
+//                            " real value was "<< (*REF.p_g)[*v].value<<
+//                            " temporal register was:  " <<
+//                            (*REF.p_g)[*v].temporal_register <<
+//                            " . ix " << ix << " proc " << MYPROC << "." << std::endl;
+            solver.evolve(
+                    // OPTIMIZATION would be just passing the IntHelper so we dont copy,sort,copy :-)
+//                            (*REF.p_IntHelper)[ix].centralValue, // FAILURE: centralValue can be sometimes 0,
+//                            (*REF.p_IntHelper)[ix].centralParams, // IntHelper is failing somewhere
+                            (*REF.p_g)[*v].value,
+                            (*REF.p_g)[*v].params,
+                            neighborValues,
+                            edgeValues,
+                            result
+                          );
+
             PRINTF_DBG("Integrating: temporal result was: %f", result);
             (*REF.p_g)[*v].temporal_register = result;
-            printf("AFTER Integrating: result was %f, IntHelper central value was: %f, real value was %f, temporal register was: %f. ix %ld proc %d.\n",
-                   result,
-                   (*REF.p_IntHelper)[ix].centralValue,
-                   (*REF.p_g)[*v].value,
-                   (*REF.p_g)[*v].temporal_register, ix, MYPROC);
+
+//            std::cout << "AFTER Integrating: result was " <<
+//                      result<<
+//                      " IntHelper central value was "<<
+//                      (*REF.p_IntHelper)[ix].centralValue<<
+//                      " real value was "<< (*REF.p_g)[*v].value<<
+//                      " temporal register was:  " <<
+//                      (*REF.p_g)[*v].temporal_register <<
+//                      " . ix " << ix << " proc " << MYPROC << "." << std::endl;
+
             PRINTF_DBG("Integrating: now it is: %f", (*REF.p_g)[*v].temporal_register);
 
             // Decrease the global value of pending integration

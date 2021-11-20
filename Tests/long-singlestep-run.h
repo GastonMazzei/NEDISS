@@ -35,6 +35,10 @@ void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
     G.kuramoto_initialization({{12.345, 6.78}}, 3.14, G.g, G.N);
     adsync_message_barrier<T>(msg_post + "'preparing ring graph for singlestep evolution'", G.g);
 
+    adsync_message<T>(msg_prev + "'showVertex'", G.g);
+    G.showVertex(G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
+
     if (SOLVER == 0) {
         GeneralSolver<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>> S_eu("eu", 1);
         for (int i = 0; i < NRUNS; i++) {
@@ -51,6 +55,10 @@ void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
                                                                                        IntHelper, MapHelper, G.N);
         }
     } else error_report("Requested solver does not exist\n");
+
+    adsync_message<T>(msg_prev + "'showVertex'", G.g);
+    G.showVertex(G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
 }
 
 

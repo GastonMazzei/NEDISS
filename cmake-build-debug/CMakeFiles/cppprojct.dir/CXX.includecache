@@ -6,12 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/m4zz31/cppprojct/Communication/CommunicationFunctions.cpp
-CommunicationFunctions.h
-/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
-../Utils/global_standard_messages.h
-/home/m4zz31/cppprojct/Utils/global_standard_messages.h
-
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
 ../macros/macros.h
 /home/m4zz31/cppprojct/macros/macros.h
@@ -118,12 +112,6 @@ boost/random/linear_congruential.hpp
 boost/graph/erdos_renyi_generator.hpp
 -
 boost/range/adaptors.hpp
--
-
-/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp
-GraphFunctions.h
-/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
-cassert
 -
 
 /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
