@@ -45,13 +45,14 @@ int main(int argc, char** argv)
     print_warnings(rank);
     static int OMP_THREAD_LIMIT = std::stoi(std::getenv("OMP_THREAD_LIMIT"));
     if (OMP_THREAD_LIMIT<3){error_report(min_threads);};
+    //if (OMP_THREAD_LIMIT<3){error_report(min_threads);}; APPLY THIS ALSO TO 3 PROCESSORS MIN, because of debug prints that use [0][1][2] indexes ;-)
     check_nested_status();
     int tagMaxFlag;
     int *tag_ub;
     MPI_Comm_get_attr(MPI_COMM_WORLD, MPI_TAG_UB, &tag_ub, &tagMaxFlag);
 
     // Testing Section ;-)
-    const int NNodes = std::stoi(std::getenv("NNODES")); //12345;200;
+    const unsigned long NNodes = std::stoi(std::getenv("NNODES")); //12345;200;
     certify_tagMax_compliant(tagMaxFlag, *tag_ub, NNodes, size, VERTEXVAL_REQUEST_FLAG);
     const int NRUNS = 500;
     const int BATCH = 1; // Keep batch at 1: increasing it enables sending messages of size bigger than 1, but it is not fully implemented in CommunicationFunctions.h.

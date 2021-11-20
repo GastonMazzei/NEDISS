@@ -13,7 +13,7 @@
 
 
 
-void graph_tests_init(int SOLVER, int TOPOLOGY, unsigned int SEED, int N = 4, double p = 0.4);
+void graph_tests_init(int SOLVER, int TOPOLOGY, unsigned int SEED, unsigned long N = 4, double p = 0.4);
 
 // THIS USES ONLY THE KURAMOTO EQUATION!!!
 template <int T, typename GRAPHTYPE>

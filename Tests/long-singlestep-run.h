@@ -55,7 +55,7 @@ void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
 
 
 template <int BATCH>
-void central_test_long_singlestep_run(unsigned int SEED, int N, double p, int NRUNS,  int SOLVER, int TOPOLOGY){
+void central_test_long_singlestep_run(unsigned int SEED, unsigned long N, double p, int NRUNS,  int SOLVER, int TOPOLOGY){
     // Ring Network
     reproductibility_lock(SEED);
 

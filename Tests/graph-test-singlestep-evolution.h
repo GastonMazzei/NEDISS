@@ -111,7 +111,7 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
 
 
 template <int BATCH>
-void graph_tests_singlestep_evolution(unsigned int SEED, int N, double p, int SOLVER, int TOPOLOGY){
+void graph_tests_singlestep_evolution(unsigned int SEED, unsigned long N, double p, int SOLVER, int TOPOLOGY){
 
     reproductibility_lock(SEED);
 

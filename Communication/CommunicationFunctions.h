@@ -152,11 +152,6 @@ void answer_messages_edges(ReferenceContainer &REF,int MYTHR) {
 };
 
 
-
-
-
-
-
 template <int DT, int TIMETOL, int BATCH>
 void perform_requests(int NNodes,
                       ReferenceContainer REF,
@@ -235,7 +230,10 @@ void perform_requests(int NNodes,
             // race-condition unfriendly? Only extensive testing will help us decide :^|
             for (auto _it= itBeg; _it != itEnd; ++_it) {
                 auto &thread = *_it;
-                for (auto it =  thread.begin();it != thread.end(); it++){
+                //for (auto it =  thread.begin();it != thread.end(); it++){ // OLD: was replaced
+                    // by the following loop as we require to eliminate elements :-)
+                auto it = thread.begin();
+                while (it !=  thread.end()) {
                     ++localcounter;
 
                     // Retrieve data
@@ -244,7 +242,7 @@ void perform_requests(int NNodes,
                     // Build the result
                     results[QAvailable.front()] = std::make_tuple((double) 0, // placeholder until we get the correct val
                                                                   (double) std::get<0>(*it), // we are inaugurating this indexing model [:<)
-                                                      owner[QAvailable.front()] * N + (int) their_vix[QAvailable.front()]);
+                          (unsigned long) (((unsigned long) owner[QAvailable.front()]) *  N + (unsigned long) their_vix[QAvailable.front()] ));
                     PRINTF_DBG("[PR] About to ask for one node!\n");std::cout<<std::flush;
                     MPI_Ssend(&their_vix[QAvailable.front()],
                               1,
@@ -286,6 +284,7 @@ void perform_requests(int NNodes,
                             }
                         }
                     }
+                    thread.erase(it++); // required after changing the 'for' to a while in order to erase elements
                 }
             }
 
@@ -308,7 +307,10 @@ void perform_requests(int NNodes,
             // race-condition unfriendly? Only extensive testing will help us decide :^|
             for (auto _it= itBegE; _it != itEndE; ++_it) {
                 auto &thread = *_it;
-                for (auto it =  thread.begin();it != thread.end(); it++){
+                //for (auto it =  thread.begin();it != thread.end(); it++){ // OLD: was replaced
+                // by the following loop as we require to eliminate elements :-)
+                auto it = thread.begin();
+                while (it !=  thread.end()) {
                     ++localcounter;
 
 
@@ -320,7 +322,7 @@ void perform_requests(int NNodes,
                     results[QAvailable.front()] = std::make_tuple(0.0, // placeholder until we get the correct node val
                                                                   0.0, // placeholder until we get the correct edge val
                             // we are inaugurating this indexing model [:<)
-                                                                  owner[QAvailable.front()] * N + (int) their_vix2[QAvailable.front()][1]);
+                          (unsigned long) (((unsigned long) owner[QAvailable.front()]) *  N + (unsigned long) their_vix2[QAvailable.front()][1] ));
 
 
                     PRINTF_DBG("[PR] About to ask for one node and edge!\n");std::cout<<std::flush;
@@ -367,6 +369,7 @@ void perform_requests(int NNodes,
 
                         }
                     }
+                    thread.erase(it++); // required after changing the 'for' to a while in order to erase elements
                 }
             }
 

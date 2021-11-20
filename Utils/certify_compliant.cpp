@@ -8,7 +8,7 @@
 
 void certify_tagMax_compliant(int TAGMAX_FLAG,
                               int MAXTAG,
-                              const int &NNODES,
+                              const unsigned long &NNODES,
                               int NPROCS,
                               int MAX_USED_TAG){
     if (TAGMAX_FLAG == 1){

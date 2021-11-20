@@ -30,9 +30,13 @@ void register_to_value(Graph &g){
     auto end = vs.first + (L/N) * (i + 1);
     if (i == N-1) end += L % N;
     for (auto v = start; v != end; ++v) {
-        printf("\nval and temp were: %f %f\n",g[*v].value, g[*v].temporal_register);
+        printf("\nval and temp were: %f %f. Vix: %lu proc: %d\n",
+               g[*v].value,
+               g[*v].temporal_register,
+               get(get(boost::vertex_index, g), *v),
+               boost::graph::distributed::process_id(g.process_group()));
         g[*v].value = g[*v].temporal_register;
-        printf("now are: %f %f\n\n",g[*v].value, g[*v].temporal_register);
+        //printf("now are: %f %f\n\n",g[*v].value, g[*v].temporal_register);
 #ifdef ASSERT
         localtackled++;
 #endif

@@ -36,8 +36,8 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
     bool is_in = false;
     long * i;
     int remaining;
-    long ix, currentuix;
-    unsigned long uix;
+    long ix;
+    unsigned long uix, currentuix;
     bool wait = false;
 
 #pragma omp critical
@@ -67,12 +67,12 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
         } else {
             ++totlaps;
             // Locate the graph vertex :-)
-            PRINTF_DBG("starting to locate this ix: %lu\n",uix);
+            PRINTF_DBG("starting to locate this uix: %lu\n",uix);
             std::cout << "Ixs: " << ix << " and " << uix <<std::endl;
             v = start;
             while (!is_in) {
                 currentuix = (unsigned long) get(get(boost::vertex_index, *(REF.p_g)), *v);
-                if (currentuix == uix){
+                if (currentuix == uix) {
                     is_in = true;
                 } else {
                     v++;
@@ -81,37 +81,30 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
             }
 
             // Join the data as required by the integrator
-
-            std::vector<double> neighborValues;
-            std::vector<double> edgeValues;
-            neighborValues.resize((*REF.p_IntHelper)[ix].ResultsPendProcess.size());
-            edgeValues.resize((*REF.p_IntHelper)[ix].ResultsPendProcess.size());
             std::vector<InfoVecElem> temp;
             temp.resize((*REF.p_IntHelper)[ix].ResultsPendProcess.size());
-
             int _it = 0;
             auto it = (*REF.p_IntHelper)[ix].ResultsPendProcess.begin();
             auto end = (*REF.p_IntHelper)[ix].ResultsPendProcess.end();
             int oldsize = (*REF.p_IntHelper)[ix].ResultsPendProcess.size();
-            std::set<int> seen;
+            std::set<unsigned long> seen;
             while (it != end){
-                int elemix = std::get<2>(*it);
-                const bool is_in = seen.find(elemix) != seen.end();
+                unsigned long elemix = std::get<2>(*it);
+                const bool is_in = seen.find(elemix) != seen.end(); //CHECKPOINT
+                printf("Std output uix: %lu ix: %ld proc: %d. vals are %f , %f , %lu\n",uix, ix, MYPROC, std::get<0>(*it), std::get<1>(*it), std::get<2>(*it));std::cout<<std::flush;
                 if (!is_in) {
-                    printf("First appearance of ix: %d for proc: %d. vals are %f & %f\n",ix, MYPROC, std::get<0>(*it), std::get<1>(*it));std::cout<<std::flush;
+                    //printf("First appearance of ix: %l for proc: %d. vals are %f & %f\n",ix, MYPROC, std::get<0>(*it), std::get<1>(*it));std::cout<<std::flush;
                     temp[_it] = *it;
                     _it++;
                     seen.insert(elemix);
                 } else {
-                    printf("NOT First appearance of ix: %d for proc: %d. vals are %f & %f\n",ix, MYPROC, std::get<0>(*it), std::get<1>(*it));std::cout<<std::flush;
+                    //printf("NOT First appearance of ix: %l for proc: %d. vals are %f & %f\n",ix, MYPROC, std::get<0>(*it), std::get<1>(*it));std::cout<<std::flush;
                 }
                 (*REF.p_IntHelper)[ix].ResultsPendProcess.erase(it++);
             }
             temp.resize(_it);
-//            for (auto const& it : (*REF.p_IntHelper)[ix].ResultsPendProcess) {
-//                temp[_it]  = it;
-//                _it++;
-//            }
+
+            // Sort by unique ID... we attempt to integrate always in the same positions :O
             std::sort(temp.begin(),
                       temp.end(),
                       [](InfoVecElem &t1, InfoVecElem &t2) {
@@ -120,14 +113,30 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
             );
             std::cout << "Temp size is: " << temp.size() << " and the container size is: " << (*REF.p_IntHelper)[ix].ResultsPendProcess.size() << " but it was " << oldsize << std::endl;
             PRINTF_DBG("Finished sorting! :-)\n");
+
+
+            // Optimization would be dealing with vectors of double tuples,
+            // no need to copy the values every time :O For that purpose the IntegrationHelper
+            // was created, which should somehow mimic the ParallelHelper constructor and
+            // resize their edgeValues accordingly.
+            std::vector<double> neighborValues;
+            std::vector<double> edgeValues;
+            neighborValues.resize(temp.size());
+            edgeValues.resize(temp.size());
             for (int j=0; j<temp.size(); ++j){
                 neighborValues[j] = std::get<0>(temp[j]);
                 edgeValues[j] = std::get<1>(temp[j]);
             }
-            PRINTF_DBG("Finished building vectors! :-)\n");
+            printf("Finished building vectors! :-) their sizes are %d (neigh) and %d (edg). ix %ld proc %d.\n",
+                   neighborValues.size(), edgeValues.size(), ix, MYPROC);
+
             // Write the new value in the temporal register
-            PRINTF_DBG("Integrating: temporal register was: %f", (*REF.p_g)[*v].temporal_register);
             double result = -420.;
+            printf("BEFORE Integrating: result was %f, IntHelper central value was: %f, real value was %f, temporal register was: %f. ix %ld proc %d.\n",
+                   result,
+                   (*REF.p_IntHelper)[ix].centralValue,
+                   (*REF.p_g)[*v].value,
+                   (*REF.p_g)[*v].temporal_register, ix, MYPROC);
             solver.evolve((*REF.p_IntHelper)[ix].centralValue,
                                           (*REF.p_IntHelper)[ix].centralParams,
                                           neighborValues,
@@ -135,6 +144,11 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
                                           result);
             PRINTF_DBG("Integrating: temporal result was: %f", result);
             (*REF.p_g)[*v].temporal_register = result;
+            printf("AFTER Integrating: result was %f, IntHelper central value was: %f, real value was %f, temporal register was: %f. ix %ld proc %d.\n",
+                   result,
+                   (*REF.p_IntHelper)[ix].centralValue,
+                   (*REF.p_g)[*v].value,
+                   (*REF.p_g)[*v].temporal_register, ix, MYPROC);
             PRINTF_DBG("Integrating: now it is: %f", (*REF.p_g)[*v].temporal_register);
 
             // Decrease the global value of pending integration
@@ -252,6 +266,7 @@ void single_evolution(Graph &g,
     std::set<int> Working, Finished;
 
 
+    //int MYPROCN = ComHelper.WORLD_RANK[0];
 
 #pragma omp parallel firstprivate(NVtot, vs, NT, N_total_nodes, REF, MAX_SUBTHR, TIMETOL, DT) // Node iterators have random access ;-)
     {
@@ -324,7 +339,8 @@ void single_evolution(Graph &g,
                 }
                 auto neighbors = boost::adjacent_vertices(*v, g);
                 auto in_edges = boost::in_edges(*v, g);
-#pragma omp parallel firstprivate(i, v, M, neighbors, NLocals, NInedges, NOwned, N_total_nodes, solver)
+                unsigned long MYPROCN = REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n];
+#pragma omp parallel firstprivate(i, v, M, neighbors, NLocals, NInedges, NOwned, N_total_nodes, MYPROCN)
                 {
                     OpenMPHelper OmpHelperN(NLocals, 0);
                     for (auto n = neighbors.first + OmpHelperN.MY_OFFSET_n;
@@ -348,9 +364,7 @@ void single_evolution(Graph &g,
                                     IntHelper[i].ResultsPendProcess.emplace_back(g[*n].value,
                                                                                  g[edge(*v, *n,
                                                                                         g).first].value, // index to UID :-)
-                                                                                 ((unsigned long) get(
-                                                                                         get(boost::vertex_index, g), *n)) *
-                                                                                 N_total_nodes);
+                                    (unsigned long) ((unsigned long) get(get(boost::vertex_index, g), *n) + N_total_nodes * ((unsigned long) MYPROCN) ) );
                                 }
                             } else { error_report("Push back mechanism for local nodes has failed"); };
                         } else { // Case (2.A): We 'see' this neighbor because it is connected
@@ -360,9 +374,9 @@ void single_evolution(Graph &g,
 #pragma omp critical
                             {
                                 ParHelper.data[i].MissingA[OmpHelperN.MY_THREAD_n].emplace_back(g[local_e].value,
-                                                                                                get(MapHelper.NodeOwner,
+                                                                                                (int) get(MapHelper.NodeOwner,
                                                                                                     *n),
-                                                                                                get(get(boost::vertex_index,
+                                                                                                (int) get(get(boost::vertex_index,
                                                                                                         g), *n));
                             }
                         }
@@ -386,9 +400,9 @@ void single_evolution(Graph &g,
                             {
                                 ParHelper.data[i].MissingB[OmpHelperE.MY_THREAD_n].emplace_back(
                                         (double) central_ix,
-                                        get(MapHelper.NodeOwner,
+                                        (int) get(MapHelper.NodeOwner,
                                             local_v),
-                                        get(get(boost::vertex_index,
+                                        (int) get(get(boost::vertex_index,
                                                 g), local_v));
                             }
                         }
