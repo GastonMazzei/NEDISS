@@ -21,6 +21,11 @@ CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o
 CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o: ../Utils/differential_equations_aux.h
 CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o: ../Utils/error.h
 
+CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
+CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.o: ../DifferentialEquations/LinearTestEquation.cpp
+CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.o: ../DifferentialEquations/LinearTestEquation.h
+CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.o: ../Utils/differential_equations_aux.h
+
 CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
 CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o: ../DifferentialEquations/NoiselessKuramoto.cpp
 CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o: ../DifferentialEquations/NoiselessKuramoto.h
@@ -118,6 +123,7 @@ CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Tests/g
 
 CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Communication/CommunicationFunctions.h
 CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
+CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../DifferentialEquations/LinearTestEquation.h
 CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../DifferentialEquations/NoiselessKuramoto.h
 CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../GraphClasses/CliqueGraph.h
 CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../GraphClasses/ErdosRenyiGraph.h
@@ -195,6 +201,7 @@ CMakeFiles/cppprojct.dir/Utils/timers.cpp.o: ../Utils/timers.cpp
 
 CMakeFiles/cppprojct.dir/main.cpp.o: ../Communication/CommunicationFunctions.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
+CMakeFiles/cppprojct.dir/main.cpp.o: ../DifferentialEquations/LinearTestEquation.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../DifferentialEquations/NoiselessKuramoto.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../GraphClasses/CliqueGraph.h
 CMakeFiles/cppprojct.dir/main.cpp.o: ../GraphClasses/ErdosRenyiGraph.h

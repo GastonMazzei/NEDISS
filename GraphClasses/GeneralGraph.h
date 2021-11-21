@@ -131,7 +131,7 @@ class CommonGraphObjectClass{
         void showEdges(Graph & g);
         void reportNProcs(Graph & g);
         void reportNodes(Graph &g);
-        void kuramoto_initialization(std::vector<std::pair<double, double>> X0_W, double J, Graph & g, unsigned int N);
+        void Initialization(std::vector<std::pair<double, double>> X0_W, double J, Graph & g, unsigned int N);
 };
 
 

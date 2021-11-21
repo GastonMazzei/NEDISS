@@ -13,7 +13,7 @@
 
 
 
-void graph_tests_init(int SOLVER, int TOPOLOGY, unsigned int SEED, unsigned long N = 4, double p = 0.4);
+void graph_tests_init(int TOPOLOGY, unsigned int SEED, unsigned long N = 4, double p = 0.4);
 
 // THIS USES ONLY THE KURAMOTO EQUATION!!!
 template <int T, typename GRAPHTYPE>
@@ -43,19 +43,19 @@ void test_graph_init(GRAPHTYPE &G, std::string name){
     adsync_message_barrier<T>(msg_post + "'showEdges'", G.g);
 
     // Initialize for constant kuramoto
-    adsync_message_barrier<T>(msg_prev + "'kuramoto_initialization (constant values)'", G.g);
-    G.kuramoto_initialization({{12.345, 6.78}}, 3.14, G.g, G.N);
-    adsync_message_barrier<T>(msg_post + "'kuramoto_initialization (constant values)'", G.g);
+    adsync_message_barrier<T>(msg_prev + "'Initialization' (constant values)'", G.g);
+    G.Initialization({{12.345, 6.78}}, 3.14, G.g, G.N);
+    adsync_message_barrier<T>(msg_post + "'Initialization' (constant values)'", G.g);
 
     // Show the number of created nodes again
-    adsync_message_barrier<T>(msg_prev + "'showVertex' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showVertex' (post eq constant values)", G.g);
     G.showVertex(G.g);
-    adsync_message_barrier<T>(msg_post + "'showVertex' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex' (post eq constant values)", G.g);
 
     // Show the edges again
-    adsync_message_barrier<T>(msg_prev + "'showEdges' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showEdges' (post eq constant values)", G.g);
     G.showEdges(G.g);
-    adsync_message_barrier<T>(msg_post + "'showEdges' (post kuramoto constant values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showEdges' (post eq constant values)", G.g);
 
     // Initialize for varied kuramoto
     //--------INITIALIZATION that is not parallelized yet
@@ -66,25 +66,25 @@ void test_graph_init(GRAPHTYPE &G, std::string name){
                                1/((double) G.N) * (double) i
                        });
     }
-    adsync_message_barrier<T>(msg_prev + "'kuramoto_initialization (varied values)'", G.g);
-    G.kuramoto_initialization(X0_W, 5.67, G.g, G.N);
-    adsync_message_barrier<T>(msg_post + "'kuramoto_initialization (varied values)'", G.g);
+    adsync_message_barrier<T>(msg_prev + "'Initialization' (varied values)'", G.g);
+    G.Initialization(X0_W, 5.67, G.g, G.N);
+    adsync_message_barrier<T>(msg_post + "'Initialization' (varied values)'", G.g);
 
     // Show the number of created nodes again
-    adsync_message_barrier<T>(msg_prev + "'showVertex' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showVertex' (post eq varied values)", G.g);
     G.showVertex(G.g);
-    adsync_message_barrier<T>(msg_post + "'showVertex' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex' (post eq varied values)", G.g);
 
     // Show the number of created nodes again
-    adsync_message_barrier<T>(msg_prev + "'showVertex' (post kuramoto varied values)(again, to confirm the vertex iterator conserves the order)", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showVertex' (post eq varied values)(again, to confirm the vertex iterator conserves the order)", G.g);
     G.showVertex(G.g);
-    adsync_message_barrier<T>(msg_post + "'showVertex' (post kuramoto varied values)(again, to confirm the vertex iterator conserves the order)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showVertex' (post eq varied values)(again, to confirm the vertex iterator conserves the order)", G.g);
 
 
     // Show the edges again
-    adsync_message_barrier<T>(msg_prev + "'showEdges' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_prev + "'showEdges' (post eq varied values)", G.g);
     G.showEdges(G.g);
-    adsync_message_barrier<T>(msg_post + "'showEdges' (post kuramoto varied values)", G.g);
+    adsync_message_barrier<T>(msg_post + "'showEdges' (post eq varied values)", G.g);
 
     // Print in command what test is :-)
     adsync_message<T>(msg_post + "'test_" + name + "_graph_init'", G.g);

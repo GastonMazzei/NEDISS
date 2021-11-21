@@ -37,43 +37,38 @@ void EulerSolver<Equation>::evolve(double t,
                            double &answer,
                            double * P){
 
-    // OVERWRITE: testing number of errors!
-//    answer = a+1;
-//    return;
-    // -------END--OF--DEBUGGIN!
-
     // Initialize auxiliary vectors
     std::vector<double> T1={0},T2={1},T3={0},T4={1}; // Any val.
-    answer = 0;
+
+    // Values defined for Euler.
+    T1[0] = 0;
+    T2[0] = 1;
+    T3[0] = 0;
+    T4[0] = 1;
+    E.UpdateFlowSpecs(T1,T2,T3,T4,d.size());
+
+    answer = a;
     if (*(P+0) != 0) {
         // Initialize result
-        T1[0] = 0;
-        T2[0] = 1;
-        T3[0] = 0;
-        T4[0] = 1;
         Specs.result = 0;
-        E.UpdateFlowSpecs(T1,T2,T3,T4,d.size());
         E.Field(t,a,b,c,d);
         // Populate answer step 1 of 4 :-)
-        // it is the reslt weighted by *P
-        answer += (T1[0] + T2[0] * a + h * Specs.result) * (*P);
+        // it is the result weighted by *P
+        answer +=  h * Specs.result;
     }
     if (*(P+1) != 0) {
-        printf("The current equation does not have method for their derivatives, Euler method fails!\n");
-        std::cout<<std::flush;
-        exit(1);
+        Specs.result = 0;
+        E.d1Field(t,a,b,c,d);
+        answer +=  h * h * Specs.result  / 2;
     }
     if (*(P+2) != 0) {
-        printf("The current equation does not have method for their derivatives, Euler method fails!\n");
-        std::cout<<std::flush;
-        exit(1);
-    }
+        Specs.result = 0;
+        E.d2Field(t,a,b,c,d);
+        answer +=  h * h * h * Specs.result  / 6;    }
     if (*(P+3) != 0) {
-        printf("The current equation does not have method for their derivatives, Euler method fails!\n");
-        std::cout<<std::flush;
-        exit(1);
-    }
-
+        Specs.result = 0;
+        E.d3Field(t,a,b,c,d);
+        answer +=  h * h * h * h * Specs.result / 24;}
 }
 
 #endif //CPPPROJCT_EULERSOLVER_H

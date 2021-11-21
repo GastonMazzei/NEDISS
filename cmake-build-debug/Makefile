@@ -196,6 +196,33 @@ DifferentialEquations/GeneralDifferentialEquation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.s
 .PHONY : DifferentialEquations/GeneralDifferentialEquation.cpp.s
 
+DifferentialEquations/LinearTestEquation.o: DifferentialEquations/LinearTestEquation.cpp.o
+
+.PHONY : DifferentialEquations/LinearTestEquation.o
+
+# target to build an object file
+DifferentialEquations/LinearTestEquation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.o
+.PHONY : DifferentialEquations/LinearTestEquation.cpp.o
+
+DifferentialEquations/LinearTestEquation.i: DifferentialEquations/LinearTestEquation.cpp.i
+
+.PHONY : DifferentialEquations/LinearTestEquation.i
+
+# target to preprocess a source file
+DifferentialEquations/LinearTestEquation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.i
+.PHONY : DifferentialEquations/LinearTestEquation.cpp.i
+
+DifferentialEquations/LinearTestEquation.s: DifferentialEquations/LinearTestEquation.cpp.s
+
+.PHONY : DifferentialEquations/LinearTestEquation.s
+
+# target to generate assembly for a file
+DifferentialEquations/LinearTestEquation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.s
+.PHONY : DifferentialEquations/LinearTestEquation.cpp.s
+
 DifferentialEquations/NoiselessKuramoto.o: DifferentialEquations/NoiselessKuramoto.cpp.o
 
 .PHONY : DifferentialEquations/NoiselessKuramoto.o
@@ -913,6 +940,9 @@ help:
 	@echo "... DifferentialEquations/GeneralDifferentialEquation.o"
 	@echo "... DifferentialEquations/GeneralDifferentialEquation.i"
 	@echo "... DifferentialEquations/GeneralDifferentialEquation.s"
+	@echo "... DifferentialEquations/LinearTestEquation.o"
+	@echo "... DifferentialEquations/LinearTestEquation.i"
+	@echo "... DifferentialEquations/LinearTestEquation.s"
 	@echo "... DifferentialEquations/NoiselessKuramoto.o"
 	@echo "... DifferentialEquations/NoiselessKuramoto.i"
 	@echo "... DifferentialEquations/NoiselessKuramoto.s"

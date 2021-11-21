@@ -11,6 +11,7 @@
 #include "../Solvers/EulerSolver.h"
 #include "../Solvers/RungeKuttaSolver.h"
 #include "../DifferentialEquations/NoiselessKuramoto.h"
+#include "../DifferentialEquations/LinearTestEquation.h"
 #include "../GraphClasses/GraphFunctions.h"
 #include "../Utils/HelperClasses.h"
 #include "../Communication/CommunicationFunctions.h"
@@ -29,20 +30,20 @@
 
 // THIS USES ONLY THE KURAMOTO EQUATION!!!
 
-template <int T, typename GRAPHTYPE, int BATCH>
+template <int T, typename GRAPHTYPE, int BATCH, typename DIFFEQ>
 void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
                                      CommunicationHelper &ComHelper,
                                      ParallelHelper &ParHelper,
                                      IntegrationHelper &IntHelper,
                                      MappingHelper &MapHelper,
-                                     int SOLVER) {
+                                     SolverConfig SOLVER) {
     // Print in command what test is it
     adsync_message<T>(msg_prev + "'test_" + name + "_graph_singlestep_evolution'", G.g);
 
     // Preprocessing
     adsync_message<T>(msg_prev + "'preparing "+name+" graph for singlestep evolution'", G.g);
     G.build();
-    G.kuramoto_initialization({{12.345, 6.78}}, 3.14, G.g, G.N);
+    G.Initialization({{12.345, 6.78}}, 3.14, G.g, G.N);
     adsync_message_barrier<T>(msg_post + "'preparing ring graph for singlestep evolution'", G.g);
 
 
@@ -58,45 +59,51 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
     adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
 
 
-    if (SOLVER == 0) {
-        GeneralSolver<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>> S_eu("eu",1) ;
+    if (SOLVER.s == 0) {
+        GeneralSolver<DIFFEQ, EulerSolver<DIFFEQ>> S_eu("eu",SOLVER.d) ;
+        S_eu.SetT0(0);
+        S_eu.SetStep(0.01);
 
-        // Test several kuramoto evolutions with Euler
-        adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (1 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>, BATCH>(G.g, S_eu,ComHelper, ParHelper,
+        // Test several eq evolutions with Euler
+        adsync_message<T>(msg_prev + "'single_eq_evolution' with euler (1 of 3)", G.g);
+        single_evolution<DIFFEQ, EulerSolver<DIFFEQ>, BATCH>(G.g, S_eu,ComHelper, ParHelper,
                                                                             IntHelper, MapHelper, G.N);
-        adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (1 of 3)", G.g);
-        adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (2 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>, BATCH>(G.g, S_eu,ComHelper, ParHelper,
+        S_eu.EvolveTime();
+        adsync_message_barrier<T>(msg_post + "'single_eq_evolution' with euler (1 of 3)", G.g);
+        adsync_message<T>(msg_prev + "'single_eq_evolution' with euler (2 of 3)", G.g);
+        single_evolution<DIFFEQ, EulerSolver<DIFFEQ>, BATCH>(G.g, S_eu,ComHelper, ParHelper,
                                                                             IntHelper, MapHelper, G.N);
-        adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (2 of 3)", G.g);
-        adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with euler (3 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, EulerSolver<NoiselessKuramoto>, BATCH>(G.g, S_eu,ComHelper, ParHelper,
+        S_eu.EvolveTime();
+        adsync_message_barrier<T>(msg_post + "'single_eq_evolution' with euler (2 of 3)", G.g);
+        adsync_message<T>(msg_prev + "'single_eq_evolution' with euler (3 of 3)", G.g);
+        single_evolution<DIFFEQ, EulerSolver<DIFFEQ>, BATCH>(G.g, S_eu,ComHelper, ParHelper,
                                                                             IntHelper, MapHelper, G.N);
-        adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with euler (3 of 3)", G.g);
+        S_eu.EvolveTime();
+        adsync_message_barrier<T>(msg_post + "'single_eq_evolution' with euler (3 of 3)", G.g);
 
 
-    } else if (SOLVER == 1) {
+    } else if (SOLVER.s == 1) {
 
-        // Please note that:
-        // DifferentialEquation has
-
-        double t[4] = {1,2,2,1};
-        GeneralSolver<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>> S_rk("rk",4, t) ;
+        GeneralSolver<DIFFEQ, RungeKuttaSolver<DIFFEQ>> S_rk("rk",0, &(SOLVER.P[0])) ;
+        S_rk.SetT0(0);
+        S_rk.SetStep(0.01);
 
         // Test several kuramoto evolutions with RungeKutta
-        adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (1 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>, BATCH>(G.g, S_rk,ComHelper, ParHelper,
+        adsync_message<T>(msg_prev + "'single_eq_evolution' with runge kutta (1 of 3)", G.g);
+        single_evolution<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk,ComHelper, ParHelper,
                                                                                         IntHelper, MapHelper, G.N);
-        adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (1 of 3)", G.g);
-        adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (2 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>, BATCH>(G.g, S_rk,ComHelper, ParHelper,
+        S_rk.EvolveTime();
+        adsync_message_barrier<T>(msg_post + "'single_eq_evolution' with runge kutta (1 of 3)", G.g);
+        adsync_message<T>(msg_prev + "'single_eq_evolution' with runge kutta (2 of 3)", G.g);
+        single_evolution<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk,ComHelper, ParHelper,
                                                                                         IntHelper, MapHelper, G.N);
-        adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (2 of 3)", G.g);
-        adsync_message<T>(msg_prev + "'single_kuramoto_evolution' with runge kutta (3 of 3)", G.g);
-        single_evolution<NoiselessKuramoto, RungeKuttaSolver<NoiselessKuramoto>, BATCH>(G.g, S_rk,ComHelper, ParHelper,
+        S_rk.EvolveTime();
+        adsync_message_barrier<T>(msg_post + "'single_eq_evolution' with runge kutta (2 of 3)", G.g);
+        adsync_message<T>(msg_prev + "'single_eq_evolution' with runge kutta (3 of 3)", G.g);
+        single_evolution<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk,ComHelper, ParHelper,
                                                                                         IntHelper, MapHelper, G.N);
-        adsync_message_barrier<T>(msg_post + "'single_kuramoto_evolution' with runge kutta (3 of 3)", G.g);
+        S_rk.EvolveTime();
+        adsync_message_barrier<T>(msg_post + "'single_eq_evolution' with runge kutta (3 of 3)", G.g);
     }
 
     // Show nodes
@@ -110,11 +117,8 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
 
 
 
-template <int BATCH>
-void graph_tests_singlestep_evolution(unsigned int SEED, unsigned long N, double p, int SOLVER, int TOPOLOGY){
-
-    reproductibility_lock(SEED);
-
+template <int BATCH, typename EQCLASS>
+void graph_test_singlestep_evolution_helper(unsigned int SEED, unsigned long N, double p, SolverConfig SOLVER, int TOPOLOGY){
     if (TOPOLOGY == 0) {
         // Ring Network
         RingGraphObject G(N);
@@ -126,9 +130,9 @@ void graph_tests_singlestep_evolution(unsigned int SEED, unsigned long N, double
         IntegrationHelper IntHelper(NVtot);
         MappingHelper MapHelper(G.g);
 
-        test_graph_singlestep_evolution<100, RingGraphObject, BATCH>(G, "Ring",
-                                                                     ComHelper, ParHelper,
-                                                                     IntHelper, MapHelper, SOLVER);
+        test_graph_singlestep_evolution<100, RingGraphObject, BATCH, EQCLASS>(G, "Ring",
+                                                                              ComHelper, ParHelper,
+                                                                              IntHelper, MapHelper, SOLVER);
 
     } else if (TOPOLOGY == 1) {
         // Clique Network
@@ -141,9 +145,9 @@ void graph_tests_singlestep_evolution(unsigned int SEED, unsigned long N, double
         IntegrationHelper IntHelper(NVtot);
         MappingHelper MapHelper(G.g);
 
-        test_graph_singlestep_evolution<100, CliqueGraphObject, BATCH>(G, "Clique",
-                                                                           ComHelper, ParHelper,
-                                                                           IntHelper, MapHelper, SOLVER);
+        test_graph_singlestep_evolution<100, CliqueGraphObject, BATCH, EQCLASS>(G, "Clique",
+                                                                                ComHelper, ParHelper,
+                                                                                IntHelper, MapHelper, SOLVER);
 
     } else if (TOPOLOGY == 2) {
         // Erdos Renyi Network
@@ -157,10 +161,30 @@ void graph_tests_singlestep_evolution(unsigned int SEED, unsigned long N, double
         MappingHelper MapHelper(G.g);
 
 
-        test_graph_singlestep_evolution<100, ErdosRenyiGraphObject, BATCH>(G, "ErdosRenyi",
-                                                                           ComHelper, ParHelper,
-                                                                           IntHelper, MapHelper, SOLVER);
+        test_graph_singlestep_evolution<100, ErdosRenyiGraphObject, BATCH, EQCLASS>(G, "ErdosRenyi",
+                                                                                    ComHelper, ParHelper,
+                                                                                    IntHelper, MapHelper, SOLVER);
     } else error_report("[ERROR] Requested topology does not exist!\n");
+
 }
+
+
+
+template <int BATCH>
+void graph_tests_singlestep_evolution(unsigned int SEED, unsigned long N, double p, SolverConfig SOLVER, int TOPOLOGY, int EQNUMBER){
+
+    reproductibility_lock(SEED);
+    if (EQNUMBER == 0){
+        graph_test_singlestep_evolution_helper<BATCH, NoiselessKuramoto>(SEED, N, p, SOLVER, TOPOLOGY);
+    } else if (EQNUMBER == 1) {
+        graph_test_singlestep_evolution_helper<BATCH, LinearTestEquation>(SEED, N, p, SOLVER, TOPOLOGY);
+    } else {
+        printf("[FATAL] Required Equation does not exist!\n");
+        std::cout<<std::flush;
+        exit(1);
+    }
+}
+
+
 
 #endif //CPPPROJCT_GRAPH_TEST_SINGLESTEP_EVOLUTION_H

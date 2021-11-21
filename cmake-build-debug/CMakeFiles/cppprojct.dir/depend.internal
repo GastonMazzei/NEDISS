@@ -21,6 +21,11 @@ CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o
  /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
  /home/m4zz31/cppprojct/Utils/differential_equations_aux.h
  /home/m4zz31/cppprojct/Utils/error.h
+CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.o
+ /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
+ /home/m4zz31/cppprojct/DifferentialEquations/LinearTestEquation.cpp
+ /home/m4zz31/cppprojct/DifferentialEquations/LinearTestEquation.h
+ /home/m4zz31/cppprojct/Utils/differential_equations_aux.h
 CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o
  /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
  /home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.cpp
@@ -119,6 +124,7 @@ CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o
 CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o
  /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
  /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
+ /home/m4zz31/cppprojct/DifferentialEquations/LinearTestEquation.h
  /home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.h
  /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
  /home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
@@ -196,6 +202,7 @@ CMakeFiles/cppprojct.dir/Utils/timers.cpp.o
 CMakeFiles/cppprojct.dir/main.cpp.o
  /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
  /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
+ /home/m4zz31/cppprojct/DifferentialEquations/LinearTestEquation.h
  /home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.h
  /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
  /home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h

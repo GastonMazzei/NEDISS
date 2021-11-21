@@ -78,14 +78,72 @@ void CommonGraphObjectClass::showEdges(Graph &g) {
 }
 
 
-void CommonGraphObjectClass::kuramoto_initialization(std::vector<pair<double, double>> X0_W, double J, Graph & g, unsigned int N){
+//void CommonGraphObjectClass::kuramoto_initialization(std::vector<pair<double, double>> X0_W, double J, Graph & g, unsigned int N){
+////    // Whatever Graph Architecture is recieved is populated with a Frequency W_i and Edge weights J
+//
+//    // 1)
+////    // Actually this clause should be changed: we would want to directly recieve W[N] split
+////    // into the number of processors, thus wanting W at each processor to be either W[1] or W[N/Nprocs]
+//    if ((X0_W.size()>1) && (N != X0_W.size())) {
+//        error_report("[error] Number of frequencies to initialize the Kuramoto model should be either 1 or N");
+//    } else if (X0_W.size()==1){
+//        for (int i=0; i<N-1; i++){
+//            X0_W.push_back(X0_W[0]);
+//        }
+//    };
+//
+//
+//    // 2)
+//    // Definition of various required types
+//
+//    OwnerMap owner = get(vertex_owner, g);
+//    vertex_iterator v, v_end;
+//    edge_iterator e, e_end;
+//
+//    // 3)
+//    // split the data across processors :-)
+//    static unsigned int NV = num_vertices(g);
+//    mpi::communicator world;
+//    unsigned int NPROCS = world.size();
+//    unsigned int BALANCE = std::floor(((double) N) / ((double) NPROCS));
+//    unsigned int MY_NUM = process_id(g.process_group());
+//    pair<double, double> myvals[NV];
+//    int j = 0;
+//    for (j=0; j<BALANCE; j++){
+//        myvals[j] = X0_W[MY_NUM * BALANCE + j];
+//    }
+//    if (NV == (BALANCE + 1)){
+//        myvals[BALANCE] = X0_W[N-1];
+//    }
+//
+//
+//    // 4) Iterate along edges and nodes
+//    j = 0;
+//    for (boost::tie(v, v_end) = vertices(g); v != v_end; ++v) {
+//        if (MY_NUM == get(owner, *v)) {
+//            if (g[*v].params.size()==0) {
+//                g[*v].params.push_back(myvals[j].second);
+//            } else {
+//                g[*v].params[0] = myvals[j].second;
+//            }
+//            g[*v].value = myvals[j].first;
+//            ++j;
+//        };
+//    }
+//    for (boost::tie(e, e_end) = edges(g); e != e_end; ++e) {
+//        g[*e].value = J;
+//    };
+//};
+
+
+void CommonGraphObjectClass::Initialization(std::vector<pair<double, double>> X0_W, double J, Graph & g, unsigned int N){
 //    // Whatever Graph Architecture is recieved is populated with a Frequency W_i and Edge weights J
 
     // 1)
 //    // Actually this clause should be changed: we would want to directly recieve W[N] split
 //    // into the number of processors, thus wanting W at each processor to be either W[1] or W[N/Nprocs]
     if ((X0_W.size()>1) && (N != X0_W.size())) {
-        error_report("[error] Number of frequencies to initialize the Kuramoto model should be either 1 or N");
+        error_report("[error] Number of frequencies to initialize the model should be either 1 or N");
     } else if (X0_W.size()==1){
         for (int i=0; i<N-1; i++){
             X0_W.push_back(X0_W[0]);
@@ -105,20 +163,43 @@ void CommonGraphObjectClass::kuramoto_initialization(std::vector<pair<double, do
     static unsigned int NV = num_vertices(g);
     mpi::communicator world;
     unsigned int NPROCS = world.size();
-    unsigned int BALANCE = std::floor(((double) N) / ((double) NPROCS));
     unsigned int MY_NUM = process_id(g.process_group());
-    pair<double, double> myvals[NV];
-    int j = 0;
-    for (j=0; j<BALANCE; j++){
-        myvals[j] = X0_W[MY_NUM * BALANCE + j];
+    unsigned int BALANCE = (unsigned int) std::floor(((double) N) / ((double) NPROCS));
+    bool is_case_below = false;
+    bool are_we_below = false;
+    if ((N % NPROCS != 0) && (MY_NUM + 1 <= N % NPROCS)) {
+        BALANCE++;
+        are_we_below = true;
     }
-    if (NV == (BALANCE + 1)){
-        myvals[BALANCE] = X0_W[N-1];
+    if (N % NPROCS != 0) {
+        is_case_below = true;
+    }
+    int begin=0,end=0;
+    for (int j=0; j<MY_NUM; ++j){
+        if (is_case_below){
+            if (are_we_below){
+                begin += (int) BALANCE;
+            } else if (j+1 <= N % NPROCS) {
+                begin += (int) (BALANCE + 1);
+            } else {
+                begin += (int) BALANCE;
+            }
+        } else {
+            begin += BALANCE;
+        }
+    }
+    end = begin + BALANCE;
+    PRINTF_DBG("About to assert the corrrect balance of nodes in processors! NPROCS: %u MY_NUM: %ud BALANCE: %u  is_case_below %d are_we_below %d NV %ud end %d begin %d\n",
+           NPROCS, MY_NUM, BALANCE, is_case_below, are_we_below, NV, end, begin);std::cout<<std::flush;
+    assert(NV == BALANCE);
+    pair<double, double> myvals[NV];
+    for (int j=begin; j<end; j++){
+        myvals[j - begin] = X0_W[j];
     }
 
 
     // 4) Iterate along edges and nodes
-    j = 0;
+    int j = 0;
     for (boost::tie(v, v_end) = vertices(g); v != v_end; ++v) {
         if (MY_NUM == get(owner, *v)) {
             if (g[*v].params.size()==0) {
@@ -136,6 +217,83 @@ void CommonGraphObjectClass::kuramoto_initialization(std::vector<pair<double, do
 };
 
 
+//
+//void CommonGraphObjectClass::lineartest_initialization(std::vector<pair<double, double>> &X0_A,Graph & g, unsigned int N){
+////    // Whatever Graph Architecture is recieved is populated with a Frequency W_i and Edge weights J
+//
+//    // 1)
+////    // Actually this clause should be changed: we would want to directly recieve W[N] split
+////    // into the number of processors, thus wanting W at each processor to be either W[1] or W[N/Nprocs]
+//    if ((X0_A.size()>1) && (N != X0_A.size())) {
+//        error_report("[error] Provided  1 < 'N' < NTOT_NODES linear weights... they should be either 1 or N.");
+//    } else if (X0_A.size()==1){
+//        for (int i=0; i<N-1; i++){
+//            X0_A.push_back(X0_A[0]);
+//        }
+//    };
+//
+//
+//    // 2)
+//    // Definition of various required types
+//
+//    OwnerMap owner = get(vertex_owner, g);
+//    vertex_iterator v, v_end;
+//    edge_iterator e, e_end;
+//
+//    // 3)
+//    // split the data across processors :-)
+//    static unsigned int NV = num_vertices(g);
+//    mpi::communicator world;
+//    unsigned int NPROCS = world.size();
+//    unsigned int MY_NUM = process_id(g.process_group());
+//    unsigned int BALANCE = (unsigned int) std::floor(((double) N) / ((double) NPROCS));
+//    bool is_case_below = false;
+//    bool are_we_below = false;
+//    if ((N % NPROCS != 0) && (MY_NUM + 1 <= N % NPROCS)) {
+//        BALANCE++;
+//        are_we_below = true;
+//    }
+//    if (N % NPROCS != 0) {
+//        is_case_below = true;
+//    }
+//    printf("About to assert the corrrect balance of nodes in processors!\n");std::cout<<std::flush;
+//    assert(NV == BALANCE);
+//    int begin,end;
+//    for (int j=0; j<MY_NUM; ++j){
+//        if (is_case_below){
+//            if (are_we_below){
+//                begin += (int) BALANCE;
+//            } else if (j+1 <= N % NPROCS) {
+//                begin += (int) (BALANCE + 1);
+//            } else {
+//                begin += (int) BALANCE;
+//            }
+//        } else {
+//            begin += BALANCE;
+//        }
+//    }
+//    end = begin + BALANCE;
+//    pair<double, double> myvals[NV];
+//    for (int j=begin; j<end; j++){
+//        myvals[j - begin] = X0_A[j];
+//    }
+//
+//
+//    // 4) Iterate along edges and nodes
+//    int j = 0;
+//    for (boost::tie(v, v_end) = vertices(g); v != v_end; ++v) {
+//        if (MY_NUM == get(owner, *v)) {
+//            if (g[*v].params.size()==0) {
+//                g[*v].params.push_back(myvals[j].second);
+//            } else {
+//                g[*v].params[0] = myvals[j].second;
+//            }
+//            g[*v].value = myvals[j].first;
+//            ++j;
+//        };
+//    }
+//};
+//
 
 
 

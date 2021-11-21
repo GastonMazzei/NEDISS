@@ -296,10 +296,8 @@ void single_evolution(Graph &g,
     // for tests
     std::set<int> Working, Finished;
 
-
-    //int MYPROCN = ComHelper.WORLD_RANK[0];
-
-#pragma omp parallel firstprivate(NVtot, vs, NT, N_total_nodes, REF, MAX_SUBTHR, TIMETOL, DT) // Node iterators have random access ;-)
+// The solver must be copied by each thread, as the 'FlowSpecs' attribute must act non-atomically.
+#pragma omp parallel firstprivate(NVtot, vs, NT, N_total_nodes, REF, MAX_SUBTHR, TIMETOL, DT, solver) // Node iterators have random access ;-)
     {
         bool am_i_first;
         int SplitCoef = omp_get_num_threads()/2; // 3/2

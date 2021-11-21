@@ -11,7 +11,7 @@
 
 
 
-void graph_tests_init(int SOLVER, int TOPOLOGY, unsigned int SEED, unsigned long N, double p){
+void graph_tests_init(int TOPOLOGY, unsigned int SEED, unsigned long N, double p){
     // ---CONSTRUCTOR AND INITIALIZATION DEBUGGING---
 
     if (TOPOLOGY == 0) {

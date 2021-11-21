@@ -14,6 +14,13 @@
 typedef std::function<double(double, double, std::vector<double>, std::vector<double>, std::vector<double>)> ScalarFlow;
 typedef std::function<double(double a, std::vector<double> &b, std::vector<double> &c, std::vector<double> &d, Graph &g, ScalarFlow &F)> SolverOp;
 
+struct SolverConfig{
+    int s=0;
+    int d=0;
+    double P[4];
+    SolverConfig();
+};
+
 struct TimeStructure{
     double h = 0.01;
     double t = 0;
@@ -33,7 +40,7 @@ public:
     GeneralSolver();
     GeneralSolver(std::string valtype);
     GeneralSolver(std::string valtype, int d);
-    GeneralSolver(std::string valtype, int d, double params[4]);
+    GeneralSolver(std::string valtype, int d, double * params);
 
     // Instantiate the Differential Equation and prepare stuff if necessary
     DIFFEQ DifferentialEquation;
@@ -56,13 +63,13 @@ public:
 };
 
 template <typename DIFFEQ, typename SOLVER>
-GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d, double params[4]){
+GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d, double * params){
     type = valtype;
     deg = d;
-    Params[0] = params[0];
-    Params[1] = params[1];
-    Params[2] = params[2];
-    Params[3] = params[3];
+    Params[0] = *(params+0);
+    Params[1] = *(params+1);
+    Params[2] = *(params+2);
+    Params[3] = *(params+3);
 };
 
 template <typename DIFFEQ, typename SOLVER>
@@ -70,7 +77,7 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype){
     // Types available should be:
     //  (1) Euler ('eu')
     //  (2) Runge-Kutta ('rk')
-    std::string methods_str = "(1) Euler ('eu'), (2) Runge-Kutta up to order 4 included ('rk').";
+    std::string methods_str = "(1) Euler ('eu').";
     type = std::move(valtype);
     if (type == "rk") {
         // Heun method's initialization :-)
@@ -105,7 +112,7 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d) {
     // Types available should be:
     //  (1) Euler ('eu')
     //  (2) Runge-Kutta ('rk')
-    std::string methods_str = "(1) Euler ('eu'), (2) Runge-Kutta up to order 4 included ('rk').";
+    std::string methods_str = "(1) Euler ('eu').";
     type = std::move(valtype);
     deg = d;
     if (type == "rk") {
@@ -116,12 +123,14 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d) {
         Params[3] = 0;
     } else if (type == "eu") {
         // Euler order 1 :-)
-        Params[0] = 1;
-        Params[1] = 0;
-        Params[2] = 0;
-        Params[3] = 0;
-        if (d!=1) printf("\n\n[WARNING]\n\nEULER IS ONLY AVAILABLE FOR ORDER 1, DEFAULTING.\n\n");
-        std::cout<<std::flush;
+        for (int i=0; i<4; ++i){
+            if (i+1 <= d){
+                Params[i] = 1;
+            } else {
+                Params[i] = 0;
+            }
+        }
+        if (d!=1) PRINTF_DBG("\n\n[WARNING]\n\nEuler od Order != 1 may not be available for some Equations, i.e. some equation classes may not have defined their field derivatives up to the requested order :O.\n\n");
     } else {
         error_report("Only support for Integration is available for the following methods:" + methods_str);
     }

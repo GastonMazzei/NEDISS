@@ -96,6 +96,12 @@
 		<Unit filename="/home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h">
 			<Option target="cppprojct"/>
 		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/DifferentialEquations/LinearTestEquation.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/DifferentialEquations/LinearTestEquation.h">
+			<Option target="cppprojct"/>
+		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.cpp">
 			<Option target="cppprojct"/>
 		</Unit>

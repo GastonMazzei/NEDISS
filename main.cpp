@@ -58,26 +58,27 @@ int main(int argc, char** argv)
     const double ErdosRenyiProba = 0.5;
     const int TESTN = std::stoi(std::getenv("TEST"));
     // Solvers: 0 is Euler, 1 is RungeKutta
-    const int SOLVER = std::stoi(std::getenv("SOLVER"));
+    SolverConfig solver_config;
     // Topology: 0 is Ring, 1 is Clique, 2 is Erdos-Renyi
     const int TOPOLOGY = std::stoi(std::getenv("TOPOLOGY"));
 
     if (TESTN == 0){
         // TEST INITIALIZATION OF ALL NETWORKS INCLUDING THEIR ATTRIBUTES
-        graph_tests_init(SOLVER, TOPOLOGY, SEED, NNodes, ErdosRenyiProba);
+        graph_tests_init(TOPOLOGY, SEED, NNodes, ErdosRenyiProba);
     } else if (TESTN == 1) {
         // TEST SINGLESTEP EVOLUTION 'A COUPLE' OF TIMES
+        int EQNUMBER = std::stoi(std::getenv("EQNUMBER"));
         graph_tests_singlestep_evolution<BATCH>(SEED,
                                             NNodes,
-                                            ErdosRenyiProba, SOLVER, TOPOLOGY);
+                                            ErdosRenyiProba, solver_config, TOPOLOGY, EQNUMBER);
     } else if (TESTN == 2){
         // TEST SINGLESTEP EVOLUTION SEVERAL THOUSAND TIMES
-        const int NRUNS = std::stoi(std::getenv("NRUNS")); ;
+        const int NRUNS = std::stoi(std::getenv("NRUNS"));
+        int EQNUMBER = std::stoi(std::getenv("EQNUMBER"));
         central_test_long_singlestep_run<BATCH>(SEED,
                                                 NNodes,
                                                 ErdosRenyiProba,
-                                                NRUNS, SOLVER, TOPOLOGY);
-
+                                                NRUNS, solver_config, TOPOLOGY, EQNUMBER);
     }
 
 
