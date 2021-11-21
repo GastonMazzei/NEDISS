@@ -61,6 +61,16 @@ A brief graphic explanation.
 
 0 - Tests initialization
 1 - Tests single-step evolution
-2- Tests results after several runs
+2 - Tests results after several runs
 
+
+<center><i>Useful tools</i></center>
  
+- `./run.sh` runs the script 
+- `./run_debug_xterm.sh` runs the script in one terminal per processor
+- `./run_valgrind.sh` runs `./run.sh` with valgrind and produces a report
+- `./run_pipe_report.sh` runs `./run.sh` and pipes the output to `tmp/trash.txt`
+- compiling with the `VERBOSE` macro defined produces a loot of output in each run.
+- several Python3 scripts are lying around which can be used to quantify the script's operation, specially when it was compiled with `VERBOSE`. They tend to become obsolete rather fast, as the prints may suffer changes or stop being important.
+- `CONSIDERATIONS.txt` contains special considerations, e.g. how the MPI implementation can affect us.
+- `Guideline-DiffEqsSolvers[ES].txt` is a proto explanation of how to build a Differential Equation for users. It says 'ES' because it is in Spanish! Ouch.
