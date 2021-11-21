@@ -37,6 +37,7 @@ public:
     int deg; // the degree of the integration algorithm
 
     std::string type;
+    bool requires_communication = false;
     GeneralSolver();
     GeneralSolver(std::string valtype);
     GeneralSolver(std::string valtype, int d);
@@ -70,6 +71,9 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d, double 
     Params[1] = *(params+1);
     Params[2] = *(params+2);
     Params[3] = *(params+3);
+    printf("[WARNING] GeneralSoler constructor that  explicitly uses four weights  params assigns 'true' to 'requires_communication', change it if the current method does not require it. Current method: %s with d=%d\n", valtype, d);
+    std::cout << std::flush;
+    requires_communication = true;
 };
 
 template <typename DIFFEQ, typename SOLVER>
@@ -81,6 +85,7 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype){
     type = std::move(valtype);
     if (type == "rk") {
         // Heun method's initialization :-)
+        requires_communication =  true;
         deg = 2;
         Params[0] = 0.5;
         Params[1] = 0.5;
@@ -105,6 +110,7 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(){
     Params[1] = 0;
     Params[2] = 0;
     Params[3] = 0;
+    requires_communication = false;
 }
 
 template <typename DIFFEQ, typename SOLVER>
@@ -116,11 +122,18 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d) {
     type = std::move(valtype);
     deg = d;
     if (type == "rk") {
-        // Heun method's initialization :-)
-        Params[0] = 0.5;
-        Params[1] = 0.5;
-        Params[2] = 0;
-        Params[3] = 0;
+        if (d == 2) {
+            // Heun method's initialization :-)
+            Params[0] = 0.5;
+            Params[1] = 0.5;
+            Params[2] = 0;
+            Params[3] = 0;
+            requires_communication = true;
+        } else {
+            printf("[FATAL] GeneralSolver(type='rk', int d) only accepts d=2 for Heun's method, but %d was the input.\n",d);
+            std::cout<<std::flush;
+            exit(1);
+        }
     } else if (type == "eu") {
         // Euler order 1 :-)
         for (int i=0; i<4; ++i){

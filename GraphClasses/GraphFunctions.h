@@ -46,6 +46,10 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
         remaining = *(REF.p_PENDING_INT);
     }
 
+    if (solver.requires_communication){
+        std::cout << "[WARNING] Oh boy, this solver requires communication which is not implemented :-(" << std::endl;
+    }
+
     // Main loop
     while (keepGoing) {
         // Fetch the data
@@ -212,6 +216,8 @@ void answer_messages(ReferenceContainer &REF, int MYTHR);
 template<int DT, int TIMETOL, int BATCH>
 void answer_messages_edges(ReferenceContainer &REF,int MYTHR);
 
+template<int DT, int TIMETOL, int BATCH>
+void answer_field_requests(ReferenceContainer &REF,int MYTHR);
 
 void sendReqForTest(int MYPROC, int i);
 
@@ -319,6 +325,9 @@ void single_evolution(Graph &g,
                     //                    we mantain at least one dispatcher alive :-)
                         answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
                         answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                        if (solver.requires_communication){
+                            answer_field_requests<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                        }
 #pragma omp atomic read
                         atomic_bool = keep_responding;
                         mssleep(DT);
@@ -552,7 +561,9 @@ void single_evolution(Graph &g,
             PRINTF_DBG("The (SECOND) cherry of the cake (-;\n");std::cout<<std::flush;
 
         } else if (OmpHelper.MY_THREAD_n % 2 == 0) {
-            int atomic_bool;
+            bool atomic_bool;
+#pragma omp atomic read
+            atomic_bool = keep_responding;
             bool later_mark_finalized = false;
             if (atomic_bool){
 #pragma omp atomic update
@@ -562,6 +573,9 @@ void single_evolution(Graph &g,
             while (atomic_bool){
                 answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
                 answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                if (solver.requires_communication) {
+                    answer_field_requests<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                }
                 // 2) Re-check if we are over
 #pragma omp atomic read
                 atomic_bool = keep_responding;

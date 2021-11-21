@@ -32,6 +32,73 @@ void send_nonblocking2(int owner, MPI_Request &r, double &ix, int TAG);
 void build_answer(double &answer, ReferenceContainer &REF, double ix, int owner, int MyNProc);
 void build_answer_edges(double * answer, ReferenceContainer &REF, double * ix, int owner, int MyNProc);
 
+
+// Trying to dispatch requests for Runge Kutta terms :-)
+template<int DT, int TIMETOL, int BATCH>
+void answer_field_requests(ReferenceContainer &REF,int MYTHR){
+    // Gonna receive requests for runge-kutta terms :-)
+    // REF can access the RK4 terms via (*REF.p_RK4)[ix]
+    // We should get requests for specific terms like
+    // TAG for RK1 request, TAG for RK1 answer, etc...
+    // the mssg says: [our ix] (int) and we respond with [our ix, rk value :-)]
+    int flag[4] = {0};
+    int TRIES=0;
+    MPI_Request R;
+    MPI_Message M;
+    MPI_Status S;
+    int buffer;
+    double answer[2];
+    int t=0;
+    bool firstlap[4]= {true};
+    int ASKING_TAGS[4] = {K1_REQUEST, K2_REQUEST, K3_REQUEST, K4_REQUEST};
+    int ANSWERING_TAGS[4] = {K1_ANSWER, K2_ANSWER, K3_ANSWER, K4_ANSWER};
+    while (TRIES < 4){
+        for (int i=0; i<4; ++i) {
+            flag[i] = 0;
+            MPI_Status status;
+            if ((flag[i] == 1) || firstlap[i]) {
+                flag[i] = 0;
+                buffer = -9995.0;
+                R = MPI_Request();
+                M = MPI_Message();
+                S = MPI_Status();
+                MPI_Improbe(MPI_ANY_SOURCE, ASKING_TAGS[i], MPI_COMM_WORLD,
+                            &flag[i], &M, &status);
+            }
+            if (firstlap[i]) firstlap[i] = false;
+            while ((flag[i] != 1) && (t < TIMETOL)) {
+
+                MPI_Improbe(MPI_ANY_SOURCE, ASKING_TAGS[i], MPI_COMM_WORLD,
+                            &flag[i], &M, &status);
+                ++t;
+                mssleep(DT);
+            }
+            if (t >= TIMETOL) ++TRIES;
+            t = 0;
+            if (flag[i] == 1) {
+                MPI_Mrecv(&buffer, 1, MPI_INT, &M, &S);
+                if (i==0){
+                    // They are asking for Runge Kutta term 1
+      //              build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
+                } else if (i==1) {
+                    // They are asking for Runge Kutta term 2
+    //                build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
+                } else if (i==2) {
+                    // They are asking for Runge Kutta term 3
+  //                  build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
+                } else if (i==3) {
+                    // They are asking for Runge Kutta term 4
+//                    build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
+                }
+                answer[0] = (double) buffer;
+                answer[1] = (double) 1.3; // K_i term goes here
+                MPI_Ssend(&answer, 2, MPI_DOUBLE, S.MPI_SOURCE, ANSWERING_TAGS[i], MPI_COMM_WORLD);
+            }
+        }
+    }
+}
+
+
 template<int DT, int TIMETOL, int BATCH>
 void answer_messages(ReferenceContainer &REF,int MYTHR) {
 
@@ -44,7 +111,6 @@ void answer_messages(ReferenceContainer &REF,int MYTHR) {
     int statusreq_status = 1;
     double buffer;
     double answer;
-    int ticks = 0;
     int statusFree = 0;
     int NTOT = 0;
     int NERR = 0;

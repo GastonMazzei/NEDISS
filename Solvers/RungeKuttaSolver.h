@@ -6,6 +6,7 @@
 #define CPPPROJCT_RUNGEKUTTASOLVER_H
 
 #include "GeneralSolver.h"
+#include "../macros/macros.h"
 
 
 template <typename Equation>
@@ -37,9 +38,16 @@ void RungeKuttaSolver<Equation>::evolve(double t,
                                      FlowSpecs &Specs,
                                      double &answer,
                                      double * P){
-    printf("[FATAL] RUNGE KUTTA is not available. Pending communication between processor for vector K1,2,3,4");
-    std::cout<<std::flush;
-    exit(1);
+                                    // add here a pointer to REF where we will store the vals ;-)
+    if (true){
+        printf("[WARNING] Runge Kutta is currently not implemented. This is not fatal but just returns integration placehholder\n");
+        std::cout << std::flush;
+        answer = INTEGRATION_PLACEHOLDER;
+    } else {
+        printf("[FATAL] RUNGE KUTTA is not available. Pending communication between processor for vector K1,2,3,4");
+        std::cout << std::flush;
+        exit(1);
+    }
 //    //-------------------------------------\
 //    // k1 = f(tn,yn)                       |
 //    // k2 = f(tn + h / 2, yn + h * k1 / 2) |
