@@ -21,11 +21,32 @@ struct ParallelCell{
     explicit ParallelCell(){};
 };
 
+
 struct ParallelHelper{
     std::vector<ParallelCell> data; // initialized to NNodes x NT
     explicit ParallelHelper(int NT, unsigned long NNodes);
 };
 
+struct LayeredSolverCell{
+    std::vector<double> RK1;
+    std::vector<double> RK2;
+    std::vector<double> RK3;
+    std::vector<double> RK4;
+    std::vector<bool> RK1_status;
+    std::vector<bool> RK2_status;
+    std::vector<bool> RK3_status;
+    std::vector<bool> RK4_status;
+    LayeredSolverCell(int N);
+    LayeredSolverCell(){};
+};
+
+struct LayeredSolverHelper : public  LayeredSolverCell {
+public:
+    bool built = false;
+    std::vector<LayeredSolverCell> data;
+    LayeredSolverHelper(int N): data(N){};
+    void buildForRank(long ix, long rank);
+};
 
 
 struct CommunicationHelper{
@@ -77,6 +98,7 @@ struct ReferenceContainer {
     CommunicationHelper * p_ComHelper;
     IntegrationHelper * p_IntHelper;
     MappingHelper * p_MapHelper;
+    LayeredSolverHelper * p_LayHelper;
     Graph * p_g;
     int * p_TOT;
     bool * p_keepResponding;
@@ -92,6 +114,7 @@ struct ReferenceContainer {
                        int & TOT,
                        int & PENDING_INT,
                        MappingHelper & MapHelper,
+                       LayeredSolverHelper & LayHelper,
                        bool keepResponding);
 };
 

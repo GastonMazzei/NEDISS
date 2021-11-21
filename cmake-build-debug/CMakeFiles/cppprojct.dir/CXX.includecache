@@ -52,43 +52,13 @@ GeneralDifferentialEquation.h
 GeneralDifferentialEquation.h
 /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
 
-/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.cpp
-GeneralGraph.h
-/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
-CliqueGraph.h
-/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
-../Utils/adequate_synchronization.h
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
-
 /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
-/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.cpp
-ErdosRenyiGraph.h
-/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
-
 /home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
-
-/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.cpp
-GeneralGraph.h
-/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
-../Utils/error.h
-/home/m4zz31/cppprojct/Utils/error.h
-cmath
--
-mpi.h
-/home/m4zz31/cppprojct/GraphClasses/mpi.h
-../Utils/adequate_synchronization.h
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
-../Utils/memory_management.h
-/home/m4zz31/cppprojct/Utils/memory_management.h
-../Utils/msleep.h
-/home/m4zz31/cppprojct/Utils/msleep.h
-iomanip
--
 
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 iostream
@@ -188,33 +158,13 @@ boost/mpi/environment.hpp
 ../Communication/CommunicationFunctions.h
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
 
-/home/m4zz31/cppprojct/GraphClasses/RingGraph.cpp
-RingGraph.h
-/home/m4zz31/cppprojct/GraphClasses/RingGraph.h
-../Utils/adequate_synchronization.h
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
-
 /home/m4zz31/cppprojct/GraphClasses/RingGraph.h
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
-/home/m4zz31/cppprojct/Solvers/EulerSolver.cpp
-EulerSolver.h
-/home/m4zz31/cppprojct/Solvers/EulerSolver.h
-
 /home/m4zz31/cppprojct/Solvers/EulerSolver.h
 GeneralSolver.h
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
-
-/home/m4zz31/cppprojct/Solvers/GeneralSolver.cpp
-GeneralSolver.h
-/home/m4zz31/cppprojct/Solvers/GeneralSolver.h
-EulerSolver.h
-/home/m4zz31/cppprojct/Solvers/EulerSolver.h
-RungeKuttaSolver.h
-/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
-../Utils/error.h
-/home/m4zz31/cppprojct/Utils/error.h
 
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
 functional
@@ -224,27 +174,11 @@ functional
 ../DifferentialEquations/GeneralDifferentialEquation.h
 /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
 
-/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.cpp
-RungeKuttaSolver.h
-/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
-
 /home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
 GeneralSolver.h
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
 ../macros/macros.h
 /home/m4zz31/cppprojct/macros/macros.h
-
-/home/m4zz31/cppprojct/Tests/graph-test-init.cpp
-graph-test-init.h
-/home/m4zz31/cppprojct/Tests/graph-test-init.h
-../GraphClasses/ErdosRenyiGraph.h
-/home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
-../GraphClasses/CliqueGraph.h
-/home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
-../GraphClasses/RingGraph.h
-/home/m4zz31/cppprojct/GraphClasses/RingGraph.h
-../Utils/reproductibility.h
-/home/m4zz31/cppprojct/Utils/reproductibility.h
 
 /home/m4zz31/cppprojct/Tests/graph-test-init.h
 string
@@ -336,10 +270,6 @@ HelperClasses.h
 ../GraphClasses/GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.cpp
-adequate_synchronization.h
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
-
 /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
 ../GraphClasses/GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
@@ -380,23 +310,11 @@ global_standard_messages.h
 error.h
 /home/m4zz31/cppprojct/Utils/error.h
 
-/home/m4zz31/cppprojct/Utils/print_init.cpp
-print_init.h
-/home/m4zz31/cppprojct/Utils/print_init.h
-adequate_synchronization.h
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
-
 /home/m4zz31/cppprojct/Utils/print_init.h
 iostream
 -
 global_standard_messages.h
 /home/m4zz31/cppprojct/Utils/global_standard_messages.h
-
-/home/m4zz31/cppprojct/Utils/print_warnings.cpp
-print_warnings.h
-/home/m4zz31/cppprojct/Utils/print_warnings.h
-adequate_synchronization.h
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
 
 /home/m4zz31/cppprojct/Utils/print_warnings.h
 iostream

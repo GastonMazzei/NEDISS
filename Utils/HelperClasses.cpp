@@ -73,6 +73,23 @@ void IntegrationCell::build(Graph &g, VD v, MappingHelper &Map,
     edgeValues.resize(rank);
 }
 
+
+
+LayeredSolverCell::LayeredSolverCell(int rank){
+    RK1.resize(rank);
+    RK2.resize(rank);
+    RK3.resize(rank);
+    RK4.resize(rank);
+    RK1_status = std::vector<bool>(rank, false);
+    RK2_status = std::vector<bool>(rank, false);
+    RK3_status = std::vector<bool>(rank, false);
+    RK4_status = std::vector<bool>(rank, false);
+}
+
+void LayeredSolverHelper::buildForRank(long ix, long rank){
+    data[ix] = LayeredSolverCell(rank);
+}
+
 ReferenceContainer::ReferenceContainer(ParallelHelper &ParHelper,
                                        CommunicationHelper &ComHelper,
                                        Graph & g,
@@ -82,11 +99,13 @@ ReferenceContainer::ReferenceContainer(ParallelHelper &ParHelper,
                                        int & TOT,
                                        int & PENDING_INT,
                                        MappingHelper & MapHelper,
+                                       LayeredSolverHelper & LayHelper,
                                        bool keepResponding){
 
     p_ParHelper = &ParHelper;
     p_ComHelper = &ComHelper;
     p_MapHelper = &MapHelper;
+    p_LayHelper = &LayHelper;
     p_keepResponding = &keepResponding;
     p_PENDING_INT = &PENDING_INT;
     p_g = &g;

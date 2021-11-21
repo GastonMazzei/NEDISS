@@ -1,0 +1,3 @@
+
+* Tags used for communication of special messages define a maximum number of graph nodes per processor. They are defined in CommunicationFunctions.h and are currently enforced at main ;-)
+

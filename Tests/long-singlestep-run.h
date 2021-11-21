@@ -24,7 +24,9 @@ void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
                                      ParallelHelper &ParHelper,
                                      IntegrationHelper &IntHelper,
                                      MappingHelper &MapHelper,
-                                     int NRUNS, SolverConfig SOLVER) {
+                                     int NRUNS,
+                                    LayeredSolverHelper &LayHelper,
+                                    SolverConfig &SOLVER) {
 
     // Print in command what test is it
     adsync_message<T>(msg_prev + "'test_" + name + "_graph_singlestep_evolution'", G.g);
@@ -47,7 +49,8 @@ void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
         for (int i = 0; i < NRUNS; i++) {
             // Test several kuramoto evolutions with Euler
             single_evolution<DIFFEQ, EulerSolver<DIFFEQ>, BATCH>(G.g, S_eu, ComHelper, ParHelper,
-                                                                                       IntHelper, MapHelper, G.N);
+                                                                   IntHelper, MapHelper, LayHelper, G.N);
+            if (i==0)  LayHelper.built = true;
             S_eu.EvolveTime();
         }
     } else if (SOLVER.s == 1) {
@@ -57,7 +60,8 @@ void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
         for (int i = 0; i < NRUNS; i++) {
             // Test several kuramoto evolutions with Euler
             single_evolution<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk, ComHelper, ParHelper,
-                                                                                       IntHelper, MapHelper, G.N);
+                                                                       IntHelper, MapHelper, LayHelper, G.N);
+            if (i==0)  LayHelper.built = true;
             S_rk.EvolveTime();
         }
     } else error_report("Requested solver does not exist\n");
@@ -69,7 +73,7 @@ void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
 
 
 template <int BATCH, typename EQCLASS>
-void central_test_long_singlestep_run_helper(unsigned int SEED, unsigned long N, double p, int NRUNS,  SolverConfig SOLVER, int TOPOLOGY){
+void central_test_long_singlestep_run_helper(unsigned int SEED, unsigned long N, double p, int NRUNS,  SolverConfig &SOLVER, int TOPOLOGY){
 
     if (TOPOLOGY == 0){
         RingGraphObject G(N);
@@ -78,11 +82,12 @@ void central_test_long_singlestep_run_helper(unsigned int SEED, unsigned long N,
         CommunicationHelper ComHelper(G.g);
         ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
         IntegrationHelper IntHelper(NVtot);
+        LayeredSolverHelper LayHelper(NVtot);
         MappingHelper MapHelper(G.g);
         test_long_singlestep_run<100, RingGraphObject, BATCH, EQCLASS>(G, "Ring",
                                                                        ComHelper, ParHelper,
                                                                        IntHelper, MapHelper,
-                                                                       NRUNS, SOLVER);
+                                                                       NRUNS, LayHelper, SOLVER);
     } else if (TOPOLOGY == 1) {
         CliqueGraphObject G(N);
         // helpers instantiated here just temporaly :-)
@@ -90,11 +95,12 @@ void central_test_long_singlestep_run_helper(unsigned int SEED, unsigned long N,
         CommunicationHelper ComHelper(G.g);
         ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
         IntegrationHelper IntHelper(NVtot);
+        LayeredSolverHelper LayHelper(NVtot);
         MappingHelper MapHelper(G.g);
         test_long_singlestep_run<100, CliqueGraphObject, BATCH, EQCLASS>(G, "Clique",
                                                                          ComHelper, ParHelper,
                                                                          IntHelper, MapHelper,
-                                                                         NRUNS, SOLVER);
+                                                                         NRUNS, LayHelper, SOLVER);
     } else if (TOPOLOGY == 2) {
         ErdosRenyiGraphObject G(N, p);
         // helpers instantiated here just temporaly :-)
@@ -102,18 +108,19 @@ void central_test_long_singlestep_run_helper(unsigned int SEED, unsigned long N,
         CommunicationHelper ComHelper(G.g);
         ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
         IntegrationHelper IntHelper(NVtot);
+        LayeredSolverHelper LayHelper(NVtot);
         MappingHelper MapHelper(G.g);
         test_long_singlestep_run<100, ErdosRenyiGraphObject, BATCH, EQCLASS>(G, "ErdosRenyi",
                                                                              ComHelper, ParHelper,
                                                                              IntHelper, MapHelper,
-                                                                             NRUNS, SOLVER);
+                                                                             NRUNS, LayHelper, SOLVER);
     } else error_report("Requested ring topology does not exist!\n");
 
 }
 
 
 template <int BATCH>
-void central_test_long_singlestep_run(unsigned int SEED, unsigned long N, double p, int NRUNS,  SolverConfig SOLVER, int TOPOLOGY, int EQNUMBER){
+void central_test_long_singlestep_run(unsigned int SEED, unsigned long N, double p, int NRUNS,  SolverConfig &SOLVER, int TOPOLOGY, int EQNUMBER){
     // Ring Network
     reproductibility_lock(SEED);
 

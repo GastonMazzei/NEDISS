@@ -258,6 +258,7 @@ void single_evolution(Graph &g,
                       ParallelHelper &ParHelper,
                       IntegrationHelper &IntHelper,
                       MappingHelper &MapHelper,
+                      LayeredSolverHelper &LayHelper,
                       unsigned long N_total_nodes){
 
     // Roughly we are:
@@ -288,22 +289,20 @@ void single_evolution(Graph &g,
                            TOT,
                            PENDING_INT,
                            MapHelper,
+                           LayHelper,
                            keep_responding);
 
     const int MAX_SUBTHR = 1;
     const int TIMETOL = 20;
-    //ComHelper.WORLD_SIZE[0] / BATCH + 1;
     const int DT = 1;
 
-
+    bool isLayerBuilt = LayHelper.built;
     int request_performers=0;
     int request_performers_ended=0;
 
-    // for tests
-    std::set<int> Working, Finished;
 
 // The solver must be copied by each thread, as the 'FlowSpecs' attribute must act non-atomically.
-#pragma omp parallel firstprivate(NVtot, vs, NT, N_total_nodes, REF, MAX_SUBTHR, TIMETOL, DT, solver) // Node iterators have random access ;-)
+#pragma omp parallel firstprivate(NVtot, vs, NT, N_total_nodes, REF, MAX_SUBTHR, TIMETOL, DT, solver, isLayerBuilt) // Node iterators have random access ;-)
     {
         bool am_i_first;
         int SplitCoef = omp_get_num_threads()/2; // 3/2
@@ -375,6 +374,7 @@ void single_evolution(Graph &g,
                 } else {
                     ui = ((unsigned long) get(get(boost::vertex_index, g), *v));
                 }
+                if (isLayerBuilt) LayHelper.buildForRank((long) ui, (long) rank);
                 auto neighbors = boost::adjacent_vertices(*v, g);
                 auto in_edges = boost::in_edges(*v, g);
                 unsigned long MYPROCN = REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n];
