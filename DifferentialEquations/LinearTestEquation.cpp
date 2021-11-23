@@ -1,12 +1,19 @@
 //
 // Created by m4zz31 on 20/11/21.
 //
-#include "LinearTestEquation.h"
+
 #include <cmath>
 #include <cassert>
 #include <utility>
 #include <vector>
 #include <iostream>
+
+
+#include "LinearTestEquation.h"
+
+bool LinearTestEquation::requiresCom(int d){
+	return false;
+}
 
 void LinearTestEquation::Field(double t, double a, std::vector<double> &b,
                               std::vector<double> &c,

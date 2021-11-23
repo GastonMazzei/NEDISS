@@ -17,7 +17,7 @@ public:
                   std::vector<double> &b,
                   std::vector<double> &c,
                   std::vector<double> &d,
-                  Equation &E,//auto F,// ScalarFlow &F,
+                  Equation &E,
                   FlowSpecs &Specs,
                   double &answer,
                   double * P);
@@ -32,13 +32,14 @@ void EulerSolver<Equation>::evolve(double t,
                            std::vector<double> &b,
                            std::vector<double> &c,
                            std::vector<double> &d,
-                           Equation &E,//ScalarFlow &F,
+                           Equation &E,
                            FlowSpecs &Specs,
                            double &answer,
                            double * P){
 
-    // Initialize auxiliary vectors
-    std::vector<double> T1={0},T2={1},T3={0},T4={1}; // Any val.
+
+    // Initialize auxiliary vectors to any value
+    std::vector<double> T1={0},T2={1},T3={0},T4={1};
 
     // Values defined for Euler.
     T1[0] = 0;
@@ -47,28 +48,40 @@ void EulerSolver<Equation>::evolve(double t,
     T4[0] = 1;
     E.UpdateFlowSpecs(T1,T2,T3,T4,d.size());
 
+    // Zero Taylor Order
     answer = a;
+
+    // First Taylor Order
     if (*(P+0) != 0) {
-        // Initialize result
         Specs.result = 0;
+	E.Reset();
         E.Field(t,a,b,c,d);
-        // Populate answer step 1 of 4 :-)
-        // it is the result weighted by *P
         answer +=  h * Specs.result;
     }
+
+    // Second Taylor Order
     if (*(P+1) != 0) {
         Specs.result = 0;
+	E.Reset();
         E.d1Field(t,a,b,c,d);
         answer +=  h * h * Specs.result  / 2;
     }
+
+    // Third Taylor Order
     if (*(P+2) != 0) {
         Specs.result = 0;
+	E.Reset();
         E.d2Field(t,a,b,c,d);
-        answer +=  h * h * h * Specs.result  / 6;    }
+        answer +=  h * h * h * Specs.result  / 6;    
+    }
+
+    // Fourth Taylor Order
     if (*(P+3) != 0) {
         Specs.result = 0;
+	E.Reset();
         E.d3Field(t,a,b,c,d);
-        answer +=  h * h * h * h * Specs.result / 24;}
+        answer +=  h * h * h * h * Specs.result / 24;
+    }
 }
 
 #endif //CPPPROJCT_EULERSOLVER_H

@@ -21,6 +21,7 @@
 
 template<typename DIFFEQ, typename SOLVER>
 void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> &solver, int MYPROC){
+
     PRINTF_DBG("Starting the contribution to int\n");std::cout<< std::flush;
     // Define timeout utilities
     const int DT= 5;
@@ -46,9 +47,6 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
         remaining = *(REF.p_PENDING_INT);
     }
 
-    if (solver.requires_communication){
-        std::cout << "[WARNING] Oh boy, this solver requires communication which is not implemented :-(" << std::endl;
-    }
 
     // Main loop
     while (keepGoing) {
@@ -56,7 +54,6 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
 #pragma omp critical
         {
             if (!REF.p_READY_FOR_INTEGRATION->second.empty()){
-//                std::cout << REF.p_READY_FOR_INTEGRATION->second.size() << " and " << REF.p_READY_FOR_INTEGRATION->first.size() << " ARE THE QUEUE SIZES!" << std::endl;
                 ix = REF.p_READY_FOR_INTEGRATION->first.front();
                 uix = REF.p_READY_FOR_INTEGRATION->second.front();
                 REF.p_READY_FOR_INTEGRATION->first.pop();
@@ -71,18 +68,10 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
             PRINTF_DBG("(NOTHING TO INT)\n");std::cout<< std::flush;
         } else {
             ++totlaps;
-            // Locate the graph vertex :-)
             PRINTF_DBG("starting to locate this uix: %lu\n",uix);
-//            std::cout << "Ixs: " << ix << " and " << uix <<std::endl;
             v = vertices(*REF.p_g).first;
             is_in =  false;
             while (!is_in) {
-//                std::cout << "v Element shows having index " <<
-//                      get(get(boost::vertex_index, *(REF.p_g)), *v) <<
-//                      " and being owned by " <<
-//                      get(get(boost::vertex_owner, *(REF.p_g)), *v) << " while we  are proc: " <<
-//                      MYPROC << " and looking for IX: "<<ix << " and UIX: " << uix << std::endl;
-
                 if (get(get(boost::vertex_owner, *(REF.p_g)), *v) == MYPROC) {
                     currentuix = (unsigned long) get(get(boost::vertex_index, *(REF.p_g)), *v);
                     if (currentuix == uix) {
@@ -95,7 +84,6 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
                     std::cout << "[CRITICAL] Failed to found ix!!!" << std::endl;
                 };
             }
-
             // Join the data as required by the integrator
             temp = std::vector<InfoVecElem>();
             temp.resize((*REF.p_IntHelper)[ix].ResultsPendProcess.size());
@@ -107,39 +95,26 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
             while (it != end){
                 unsigned long elemix = std::get<2>(*it);
                 const bool is_in = seen.find(elemix) != seen.end(); //CHECKPOINT
-
                 PRINTF_DBG("Std output uix: %lu ix: %ld proc: %d. vals are %f , %f , %lu\n",
                        uix, ix, MYPROC,
                        std::get<0>(*it), std::get<1>(*it), std::get<2>(*it));
                 std::cout<<std::flush;
-
                 if (!is_in) {
-                    //printf("First appearance of ix: %l for proc: %d. vals are %f & %f\n",ix, MYPROC, std::get<0>(*it), std::get<1>(*it));std::cout<<std::flush;
                     temp[_it] = *it;
                     _it++;
                     seen.insert(elemix);
                 } else {
-                    //printf("NOT First appearance of ix: %l for proc: %d. vals are %f & %f\n",ix, MYPROC, std::get<0>(*it), std::get<1>(*it));std::cout<<std::flush;
                 }
                 (*REF.p_IntHelper)[ix].ResultsPendProcess.erase(it++);
             }
             temp.resize(_it);
-
-            // Sort by unique ID... we attempt to integrate always in the same positions :O
             std::sort(temp.begin(),
                       temp.end(),
                       [](InfoVecElem &t1, InfoVecElem &t2) {
                           return std::get<2>(t1) > std::get<2>(t2);
                       }
             );
-//            std::cout << "Temp size is: " << temp.size() << " and the container size is: " << (*REF.p_IntHelper)[ix].ResultsPendProcess.size() << " but it was " << oldsize << std::endl;
             PRINTF_DBG("Finished sorting! :-)\n");
-
-
-            // Optimization would be dealing with vectors of double tuples,
-            // no need to copy the values every time :O For that purpose the IntegrationHelper
-            // was created, which should somehow mimic the ParallelHelper constructor and
-            // resize their edgeValues accordingly.
             std::vector<double> neighborValues;
             std::vector<double> edgeValues;
             neighborValues.resize(temp.size());
@@ -148,53 +123,19 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
                 neighborValues[j] = std::get<0>(temp[j]);
                 edgeValues[j] = std::get<1>(temp[j]);
             }
-//            printf("Finished building vectors! :-) their sizes are %d (neigh) and %d (edg). ix %ld proc %d.\n",
-//                   neighborValues.size(), edgeValues.size(), ix, MYPROC);
-
-            // Write the new value in the temporal register
             double result = -420.;
-//            std::cout << "BEFORE Integrating: result was " <<
-//                              result<<
-//                              " IntHelper central value was "<<
-//                            (*REF.p_IntHelper)[ix].centralValue<<
-//                            " real value was "<< (*REF.p_g)[*v].value<<
-//                            " temporal register was:  " <<
-//                            (*REF.p_g)[*v].temporal_register <<
-//                            " . ix " << ix << " proc " << MYPROC << "." << std::endl;
             solver.evolve(
-                    // OPTIMIZATION would be just passing the IntHelper so we dont copy,sort,copy :-)
-//                            (*REF.p_IntHelper)[ix].centralValue, // FAILURE: centralValue can be sometimes 0,
-//                            (*REF.p_IntHelper)[ix].centralParams, // IntHelper is failing somewhere
                             (*REF.p_g)[*v].value,
                             (*REF.p_g)[*v].params,
                             neighborValues,
                             edgeValues,
                             result
                           );
-
             PRINTF_DBG("Integrating: temporal result was: %f", result);
             (*REF.p_g)[*v].temporal_register = result;
-
-//            std::cout << "AFTER Integrating: result was " <<
-//                      result<<
-//                      " IntHelper central value was "<<
-//                      (*REF.p_IntHelper)[ix].centralValue<<
-//                      " real value was "<< (*REF.p_g)[*v].value<<
-//                      " temporal register was:  " <<
-//                      (*REF.p_g)[*v].temporal_register <<
-//                      " . ix " << ix << " proc " << MYPROC << "." << std::endl;
-
             PRINTF_DBG("Integrating: now it is: %f", (*REF.p_g)[*v].temporal_register);
-
-            // Decrease the global value of pending integration
-//#pragma omp critical
-//{
-//            *(REF.p_PENDING_INT)--;
-//}
         }
         wait = false;
-
-        // Communicate with other threads to see if we need to keep going
 #pragma omp critical
 {
         remaining = REF.p_READY_FOR_INTEGRATION->first.size();
@@ -217,7 +158,15 @@ template<int DT, int TIMETOL, int BATCH>
 void answer_messages_edges(ReferenceContainer &REF,int MYTHR);
 
 template<int DT, int TIMETOL, int BATCH>
-void answer_field_requests(ReferenceContainer &REF,int MYTHR);
+void answer_field_requests(ReferenceContainer &REF,int MYTHR, int Nfield);
+
+// Three new ones pend implementing :-)
+template<int DT, int TIMETOL, int BATCH>
+void perform_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder);
+template<typename DIFFEQ, typename SOLVER, int BATCH>
+void contribute_to_higher_integration_without_communication(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> &solver, int fieldNum){};
+template<typename DIFFEQ, typename SOLVER, int BATCH>
+void finalize_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> &solver){};
 
 void sendReqForTest(int MYPROC, int i);
 
@@ -308,16 +257,11 @@ void single_evolution(Graph &g,
         int SplitCoef = omp_get_num_threads()/2; // 3/2
         if (SplitCoef < 2){SplitCoef = 2;}
         OpenMPHelper OmpHelper(NVtot, SplitCoef);
-
-
         if (OmpHelper.MY_THREAD_n < SplitCoef){
-
             if (OmpHelper.MY_THREAD_n % (MAX_SUBTHR + 1) == 0) {
-
                 bool atomic_bool;
 #pragma omp atomic read
                 atomic_bool = keep_responding;
-
 #pragma omp atomic update
                 ++active_responders;
                     while (atomic_bool) { // as long as we keep processing our own,
@@ -325,7 +269,7 @@ void single_evolution(Graph &g,
                         answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
                         answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
                         if (solver.requires_communication){
-                            answer_field_requests<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                            answer_field_requests<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n, 1);
                         }
 #pragma omp atomic read
                         atomic_bool = keep_responding;
@@ -574,7 +518,7 @@ void single_evolution(Graph &g,
                 answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
                 answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
                 if (solver.requires_communication) {
-                    answer_field_requests<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                    answer_field_requests<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n, 1);
                 }
                 // 2) Re-check if we are over
 #pragma omp atomic read
@@ -587,7 +531,9 @@ void single_evolution(Graph &g,
             }
         }
 
-        // Integration section
+/// COULD THIS BE INSERTED INSIDE THE PREVIOUS PARALLEL REGION? todo: optimization upgrade.
+
+        // Integration section: this is only exited when there are no more pending integration remaining :-)
         PRINTF_DBG("starting to contribute\n");std::cout<<std::flush;
         int auxv1,auxv2;
 #pragma omp atomic read
@@ -596,7 +542,7 @@ void single_evolution(Graph &g,
         auxv2 = request_performers_ended;
         bool keep_integrating = (auxv1 > auxv2);
         while (keep_integrating) {
-            contribute_to_integration(REF, solver,
+            contribute_to_integration<DIFFEQ, SOLVER>(REF, solver,
                                       REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n]);
 #pragma omp atomic read
             auxv1 = request_performers;
@@ -605,12 +551,116 @@ void single_evolution(Graph &g,
             keep_integrating = (auxv1 > auxv2);
             mssleep(DT);
         }
-        contribute_to_integration(REF, solver,
-                                  REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n]);
+        contribute_to_integration<DIFFEQ, SOLVER>(REF, solver,
+                                      REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n]);
         PRINTF_DBG("ending to contribute\n");std::cout<<std::flush;
 
 
 } // end of the parallel construct
+
+printf("Exited the parallel construct! yay! solver deg is %d\n", solver.deg);
+
+    for (int i=2; i < solver.deg ; ++i){
+        printf("entering the for, i is %d\n",i);
+        if (solver.requires_communication){
+	        bool keep_responding = true;
+            int Ncapturers = 0;
+            int NFinalizedCapturers = 0;
+            int Nresponders = 0;
+            int NFinalizedResponders = 0;
+            long pending = (long) NVtot;
+            std::queue<long> CAPTURED; 
+#pragma omp parallel
+{
+            if ((omp_get_thread_num() % 2 == 1) && (omp_get_thread_num != 0)){
+#pragma omp atomic update
+                Ncapturers++;
+                long locallyPending;
+#pragma omp atomic read
+                locallyPending = pending;
+                while (locallyPending > 0){
+                    perform_field_requests<DT, TIMETOL, BATCH>(REF,
+                     REF.p_ComHelper->WORLD_RANK[omp_get_thread_num()],
+                     i);
+#pragma omp atomic read
+                    locallyPending = pending;
+                    mssleep(DT);
+                    // -- only -- for -- debugging -- haha
+#pragma omp atomic update
+                    --pending;
+                    printf("locallyPending' is now: %l\n",locallyPending);
+                    //----end--of--debugging--section--hahaa
+		         }
+#pragma omp atomic update
+		        NFinalizedCapturers++;
+	         } else if ((omp_get_thread_num() % 2 == 0) && (omp_get_thread_num != 0)){
+#pragma omp atomic update
+		        Nresponders++;
+                bool l_keep_responding = true;
+		        while (l_keep_responding){
+                    answer_field_requests<DT, TIMETOL, BATCH>(REF, (int) omp_get_thread_num(), i);
+#pragma omp atomic read
+                    l_keep_responding = keep_responding;
+                    mssleep(DT);
+		        }
+#pragma omp atomic update
+		        NFinalizedResponders++;
+            } else {
+                int v_Ncapturers = 0;
+                int v_NFinalizedCapturers = 0;
+                int v_Nresponders = 0;
+                int v_NFinalizedResponders = 0;
+                long locallyPending;
+#pragma omp atomic read
+                v_Ncapturers = Ncapturers;
+                while (v_Ncapturers == 0){
+#pragma omp atomic read
+                    v_Ncapturers = Ncapturers;
+                }
+#pragma omp atomic read
+                v_NFinalizedCapturers = NFinalizedCapturers;
+                while (v_Ncapturers > v_NFinalizedCapturers){
+#pragma omp atomic read
+                    v_Ncapturers = Ncapturers;
+#pragma omp atomic read
+                    v_NFinalizedCapturers = NFinalizedCapturers;
+                    mssleep(DT);
+                    printf("They are not yet equal: %d vs %d\n", (int) v_Ncapturers, (int) v_NFinalizedCapturers);
+                }
+                printf("about to implement the first integration barrier\n");
+                MPI_Barrier(MPI_COMM_WORLD);
+#pragma omp atomic write
+                keep_responding = false;
+#pragma omp atomic read
+                v_Nresponders = Nresponders;
+                while (v_Nresponders == 0){
+#pragma omp atomic read
+                    v_Nresponders = Nresponders;
+                }
+#pragma omp atomic read
+                v_NFinalizedResponders = NFinalizedResponders;
+                while (v_Nresponders > v_NFinalizedResponders){
+#pragma omp atomic read
+                    v_Nresponders = Nresponders;
+#pragma omp atomic read
+                    v_NFinalizedResponders = NFinalizedResponders;
+                    mssleep(DT);
+                }
+                MPI_Barrier(MPI_COMM_WORLD);
+	        }
+}
+	// compute the next required step
+        } else {
+		    contribute_to_higher_integration_without_communication<DIFFEQ, SOLVER, BATCH>(REF,
+                                                                    solver,
+				                                                    i);
+	    }
+    }
+    // Join all the integration terms
+    printf("Reached the final integration :-)\n");
+    finalize_integration<DIFFEQ, SOLVER, BATCH>(REF, solver);
+    
+
 
     PRINTF_DBG("starting to swap register\n");std::cout<<std::flush;
     // Swap temporal and main registers

@@ -6,6 +6,7 @@
 #define CPPPROJCT_RUNGEKUTTASOLVER_H
 
 #include "GeneralSolver.h"
+
 #include "../macros/macros.h"
 
 
@@ -19,7 +20,7 @@ public:
                   std::vector<double> &b,
                   std::vector<double> &c,
                   std::vector<double> &d,
-                  Equation &E,//auto F,// ScalarFlow &F,
+                  Equation &E,
                   FlowSpecs &Specs,
                   double &answer,
                   double * P);
@@ -34,7 +35,7 @@ void RungeKuttaSolver<Equation>::evolve(double t,
                                      std::vector<double> &b,
                                      std::vector<double> &c,
                                      std::vector<double> &d,
-                                     Equation &E,//ScalarFlow &F,
+                                     Equation &E,
                                      FlowSpecs &Specs,
                                      double &answer,
                                      double * P){

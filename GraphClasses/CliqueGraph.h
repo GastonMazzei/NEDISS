@@ -17,7 +17,7 @@ public:
     unsigned long Procs = num_processes(boost::graph::distributed::mpi_process_group());
 
     CliqueGraphObject(unsigned long num_nodes) :
-            E((num_nodes * (num_nodes - 1)) / 2),
+            E((unsigned long)  ((((long) num_nodes) * (long) ((long) num_nodes - (long) 1)) / 2)),
             N(num_nodes),
             g(N) {};
 

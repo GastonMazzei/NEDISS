@@ -9,6 +9,15 @@
 #include <utility>
 #include <vector>
 
+
+bool NoiselessKuramoto::requiresCom(int d){
+	if (d==1) {
+		return false;
+	} else if (d>1) {
+		return true;
+	}
+}
+
 void NoiselessKuramoto::Field(double t, double a, std::vector<double> &b,
                       std::vector<double> &c,
                       std::vector<double> &d){

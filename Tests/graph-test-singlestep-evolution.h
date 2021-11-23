@@ -5,39 +5,41 @@
 #ifndef CPPPROJCT_GRAPH_TEST_SINGLESTEP_EVOLUTION_H
 #define CPPPROJCT_GRAPH_TEST_SINGLESTEP_EVOLUTION_H
 
+#include "graph-test-singlestep-evolution.h"
 
 #include "../Utils/adequate_synchronization.h"
 #include "../Utils/global_standard_messages.h"
+#include "../Utils/HelperClasses.h"
+#include "../Utils/reproductibility.h"
+
 #include "../Solvers/EulerSolver.h"
 #include "../Solvers/RungeKuttaSolver.h"
+
 #include "../DifferentialEquations/NoiselessKuramoto.h"
 #include "../DifferentialEquations/LinearTestEquation.h"
-#include "../GraphClasses/GraphFunctions.h"
-#include "../Utils/HelperClasses.h"
-#include "../Communication/CommunicationFunctions.h"
-
-
-#include "graph-test-singlestep-evolution.h"
 
 #include "../GraphClasses/ErdosRenyiGraph.h"
 #include "../GraphClasses/CliqueGraph.h"
 #include "../GraphClasses/RingGraph.h"
-#include "../Utils/reproductibility.h"
-
-
-#include "../Communication/CommunicationFunctions.h"
+#include "../GraphClasses/GraphFunctions.h"
 #include "../GraphClasses/GraphFunctions.h"
 
-// THIS USES ONLY THE KURAMOTO EQUATION!!!
+#include "../Communication/CommunicationFunctions.h"
+#include "../Communication/CommunicationFunctions.h"
+
+
 
 template <int T, typename GRAPHTYPE, int BATCH, typename DIFFEQ>
-void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
+
+void test_graph_singlestep_evolution(GRAPHTYPE &G, 
+				     std::string name,
                                      CommunicationHelper &ComHelper,
                                      ParallelHelper &ParHelper,
                                      IntegrationHelper &IntHelper,
                                      MappingHelper &MapHelper,
                                      LayeredSolverHelper &LayHelper,
                                      SolverConfig &SOLVER) {
+
     // Print in command what test is it
     adsync_message<T>(msg_prev + "'test_" + name + "_graph_singlestep_evolution'", G.g);
 
@@ -54,7 +56,7 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
     adsync_message_barrier<T>(msg_post + "'reportNodes'", G.g);
 
 
-//     Show nodes
+    // Show nodes
     adsync_message<T>(msg_prev + "'showVertex'", G.g);
     G.showVertex(G.g);
     adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
@@ -90,7 +92,7 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
         S_rk.SetT0(0);
         S_rk.SetStep(0.01);
 
-        // Test several kuramoto evolutions with RungeKutta
+        // Test several eq evolutions with RungeKutta
         adsync_message<T>(msg_prev + "'single_eq_evolution' with runge kutta (1 of 3)", G.g);
         single_evolution<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk,ComHelper, ParHelper,
                                                                   IntHelper, MapHelper, LayHelper, G.N);
@@ -114,7 +116,7 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G, std::string name,
     G.showVertex(G.g);
     adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
 
-    // Print in command what test is it
+    // Print in command what test is it and inform that it has ended
     adsync_message<T>(msg_post + "'test_" + name + "_graph_singlestep_evolution'", G.g);
 }
 

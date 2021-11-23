@@ -412,33 +412,6 @@ Simulation/Simulation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.s
 .PHONY : Simulation/Simulation.cpp.s
 
-Solvers/EulerSolver.o: Solvers/EulerSolver.cpp.o
-
-.PHONY : Solvers/EulerSolver.o
-
-# target to build an object file
-Solvers/EulerSolver.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o
-.PHONY : Solvers/EulerSolver.cpp.o
-
-Solvers/EulerSolver.i: Solvers/EulerSolver.cpp.i
-
-.PHONY : Solvers/EulerSolver.i
-
-# target to preprocess a source file
-Solvers/EulerSolver.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.i
-.PHONY : Solvers/EulerSolver.cpp.i
-
-Solvers/EulerSolver.s: Solvers/EulerSolver.cpp.s
-
-.PHONY : Solvers/EulerSolver.s
-
-# target to generate assembly for a file
-Solvers/EulerSolver.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.s
-.PHONY : Solvers/EulerSolver.cpp.s
-
 Solvers/GeneralSolver.o: Solvers/GeneralSolver.cpp.o
 
 .PHONY : Solvers/GeneralSolver.o
@@ -465,33 +438,6 @@ Solvers/GeneralSolver.s: Solvers/GeneralSolver.cpp.s
 Solvers/GeneralSolver.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.s
 .PHONY : Solvers/GeneralSolver.cpp.s
-
-Solvers/RungeKuttaSolver.o: Solvers/RungeKuttaSolver.cpp.o
-
-.PHONY : Solvers/RungeKuttaSolver.o
-
-# target to build an object file
-Solvers/RungeKuttaSolver.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o
-.PHONY : Solvers/RungeKuttaSolver.cpp.o
-
-Solvers/RungeKuttaSolver.i: Solvers/RungeKuttaSolver.cpp.i
-
-.PHONY : Solvers/RungeKuttaSolver.i
-
-# target to preprocess a source file
-Solvers/RungeKuttaSolver.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.i
-.PHONY : Solvers/RungeKuttaSolver.cpp.i
-
-Solvers/RungeKuttaSolver.s: Solvers/RungeKuttaSolver.cpp.s
-
-.PHONY : Solvers/RungeKuttaSolver.s
-
-# target to generate assembly for a file
-Solvers/RungeKuttaSolver.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.s
-.PHONY : Solvers/RungeKuttaSolver.cpp.s
 
 Tests/graph-test-init.o: Tests/graph-test-init.cpp.o
 
@@ -964,15 +910,9 @@ help:
 	@echo "... Simulation/Simulation.o"
 	@echo "... Simulation/Simulation.i"
 	@echo "... Simulation/Simulation.s"
-	@echo "... Solvers/EulerSolver.o"
-	@echo "... Solvers/EulerSolver.i"
-	@echo "... Solvers/EulerSolver.s"
 	@echo "... Solvers/GeneralSolver.o"
 	@echo "... Solvers/GeneralSolver.i"
 	@echo "... Solvers/GeneralSolver.s"
-	@echo "... Solvers/RungeKuttaSolver.o"
-	@echo "... Solvers/RungeKuttaSolver.i"
-	@echo "... Solvers/RungeKuttaSolver.s"
 	@echo "... Tests/graph-test-init.o"
 	@echo "... Tests/graph-test-init.i"
 	@echo "... Tests/graph-test-init.s"

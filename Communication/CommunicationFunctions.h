@@ -4,38 +4,34 @@
 
 #ifndef CPPPROJCT_COMMUNICATIONFUNCTIONS_H
 #define CPPPROJCT_COMMUNICATIONFUNCTIONS_H
-#include "../macros/macros.h"
-#include <boost/serialization/string.hpp>
-#include "../GraphClasses/GeneralGraph.h"
-#include "../GraphClasses/GraphFunctions.h"
-#include "../Utils/HelperClasses.h"
-#include "../Utils/error.h"
-#include "../Utils/global_standard_messages.h"
-#include "../Utils/msleep.h"
+
 #include <set>
 #include <iterator>
 #include <random>
 
+#include "../macros/macros.h"
 
-void sendReqForTest(int MYPROC, int i);
-int destroyRequestReturnInteger(MPI_Request &R);
-void destroyRequest(MPI_Request &R, int &NERR);
-void destroyRequestWithoutCounter(MPI_Request &R);
-void freeRequestWithoutCounter(MPI_Request &R);
-void send_nonblocking(int owner, MPI_Request &r, double &ix, int TAG);
-void recv_nonblocking(int owner, MPI_Request &r, double &result, int TAG);
-void recv_nonblocking2(int owner, MPI_Request &r, double & result, int TAG);
-void irespond_value(ReferenceContainer &REF, double ix, int owner, MPI_Request & R, int MyNProc);
-void respond_value(ReferenceContainer &REF, double ix, int owner, int MyNProc);
-void irespond_value_edges(ReferenceContainer &REF, double *ix, int owner, MPI_Request & R, int MyNProc);
-void send_nonblocking2(int owner, MPI_Request &r, double &ix, int TAG);
+#include "../GraphClasses/GeneralGraph.h"
+#include "../GraphClasses/GraphFunctions.h"
+
+#include "../Utils/HelperClasses.h"
+#include "../Utils/error.h"
+#include "../Utils/global_standard_messages.h"
+#include "../Utils/msleep.h"
+
+
+
+//#include <boost/serialization/string.hpp> todo: kill
+
+
 void build_answer(double &answer, ReferenceContainer &REF, double ix, int owner, int MyNProc);
+
 void build_answer_edges(double * answer, ReferenceContainer &REF, double * ix, int owner, int MyNProc);
 
 
 // Trying to dispatch requests for Runge Kutta terms :-)
 template<int DT, int TIMETOL, int BATCH>
-void answer_field_requests(ReferenceContainer &REF,int MYTHR){
+void answer_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder){
     // Gonna receive requests for runge-kutta terms :-)
     // REF can access the RK4 terms via (*REF.p_RK4)[ix]
     // We should get requests for specific terms like
@@ -53,7 +49,7 @@ void answer_field_requests(ReferenceContainer &REF,int MYTHR){
     int ASKING_TAGS[4] = {K1_REQUEST, K2_REQUEST, K3_REQUEST, K4_REQUEST};
     int ANSWERING_TAGS[4] = {K1_ANSWER, K2_ANSWER, K3_ANSWER, K4_ANSWER};
     while (TRIES < 4){
-        for (int i=0; i<4; ++i) {
+        for (int i = fieldOrder-1; i < fieldOrder; ++i) {
             flag[i] = 0;
             MPI_Status status;
             if ((flag[i] == 1) || firstlap[i]) {
@@ -78,26 +74,35 @@ void answer_field_requests(ReferenceContainer &REF,int MYTHR){
             if (flag[i] == 1) {
                 MPI_Mrecv(&buffer, 1, MPI_INT, &M, &S);
                 if (i==0){
-                    // They are asking for Runge Kutta term 1
+       //             They are asking for Runge Kutta term 1
       //              build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
+                    answer[1] == REF.p_LayHelper->RK1[buffer];
                 } else if (i==1) {
-                    // They are asking for Runge Kutta term 2
+     //               They are asking for Runge Kutta term 2
     //                build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
+                    answer[1] == REF.p_LayHelper->RK2[buffer];
                 } else if (i==2) {
-                    // They are asking for Runge Kutta term 3
+   //                 They are asking for Runge Kutta term 3
   //                  build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
+                    answer[1] == REF.p_LayHelper->RK3[buffer];
                 } else if (i==3) {
-                    // They are asking for Runge Kutta term 4
+ //                   They are asking for Runge Kutta term 4
 //                    build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
+                    answer[1] == REF.p_LayHelper->RK4[buffer];
                 }
                 answer[0] = (double) buffer;
-                answer[1] = (double) 1.3; // K_i term goes here
                 MPI_Ssend(&answer, 2, MPI_DOUBLE, S.MPI_SOURCE, ANSWERING_TAGS[i], MPI_COMM_WORLD);
             }
         }
     }
 }
 
+
+
+template<int DT, int TIMETOL, int BATCH>
+void perform_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder){
+	return;
+}
 
 template<int DT, int TIMETOL, int BATCH>
 void answer_messages(ReferenceContainer &REF,int MYTHR) {
@@ -223,11 +228,10 @@ void perform_requests(int NNodes,
                       ReferenceContainer REF,
                       unsigned long N,
                       OpenMPHelper &O) {
-
-    std::uniform_int_distribution<int> gen(92412,732532);
-    unsigned int SEED = std::stoi(std::getenv("SEED"));
-    std::mt19937 rng(SEED);
-    int randi = gen(rng);
+// todo: kill
+//    std::uniform_int_distribution<int> gen(92412,732532);
+//    unsigned int SEED = std::stoi(std::getenv("SEED"));
+//    std::mt19937 rng(SEED);
 
     long ix;
     unsigned long uix;
@@ -262,9 +266,9 @@ void perform_requests(int NNodes,
     for (int i = 0; i < BATCH; ++i){
         QAvailable.push(i);
     }
-    double vval[BATCH], their_vix[BATCH]; // node receptors
-    double vval2[BATCH][2], their_vix2[BATCH][2]; // node receptors
-    int ixlist[BATCH]; // this is our new helper in order to process various indexes asynchronously (=^-|)-|-/
+    double vval[BATCH], their_vix[BATCH];
+    double vval2[BATCH][2], their_vix2[BATCH][2];
+    int ixlist[BATCH]; 
     int owner[BATCH];
     int retStatus=1;
     int status_rstatus=1;
@@ -293,21 +297,16 @@ void perform_requests(int NNodes,
                 }
             }
 
-            // race-condition unfriendly? Only extensive testing will help us decide :^|
             for (auto _it= itBeg; _it != itEnd; ++_it) {
                 auto &thread = *_it;
-                //for (auto it =  thread.begin();it != thread.end(); it++){ // OLD: was replaced
-                    // by the following loop as we require to eliminate elements :-)
                 auto it = thread.begin();
                 while (it !=  thread.end()) {
                     ++localcounter;
 
-                    // Retrieve data
                     owner[QAvailable.front()] = std::get<1>(*it);
                     their_vix[QAvailable.front()] = (double) std::get<2>(*it);
-                    // Build the result
                     results[QAvailable.front()] = std::make_tuple((double) 0, // placeholder until we get the correct val
-                                                                  (double) std::get<0>(*it), // we are inaugurating this indexing model [:<)
+                                                                  (double) std::get<0>(*it),
                           (unsigned long) (((unsigned long) owner[QAvailable.front()]) *  N + (unsigned long) their_vix[QAvailable.front()] ));
                     PRINTF_DBG("[PR] About to ask for one node!\n");std::cout<<std::flush;
                     MPI_Ssend(&their_vix[QAvailable.front()],
@@ -326,7 +325,6 @@ void perform_requests(int NNodes,
                              MPI_COMM_WORLD,
                              MPI_STATUS_IGNORE);
                     PRINTF_DBG("[PR] Correctly recieved!\n");std::cout<<std::flush;
-
 
                     // Prepare stuff  for the next iteration
                     QPend.push_back(QAvailable.front());
@@ -350,7 +348,7 @@ void perform_requests(int NNodes,
                             }
                         }
                     }
-                    thread.erase(it++); // required after changing the 'for' to a while in order to erase elements
+                    thread.erase(it++);
                 }
             }
 
@@ -370,15 +368,11 @@ void perform_requests(int NNodes,
 
 
 
-            // race-condition unfriendly? Only extensive testing will help us decide :^|
             for (auto _it= itBegE; _it != itEndE; ++_it) {
                 auto &thread = *_it;
-                //for (auto it =  thread.begin();it != thread.end(); it++){ // OLD: was replaced
-                // by the following loop as we require to eliminate elements :-)
                 auto it = thread.begin();
                 while (it !=  thread.end()) {
                     ++localcounter;
-
 
                     // Retrieve data
                     owner[QAvailable.front()] = (int) std::get<1>(*it);
@@ -387,7 +381,7 @@ void perform_requests(int NNodes,
                     // Build the result
                     results[QAvailable.front()] = std::make_tuple(0.0, // placeholder until we get the correct node val
                                                                   0.0, // placeholder until we get the correct edge val
-                            // we are inaugurating this indexing model [:<)
+                           
                           (unsigned long) (((unsigned long) owner[QAvailable.front()]) *  N + (unsigned long) their_vix2[QAvailable.front()][1] ));
 
 
@@ -410,7 +404,6 @@ void perform_requests(int NNodes,
                              MPI_STATUS_IGNORE);
                     PRINTF_DBG("[PR] Correctly recieved!\n");std::cout<<std::flush;
 
-                    // Prepare stuff  for the next iteration
                     QPend.push_back(QAvailable.front());
                     QAvailable.pop();
 
@@ -435,7 +428,7 @@ void perform_requests(int NNodes,
 
                         }
                     }
-                    thread.erase(it++); // required after changing the 'for' to a while in order to erase elements
+                    thread.erase(it++); 
                 }
             }
 
@@ -452,7 +445,6 @@ void perform_requests(int NNodes,
             tot_locals  = 0;
             sent_locally = 0;
             total_processed = 0;
-            //answer_messages<DT, TIMETOL, BATCH>(REF, O.MY_THREAD_n); // #HYPERPARAMS #HYPERPARAMETERS
         }
         ix_update = false;
 #pragma omp critical
@@ -485,11 +477,5 @@ void perform_requests(int NNodes,
 
 } // end of function
 
-
-
-
-void ask_for_node(int owner, double &vvalue, CommunicationHelper &H, int ix, Graph &g);
-
-void ask_for_node_and_vertex(int owner, double &vvalue, double &evalue, CommunicationHelper &H, int ix, Graph &g);
 
 #endif //CPPPROJCT_COMMUNICATIONFUNCTIONS_H

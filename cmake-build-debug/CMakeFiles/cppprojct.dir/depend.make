@@ -78,15 +78,6 @@ CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../macros/macros.h
 
 CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o: ../Simulation/Simulation.cpp
 
-CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
-CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../GraphClasses/GeneralGraph.h
-CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../Solvers/EulerSolver.cpp
-CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../Solvers/EulerSolver.h
-CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../Solvers/GeneralSolver.h
-CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../Utils/differential_equations_aux.h
-CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../Utils/error.h
-CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../macros/macros.h
-
 CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
 CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../GraphClasses/GeneralGraph.h
 CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../Solvers/EulerSolver.h
@@ -96,15 +87,6 @@ CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../Solvers/RungeKuttaSolve
 CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../Utils/differential_equations_aux.h
 CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../Utils/error.h
 CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../macros/macros.h
-
-CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.h
-CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../GraphClasses/GeneralGraph.h
-CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../Solvers/GeneralSolver.h
-CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../Solvers/RungeKuttaSolver.cpp
-CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../Solvers/RungeKuttaSolver.h
-CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../Utils/differential_equations_aux.h
-CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../Utils/error.h
-CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../macros/macros.h
 
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../GraphClasses/CliqueGraph.h
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../GraphClasses/ErdosRenyiGraph.h

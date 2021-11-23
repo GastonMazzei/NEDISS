@@ -8,16 +8,13 @@
 #include "../Utils/adequate_synchronization.h"
 
 
-using namespace std;
+//using namespace std; todo: kill
+
 using namespace boost;
 
 
 void CliqueGraphObject::build(){
-    typedef graph_traits<Graph>::vertex_iterator vertex_iterator;
-    //typedef property_map<Graph, int DynamicNode::*>::type LocalMap;
-    //LocalMap local = get(&DynamicNode::value, g);
-    //get(g, *v).value = 8;
-    int i=0;
+    //int i=0; todo: kill
     if (process_id(g.process_group()) == 0) {
         for (int i = 0; i < N; i++) {
 #pragma omp for

@@ -12,15 +12,21 @@
 class NoiselessKuramoto : public GeneralDifferentialEquation {
 public:
     NoiselessKuramoto(): GeneralDifferentialEquation(0){};
+
+    bool requiresCom(int d);
+
     void Field(double t, double a, std::vector<double> &b,
                  std::vector<double> &c,
                  std::vector<double> &d);
+
     void d1Field(double t, double a, std::vector<double> &b,
                std::vector<double> &c,
                std::vector<double> &d);
+
     void d2Field(double t, double a, std::vector<double> &b,
                  std::vector<double> &c,
                  std::vector<double> &d);
+
     void d3Field(double t, double a, std::vector<double> &b,
                  std::vector<double> &c,
                  std::vector<double> &d);

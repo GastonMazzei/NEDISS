@@ -78,30 +78,12 @@ CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o
  /home/m4zz31/cppprojct/macros/macros.h
 CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o
  /home/m4zz31/cppprojct/Simulation/Simulation.cpp
-CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o
- /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
- /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
- /home/m4zz31/cppprojct/Solvers/EulerSolver.cpp
- /home/m4zz31/cppprojct/Solvers/EulerSolver.h
- /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
- /home/m4zz31/cppprojct/Utils/differential_equations_aux.h
- /home/m4zz31/cppprojct/Utils/error.h
- /home/m4zz31/cppprojct/macros/macros.h
 CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o
  /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
  /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
  /home/m4zz31/cppprojct/Solvers/EulerSolver.h
  /home/m4zz31/cppprojct/Solvers/GeneralSolver.cpp
  /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
- /home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
- /home/m4zz31/cppprojct/Utils/differential_equations_aux.h
- /home/m4zz31/cppprojct/Utils/error.h
- /home/m4zz31/cppprojct/macros/macros.h
-CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o
- /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
- /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
- /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
- /home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.cpp
  /home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h
  /home/m4zz31/cppprojct/Utils/differential_equations_aux.h
  /home/m4zz31/cppprojct/Utils/error.h

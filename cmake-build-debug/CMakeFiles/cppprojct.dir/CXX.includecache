@@ -13,10 +13,14 @@ CommunicationFunctions.h
 /home/m4zz31/cppprojct/Utils/global_standard_messages.h
 
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
+set
+-
+iterator
+-
+random
+-
 ../macros/macros.h
 /home/m4zz31/cppprojct/macros/macros.h
-boost/serialization/string.hpp
--
 ../GraphClasses/GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 ../GraphClasses/GraphFunctions.h
@@ -29,12 +33,6 @@ boost/serialization/string.hpp
 /home/m4zz31/cppprojct/Utils/global_standard_messages.h
 ../Utils/msleep.h
 /home/m4zz31/cppprojct/Utils/msleep.h
-set
--
-iterator
--
-random
--
 
 /home/m4zz31/cppprojct/DifferentialEquations/GeneralDifferentialEquation.h
 functional
@@ -193,10 +191,16 @@ cmath
 /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
 
 /home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
+graph-test-singlestep-evolution.h
+/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
 ../Utils/adequate_synchronization.h
 /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
 ../Utils/global_standard_messages.h
 /home/m4zz31/cppprojct/Utils/global_standard_messages.h
+../Utils/HelperClasses.h
+/home/m4zz31/cppprojct/Utils/HelperClasses.h
+../Utils/reproductibility.h
+/home/m4zz31/cppprojct/Utils/reproductibility.h
 ../Solvers/EulerSolver.h
 /home/m4zz31/cppprojct/Solvers/EulerSolver.h
 ../Solvers/RungeKuttaSolver.h
@@ -205,26 +209,20 @@ cmath
 /home/m4zz31/cppprojct/DifferentialEquations/NoiselessKuramoto.h
 ../DifferentialEquations/LinearTestEquation.h
 /home/m4zz31/cppprojct/DifferentialEquations/LinearTestEquation.h
-../GraphClasses/GraphFunctions.h
-/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
-../Utils/HelperClasses.h
-/home/m4zz31/cppprojct/Utils/HelperClasses.h
-../Communication/CommunicationFunctions.h
-/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
-graph-test-singlestep-evolution.h
-/home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
 ../GraphClasses/ErdosRenyiGraph.h
 /home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
 ../GraphClasses/CliqueGraph.h
 /home/m4zz31/cppprojct/GraphClasses/CliqueGraph.h
 ../GraphClasses/RingGraph.h
 /home/m4zz31/cppprojct/GraphClasses/RingGraph.h
-../Utils/reproductibility.h
-/home/m4zz31/cppprojct/Utils/reproductibility.h
-../Communication/CommunicationFunctions.h
-/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
 ../GraphClasses/GraphFunctions.h
 /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
+../GraphClasses/GraphFunctions.h
+/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
+../Communication/CommunicationFunctions.h
+/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
+../Communication/CommunicationFunctions.h
+/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
 
 /home/m4zz31/cppprojct/Tests/long-singlestep-run.cpp
 ../GraphClasses/ErdosRenyiGraph.h
@@ -261,10 +259,6 @@ long-singlestep-run.h
 /home/m4zz31/cppprojct/Utils/HelperClasses.h
 ../Communication/CommunicationFunctions.h
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
-
-/home/m4zz31/cppprojct/Utils/HelperClasses.cpp
-HelperClasses.h
-/home/m4zz31/cppprojct/Utils/HelperClasses.h
 
 /home/m4zz31/cppprojct/Utils/HelperClasses.h
 ../GraphClasses/GeneralGraph.h

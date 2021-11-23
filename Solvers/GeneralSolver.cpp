@@ -3,13 +3,16 @@
 //
 
 #include  "GeneralSolver.h"
-
-
 #include "EulerSolver.h"
 #include "RungeKuttaSolver.h"
+
 #include "../Utils/error.h"
 
+
 SolverConfig::SolverConfig(){
+    /* s == 0 is EulerSolver: read from command-line the depth 
+     *
+     */
     // 0 is Euler: ask for the depth
     // 1 is Runge-Kutta: ask for the coefficients
     s=std::stoi(std::getenv("SOLVER"));

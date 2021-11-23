@@ -141,9 +141,6 @@
 		<Unit filename="/home/m4zz31/cppprojct/Simulation/Simulation.cpp">
 			<Option target="cppprojct"/>
 		</Unit>
-		<Unit filename="/home/m4zz31/cppprojct/Solvers/EulerSolver.cpp">
-			<Option target="cppprojct"/>
-		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Solvers/EulerSolver.h">
 			<Option target="cppprojct"/>
 		</Unit>
@@ -151,9 +148,6 @@
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Solvers/GeneralSolver.h">
-			<Option target="cppprojct"/>
-		</Unit>
-		<Unit filename="/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.cpp">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Solvers/RungeKuttaSolver.h">

@@ -73,7 +73,7 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d, double 
     Params[3] = *(params+3);
     printf("[WARNING] GeneralSoler constructor that  explicitly uses four weights  params assigns 'true' to 'requires_communication', change it if the current method does not require it. Current method: %s with d=%d\n", valtype, d);
     std::cout << std::flush;
-    requires_communication = true;
+    requires_communication = DifferentialEquation.requiresCom(d);
 };
 
 template <typename DIFFEQ, typename SOLVER>
@@ -85,14 +85,15 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype){
     type = std::move(valtype);
     if (type == "rk") {
         // Heun method's initialization :-)
-        requires_communication =  true;
         deg = 2;
+    	requires_communication = DifferentialEquation.requiresCom(deg);
         Params[0] = 0.5;
         Params[1] = 0.5;
         Params[2] = 0;
         Params[3] = 0;
     } else if (type == "eu") {
         deg = 1;
+    	requires_communication = DifferentialEquation.requiresCom(deg);
         Params[0] = 1;
         Params[1] = 0;
         Params[2] = 0;
@@ -110,7 +111,7 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(){
     Params[1] = 0;
     Params[2] = 0;
     Params[3] = 0;
-    requires_communication = false;
+    requires_communication = DifferentialEquation.requiresCom(deg);
 }
 
 template <typename DIFFEQ, typename SOLVER>
@@ -123,13 +124,14 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d) {
     deg = d;
     if (type == "rk") {
         if (d == 2) {
-            // Heun method's initialization :-)
+            // Heun method
             Params[0] = 0.5;
             Params[1] = 0.5;
             Params[2] = 0;
             Params[3] = 0;
-            requires_communication = true;
+    	    requires_communication = DifferentialEquation.requiresCom(d);
         } else {
+		// todo: build
             printf("[FATAL] GeneralSolver(type='rk', int d) only accepts d=2 for Heun's method, but %d was the input.\n",d);
             std::cout<<std::flush;
             exit(1);
@@ -142,6 +144,8 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d) {
             } else {
                 Params[i] = 0;
             }
+
+    	    requires_communication = DifferentialEquation.requiresCom(d);
         }
         if (d!=1) PRINTF_DBG("\n\n[WARNING]\n\nEuler od Order != 1 may not be available for some Equations, i.e. some equation classes may not have defined their field derivatives up to the requested order :O.\n\n");
     } else {
