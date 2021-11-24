@@ -100,9 +100,7 @@ void answer_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder){
 
 
 template<int DT, int TIMETOL, int BATCH>
-void perform_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder){
-	return;
-}
+void perform_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder);
 
 template<int DT, int TIMETOL, int BATCH>
 void answer_messages(ReferenceContainer &REF,int MYTHR) {

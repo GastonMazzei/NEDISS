@@ -76,14 +76,14 @@ void IntegrationCell::build(Graph &g, VD v, MappingHelper &Map,
 
 
 LayeredSolverCell::LayeredSolverCell(int rank){
-    RK1.resize(rank);
-    RK2.resize(rank);
-    RK3.resize(rank);
-    RK4.resize(rank);
-    RK1_status = std::vector<bool>(rank, false);
-    RK2_status = std::vector<bool>(rank, false);
-    RK3_status = std::vector<bool>(rank, false);
-    RK4_status = std::vector<bool>(rank, false);
+    RK1.resize(rank+1);
+    RK2.resize(rank+1);
+    RK3.resize(rank+1);
+    RK4.resize(rank+1);
+    RK1_status = std::vector<bool>(rank+1, false);
+    RK2_status = std::vector<bool>(rank+1, false);
+    RK3_status = std::vector<bool>(rank+1, false);
+    RK4_status = std::vector<bool>(rank+1, false);
 }
 
 void LayeredSolverHelper::buildForRank(long ix, long rank){

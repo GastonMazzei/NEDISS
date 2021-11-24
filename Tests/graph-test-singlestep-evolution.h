@@ -88,7 +88,7 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G,
 
     } else if (SOLVER.s == 1) {
 
-        GeneralSolver<DIFFEQ, RungeKuttaSolver<DIFFEQ>> S_rk("rk",0, &(SOLVER.P[0])) ;
+        GeneralSolver<DIFFEQ, RungeKuttaSolver<DIFFEQ>> S_rk("rk",SOLVER.d, &(SOLVER.P[0])) ;
         S_rk.SetT0(0);
         S_rk.SetStep(0.01);
 

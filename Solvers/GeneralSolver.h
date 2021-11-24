@@ -54,7 +54,38 @@ public:
                 std::vector<double> &b,
                 std::vector<double> &c,
                 std::vector<double> &d,
+                std::vector<double> &RK1,
+                std::vector<double> &RK2,
+                std::vector<double> &RK3,
+                std::vector<double> &RK4,
                 double &answer);
+    void Term1(double a,
+               std::vector<double> &b,
+               std::vector<double> &c,
+               std::vector<double> &d,
+               std::vector<double> &RK1);
+    void Term2(double a,
+               std::vector<double> &b,
+               std::vector<double> &c,
+               std::vector<double> &d,
+               std::vector<double> &RK1,
+               std::vector<double> &RK2);
+    void Term3(double a,
+               std::vector<double> &b,
+               std::vector<double> &c,
+               std::vector<double> &d,
+               std::vector<double> &RK1,
+               std::vector<double> &RK2,
+               std::vector<double> &RK3);
+    void Term4(double a,
+               std::vector<double> &b,
+               std::vector<double> &c,
+               std::vector<double> &d,
+               std::vector<double> &RK1,
+               std::vector<double> &RK2,
+               std::vector<double> &RK3,
+               std::vector<double> &RK4);
+
 
     // Configuration specific to the time structure :-)
     TimeStructure T;
@@ -71,7 +102,7 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d, double 
     Params[1] = *(params+1);
     Params[2] = *(params+2);
     Params[3] = *(params+3);
-    printf("[WARNING] GeneralSoler constructor that  explicitly uses four weights  params assigns 'true' to 'requires_communication', change it if the current method does not require it. Current method: %s with d=%d\n", valtype, d);
+    std::cout << "[WARNING] GeneralSolver constructor that  explicitly uses four weights  params assigns 'true' to 'requires_communication', change it if the current method does not require it. Current method: " << valtype << " with d=" << d << std::endl;
     std::cout << std::flush;
     requires_communication = DifferentialEquation.requiresCom(d);
 };
@@ -175,10 +206,69 @@ void GeneralSolver<DIFFEQ, SOLVER>::evolve(double a,
                                              std::vector<double> &b,
                                              std::vector<double> &c,
                                              std::vector<double> &d,
+                                             std::vector<double> &RK1,
+                                             std::vector<double> &RK2,
+                                             std::vector<double> &RK3,
+                                             std::vector<double> &RK4,
                                              double &answer){
     return Solver.evolve(T.t, T.h, a, b, c, d, DifferentialEquation,
-                         DifferentialEquation.Specs, answer, &Params[0]);
+                         DifferentialEquation.Specs, RK1, RK2, RK3, RK4, answer, &Params[0]);
 }
+
+
+template <typename DIFFEQ, typename SOLVER>
+void GeneralSolver<DIFFEQ, SOLVER>::Term1(double a,
+                                           std::vector<double> &b,
+                                           std::vector<double> &c,
+                                           std::vector<double> &d,
+                                           std::vector<double> &RK1){
+    return Solver.Term1(T.t, T.h, a, b, c, d, DifferentialEquation,
+                         DifferentialEquation.Specs, RK1, &Params[0]);
+}
+
+
+template <typename DIFFEQ, typename SOLVER>
+void GeneralSolver<DIFFEQ, SOLVER>::Term2(double a,
+                                         std::vector<double> &b,
+                                         std::vector<double> &c,
+                                         std::vector<double> &d,
+                                         std::vector<double> &RK1,
+                                         std::vector<double> &RK2){
+    return Solver.Term2(T.t, T.h, a, b, c, d, DifferentialEquation,
+                         DifferentialEquation.Specs, RK1, RK2, &Params[0]);
+}
+
+
+
+template <typename DIFFEQ, typename SOLVER>
+void GeneralSolver<DIFFEQ, SOLVER>::Term3(double a,
+                                         std::vector<double> &b,
+                                         std::vector<double> &c,
+                                         std::vector<double> &d,
+                                         std::vector<double> &RK1,
+                                         std::vector<double> &RK2,
+                                         std::vector<double> &RK3){
+    return Solver.Term3(T.t, T.h, a, b, c, d, DifferentialEquation,
+                         DifferentialEquation.Specs, RK1, RK2, RK3, &Params[0]);
+}
+
+
+
+
+template <typename DIFFEQ, typename SOLVER>
+void GeneralSolver<DIFFEQ, SOLVER>::Term4(double a,
+                                         std::vector<double> &b,
+                                         std::vector<double> &c,
+                                         std::vector<double> &d,
+                                         std::vector<double> &RK1,
+                                         std::vector<double> &RK2,
+                                         std::vector<double> &RK3,
+                                         std::vector<double> &RK4){
+    return Solver.Term4(T.t, T.h, a, b, c, d, DifferentialEquation,
+                         DifferentialEquation.Specs, RK1, RK2, RK3, RK4, &Params[0]);
+}
+
+
 
 template <typename DIFFEQ, typename SOLVER>
 void GeneralSolver<DIFFEQ, SOLVER>::PostTemplateProcessing(){

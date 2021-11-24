@@ -23,5 +23,9 @@ SolverConfig::SolverConfig(){
         P[1] = (double) std::stof(std::getenv("K2"));
         P[2] = (double) std::stof(std::getenv("K3"));
         P[3] = (double) std::stof(std::getenv("K4"));
+        if (P[0]!=0) d=1;
+        if (P[1]!=0) d=2;
+        if (P[2]!=0) d=3;
+        if (P[3]!=0) d=4;
     }
 }

@@ -12,8 +12,10 @@
 
 bool NoiselessKuramoto::requiresCom(int d){
 	if (d==1) {
+	    printf("Requires communication returning false\n");
 		return false;
 	} else if (d>1) {
+        printf("Requires communication returning true\n");
 		return true;
 	}
 }
