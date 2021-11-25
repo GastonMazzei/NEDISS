@@ -162,6 +162,7 @@ void EulerSolver<Equation>::Term2(double t,
     E.Reset();
     E.d1Field(t,a,b,c,d);
     RK2[0] =  Specs.result; // (*(P+1)) * h * h / 2
+    PRINTF_DBG("a=%f,b=%f, b size is %d and the result was %f\n",a,b[0],b.size(), RK2[0]);std::cout<<std::flush;
 };
 
 template <typename Equation>

@@ -128,6 +128,11 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
                 std::get<0>((*REF.p_IntHelper)[ix].ixMap[j]) = (unsigned long) std::get<2>(temp[j]);
                 std::get<1>((*REF.p_IntHelper)[ix].ixMap[j]) = (unsigned long) std::get<3>(temp[j]);
                 std::get<2>((*REF.p_IntHelper)[ix].ixMap[j]) = (unsigned long) std::get<4>(temp[j]);
+                PRINTF_DBG("temp[j] would be integerisized to %d %d %d\n",
+                       (int)((unsigned long) std::get<2>(temp[j])),
+                       (int)((unsigned long) std::get<3>(temp[j])),
+                       (int)((unsigned long) std::get<4>(temp[j]))
+                       );
             }
             solver.Term1(
                     (*REF.p_g)[*v].value,
@@ -181,7 +186,7 @@ void answer_field_requests(ReferenceContainer &REF,int MYTHR, int Nfield);
 //----------------------------------------------------------
 
 template<int DT, int TIMETOL, int BATCH>
-void perform_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder,std::queue<long> * queue);
+void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,std::queue<long> * queue);
 
 template<typename DIFFEQ, typename SOLVER, int BATCH>
 void contribute_to_higher_integration(ReferenceContainer &REF,
@@ -189,7 +194,7 @@ void contribute_to_higher_integration(ReferenceContainer &REF,
                                                             int fieldNum){
     int N = REF.p_LayHelper->data.size();
     auto vs = vertices(*REF.p_g);
-#pragma omp parallel firstprivate(N, REF, vs)
+#pragma omp parallel firstprivate(N, REF, vs, solver)
     {
         int Nthreads = (int) omp_get_num_threads();
         int myThread = (int) omp_get_thread_num();
@@ -198,14 +203,37 @@ void contribute_to_higher_integration(ReferenceContainer &REF,
         if (myThread + 1 == Nthreads) end += N%Nthreads;
         for (auto v = vs.first + begin; v != vs.first + end; ++v){
             long ix = get(get(boost::vertex_index, *(REF.p_g)), *v);
+//            if (ix == 0){
+//                for (int j=1; j< REF.p_LayHelper->data[ix].RK1.size(); ++j){
+//                    std::cout << 0 << " " << REF.p_LayHelper->data[ix].RK1[j] << std::endl;
+//                }
+//            }
+//            if (ix == 1){
+//                for (int j=1; j< REF.p_LayHelper->data[ix].RK1.size(); ++j){
+//                    std::cout << 1 << " " << REF.p_LayHelper->data[ix].RK1[j] << std::endl;
+//                }
+//            }
+//            if (ix == 0){
+//                for (int j=1; j< REF.p_LayHelper->data[ix].RK2.size(); ++j){
+//                    std::cout << REF.p_LayHelper->data[ix].RK2[j] << std::endl;
+//                }
+//            }
+//            if (ix == 0){
+//                for (int j=1; j< REF.p_LayHelper->data[ix].RK3.size(); ++j){
+//                    std::cout << REF.p_LayHelper->data[ix].RK3[j] << std::endl;
+//                }
+//            }
             if (fieldNum == 2){
+//                REF.p_LayHelper->data[ix].RK2[0] = 0;
                 solver.Term2((*REF.p_IntHelper)[ix].centralValue,
                              (*REF.p_IntHelper)[ix].centralParams,
                              (*REF.p_IntHelper)[ix].neighborValues,
                              (*REF.p_IntHelper)[ix].edgeValues,
                              REF.p_LayHelper->data[ix].RK1,
                              REF.p_LayHelper->data[ix].RK2);
+                REF.p_LayHelper->data[ix].RK2_status = true;
             } else if (fieldNum == 3) {
+//                REF.p_LayHelper->data[ix].RK3[0] = 0;
                 solver.Term3((*REF.p_IntHelper)[ix].centralValue,
                              (*REF.p_IntHelper)[ix].centralParams,
                              (*REF.p_IntHelper)[ix].neighborValues,
@@ -213,7 +241,9 @@ void contribute_to_higher_integration(ReferenceContainer &REF,
                              REF.p_LayHelper->data[ix].RK1,
                              REF.p_LayHelper->data[ix].RK2,
                              REF.p_LayHelper->data[ix].RK3);
+                REF.p_LayHelper->data[ix].RK3_status = true;
             } else if (fieldNum == 4){
+//                REF.p_LayHelper->data[ix].RK4[0] = 0;
                 solver.Term4((*REF.p_IntHelper)[ix].centralValue,
                              (*REF.p_IntHelper)[ix].centralParams,
                              (*REF.p_IntHelper)[ix].neighborValues,
@@ -222,6 +252,7 @@ void contribute_to_higher_integration(ReferenceContainer &REF,
                              REF.p_LayHelper->data[ix].RK2,
                              REF.p_LayHelper->data[ix].RK3,
                              REF.p_LayHelper->data[ix].RK4);
+                REF.p_LayHelper->data[ix].RK4_status = true;
             } else {
                 printf("[FATAL] field order requested does not exist. Requested was: %d\n", fieldNum);
                 std::cout<<std::flush;
@@ -246,7 +277,7 @@ void finalize_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> 
 	if (myThread + 1 == Nthreads) end += N%Nthreads;
         for (auto v = vs.first + begin; v != vs.first + end; ++v){
             long ix = get(get(boost::vertex_index, *(REF.p_g)), *v);
-            double answer=0;
+            double answer = 0;
             solver.evolve(
                         (*REF.p_IntHelper)[ix].centralValue,
                         (*REF.p_IntHelper)[ix].centralParams,
@@ -259,6 +290,10 @@ void finalize_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> 
                         answer
             );
             (*REF.p_g)[*v].temporal_register = answer;
+            REF.p_LayHelper->data[ix].RK1_status = false;
+            REF.p_LayHelper->data[ix].RK2_status = false;
+            REF.p_LayHelper->data[ix].RK3_status = false;
+            REF.p_LayHelper->data[ix].RK4_status = false;
         }
 }
 };
@@ -341,10 +376,10 @@ void single_evolution(Graph &g,
                     //                    we mantain at least one dispatcher alive :-)
                         answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
                         answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
-                        if (solver.requires_communication){
-                            printf("it did required com :-)\n");
-                            answer_field_requests<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n, 1);
-                        }
+//                        if (solver.requires_communication){
+//                            printf("it did required com :-)\n");
+//                            answer_field_requests<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n, 1);
+//                        }
 #pragma omp atomic read
                         atomic_bool = keep_responding;
                         mssleep(DT);
@@ -416,12 +451,14 @@ void single_evolution(Graph &g,
 #pragma omp critical         // Just store the results directly in the results.
                                 // we can probably afford being critical as there is
                                 // MPI communication overhead in other threads.
-                                {
+{
                                     IntHelper[i].ResultsPendProcess.emplace_back(g[*n].value,
                                                                                  g[edge(*v, *n,
                                                                                         g).first].value, // index to UID :-)
-                                    (unsigned long) ((unsigned long) get(get(boost::vertex_index, g), *n) + N_total_nodes * ((unsigned long) MYPROCN) ) );
-                                }
+                                    (unsigned long) ((unsigned long) get(get(boost::vertex_index, g), *n) + N_total_nodes * ((unsigned long) MYPROCN) ) ,
+                                                                                 (unsigned long)  get(get(boost::vertex_index, g), local_v),
+                                                                                 (unsigned long)  get(get(boost::vertex_owner, g), local_v));
+}
                             } else { error_report("Push back mechanism for local nodes has failed"); };
                         } else { // Case (2.A): We 'see' this neighbor because it is connected
                             // via an edge that we own. Get the edge and record who is the other node's owner
@@ -591,9 +628,9 @@ void single_evolution(Graph &g,
             while (atomic_bool){
                 answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
                 answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
-                if (solver.requires_communication) {
-                    answer_field_requests<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n, 1);
-                }
+//                if (solver.requires_communication) {
+//                    answer_field_requests<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n, 1);
+//                }
                 // 2) Re-check if we are over
 #pragma omp atomic read
                 atomic_bool = keep_responding;
@@ -631,10 +668,10 @@ void single_evolution(Graph &g,
 
 } // end of the parallel construct
 
-    printf("Exited the parallel construct! yay! solver deg is %d\n", solver.deg);
+    PRINTF_DBG("Exited the parallel construct! solver deg is %d\n", solver.deg);
 
     for (int i=2; i < solver.deg+1 ; ++i){
-        printf("entering the for, i is %d\n",i);
+        PRINTF_DBG("entering the for, i is %d\n",i);
         if (solver.requires_communication){
 	        bool keep_responding = true;
             int Ncapturers = 0;
@@ -667,7 +704,7 @@ void single_evolution(Graph &g,
                     v_NFinalizedCapturers = NFinalizedCapturers;
                     mssleep(DT);
                 }
-                std::cout << "about to implement the first integration barrier"<< v_Ncapturers << std::endl;
+                //std::cout << "about to implement the first integration barrier "<< v_Ncapturers << std::endl;
                 MPI_Barrier(MPI_COMM_WORLD);
 #pragma omp atomic write
                 keep_responding = false;
@@ -686,6 +723,7 @@ void single_evolution(Graph &g,
                     v_NFinalizedResponders = NFinalizedResponders;
                     mssleep(DT);
                 }
+                //std::cout << "about to implement the second integration barrier "<< v_Ncapturers << std::endl;
                 MPI_Barrier(MPI_COMM_WORLD);
             } else if (omp_get_thread_num() % 2 == 1){
 
@@ -698,7 +736,7 @@ void single_evolution(Graph &g,
 }
                 perform_field_requests<DT, TIMETOL, BATCH>(
                                                 REF,
-                                                REF.p_ComHelper->WORLD_RANK[omp_get_thread_num()],
+                                                (int) REF.p_ComHelper->WORLD_RANK[omp_get_thread_num()],
                                                 i,
                                                 locallyQueue);
 #pragma omp atomic update

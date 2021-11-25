@@ -42,19 +42,20 @@ void answer_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder){
     MPI_Request R;
     MPI_Message M;
     MPI_Status S;
-    int buffer;
-    double answer[2];
+    int buffer[2];
+    double answer;
     int t=0;
     bool firstlap[4]= {true};
     int ASKING_TAGS[4] = {K1_REQUEST, K2_REQUEST, K3_REQUEST, K4_REQUEST};
     int ANSWERING_TAGS[4] = {K1_ANSWER, K2_ANSWER, K3_ANSWER, K4_ANSWER};
     while (TRIES < 4){
-        for (int i = fieldOrder-1; i < fieldOrder; ++i) {
+        for (int i = fieldOrder-1-1; i < fieldOrder-1; ++i) {
             flag[i] = 0;
             MPI_Status status;
             if ((flag[i] == 1) || firstlap[i]) {
                 flag[i] = 0;
-                buffer = -9995;
+                buffer[0] = -9995;
+                buffer[1] = -9994;
                 R = MPI_Request();
                 M = MPI_Message();
                 S = MPI_Status();
@@ -72,37 +73,59 @@ void answer_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder){
             if (t >= TIMETOL) ++TRIES;
             t = 0;
             if (flag[i] == 1) {
-                MPI_Mrecv(&buffer, 1, MPI_INT, &M, &S);
-
-                // UPDATE!!
-                // we are sent this:
-                // //            int sendBuffer[3] = {uniqueid, ix, owner}; via the rk_i request channel
-                ////  and we answr with thgis:
-                ///          double recvBuffer[1] = {value} via the uniqueid channel
-
+                MPI_Mrecv(&buffer, 2, MPI_INT, &M, &S);
+                PRINTF_DBG("[afr] WE JUST RECEIVED :-) buffer is %d and %d\n", buffer[0], buffer[1]);
+                bool isReady = false;
                 if (i==0){
-                    while (!REF.p_LayHelper->data[buffer].RK1_status){
+#pragma omp atomic read
+                    isReady = REF.p_LayHelper->data[buffer[1]].RK1_status;
+                    while (!isReady){
+                        PRINTF_DBG("RK1 status not found, keeping going...");std::cout<<std::flush;
                         mssleep(DT);
+#pragma omp atomic read
+                        isReady = REF.p_LayHelper->data[buffer[1]].RK1_status;
                     }
-                    answer[1] == REF.p_LayHelper->data[buffer].RK1[0];
+#pragma omp atomic read
+                    answer = REF.p_LayHelper->data[buffer[1]].RK1[0];
                 } else if (i==1) {
-                    while (!REF.p_LayHelper->data[buffer].RK2_status){
+#pragma omp atomic read
+                    isReady = REF.p_LayHelper->data[buffer[1]].RK2_status;
+                    while (!isReady){
+                        PRINTF_DBG("RK2 status not found, keeping going...");std::cout<<std::flush;
                         mssleep(DT);
+#pragma omp atomic read
+                        isReady = REF.p_LayHelper->data[buffer[1]].RK2_status;
                     }
-                    answer[1] == REF.p_LayHelper->data[buffer].RK2[0];
+#pragma omp atomic read
+                    answer = REF.p_LayHelper->data[buffer[1]].RK2[0];
                 } else if (i==2) {
-                    while (!REF.p_LayHelper->data[buffer].RK3_status){
+#pragma omp atomic read
+                    isReady = REF.p_LayHelper->data[buffer[1]].RK3_status;
+                    while (!isReady){
+                        PRINTF_DBG("RK3 status not found, keeping going...");std::cout<<std::flush;
                         mssleep(DT);
+#pragma omp atomic read
+                        isReady = REF.p_LayHelper->data[buffer[1]].RK3_status;
                     }
-                    answer[1] == REF.p_LayHelper->data[buffer].RK3[0];
+
+#pragma omp atomic read
+                    answer = REF.p_LayHelper->data[buffer[1]].RK3[0];
                 } else if (i==3) {
-                    while (!REF.p_LayHelper->data[buffer].RK4_status){
+#pragma omp atomic read
+                    isReady = REF.p_LayHelper->data[buffer[1]].RK4_status;
+                    while (!isReady){
+                        PRINTF_DBG("RK4 status not found, keeping going...");std::cout<<std::flush;
                         mssleep(DT);
+#pragma omp atomic read
+                        isReady = REF.p_LayHelper->data[buffer[1]].RK4_status;
                     }
-                    answer[1] == REF.p_LayHelper->data[buffer].RK4[0];
+
+#pragma omp atomic read
+                    answer = REF.p_LayHelper->data[buffer[1]].RK4[0];
                 }
-                answer[0] = (double) buffer;
-                MPI_Ssend(&answer, 2, MPI_DOUBLE, S.MPI_SOURCE, ANSWERING_TAGS[i], MPI_COMM_WORLD);
+                PRINTF_DBG("[afr] About to send :-)! tag %d\n", buffer[0]);std::cout<<std::flush;
+                MPI_Ssend(&answer, 1, MPI_DOUBLE, S.MPI_SOURCE, buffer[0], MPI_COMM_WORLD);
+                PRINTF_DBG("[afr] Finished sending :-)! tag %d\n", buffer[0]);
             }
         }
     }
@@ -111,8 +134,9 @@ void answer_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder){
 
 
 template<int DT, int TIMETOL, int BATCH>
-void perform_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder,std::queue<long> * queue){
+void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,std::queue<long> * queue){
 
+    int ASKING_TAGS[4] = {K1_REQUEST, K2_REQUEST, K3_REQUEST, K4_REQUEST};
     bool keep_working = true;
     long ix;
     int L;
@@ -137,47 +161,81 @@ void perform_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder,st
             exit(1);
         }
 
-        for (int i=1; i<L ; ++i){
-            // try to fill
-            REF.p_LayHelper->data[ix].RK1[i] = 10;
+        for (int i=0; i<L-1 ; ++i){
+            double recvBuffer;
+            if (((int) std::get<2>((*REF.p_IntHelper)[ix].ixMap[i])) == MYPROC) {
+                if (fieldOrder == 2) {
+                    bool isReadyYet = false; //RECENT: changed from get<2> to get<1>
+                    unsigned long owner = std::get<1>((*REF.p_IntHelper)[ix].ixMap[i]);
+#pragma omp atomic read
+                    isReadyYet = REF.p_LayHelper->data[owner].RK1_status;
+                    while (!isReadyYet) {
+                        mssleep(DT);
+#pragma omp atomic read
+                        isReadyYet = REF.p_LayHelper->data[owner].RK1_status;
+                    }
+#pragma omp atomic read
+                    recvBuffer = REF.p_LayHelper->data[owner].RK1[0];
+                } else if (fieldOrder == 3) {
+                    bool isReadyYet = false;
+                    unsigned long owner = std::get<2>((*REF.p_IntHelper)[ix].ixMap[i]);
+#pragma omp atomic read
+                    isReadyYet = REF.p_LayHelper->data[owner].RK2_status;
+                    while (!isReadyYet) {
+                        mssleep(DT);
+#pragma omp atomic read
+                        isReadyYet = REF.p_LayHelper->data[owner].RK2_status;
+                    }
+#pragma omp atomic read
+                    recvBuffer = REF.p_LayHelper->data[owner].RK2[0];
+                } else if (fieldOrder == 4) {
+                    bool isReadyYet = false;
+                    unsigned long owner = std::get<2>((*REF.p_IntHelper)[ix].ixMap[i]);
+#pragma omp atomic read
+                    isReadyYet = REF.p_LayHelper->data[owner].RK3_status;
+                    while (!isReadyYet) {
+                        mssleep(DT);
+#pragma omp atomic read
+                        isReadyYet = REF.p_LayHelper->data[owner].RK3_status;
+                    }
+#pragma omp atomic read
+                    recvBuffer = REF.p_LayHelper->data[owner].RK3[0];
+                };
+            } else {
+                int sendBuffer[2] = {
+                        (int) std::get<0>((*REF.p_IntHelper)[ix].ixMap[i]),
+                        (int) std::get<1>((*REF.p_IntHelper)[ix].ixMap[i])
+                };
 
-            //[our ix] (int) and we respond with [our ix, rk value :-)]
-            //
-            // we need to know their ix
-            //
-            //
-            // send REF.p_IntHelper.ixMap[ix][i] (first one is unique id, second one is ix, third owner)
+                PRINTF_DBG("[pfr] About to send! sendbuffer says %d and %d\n", sendBuffer[0], sendBuffer[1]);
+                //std::cout << "Originally it is: " << std::get<0>((*REF.p_IntHelper)[ix].ixMap[i]) << std::endl;
+                //std::cout << "L is " << L << " and [ix].ixMap's size is: " << (*REF.p_IntHelper)[ix].ixMap.size() << std::endl;
+                MPI_Ssend(&sendBuffer,
+                          2,
+                          MPI_INT,
+                          (int) std::get<2>((*REF.p_IntHelper)[ix].ixMap[i]),
+                          ASKING_TAGS[fieldOrder-2],
+                          MPI_COMM_WORLD);
+                PRINTF_DBG("[pfr] About to receive! tag is %d\n",
+                       (int) std::get<0>((*REF.p_IntHelper)[ix].ixMap[i])
+                );
+                MPI_Recv(&recvBuffer,
+                         1,
+                         MPI_DOUBLE,
+                         (int) std::get<2>((*REF.p_IntHelper)[ix].ixMap[i]),
+                         (int) std::get<0>((*REF.p_IntHelper)[ix].ixMap[i]),
+                         MPI_COMM_WORLD,
+                         MPI_STATUS_IGNORE);
+                PRINTF_DBG("[pfr] recieved %f!\n",recvBuffer);
+            }
 
-            // CORE PART!
-//            int sendBuffer[3] = {uniqueid, ix, owner}; via the rk_i request channel
-//            double recvBuffer[1] = {value} via the uniqueid channel
-
-//            MPI_Ssend(&their_vix[QAvailable.front()],
-//                      1,
-//                      MPI_DOUBLE,
-//                      owner[QAvailable.front()],
-//                      VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD);
-//            PRINTF_DBG("[PR] Asked!\n");std::cout<<std::flush;
-//
-//            PRINTF_DBG("[PR] About to recv!\n");std::cout<<std::flush;
-//            MPI_Recv(&vval[QAvailable.front()],
-//                     1,
-//                     MPI_DOUBLE,
-//                     owner[QAvailable.front()],
-//                     (int) their_vix[QAvailable.front()],
-//                     MPI_COMM_WORLD,
-//                     MPI_STATUS_IGNORE);
-//            PRINTF_DBG("[PR] Correctly recieved!\n");std::cout<<std::flush;
-
-
-
-
-
-
-
-
-
-
+            if (fieldOrder == 2) {
+                REF.p_LayHelper->data[ix].RK1[i+1] = recvBuffer;
+            } else if (fieldOrder == 3) {
+                REF.p_LayHelper->data[ix].RK2[i+1] = recvBuffer;
+            } else if (fieldOrder == 4) {
+                REF.p_LayHelper->data[ix].RK3[i+1] = recvBuffer;
+            };
         }
 #pragma omp critical
  {
