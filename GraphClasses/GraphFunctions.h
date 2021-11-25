@@ -125,6 +125,9 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
             for (int j=0; j<temp.size(); ++j){
                 (*REF.p_IntHelper)[ix].neighborValues[j] = std::get<0>(temp[j]);
                 (*REF.p_IntHelper)[ix].edgeValues[j] = std::get<1>(temp[j]);
+                std::get<0>((*REF.p_IntHelper)[ix].ixMap[j]) = (unsigned long) std::get<2>(temp[j]);
+                std::get<1>((*REF.p_IntHelper)[ix].ixMap[j]) = (unsigned long) std::get<3>(temp[j]);
+                std::get<2>((*REF.p_IntHelper)[ix].ixMap[j]) = (unsigned long) std::get<4>(temp[j]);
             }
             solver.Term1(
                     (*REF.p_g)[*v].value,
@@ -133,7 +136,7 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
                     (*REF.p_IntHelper)[ix].edgeValues,
                     REF.p_LayHelper->data[ix].RK1
             );
-            REF.p_LayHelper->data[ix].RK1_status[0] = true;
+            REF.p_LayHelper->data[ix].RK1_status = true;
 
             // for ccompatibility during development:
             (*REF.p_g)[*v].temporal_register = 0;
@@ -178,7 +181,7 @@ void answer_field_requests(ReferenceContainer &REF,int MYTHR, int Nfield);
 //----------------------------------------------------------
 
 template<int DT, int TIMETOL, int BATCH>
-void perform_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder){};
+void perform_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder,std::queue<long> * queue);
 
 template<typename DIFFEQ, typename SOLVER, int BATCH>
 void contribute_to_higher_integration(ReferenceContainer &REF,
@@ -232,10 +235,11 @@ template<typename DIFFEQ, typename SOLVER, int BATCH>
 void finalize_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> &solver){
 
 	int N = REF.p_LayHelper->data.size();
-	int Nthreads = (int) omp_get_num_threads();
+
 	auto vs = vertices(*REF.p_g);
-#pragma omp parallel firstprivate(N, Nthreads, REF, vs)
+#pragma omp parallel firstprivate(N, REF, vs)
 {
+    int Nthreads = (int) omp_get_num_threads();
 	int myThread = (int) omp_get_thread_num();
 	int begin = N/Nthreads * myThread;
 	int end = N/Nthreads * (myThread + 1);
@@ -254,7 +258,7 @@ void finalize_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> 
                         REF.p_LayHelper->data[ix].RK4,
                         answer
             );
-            //(*REF.p_g)[*v].temporal_register = answer; //TODO: FIX memory leak
+            (*REF.p_g)[*v].temporal_register = answer;
         }
 }
 };
@@ -625,7 +629,6 @@ void single_evolution(Graph &g,
                                       REF.p_ComHelper->WORLD_RANK[OmpHelper.MY_THREAD_n]);
         PRINTF_DBG("ending to contribute\n");std::cout<<std::flush;
 
-
 } // end of the parallel construct
 
     printf("Exited the parallel construct! yay! solver deg is %d\n", solver.deg);
@@ -639,7 +642,8 @@ void single_evolution(Graph &g,
             int Nresponders = 0;
             int NFinalizedResponders = 0;
             long pending = (long) NVtot;
-            std::queue<long> CAPTURED; 
+            std::queue<long> CAPTURED;
+            for (long k=0; k<pending; ++k) CAPTURED.push(k);
 #pragma omp parallel
 {
             if (omp_get_thread_num() == 0) {
@@ -684,30 +688,22 @@ void single_evolution(Graph &g,
                 }
                 MPI_Barrier(MPI_COMM_WORLD);
             } else if (omp_get_thread_num() % 2 == 1){
+
 #pragma omp atomic update
                 Ncapturers++;
-                long locallyPending;
-#pragma omp atomic read
-                locallyPending = pending;
-                while (locallyPending > 0){
-                    perform_field_requests<DT, TIMETOL, BATCH>(REF,
-                        REF.p_ComHelper->WORLD_RANK[omp_get_thread_num()],
-                        i);
-#pragma omp atomic read
-                    locallyPending = pending;
-                    mssleep(DT);
-
-
-                    // -- only -- for -- debugging -- haha
-#pragma omp atomic update
-                    --pending;
-//                    printf("locallyPending' is now: %ld\n",locallyPending);
-                    //----end--of--debugging--section--hahaa
-
-
-		         }
+                std::queue<long> * locallyQueue;
+#pragma omp critical
+{
+                locallyQueue = &CAPTURED;
+}
+                perform_field_requests<DT, TIMETOL, BATCH>(
+                                                REF,
+                                                REF.p_ComHelper->WORLD_RANK[omp_get_thread_num()],
+                                                i,
+                                                locallyQueue);
 #pragma omp atomic update
 		        NFinalizedCapturers++;
+
 	         } else if (omp_get_thread_num() % 2 == 0) {
 #pragma omp atomic update
 		        Nresponders++;

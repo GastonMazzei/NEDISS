@@ -24,7 +24,6 @@ CommunicationHelper::CommunicationHelper(Graph &g) {
 ParallelHelper::ParallelHelper(int NT, unsigned long NNodes){
     data.resize(NNodes);
     for (int i=0; i<NNodes; i++){
-        data[i].ProcessLocally.resize(NT);
         data[i].MissingA.resize(NT);
         data[i].MissingB.resize(NT);
     }
@@ -71,6 +70,7 @@ void IntegrationCell::build(Graph &g, VD v, MappingHelper &Map,
     }
     neighborValues.resize(rank);
     edgeValues.resize(rank);
+    ixMap.resize(rank);
 }
 
 
@@ -80,10 +80,10 @@ LayeredSolverCell::LayeredSolverCell(int rank){
     RK2.resize(rank+1);
     RK3.resize(rank+1);
     RK4.resize(rank+1);
-    RK1_status = std::vector<bool>(rank+1, false);
-    RK2_status = std::vector<bool>(rank+1, false);
-    RK3_status = std::vector<bool>(rank+1, false);
-    RK4_status = std::vector<bool>(rank+1, false);
+    RK1_status = false; // std::vector<bool>(rank+1, false);
+    RK2_status = false; // std::vector<bool>(rank+1, false);
+    RK3_status = false; // std::vector<bool>(rank+1, false);
+    RK4_status = false; // std::vector<bool>(rank+1, false);
 }
 
 void LayeredSolverHelper::buildForRank(long ix, long rank){

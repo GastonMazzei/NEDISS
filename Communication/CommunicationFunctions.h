@@ -54,7 +54,7 @@ void answer_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder){
             MPI_Status status;
             if ((flag[i] == 1) || firstlap[i]) {
                 flag[i] = 0;
-                buffer = -9995.0;
+                buffer = -9995;
                 R = MPI_Request();
                 M = MPI_Message();
                 S = MPI_Status();
@@ -73,22 +73,33 @@ void answer_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder){
             t = 0;
             if (flag[i] == 1) {
                 MPI_Mrecv(&buffer, 1, MPI_INT, &M, &S);
+
+                // UPDATE!!
+                // we are sent this:
+                // //            int sendBuffer[3] = {uniqueid, ix, owner}; via the rk_i request channel
+                ////  and we answr with thgis:
+                ///          double recvBuffer[1] = {value} via the uniqueid channel
+
                 if (i==0){
-       //             They are asking for Runge Kutta term 1
-      //              build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
-                    answer[1] == REF.p_LayHelper->RK1[buffer];
+                    while (!REF.p_LayHelper->data[buffer].RK1_status){
+                        mssleep(DT);
+                    }
+                    answer[1] == REF.p_LayHelper->data[buffer].RK1[0];
                 } else if (i==1) {
-     //               They are asking for Runge Kutta term 2
-    //                build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
-                    answer[1] == REF.p_LayHelper->RK2[buffer];
+                    while (!REF.p_LayHelper->data[buffer].RK2_status){
+                        mssleep(DT);
+                    }
+                    answer[1] == REF.p_LayHelper->data[buffer].RK2[0];
                 } else if (i==2) {
-   //                 They are asking for Runge Kutta term 3
-  //                  build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
-                    answer[1] == REF.p_LayHelper->RK3[buffer];
+                    while (!REF.p_LayHelper->data[buffer].RK3_status){
+                        mssleep(DT);
+                    }
+                    answer[1] == REF.p_LayHelper->data[buffer].RK3[0];
                 } else if (i==3) {
- //                   They are asking for Runge Kutta term 4
-//                    build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
-                    answer[1] == REF.p_LayHelper->RK4[buffer];
+                    while (!REF.p_LayHelper->data[buffer].RK4_status){
+                        mssleep(DT);
+                    }
+                    answer[1] == REF.p_LayHelper->data[buffer].RK4[0];
                 }
                 answer[0] = (double) buffer;
                 MPI_Ssend(&answer, 2, MPI_DOUBLE, S.MPI_SOURCE, ANSWERING_TAGS[i], MPI_COMM_WORLD);
@@ -100,7 +111,85 @@ void answer_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder){
 
 
 template<int DT, int TIMETOL, int BATCH>
-void perform_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder);
+void perform_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder,std::queue<long> * queue){
+
+    bool keep_working = true;
+    long ix;
+    int L;
+#pragma omp critical
+{
+    if (!queue->empty()){
+        ix = queue->front();
+        queue->pop();
+    } else {
+        keep_working = false;
+    }
+}
+    while (keep_working){
+        if (fieldOrder==2){
+            L = REF.p_LayHelper->data[ix].RK1.size();
+        } else if (fieldOrder==3) {
+            L = REF.p_LayHelper->data[ix].RK2.size();
+        } else if (fieldOrder==4) {
+            L = REF.p_LayHelper->data[ix].RK2.size();
+        } else {
+            printf("[FATAL] field order requested to perform_field_requests does not exist!\n");std::cout<<std::flush;
+            exit(1);
+        }
+
+        for (int i=1; i<L ; ++i){
+            // try to fill
+            REF.p_LayHelper->data[ix].RK1[i] = 10;
+
+            //[our ix] (int) and we respond with [our ix, rk value :-)]
+            //
+            // we need to know their ix
+            //
+            //
+            // send REF.p_IntHelper.ixMap[ix][i] (first one is unique id, second one is ix, third owner)
+
+            // CORE PART!
+//            int sendBuffer[3] = {uniqueid, ix, owner}; via the rk_i request channel
+//            double recvBuffer[1] = {value} via the uniqueid channel
+
+//            MPI_Ssend(&their_vix[QAvailable.front()],
+//                      1,
+//                      MPI_DOUBLE,
+//                      owner[QAvailable.front()],
+//                      VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD);
+//            PRINTF_DBG("[PR] Asked!\n");std::cout<<std::flush;
+//
+//            PRINTF_DBG("[PR] About to recv!\n");std::cout<<std::flush;
+//            MPI_Recv(&vval[QAvailable.front()],
+//                     1,
+//                     MPI_DOUBLE,
+//                     owner[QAvailable.front()],
+//                     (int) their_vix[QAvailable.front()],
+//                     MPI_COMM_WORLD,
+//                     MPI_STATUS_IGNORE);
+//            PRINTF_DBG("[PR] Correctly recieved!\n");std::cout<<std::flush;
+
+
+
+
+
+
+
+
+
+
+        }
+#pragma omp critical
+ {
+         if (!queue->empty()){
+             ix = queue->front();
+             queue->pop();
+         } else {
+             keep_working = false;
+         }
+ }
+     }
+};
 
 template<int DT, int TIMETOL, int BATCH>
 void answer_messages(ReferenceContainer &REF,int MYTHR) {
@@ -226,11 +315,6 @@ void perform_requests(int NNodes,
                       ReferenceContainer REF,
                       unsigned long N,
                       OpenMPHelper &O) {
-// todo: kill
-//    std::uniform_int_distribution<int> gen(92412,732532);
-//    unsigned int SEED = std::stoi(std::getenv("SEED"));
-//    std::mt19937 rng(SEED);
-
     long ix;
     unsigned long uix;
     int total_processed=0;
@@ -305,7 +389,9 @@ void perform_requests(int NNodes,
                     their_vix[QAvailable.front()] = (double) std::get<2>(*it);
                     results[QAvailable.front()] = std::make_tuple((double) 0, // placeholder until we get the correct val
                                                                   (double) std::get<0>(*it),
-                          (unsigned long) (((unsigned long) owner[QAvailable.front()]) *  N + (unsigned long) their_vix[QAvailable.front()] ));
+                          (unsigned long) (((unsigned long) owner[QAvailable.front()]) *  N + (unsigned long) their_vix[QAvailable.front()] ),
+                                                                  (unsigned long) std::get<2>(*it),
+                                                                  (unsigned long) std::get<1>(*it));
                     PRINTF_DBG("[PR] About to ask for one node!\n");std::cout<<std::flush;
                     MPI_Ssend(&their_vix[QAvailable.front()],
                               1,
@@ -379,8 +465,9 @@ void perform_requests(int NNodes,
                     // Build the result
                     results[QAvailable.front()] = std::make_tuple(0.0, // placeholder until we get the correct node val
                                                                   0.0, // placeholder until we get the correct edge val
-                           
-                          (unsigned long) (((unsigned long) owner[QAvailable.front()]) *  N + (unsigned long) their_vix2[QAvailable.front()][1] ));
+                          (unsigned long) (((unsigned long) owner[QAvailable.front()]) *  N + (unsigned long) their_vix2[QAvailable.front()][1] ),
+                           (unsigned long) std::get<2>(*it),
+                            (unsigned long) std::get<1>(*it));
 
 
                     PRINTF_DBG("[PR] About to ask for one node and edge!\n");std::cout<<std::flush;

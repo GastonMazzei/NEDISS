@@ -10,12 +10,12 @@
 
 typedef Graph::vertex_descriptor VD;
 typedef Graph::edge_descriptor ED;//                        (UID is [Number of total nodes] * P_id  + local_index)
-typedef std::tuple<double, double, unsigned long> InfoVecElem; // DynamicNode.value, DynamicEdge.value, UID
+//typedef std::tuple<double, double, unsigned long> InfoVecElem; // DynamicNode.value, DynamicEdge.value, UID
+typedef std::tuple<double, double, unsigned long, unsigned long, unsigned long> InfoVecElem; // DynamicNode.value, DynamicEdge.value, UID
 typedef std::tuple<double, int, int> PartialInfoVecElem; // DynamicNode.value Owner Index
 
 struct ParallelCell{
     // Container of variable size that can keep track of different threads storing objects
-    std::vector<std::list<InfoVecElem>> ProcessLocally;
     std::vector<std::list<PartialInfoVecElem>> MissingA;
     std::vector<std::list<PartialInfoVecElem>> MissingB;
     explicit ParallelCell(){};
@@ -32,10 +32,14 @@ struct LayeredSolverCell{
     std::vector<double> RK2;
     std::vector<double> RK3;
     std::vector<double> RK4;
-    std::vector<bool> RK1_status;
-    std::vector<bool> RK2_status;
-    std::vector<bool> RK3_status;
-    std::vector<bool> RK4_status;
+    bool RK1_status;
+    bool RK2_status;
+    bool RK3_status;
+    bool RK4_status;
+//    std::vector<bool> RK1_status;
+//    std::vector<bool> RK2_status;
+//    std::vector<bool> RK3_status;
+//    std::vector<bool> RK4_status;
     LayeredSolverCell(int N);
     LayeredSolverCell(){};
 };
@@ -81,6 +85,7 @@ struct IntegrationCell{
     std::list<InfoVecElem> ResultsPendProcess;
     std::vector<double> edgeValues;
     std::vector<double> neighborValues;
+    std::vector<std::tuple<unsigned long, unsigned long, unsigned long>> ixMap;
     void build(Graph &g, VD v, MappingHelper &Map,
                unsigned long &NOwned,
                unsigned long &rank,
