@@ -16,7 +16,7 @@ for i in range(TOT):
 	for l in d[i]:
 		if '[label' in l:
 			vals += [float(l.split('[')[1].split('=')[1].split(']')[0])]
-MIN, MAX = min(vals), max(vals)
+MIN, MAX = min(np.sin(vals)), max(np.sin(vals))
 
 
 # Global values
@@ -29,7 +29,7 @@ def ftoh(v):
 	"""
 	convert value to hex
 	"""
-	return COLORS[np.argmin(np.abs(VALUES - v))] 
+	return COLORS[np.argmin(np.abs(VALUES - np.sin(v)))] 
 
 
 for i in range(TOT):

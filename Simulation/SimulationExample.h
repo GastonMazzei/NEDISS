@@ -36,10 +36,11 @@ void run_several_times(GRAPHTYPE &G, std::string name,
     }
     G.Initialization(X0_W, 1, G.g, G.N);
 
+    int SAMPLING_FREQ = (int) std::stoi(std::getenv("SAMPLING_FREQ"));
     // Start the simulation!
     if (SOLVER.s == 0) {
         int fileCounter = 0;
-        int WRITING_FREQ = 3;
+        int WRITING_FREQ = SAMPLING_FREQ;
         GeneralSolver<DIFFEQ, EulerSolver<DIFFEQ>> S_eu("eu", SOLVER.d);
         S_eu.SetT0(0);
         S_eu.SetStep(0.01);
@@ -59,7 +60,7 @@ void run_several_times(GRAPHTYPE &G, std::string name,
         }
     } else if (SOLVER.s == 1) {
         int fileCounter = 0;
-        int WRITING_FREQ = 1;
+        int WRITING_FREQ = SAMPLING_FREQ;
         GeneralSolver<DIFFEQ, RungeKuttaSolver<DIFFEQ>> S_rk("rk", SOLVER.d, &SOLVER.P[0]);
         S_rk.SetT0(0);
         S_rk.SetStep(0.01);
