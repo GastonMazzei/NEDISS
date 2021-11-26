@@ -762,7 +762,7 @@ void single_evolution(Graph &g,
                                                                 i);
     }
     // Join all the integration terms
-    printf("Reached the final integration :-)\n");
+    PRINTF_DBG("Reached the final integration :-)\n");
     finalize_integration<DIFFEQ, SOLVER, BATCH>(REF, solver);
     
 

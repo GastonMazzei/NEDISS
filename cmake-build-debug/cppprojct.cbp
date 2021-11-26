@@ -147,6 +147,9 @@
 		<Unit filename="/home/m4zz31/cppprojct/Simulation/Simulation.cpp">
 			<Option target="cppprojct"/>
 		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Simulation/SimulationExample.h">
+			<Option target="cppprojct"/>
+		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Solvers/EulerSolver.h">
 			<Option target="cppprojct"/>
 		</Unit>

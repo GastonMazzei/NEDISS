@@ -1,2 +1,6 @@
 valgrind-out.txt
 ./tmp
+graphic/processed-program-output/*
+graphic/program-output-backup/*
+graphic/rendered-program-output/*
+graphic/program-output/*

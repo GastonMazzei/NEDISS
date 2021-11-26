@@ -8,10 +8,6 @@
 #include "test-imports.h"
 
 
-#include "test-imports.h"
-
-// THIS USES ONLY THE KURAMOTO EQUATION!!!
-
 template <int T, typename GRAPHTYPE, int BATCH, typename DIFFEQ>
 void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
                                      CommunicationHelper &ComHelper,
@@ -41,7 +37,6 @@ void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
         S_eu.SetT0(0);
         S_eu.SetStep(0.01);
         for (int i = 0; i < NRUNS; i++) {
-            // Test several kuramoto evolutions with Euler
             single_evolution<DIFFEQ, EulerSolver<DIFFEQ>, BATCH>(G.g, S_eu, ComHelper, ParHelper,
                                                                    IntHelper, MapHelper, LayHelper, G.N);
             if (i==0)  LayHelper.built = true;
@@ -52,7 +47,6 @@ void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
         S_rk.SetT0(0);
         S_rk.SetStep(0.01);
         for (int i = 0; i < NRUNS; i++) {
-            // Test several kuramoto evolutions with Euler
             single_evolution<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk, ComHelper, ParHelper,
                                                                        IntHelper, MapHelper, LayHelper, G.N);
             if (i==0)  LayHelper.built = true;

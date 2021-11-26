@@ -88,9 +88,9 @@ void CommonGraphObjectClass::Initialization(std::vector<pair<double, double>> X0
     unsigned int MY_NUM = process_id(g.process_group());
 
     if (X0_W.size()>1) {
-        printf("SIZE >1\n");
+        PRINTF_DBG("SIZE >1\n");
         if (N == X0_W.size()){
-            printf("SIZE IS N\n");
+            PRINTF_DBG("SIZE IS N\n");
             // Procedure to select the NNodesProcessor_i with i the current processor
             // for the case in which we are given not 'our' values but those of the entire graph
             mpi::communicator world;

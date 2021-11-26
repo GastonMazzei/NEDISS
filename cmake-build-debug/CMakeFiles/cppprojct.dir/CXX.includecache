@@ -154,6 +154,20 @@ GeneralGraph.h
 boost/graph/small_world_generator.hpp
 -
 
+/home/m4zz31/cppprojct/Simulation/SimulationExample.h
+iostream
+-
+fstream
+-
+string
+-
+map
+-
+boost/graph/graphviz.hpp
+-
+../Tests/test-imports.h
+/home/m4zz31/cppprojct/Tests/test-imports.h
+
 /home/m4zz31/cppprojct/Solvers/EulerSolver.h
 GeneralSolver.h
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
@@ -172,10 +186,6 @@ GeneralSolver.h
 ../macros/macros.h
 /home/m4zz31/cppprojct/macros/macros.h
 
-/home/m4zz31/cppprojct/Tests/graph-test-init.cpp
-graph-test-init.h
-/home/m4zz31/cppprojct/Tests/graph-test-init.h
-
 /home/m4zz31/cppprojct/Tests/graph-test-init.h
 string
 -
@@ -185,24 +195,12 @@ cmath
 -
 test-imports.h
 /home/m4zz31/cppprojct/Tests/test-imports.h
-iostream
--
-fstream
--
-string
--
-map
--
-boost/graph/graphviz.hpp
--
 
 /home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
 test-imports.h
 /home/m4zz31/cppprojct/Tests/test-imports.h
 
 /home/m4zz31/cppprojct/Tests/long-singlestep-run.h
-test-imports.h
-/home/m4zz31/cppprojct/Tests/test-imports.h
 test-imports.h
 /home/m4zz31/cppprojct/Tests/test-imports.h
 
@@ -323,4 +321,6 @@ Tests/long-singlestep-run.h
 /home/m4zz31/cppprojct/Tests/long-singlestep-run.h
 Utils/certify_compliant.h
 /home/m4zz31/cppprojct/Utils/certify_compliant.h
+Simulation/SimulationExample.h
+/home/m4zz31/cppprojct/Simulation/SimulationExample.h
 

@@ -12,11 +12,7 @@
 #include "test-imports.h"
 
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <map>
-#include <boost/graph/graphviz.hpp>
+
 
 void graph_tests_init(int TOPOLOGY, unsigned int SEED, unsigned long N = 4);
 
@@ -93,28 +89,6 @@ void test_graph_init(GRAPHTYPE &G, std::string name){
 
     // Print in command what test is :-)
     adsync_message<T>(msg_post + "'test_" + name + "_graph_init'", G.g);
-
-    const char* dot = "graphviz_test_new.dot";
-    boost::write_graphviz(dot, G.g, boost::make_label_writer(get(&DynamicNode::value, G.g)));
-
-//    template <class Name>
-//    class label_writer {
-//    public:
-//        label_writer(Name _name) : name(_name) {}
-//        template <class VertexOrEdge>
-//        void operator()(std::ostream& out, const VertexOrEdge& v) const {
-//            out << "[label=\"" << name[v] << "\"]";
-//        }
-//    private:
-//        Name name;
-//    };
-//    A function to conveniently create this writer is provided:
-//
-//    template < class Name >
-//    label_writer<Name>
-    //auto boost::make_label_writer(Name n);
-
-
 };
 
 

@@ -12,7 +12,7 @@
 #include "Utils/parallel_sanitizer.h"
 #include "Tests/long-singlestep-run.h"
 #include "Utils/certify_compliant.h"
-
+#include "Simulation/SimulationExample.h"
 
 
 using namespace std;
@@ -77,6 +77,13 @@ int main(int argc, char** argv)
         central_test_long_singlestep_run<BATCH>(SEED,
                                                 NNodes,
                                                 NRUNS, solver_config, TOPOLOGY, EQNUMBER);
+    } else if (TESTN == -1){
+        // TEST SINGLESTEP EVOLUTION SEVERAL THOUSAND TIMES
+        const int NRUNS = std::stoi(std::getenv("NRUNS"));
+        int EQNUMBER = std::stoi(std::getenv("EQNUMBER"));
+        simulator<BATCH>(SEED,
+                            NNodes,
+                            NRUNS, solver_config, TOPOLOGY, EQNUMBER);
     }
 
 
