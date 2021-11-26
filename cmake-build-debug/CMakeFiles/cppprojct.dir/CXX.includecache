@@ -172,6 +172,10 @@ GeneralSolver.h
 ../macros/macros.h
 /home/m4zz31/cppprojct/macros/macros.h
 
+/home/m4zz31/cppprojct/Tests/graph-test-init.cpp
+graph-test-init.h
+/home/m4zz31/cppprojct/Tests/graph-test-init.h
+
 /home/m4zz31/cppprojct/Tests/graph-test-init.h
 string
 -
@@ -181,6 +185,16 @@ cmath
 -
 test-imports.h
 /home/m4zz31/cppprojct/Tests/test-imports.h
+iostream
+-
+fstream
+-
+string
+-
+map
+-
+boost/graph/graphviz.hpp
+-
 
 /home/m4zz31/cppprojct/Tests/graph-test-singlestep-evolution.h
 test-imports.h

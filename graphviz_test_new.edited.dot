@@ -1,0 +1,31 @@
+digraph g {
+  subgraph cluster_0 {
+    label="p0";
+    n0[label=0];
+    n1[label=0.23919671064797021];
+    n2[label=0.46450620044684321];
+    n3[label=0.66284750922890467];
+    n4[label=0.82270538851480068];
+  }
+
+  n0 -> n9 [dir=none];
+  n0 -> n1 [dir=none];
+  n1 -> n2 [dir=none];
+  n2 -> n3 [dir=none];
+  n3 -> n4 [dir=none];
+  n4 -> n5 [dir=none];
+
+  subgraph cluster_1 {
+    label="p1";
+    n5[label=0.93479885083569136];
+    n6[label=0.99262000290670116];
+    n7[label=0.99281187921444969];
+    n8[label=0.9353633398538177];
+    n9[label=0.82360971728568211];
+  }
+
+  n5 -> n6 [dir=none];
+  n6 -> n7 [dir=none];
+  n7 -> n8 [dir=none];
+  n8 -> n9 [dir=none];
+}
