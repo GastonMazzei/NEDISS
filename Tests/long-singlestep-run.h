@@ -5,16 +5,10 @@
 #ifndef CPPPROJCT_LONG_SINGLESTEP_RUN_H
 #define CPPPROJCT_LONG_SINGLESTEP_RUN_H
 
+#include "test-imports.h"
 
-#include "../Utils/adequate_synchronization.h"
-#include "../Utils/global_standard_messages.h"
-#include "../Solvers/EulerSolver.h"
-#include "../Solvers/RungeKuttaSolver.h"
-#include "../DifferentialEquations/NoiselessKuramoto.h"
-#include "../DifferentialEquations/LinearTestEquation.h"
-#include "../GraphClasses/GraphFunctions.h"
-#include "../Utils/HelperClasses.h"
-#include "../Communication/CommunicationFunctions.h"
+
+#include "test-imports.h"
 
 // THIS USES ONLY THE KURAMOTO EQUATION!!!
 
@@ -73,7 +67,16 @@ void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
 
 
 template <int BATCH, typename EQCLASS>
-void central_test_long_singlestep_run_helper(unsigned int SEED, unsigned long N, double p, int NRUNS,  SolverConfig &SOLVER, int TOPOLOGY){
+void central_test_long_singlestep_run_helper(unsigned int SEED, unsigned long N, int NRUNS,  SolverConfig &SOLVER, int TOPOLOGY){
+
+    unsigned long K;
+    double p;
+    if ((TOPOLOGY == 2) || (TOPOLOGY == 3)) {
+        p = (double) std::stod(std::getenv("proba"));
+    }
+    if ((TOPOLOGY == 3)) {
+        K = (unsigned long) std::stoul(std::getenv("kneigh"));
+    }
 
     if (TOPOLOGY == 0){
         RingGraphObject G(N);
@@ -114,20 +117,33 @@ void central_test_long_singlestep_run_helper(unsigned int SEED, unsigned long N,
                                                                              ComHelper, ParHelper,
                                                                              IntHelper, MapHelper,
                                                                              NRUNS, LayHelper, SOLVER);
+    } else if (TOPOLOGY == 3) {
+        SmallWorldGraphObject G(N, K, p);
+        // helpers instantiated here just temporaly :-)
+        unsigned long NVtot = boost::num_vertices(G.g);
+        CommunicationHelper ComHelper(G.g);
+        ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
+        IntegrationHelper IntHelper(NVtot);
+        LayeredSolverHelper LayHelper(NVtot);
+        MappingHelper MapHelper(G.g);
+        test_long_singlestep_run<100, SmallWorldGraphObject, BATCH, EQCLASS>(G, "SmallWorld",
+                                                                             ComHelper, ParHelper,
+                                                                             IntHelper, MapHelper,
+                                                                             NRUNS, LayHelper, SOLVER);
     } else error_report("Requested ring topology does not exist!\n");
 
 }
 
 
 template <int BATCH>
-void central_test_long_singlestep_run(unsigned int SEED, unsigned long N, double p, int NRUNS,  SolverConfig &SOLVER, int TOPOLOGY, int EQNUMBER){
+void central_test_long_singlestep_run(unsigned int SEED, unsigned long N, int NRUNS,  SolverConfig &SOLVER, int TOPOLOGY, int EQNUMBER){
     // Ring Network
     reproductibility_lock(SEED);
 
     if (EQNUMBER == 0){
-        central_test_long_singlestep_run_helper<BATCH, NoiselessKuramoto>(SEED, N, p, NRUNS,  SOLVER, TOPOLOGY);
+        central_test_long_singlestep_run_helper<BATCH, NoiselessKuramoto>(SEED, N,NRUNS,  SOLVER, TOPOLOGY);
     } else if (EQNUMBER == 1) {
-        central_test_long_singlestep_run_helper<BATCH, LinearTestEquation>(SEED, N, p, NRUNS,  SOLVER, TOPOLOGY);
+        central_test_long_singlestep_run_helper<BATCH, LinearTestEquation>(SEED, N, NRUNS,  SOLVER, TOPOLOGY);
     } else {
         printf("[FATAL] Required Equation does not exist!\n");
         std::cout<<std::flush;

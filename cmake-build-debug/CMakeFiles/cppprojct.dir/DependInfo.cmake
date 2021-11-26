@@ -13,6 +13,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o"
   "/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o"
   "/home/m4zz31/cppprojct/GraphClasses/RingGraph.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o"
+  "/home/m4zz31/cppprojct/GraphClasses/SmallWorldGraph.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.o"
   "/home/m4zz31/cppprojct/Simulation/Simulation.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o"
   "/home/m4zz31/cppprojct/Solvers/GeneralSolver.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o"
   "/home/m4zz31/cppprojct/Tests/graph-test-init.cpp" "/home/m4zz31/cppprojct/cmake-build-debug/CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o"

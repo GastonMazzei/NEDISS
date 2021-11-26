@@ -19,10 +19,10 @@ SolverConfig::SolverConfig(){
     if (s == 0){
         d = std::stoi(std::getenv("SOLVERDEPTH"));
     } else if (s == 1) {
-        P[0] = (double) std::stof(std::getenv("K1"));
-        P[1] = (double) std::stof(std::getenv("K2"));
-        P[2] = (double) std::stof(std::getenv("K3"));
-        P[3] = (double) std::stof(std::getenv("K4"));
+        P[0] = (double) std::stod(std::getenv("K1"));
+        P[1] = (double) std::stod(std::getenv("K2"));
+        P[2] = (double) std::stod(std::getenv("K3"));
+        P[3] = (double) std::stod(std::getenv("K4"));
         if (P[0]!=0) d=1;
         if (P[1]!=0) d=2;
         if (P[2]!=0) d=3;

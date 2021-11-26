@@ -17,7 +17,7 @@ A brief graphic explanation.
 
 * K1, K2, K3, K4: `[0,1]` are the weights to apply to each of the Runge Kutta terms.
 
-* TOPOLOGY: `{0,1,2}` indexes the topology. Currently `0` is a ring, `1` is a Clique, and `2` is Erdos-Renyi. The latter currently has its probability p fixed at compilation. 
+* TOPOLOGY: `{0,1,2,3}` indexes the topology. Currently `0` is a ring, `1` is a Clique, `2` is Erdos-Renyi, and `3` is Small-World. The latter currently has its probability p fixed at compilation. 
 
 * NRUNS: `0-inf` defines the number of iterations to perform for the test that can be accessed through the flag TEST=2.
 
@@ -26,6 +26,10 @@ A brief graphic explanation.
 * TEST: `{0,1,2}` are the possible test modes to run as it is currently under development.
 
 * SEED: `any int` is the seed to use during the entire simulation.
+
+* kneigh: `0-inf` defines the number of neighbors to which connect if building a Small-World graph.
+
+* proba: `[0,1]` defines the probability used in the relevant constructors, currently Erdos-Renyi and Small-World.
 
 * OMP_THREAD_LIMIT: `3-inf` is the maximum number of threads allowed per processor. At least three are required by our current division of tasks which is thread-id dependant.
 
@@ -40,8 +44,8 @@ A brief graphic explanation.
 
 | Equation | Euler order 1 | Euler up to O(4) | Generalized Runge Kutta|
 | --- | --- | --- | --- |
-| 1D linear | :heavy_check_mark: | :heavy_check_mark: | :x: |
-| Noiseless <a href='https://en.wikipedia.org/wiki/Kuramoto_model'>Kuramoto</a> | :heavy_check_mark: | :x: | :x: |
+| 1D linear | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Noiseless <a href='https://en.wikipedia.org/wiki/Kuramoto_model'>Kuramoto</a> | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | N-D linear | :x: | :x: | :x: |
 
 <center><i>Topology & Initialization</i></center>
@@ -53,7 +57,7 @@ A brief graphic explanation.
 | Erdos Renyi(N,p) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :black_square_button: |
 | Grid(N,M) | :x: | :x: | :x: | :x: |
 | Torus(N,M) | :x: | :x: | :x: | :x: |
-| Small World(N,k,p) | :x: | :x: | :x: | :x: |
+| Small World(N,k,p) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: |
 | hypercube(N) | :x: | :x: | :x: | :x: |
 
 

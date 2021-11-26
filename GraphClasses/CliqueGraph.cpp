@@ -8,13 +8,10 @@
 #include "../Utils/adequate_synchronization.h"
 
 
-//using namespace std; todo: kill
-
 using namespace boost;
 
 
 void CliqueGraphObject::build(){
-    //int i=0; todo: kill
     if (process_id(g.process_group()) == 0) {
         for (int i = 0; i < N; i++) {
 #pragma omp for

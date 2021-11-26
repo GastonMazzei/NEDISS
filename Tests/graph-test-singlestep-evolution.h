@@ -5,29 +5,7 @@
 #ifndef CPPPROJCT_GRAPH_TEST_SINGLESTEP_EVOLUTION_H
 #define CPPPROJCT_GRAPH_TEST_SINGLESTEP_EVOLUTION_H
 
-#include "graph-test-singlestep-evolution.h"
-
-#include "../Utils/adequate_synchronization.h"
-#include "../Utils/global_standard_messages.h"
-#include "../Utils/HelperClasses.h"
-#include "../Utils/reproductibility.h"
-
-#include "../Solvers/EulerSolver.h"
-#include "../Solvers/RungeKuttaSolver.h"
-
-#include "../DifferentialEquations/NoiselessKuramoto.h"
-#include "../DifferentialEquations/LinearTestEquation.h"
-
-#include "../GraphClasses/ErdosRenyiGraph.h"
-#include "../GraphClasses/CliqueGraph.h"
-#include "../GraphClasses/RingGraph.h"
-#include "../GraphClasses/GraphFunctions.h"
-#include "../GraphClasses/GraphFunctions.h"
-
-#include "../Communication/CommunicationFunctions.h"
-#include "../Communication/CommunicationFunctions.h"
-
-
+#include "test-imports.h"
 
 template <int T, typename GRAPHTYPE, int BATCH, typename DIFFEQ>
 
@@ -123,7 +101,18 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G,
 
 
 template <int BATCH, typename EQCLASS>
-void graph_test_singlestep_evolution_helper(unsigned int SEED, unsigned long N, double p, SolverConfig &SOLVER, int TOPOLOGY){
+void graph_test_singlestep_evolution_helper(unsigned int SEED, unsigned long N, SolverConfig &SOLVER, int TOPOLOGY){
+
+    unsigned long K;
+    double p;
+    if ((TOPOLOGY == 2) || (TOPOLOGY == 3)) {
+        p = (double) std::stod(std::getenv("proba"));
+    }
+    if ((TOPOLOGY == 3)) {
+        K = (unsigned long) std::stoul(std::getenv("kneigh"));
+    }
+
+
     if (TOPOLOGY == 0) {
         // Ring Network
         RingGraphObject G(N);
@@ -175,6 +164,23 @@ void graph_test_singlestep_evolution_helper(unsigned int SEED, unsigned long N, 
                                                                                     ComHelper, ParHelper,
                                                                                     IntHelper, MapHelper,
                                                                                     LayHelper, SOLVER);
+    } else if (TOPOLOGY == 3) {
+        // Small World Network
+        SmallWorldGraphObject G(N, K, p);
+
+        // helpers instantiated here just temporaly :-)
+        unsigned long NVtot = boost::num_vertices(G.g);
+        CommunicationHelper ComHelper(G.g);
+        ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
+        IntegrationHelper IntHelper(NVtot);
+        LayeredSolverHelper LayHelper(NVtot);
+        MappingHelper MapHelper(G.g);
+
+
+        test_graph_singlestep_evolution<100, SmallWorldGraphObject, BATCH, EQCLASS>(G, "SmallWorld",
+                                                                                    ComHelper, ParHelper,
+                                                                                    IntHelper, MapHelper,
+                                                                                    LayHelper, SOLVER);
     } else error_report("[ERROR] Requested topology does not exist!\n");
 
 }
@@ -182,13 +188,13 @@ void graph_test_singlestep_evolution_helper(unsigned int SEED, unsigned long N, 
 
 
 template <int BATCH>
-void graph_tests_singlestep_evolution(unsigned int SEED, unsigned long N, double p, SolverConfig &SOLVER, int TOPOLOGY, int EQNUMBER){
+void graph_tests_singlestep_evolution(unsigned int SEED, unsigned long N, SolverConfig &SOLVER, int TOPOLOGY, int EQNUMBER){
 
     reproductibility_lock(SEED);
     if (EQNUMBER == 0){
-        graph_test_singlestep_evolution_helper<BATCH, NoiselessKuramoto>(SEED, N, p, SOLVER, TOPOLOGY);
+        graph_test_singlestep_evolution_helper<BATCH, NoiselessKuramoto>(SEED, N, SOLVER, TOPOLOGY);
     } else if (EQNUMBER == 1) {
-        graph_test_singlestep_evolution_helper<BATCH, LinearTestEquation>(SEED, N, p, SOLVER, TOPOLOGY);
+        graph_test_singlestep_evolution_helper<BATCH, LinearTestEquation>(SEED, N, SOLVER, TOPOLOGY);
     } else {
         printf("[FATAL] Required Equation does not exist!\n");
         std::cout<<std::flush;

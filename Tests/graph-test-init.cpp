@@ -2,17 +2,18 @@
 // Created by m4zz31 on 29/10/21.
 //
 #include "graph-test-init.h"
-#include "../GraphClasses/ErdosRenyiGraph.h"
-#include "../GraphClasses/CliqueGraph.h"
-#include "../GraphClasses/RingGraph.h"
 
 
-#include "../Utils/reproductibility.h"
+void graph_tests_init(int TOPOLOGY, unsigned int SEED, unsigned long N){
 
-
-
-void graph_tests_init(int TOPOLOGY, unsigned int SEED, unsigned long N, double p){
-    // ---CONSTRUCTOR AND INITIALIZATION DEBUGGING---
+    unsigned long K;
+    double p;
+    if ((TOPOLOGY == 2) || (TOPOLOGY == 3)) {
+        p = (double) std::stod(std::getenv("proba"));
+    }
+    if ((TOPOLOGY == 3)) {
+        K = (unsigned long) std::stoul(std::getenv("kneigh"));
+    }
 
     if (TOPOLOGY == 0) {
 
@@ -28,12 +29,19 @@ void graph_tests_init(int TOPOLOGY, unsigned int SEED, unsigned long N, double p
         CliqueGraphObject G1(N);
         test_graph_init<200, CliqueGraphObject>(G1, "Clique");
 
-    } else if (TOPOLOGY == 3) {
+    } else if (TOPOLOGY == 2) {
 
         // Erdos Renyi Network
         reproductibility_lock(SEED);
         ErdosRenyiGraphObject G3(N, p);
         test_graph_init<200, ErdosRenyiGraphObject>(G3, "ErdosRenyi");
+
+    } else if (TOPOLOGY == 3) {
+
+        // Small World Network
+        reproductibility_lock(SEED);
+        SmallWorldGraphObject G4(N, K, p);
+        test_graph_init<200, SmallWorldGraphObject>(G4, "SmallWorld");
 
     }
 }

@@ -55,29 +55,27 @@ int main(int argc, char** argv)
     const unsigned long NNodes = std::stoi(std::getenv("NNODES")); //12345;200;
     certify_tagMax_compliant(tagMaxFlag, *tag_ub, NNodes, size, VERTEXVAL_REQUEST_FLAG);
     const int BATCH = 1; // Keep batch at 1: increasing it enables sending messages of size bigger than 1, but it is not fully implemented in CommunicationFunctions.h.
-    const double ErdosRenyiProba = 0.5;
     const int TESTN = std::stoi(std::getenv("TEST"));
     // Solvers: 0 is Euler, 1 is RungeKutta
     SolverConfig solver_config;
-    // Topology: 0 is Ring, 1 is Clique, 2 is Erdos-Renyi
+    // Topology: 0 is Ring, 1 is Clique, 2 is Erdos-Renyi, 3 is Small-World
     const int TOPOLOGY = std::stoi(std::getenv("TOPOLOGY"));
 
     if (TESTN == 0){
         // TEST INITIALIZATION OF ALL NETWORKS INCLUDING THEIR ATTRIBUTES
-        graph_tests_init(TOPOLOGY, SEED, NNodes, ErdosRenyiProba);
+        graph_tests_init(TOPOLOGY, SEED, NNodes);
     } else if (TESTN == 1) {
         // TEST SINGLESTEP EVOLUTION 'A COUPLE' OF TIMES
         int EQNUMBER = std::stoi(std::getenv("EQNUMBER"));
         graph_tests_singlestep_evolution<BATCH>(SEED,
                                             NNodes,
-                                            ErdosRenyiProba, solver_config, TOPOLOGY, EQNUMBER);
+                                            solver_config, TOPOLOGY, EQNUMBER);
     } else if (TESTN == 2){
         // TEST SINGLESTEP EVOLUTION SEVERAL THOUSAND TIMES
         const int NRUNS = std::stoi(std::getenv("NRUNS"));
         int EQNUMBER = std::stoi(std::getenv("EQNUMBER"));
         central_test_long_singlestep_run<BATCH>(SEED,
                                                 NNodes,
-                                                ErdosRenyiProba,
                                                 NRUNS, solver_config, TOPOLOGY, EQNUMBER);
     }
 

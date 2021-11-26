@@ -20,21 +20,7 @@ public:
             E(num_nodes), // E =/= 2 * N as it is bidirectional ;-) so it's just N
             N(num_nodes),
             g(N) {};
-
     void build(); // Ring constructor
-//    using vertex = typename Graph::vertex_descriptor;
-//    auto bundles() {
-//        auto accessor = [map = get(boost::vertex_bundle, g)](vertex v) -> auto& {
-//            return map[v];
-//        };
-//        return vertices(g) | transformed(accessor);
-//    }
-//    auto bundles() const {
-//        auto accessor = [map = get(boost::vertex_bundle, g)](vertex v) -> auto& {
-//            return map[v];
-//        };
-//        return vertices(g) | transformed(accessor);
-//    }
 };
 
 

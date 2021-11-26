@@ -3,6 +3,7 @@
 //
 #ifndef CPPPROJCT_ERDOSRENYIGRAPH_H
 #define CPPPROJCT_ERDOSRENYIGRAPH_H
+
 #include "GeneralGraph.h"
 
 class ErdosRenyiGraphObject : public CommonGraphObjectClass {

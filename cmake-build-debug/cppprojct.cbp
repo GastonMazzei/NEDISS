@@ -138,6 +138,12 @@
 		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/RingGraph.h">
 			<Option target="cppprojct"/>
 		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/SmallWorldGraph.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/SmallWorldGraph.h">
+			<Option target="cppprojct"/>
+		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Simulation/Simulation.cpp">
 			<Option target="cppprojct"/>
 		</Unit>
@@ -175,6 +181,9 @@
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Tests/solvers-test-init.h">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Tests/test-imports.h">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Utils/HelperClasses.cpp">

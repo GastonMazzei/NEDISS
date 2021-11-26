@@ -8,12 +8,11 @@
 #include <string>
 #include <vector>
 #include <cmath>
-#include "../Utils/global_standard_messages.h"
-#include "../Utils/adequate_synchronization.h"
+
+#include "test-imports.h"
 
 
-
-void graph_tests_init(int TOPOLOGY, unsigned int SEED, unsigned long N = 4, double p = 0.4);
+void graph_tests_init(int TOPOLOGY, unsigned int SEED, unsigned long N = 4);
 
 // THIS USES ONLY THE KURAMOTO EQUATION!!!
 template <int T, typename GRAPHTYPE>
