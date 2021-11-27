@@ -23,11 +23,17 @@
 
 template <typename SpecificRequestObject> class RequestObject;
 
-class FieldRequestObject;
+template <int field> class FieldRequestObject;
 
 template<int DT, int TIMETOL, int BATCH, typename RequestClass>
 void generic_answer_requests(ReferenceContainer &REF,int MYTHR, RequestClass ReqObj);
 
+
+typedef RequestObject<FieldRequestObject<-2>> EdgesRequester;
+typedef RequestObject<FieldRequestObject<-1>> NodesRequester;
+typedef RequestObject<FieldRequestObject<0>> Field0Requester;
+typedef RequestObject<FieldRequestObject<1>> Field1Requester;
+typedef RequestObject<FieldRequestObject<2>> Field2Requester;
 
 // NEW FUNCTION: 
 // in this version we write to RK1 
@@ -381,18 +387,21 @@ void single_evolution(Graph &g,
                 atomic_bool = keep_responding;
 #pragma omp atomic update
                 ++active_responders;
-                    while (atomic_bool) { // as long as we keep processing our own,
-                    //                    we mantain at least one dispatcher alive :-)
-                        answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
-                        answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
-//                        if (solver.requires_communication){
-//                            printf("it did required com :-)\n");
-//                            answer_field_requests<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n, 1);
-//                        }
+                NodesRequester RO;
+                EdgesRequester RO_edges;
+                while (atomic_bool) {
+                    generic_answer_requests<DT, TIMETOL, BATCH, NodesRequester>(REF,
+                                                                            OmpHelper.MY_THREAD_n,
+                                                                            RO);
+                    generic_answer_requests<DT, TIMETOL, BATCH, EdgesRequester>(REF,
+                                                                                    OmpHelper.MY_THREAD_n,
+                                                                                    RO_edges);
+                    //answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
+                    //answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
 #pragma omp atomic read
-                        atomic_bool = keep_responding;
-                        mssleep(DT);
-                    }
+                    atomic_bool = keep_responding;
+                    mssleep(DT);
+                }
 #pragma omp atomic update
                 ++finalized_responders;
 
@@ -634,13 +643,15 @@ void single_evolution(Graph &g,
                 active_responders ++;
                 later_mark_finalized = true;
                 }
+            NodesRequester RO;
+            EdgesRequester RO_edges;
             while (atomic_bool){
-                answer_messages<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
-                answer_messages_edges<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n);
-//                if (solver.requires_communication) {
-//                    answer_field_requests<DT, TIMETOL, BATCH>(REF, OmpHelper.MY_THREAD_n, 1);
-//                }
-                // 2) Re-check if we are over
+                generic_answer_requests<DT, TIMETOL, BATCH, NodesRequester>(REF,
+                                                                            OmpHelper.MY_THREAD_n,
+                                                                            RO);
+                generic_answer_requests<DT, TIMETOL, BATCH, EdgesRequester>(REF,
+                                                                            OmpHelper.MY_THREAD_n,
+                                                                            RO_edges);
 #pragma omp atomic read
                 atomic_bool = keep_responding;
                 PRINTF_DBG("so far I keep responding U.u cuz keep responding was %d\n", atomic_bool);
@@ -650,8 +661,6 @@ void single_evolution(Graph &g,
                 finalized_responders++;
             }
         }
-
-/// COULD THIS BE INSERTED INSIDE THE PREVIOUS PARALLEL REGION? todo: optimization upgrade.
 
         // Integration section: this is only exited when there are no more pending integration remaining :-)
         PRINTF_DBG("starting to contribute\n");std::cout<<std::flush;
@@ -755,14 +764,23 @@ void single_evolution(Graph &g,
 #pragma omp atomic update
 		        Nresponders++;
                 bool l_keep_responding = true;
+                Field0Requester RO_field0;
+                Field1Requester RO_field1;
+                Field2Requester RO_field2;
 		        while (l_keep_responding){
-                    RequestObject<FieldRequestObject> RO(i-2);
-                    generic_answer_requests<DT, TIMETOL, BATCH, RequestObject<FieldRequestObject>>(
-                            REF,
-                            (int) omp_get_thread_num(),
-                            RO);
-
-//                    answer_field_requests<DT, TIMETOL, BATCH>(REF, (int) omp_get_thread_num(), i);
+		            if (i == 2){
+                        generic_answer_requests<DT, TIMETOL, BATCH, Field0Requester>(REF,
+                                                                        (int) omp_get_thread_num(),
+                                                                         RO_field0);
+		            } else if (i == 3){
+                        generic_answer_requests<DT, TIMETOL, BATCH, Field1Requester>(REF,
+                                                                        (int) omp_get_thread_num(),
+                                                                         RO_field1);
+                    } else if (i == 4){
+                        generic_answer_requests<DT, TIMETOL, BATCH, Field2Requester>(REF,
+                                                                        (int) omp_get_thread_num(),
+                                                                         RO_field2);
+                    }
 #pragma omp atomic read
                     l_keep_responding = keep_responding;
                     mssleep(DT);
@@ -779,21 +797,24 @@ void single_evolution(Graph &g,
     // Join all the integration terms
     PRINTF_DBG("Reached the final integration :-)\n");
     finalize_integration<DIFFEQ, SOLVER, BATCH>(REF, solver);
-    
 
-
-    PRINTF_DBG("starting to swap register\n");std::cout<<std::flush;
     // Swap temporal and main registers
+    PRINTF_DBG("starting to swap register\n");std::cout<<std::flush;
     register_to_value(g);
 
-    PRINTF_DBG("exited");
+    // Synchronize
     PRINTF_DBG("About to synchronize");std::cout<<std::flush;
     MPI_Barrier(MPI_COMM_WORLD);
+
+    // Evolve time
     PRINTF_DBG("About to increase time by h\n");
     solver.EvolveTime();
+
+    // Finalize
     PRINTF_DBG("Done");
     printf("-^-^-H-E-A-R-T-B-E-A-T-^-^-");
     PRINTF_DBG("\n\n\n\\n\n\n\n\n\n");std::cout<<std::flush;
+    PRINTF_DBG("exited");
 }
 
 

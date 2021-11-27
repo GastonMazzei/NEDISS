@@ -49,13 +49,13 @@ void build_answer_edges(double * answer, ReferenceContainer &REF, double * ix, i
     }
     if (!found) {
         printf("CRITICAL: node+edge not found!\n");
-        std::cout << std::flush;
+        std::cout << "We were asked for " <<  *ix << " and " << *(ix+1) << std::flush;
+        std::cout << "owner and mynproc are " <<  owner << " and " << MyNProc << std::flush;
         PRINTF_DBG("[CRITICAL] THE NODE WAS NOT FOUND\n");
         std::cout << std::flush;
         exit(1);
     }
 }
-
 
 
 void build_answer_nodes(double &answer, ReferenceContainer &REF, double ix, int owner, int &MyNProc){
@@ -76,54 +76,15 @@ void build_answer_nodes(double &answer, ReferenceContainer &REF, double ix, int 
 
 
 
-void FieldRequestObject::buildSendTag(int * data){
-    sendTag = *data;
-};
-
-void FieldRequestObject::buildRecvTag(int * data){
-    if (field == 0){
-        recvTag = K1_REQUEST;
-        //std::cout << "rk1 req tag is " << sendTag << std::endl;
-        return;
-    } else if (field == 1) {
-        recvTag = K2_REQUEST;
-        //std::cout << "rk2 req tag is " << sendTag << std::endl;
-        return;
-    } else if (field == 2) {
-        recvTag = K3_REQUEST;
-        //std::cout << "rk3 req tag is " << sendTag << std::endl;
-        return;
-    }
-};
 
 
-void FieldRequestObject::computeAnswer(ReferenceContainer &REF, int * buffer, double * answer){
-    if (field == 0){
-#pragma omp atomic read
-        (*answer) = REF.p_LayHelper->data[*(buffer + 1)].RK1[0];
-    } else if (field == 1) {
-#pragma omp atomic read
-        (*answer) = REF.p_LayHelper->data[*(buffer + 1)].RK2[0];
-    } else if (field == 2) {
-#pragma omp atomic read
-        (*answer) = REF.p_LayHelper->data[*(buffer + 1)].RK3[0];
-    }
-};
 
-void FieldRequestObject::computeReady(ReferenceContainer &REF, int * buffer, bool &isReady){
-    if (field == 0){
-#pragma omp atomic read
-        isReady = REF.p_LayHelper->data[*(buffer + 1)].RK1_status;
-        std::cout << "rk1 status returned " << isReady << std::endl;
-        return;
-    } else if (field == 1) {
-#pragma omp atomic read
-        isReady = REF.p_LayHelper->data[*(buffer + 1)].RK2_status;
-        return;
-    } else if (field == 2) {
-#pragma omp atomic read
-        isReady = REF.p_LayHelper->data[*(buffer + 1)].RK3_status;
-        return;
-    }
-};
+
+
+
+
+
+
+
+
 
