@@ -21,12 +21,18 @@
 
 
 
-//#include <boost/serialization/string.hpp> todo: kill
+void build_answer_nodes(double &answer, ReferenceContainer &REF, double ix, int owner, int &MyNProc);
+void build_answer_edges(double * answer, ReferenceContainer &REF, double * ix, int owner, int &MyNProc);
 
+template <int T>
+void build_answer_generic(double * answer, ReferenceContainer &REF, double * ix, int owner, int &MyNProc){
+    if (T == 0){
+        build_answer_nodes(*answer, REF, *ix, owner, MyNProc);
+    } else if (T == 1) {
+        build_answer_edges(answer, REF, ix, owner, MyNProc);
+    }
+};
 
-void build_answer(double &answer, ReferenceContainer &REF, double ix, int owner, int MyNProc);
-
-void build_answer_edges(double * answer, ReferenceContainer &REF, double * ix, int owner, int MyNProc);
 
 
 // Trying to dispatch requests for Runge Kutta terms :-)
@@ -133,6 +139,119 @@ void answer_field_requests(ReferenceContainer &REF,int MYTHR, int fieldOrder){
 
 
 
+
+
+template <typename SpecificRequestObject>
+class RequestObject : public SpecificRequestObject {
+    public:
+        RequestObject(int type): SpecificRequestObject(type){};
+        RequestObject(){};
+};
+
+class BaseSpecificRequestObject{
+public:
+    int recvLength;
+    int sendLength;
+    int recvTag;
+    int sendTag;
+};
+
+class FieldRequestObject : public BaseSpecificRequestObject{
+public:
+    int field=-1;
+    int recvLength = 2;
+    int  sendLength = 1;
+    FieldRequestObject(int fieldOrder): field(fieldOrder){};
+    void buildSendTag(int * data);
+    void buildRecvTag(int * data);
+    void computeAnswer(ReferenceContainer &REF, int * buffer, double * answer);
+    void computeReady(ReferenceContainer &REF, int * buffer, bool &isReady);
+};
+
+
+
+template<int DT, int TIMETOL, int BATCH, typename RequestClass>
+void generic_answer_requests(ReferenceContainer &REF,int MYTHR, RequestClass ReqObj){
+    int flag = 0;
+    int TRIES=0;
+    MPI_Request R;
+    MPI_Message M;
+    MPI_Status S;
+    int buffer[ReqObj.recvLength];
+    double answer[ReqObj.sendLength];
+    int t=0;
+    bool firstlap = true;
+    ReqObj.buildRecvTag(&buffer[0]);
+
+    while (TRIES < 4){
+        flag = 0;
+        MPI_Status status;
+        if ((flag == 1) || firstlap) {
+            flag = 0;
+            R = MPI_Request();
+            M = MPI_Message();
+            S = MPI_Status();
+            MPI_Improbe(MPI_ANY_SOURCE,
+                        ReqObj.recvTag,
+                        MPI_COMM_WORLD,
+                        &flag,
+                        &M,
+                        &status);
+        }
+        if (firstlap) firstlap = false;
+        while ((flag != 1) && (t < TIMETOL)) {
+            MPI_Improbe(MPI_ANY_SOURCE,
+                        ReqObj.recvTag,
+                        MPI_COMM_WORLD,
+                        &flag,
+                        &M,
+                        &status);
+            ++t;
+            mssleep(DT);
+        }
+        if (t >= TIMETOL) ++TRIES;
+        t = 0;
+        if (flag == 1) {
+            MPI_Mrecv(&buffer, ReqObj.recvLength, MPI_INT, &M, &S);
+            bool isReady = false;
+
+#pragma omp critical
+{
+            ReqObj.computeReady(REF, buffer, isReady);
+};
+            while (!isReady) {
+#pragma omp critical
+{
+                ReqObj.computeReady(REF, buffer, isReady);
+};
+                mssleep(DT);
+            }
+            ReqObj.computeAnswer(REF, buffer, answer);
+            ReqObj.buildSendTag(&buffer[0]);
+            MPI_Ssend(&answer[0],
+                      ReqObj.sendLength,
+                      MPI_DOUBLE,
+                      S.MPI_SOURCE,
+                      ReqObj.sendTag,
+                      MPI_COMM_WORLD);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 template<int DT, int TIMETOL, int BATCH>
 void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,std::queue<long> * queue){
 
@@ -207,7 +326,7 @@ void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,s
                         (int) std::get<1>((*REF.p_IntHelper)[ix].ixMap[i])
                 };
 
-                PRINTF_DBG("[pfr] About to send! sendbuffer says %d and %d\n", sendBuffer[0], sendBuffer[1]);
+                printf("[pfr] About to send! sendbuffer says %d and %d... asking tag is %d\n", sendBuffer[0], sendBuffer[1], ASKING_TAGS[fieldOrder-2]);
                 //std::cout << "Originally it is: " << std::get<0>((*REF.p_IntHelper)[ix].ixMap[i]) << std::endl;
                 //std::cout << "L is " << L << " and [ix].ixMap's size is: " << (*REF.p_IntHelper)[ix].ixMap.size() << std::endl;
                 MPI_Ssend(&sendBuffer,
@@ -252,18 +371,10 @@ void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,s
 template<int DT, int TIMETOL, int BATCH>
 void answer_messages(ReferenceContainer &REF,int MYTHR) {
 
-    int MYPROC = REF.p_ComHelper->WORLD_RANK[MYTHR];
-    int NPROCS = REF.p_ComHelper->WORLD_SIZE[MYTHR];
-    int NDISPATCHED = 0;
     int flag;
-    int probe_status = 1;
     double ix;
-    int statusreq_status = 1;
     double buffer;
     double answer;
-    int statusFree = 0;
-    int NTOT = 0;
-    int NERR = 0;
     MPI_Message M;
     MPI_Status  S;
     MPI_Request R;
@@ -295,7 +406,7 @@ void answer_messages(ReferenceContainer &REF,int MYTHR) {
         t=0;
         if (flag == 1){
             MPI_Mrecv(&buffer, 1, MPI_DOUBLE, &M, &S);
-            build_answer(answer, REF, buffer, S.MPI_SOURCE, MYPROC);
+            build_answer_generic<0>(&answer, REF, &buffer, S.MPI_SOURCE, REF.p_ComHelper->WORLD_RANK[MYTHR]);
             PRINTF_DBG("About to send one!\n");std::cout<<std::flush;
             MPI_Ssend(&answer, 1, MPI_DOUBLE, S.MPI_SOURCE, (int) buffer, MPI_COMM_WORLD);
             PRINTF_DBG("Correctly sent one!\n");std::cout<<std::flush;
@@ -311,19 +422,10 @@ void answer_messages(ReferenceContainer &REF,int MYTHR) {
 template<int DT, int TIMETOL, int BATCH>
 void answer_messages_edges(ReferenceContainer &REF,int MYTHR) {
 
-    int MYPROC = REF.p_ComHelper->WORLD_RANK[MYTHR];
-    int NPROCS = REF.p_ComHelper->WORLD_SIZE[MYTHR];
-    int NDISPATCHED = 0;
     int flag;
-    int probe_status = 1;
     double ix;
-    int statusreq_status = 1;
     double buffer[2];
     double answer[2];
-    int ticks = 0;
-    int statusFree = 0;
-    int NTOT = 0;
-    int NERR = 0;
     MPI_Message M;
     MPI_Status  S;
     MPI_Request R;
@@ -354,7 +456,7 @@ void answer_messages_edges(ReferenceContainer &REF,int MYTHR) {
         t=0;
         if (flag == 1){
             MPI_Mrecv(&buffer[0], 2, MPI_DOUBLE, &M, &S);
-            build_answer_edges(&answer[0], REF, &buffer[0], S.MPI_SOURCE, MYPROC);
+            build_answer_generic<1>(&answer[0], REF, &buffer[0], S.MPI_SOURCE, REF.p_ComHelper->WORLD_RANK[MYTHR]);
             PRINTF_DBG("About to send one!\n");std::cout<<std::flush;
             MPI_Ssend(&answer[0],
                       2,
@@ -614,7 +716,7 @@ void perform_requests(int NNodes,
         }
         PRINTF_DBG("TOT=%d, NNodes=%d, ix_update=%d, total_processed=%d, ix=%d\n",
                atomic_helper, NNodes, ix_update, total_processed, ix);std::cout<<std::flush;
-        if (globalstatus && (!ix_update)) mssleep(5);
+        if (globalstatus && (!ix_update)) mssleep(DT);
     }
     PRINTF_DBG("Final termination of perform_requests :-)\n");std::cout<<std::flush;
 

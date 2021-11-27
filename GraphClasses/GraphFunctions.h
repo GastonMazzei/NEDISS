@@ -20,6 +20,15 @@
 #include "../Communication/CommunicationFunctions.h"
 
 
+
+template <typename SpecificRequestObject> class RequestObject;
+
+class FieldRequestObject;
+
+template<int DT, int TIMETOL, int BATCH, typename RequestClass>
+void generic_answer_requests(ReferenceContainer &REF,int MYTHR, RequestClass ReqObj);
+
+
 // NEW FUNCTION: 
 // in this version we write to RK1 
 //
@@ -29,7 +38,7 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
 
     PRINTF_DBG("Starting the contribution to int\n");std::cout<< std::flush;
     // Define timeout utilities
-    const int DT= 5;
+    const int DT= 0;
     int totlaps=0;
     // Build a graph vertex iterator
     auto vs = vertices(*REF.p_g);
@@ -747,7 +756,13 @@ void single_evolution(Graph &g,
 		        Nresponders++;
                 bool l_keep_responding = true;
 		        while (l_keep_responding){
-                    answer_field_requests<DT, TIMETOL, BATCH>(REF, (int) omp_get_thread_num(), i);
+                    RequestObject<FieldRequestObject> RO(i-2);
+                    generic_answer_requests<DT, TIMETOL, BATCH, RequestObject<FieldRequestObject>>(
+                            REF,
+                            (int) omp_get_thread_num(),
+                            RO);
+
+//                    answer_field_requests<DT, TIMETOL, BATCH>(REF, (int) omp_get_thread_num(), i);
 #pragma omp atomic read
                     l_keep_responding = keep_responding;
                     mssleep(DT);
