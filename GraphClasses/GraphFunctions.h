@@ -270,9 +270,11 @@ void contribute_to_higher_integration(ReferenceContainer &REF,
                          REF.p_LayHelper->data[ix].RK1);
             REF.p_LayHelper->data[ix].RK1_status = true;
             PRINTF_DBG("RK1 with ix %ld correctly computed! it yielded %f and central value was %f\n", ix, REF.p_LayHelper->data[ix].RK1[0], (*REF.p_IntHelper)[ix].centralValue);
-            printf("centralParams are : \n");display((*REF.p_IntHelper)[ix].centralParams);
-            printf("Neighbor values are : \n");display((*REF.p_IntHelper)[ix].neighborValues);
-            printf("edgeValues values are : \n");display((*REF.p_IntHelper)[ix].edgeValues);
+            if (VERBOSE) {
+                PRINTF_DBG("centralParams are : \n");display((*REF.p_IntHelper)[ix].centralParams);
+                PRINTF_DBG("Neighbor values are : \n");display((*REF.p_IntHelper)[ix].neighborValues);
+                PRINTF_DBG("edgeValues values are : \n");display((*REF.p_IntHelper)[ix].edgeValues);
+            }
         } else {
             printf("[FATAL] field order requested does not exist. Requested was: %d\n", fieldNum);
             std::cout<<std::flush;

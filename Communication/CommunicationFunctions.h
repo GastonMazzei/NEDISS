@@ -272,6 +272,7 @@ void generic_answer_requests(ReferenceContainer &REF, int MYTHR, RequestClass Re
             ReqObj.computeAnswer(REF, &buffer[0], &answer[0], S, MYPROC);
             ReqObj.buildSendTag(&buffer[0]);
             PRINTF_DBG("[GAR] About to send! sendDouble is %d, ReqObj.sendLength is %d, and ReqObj.sendTag is %d\n", ReqObj.sendDouble, ReqObj.sendLength, ReqObj.sendTag);
+            PRINTF_DBG("[GAR] The sent message('s first element) will be %f\n", answer[0]);
             if (ReqObj.sendDouble){
                 MPI_Ssend(&answer[0],
                           ReqObj.sendLength,

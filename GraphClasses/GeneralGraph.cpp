@@ -127,13 +127,13 @@ void CommonGraphObjectClass::Initialization(std::vector<pair<double, double>> X0
         } else if (X0_W.size() != NV) {
             error_report("[error] Length of the params vector to initialize the model should be either 1, NNodesTotal or NNodesProcessor_i");
         } else {
-            printf("SIZE IS NV\n");
+            PRINTF_DBG("SIZE IS NV\n");
             for (int j=0; j<X0_W.size(); j++){
                 myvals[j] = X0_W[j];
             }
         }
     } else if (X0_W.size()==1){
-        printf("SIZE IS 1\n");
+        PRINTF_DBG("SIZE IS 1\n");
         for (int j=0; j<NV; j++){
             myvals[j] = X0_W[0];
         }

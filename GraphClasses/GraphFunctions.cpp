@@ -29,15 +29,17 @@ void update_neighbor_values(ReferenceContainer &REF){
                    ix, MYPROC, (*REF.p_IntHelper)[ix].centralValue, (*REF.p_g)[*v].value);
         (*REF.p_IntHelper)[ix].centralValue = (*REF.p_g)[*v].value;
     }
-#pragma omp barrier
-    // Propagate from diagonal terms
-    for (int ix = begin; ix < end; ++ix){
-        for (int j=0; j<(*REF.p_IntHelper)[ix].ixMap.size(); ++j){
-            if (std::get<2>((*REF.p_IntHelper)[ix].ixMap[j]) == MYPROC){
-                (*REF.p_IntHelper)[ix].neighborValues[j] = (*REF.p_IntHelper)[std::get<1>((*REF.p_IntHelper)[ix].ixMap[j])].centralValue;
-            }
-        }
-    }
+    // THE FOLLOWING IS NOT REQUIRED: ITS ALREADY COVERED IN PERFORM_FIELD_REQUESTS from communication ;-)
+    //
+//#pragma omp barrier
+//    // Propagate from diagonal terms
+//    for (int ix = begin; ix < end; ++ix){
+//        for (int j=0; j<(*REF.p_IntHelper)[ix].ixMap.size(); ++j){
+//            if (std::get<2>((*REF.p_IntHelper)[ix].ixMap[j]) == MYPROC){
+//                (*REF.p_IntHelper)[ix].neighborValues[j] = (*REF.p_IntHelper)[std::get<1>((*REF.p_IntHelper)[ix].ixMap[j])].centralValue;
+//            }
+//        }
+//    }
 }
 };
 

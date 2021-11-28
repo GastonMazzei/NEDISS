@@ -3,10 +3,10 @@
 # Simulation
 
 EQNUMBER=0;
-NRUNS=30;
+NRUNS=300;
 TEST=-1;
 SEED=21234;
-SAMPLING_FREQ=1;
+SAMPLING_FREQ=2;
 
 # Solver
 
@@ -19,13 +19,13 @@ K4=0.16666666666666;
 
 # Topology
 
-TOPOLOGY=1;
-kneigh=3;
-proba=0.1;
-NNODES=15;
+TOPOLOGY=3;
+kneigh=5;
+proba=0.10;
+NNODES=60;
 
 # Performance
 
-OMP_THREAD_LIMIT=5;
+OMP_THREAD_LIMIT=3;
 OMP_NESTED=true;
 NP=3

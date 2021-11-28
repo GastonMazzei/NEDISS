@@ -12,7 +12,7 @@
 
 bool NoiselessKuramoto::requiresCom(int d){
 	if (d==1) {
-		return false;
+		return true;
 	} else if (d>1) {
 		return true;
 	}

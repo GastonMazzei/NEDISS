@@ -58,6 +58,24 @@ GeneralGraph.h
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 
+/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.cpp
+GeneralGraph.h
+/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+../Utils/error.h
+/home/m4zz31/cppprojct/Utils/error.h
+cmath
+-
+mpi.h
+/home/m4zz31/cppprojct/GraphClasses/mpi.h
+../Utils/adequate_synchronization.h
+/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
+../Utils/memory_management.h
+/home/m4zz31/cppprojct/Utils/memory_management.h
+../Utils/msleep.h
+/home/m4zz31/cppprojct/Utils/msleep.h
+iomanip
+-
+
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 iostream
 -
