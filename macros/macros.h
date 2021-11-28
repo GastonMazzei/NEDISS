@@ -18,7 +18,7 @@
 #endif
 
 #if !defined(VERTEXVAL_REQUEST_FLAG)
-#define VERTEXVAL_REQUEST_FLAG 25001
+    #define VERTEXVAL_REQUEST_FLAG 25001
 #endif
 
 #if !defined(EDGEVAL_REQUEST_FLAG)

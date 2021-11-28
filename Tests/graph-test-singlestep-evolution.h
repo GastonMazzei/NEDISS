@@ -10,13 +10,9 @@
 template <int T, typename GRAPHTYPE, int BATCH, typename DIFFEQ>
 
 void test_graph_singlestep_evolution(GRAPHTYPE &G, 
-				     std::string name,
-                                     CommunicationHelper &ComHelper,
-                                     ParallelHelper &ParHelper,
-                                     IntegrationHelper &IntHelper,
-                                     MappingHelper &MapHelper,
-                                     LayeredSolverHelper &LayHelper,
+				                    std::string name,
                                      SolverConfig &SOLVER) {
+
 
     // Print in command what test is it
     adsync_message<T>(msg_prev + "'test_" + name + "_graph_singlestep_evolution'", G.g);
@@ -39,6 +35,21 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G,
     G.showVertex(G.g);
     adsync_message_barrier<T>(msg_post + "'showVertex'", G.g);
 
+    unsigned long NVtot = boost::num_vertices(G.g);
+    CommunicationHelper ComHelper(G.g);
+    ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
+    IntegrationHelper IntHelper(NVtot);
+    LayeredSolverHelper LayHelper(NVtot);
+    MappingHelper MapHelper(G.g);
+
+    ReferenceContainer REF(ParHelper,
+                           ComHelper,
+                           G.g,
+                           IntHelper,
+                           MapHelper,
+                           LayHelper,
+                           NVtot);
+
 
     if (SOLVER.s == 0) {
         GeneralSolver<DIFFEQ, EulerSolver<DIFFEQ>> S_eu("eu",SOLVER.d) ;
@@ -47,22 +58,22 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G,
 
         // Test several eq evolutions with Euler
         adsync_message<T>(msg_prev + "'single_eq_evolution' with euler (1 of 3)", G.g);
-        single_evolution<DIFFEQ, EulerSolver<DIFFEQ>, BATCH>(G.g, S_eu,ComHelper, ParHelper,
-                                                            IntHelper, MapHelper, LayHelper, G.N);
+        single_evolution<DIFFEQ, EulerSolver<DIFFEQ>, BATCH>(G.g, S_eu, REF, G.N);
         LayHelper.built = true;
         S_eu.EvolveTime();
         adsync_message_barrier<T>(msg_post + "'single_eq_evolution' with euler (1 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_eq_evolution' with euler (2 of 3)", G.g);
-        single_evolution<DIFFEQ, EulerSolver<DIFFEQ>, BATCH>(G.g, S_eu,ComHelper, ParHelper,
-                                                             IntHelper, MapHelper, LayHelper, G.N);
+        //single_evolution<DIFFEQ, EulerSolver<DIFFEQ>, BATCH>(G.g, S_eu, REF, G.N);
+        single_evolution2<DIFFEQ, EulerSolver<DIFFEQ>, BATCH>(G.g, S_eu, REF, G.N);
+
         S_eu.EvolveTime();
         adsync_message_barrier<T>(msg_post + "'single_eq_evolution' with euler (2 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_eq_evolution' with euler (3 of 3)", G.g);
-        single_evolution<DIFFEQ, EulerSolver<DIFFEQ>, BATCH>(G.g, S_eu,ComHelper, ParHelper,
-                                                             IntHelper, MapHelper, LayHelper, G.N);
+        //single_evolution<DIFFEQ, EulerSolver<DIFFEQ>, BATCH>(G.g, S_eu, REF, G.N);
+        single_evolution2<DIFFEQ, EulerSolver<DIFFEQ>, BATCH>(G.g, S_eu, REF, G.N);
+
         S_eu.EvolveTime();
         adsync_message_barrier<T>(msg_post + "'single_eq_evolution' with euler (3 of 3)", G.g);
-
 
     } else if (SOLVER.s == 1) {
 
@@ -72,19 +83,21 @@ void test_graph_singlestep_evolution(GRAPHTYPE &G,
 
         // Test several eq evolutions with RungeKutta
         adsync_message<T>(msg_prev + "'single_eq_evolution' with runge kutta (1 of 3)", G.g);
-        single_evolution<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk,ComHelper, ParHelper,
-                                                                  IntHelper, MapHelper, LayHelper, G.N);
+        single_evolution<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk, REF, G.N);
+
         LayHelper.built = true;
         S_rk.EvolveTime();
         adsync_message_barrier<T>(msg_post + "'single_eq_evolution' with runge kutta (1 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_eq_evolution' with runge kutta (2 of 3)", G.g);
-        single_evolution<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk,ComHelper, ParHelper,
-                                                                  IntHelper, MapHelper, LayHelper, G.N);
+        //single_evolution<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk, REF, G.N);
+        single_evolution2<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk, REF, G.N);
+
         S_rk.EvolveTime();
         adsync_message_barrier<T>(msg_post + "'single_eq_evolution' with runge kutta (2 of 3)", G.g);
         adsync_message<T>(msg_prev + "'single_eq_evolution' with runge kutta (3 of 3)", G.g);
-        single_evolution<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk,ComHelper, ParHelper,
-                                                                  IntHelper, MapHelper, LayHelper, G.N);
+        //single_evolution<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk, REF, G.N);
+        single_evolution2<DIFFEQ, RungeKuttaSolver<DIFFEQ>, BATCH>(G.g, S_rk, REF, G.N);
+
         S_rk.EvolveTime();
         adsync_message_barrier<T>(msg_post + "'single_eq_evolution' with runge kutta (3 of 3)", G.g);
     }
@@ -112,75 +125,26 @@ void graph_test_singlestep_evolution_helper(unsigned int SEED, unsigned long N, 
         K = (unsigned long) std::stoul(std::getenv("kneigh"));
     }
 
-
     if (TOPOLOGY == 0) {
         // Ring Network
         RingGraphObject G(N);
-
-        // helpers instantiated here just temporaly :-)
-        unsigned long NVtot = boost::num_vertices(G.g);
-        CommunicationHelper ComHelper(G.g);
-        ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
-        IntegrationHelper IntHelper(NVtot);
-        LayeredSolverHelper LayHelper(NVtot);
-        MappingHelper MapHelper(G.g);
-
-        test_graph_singlestep_evolution<100, RingGraphObject, BATCH, EQCLASS>(G, "Ring",
-                                                                              ComHelper, ParHelper,
-                                                                              IntHelper, MapHelper,
-                                                                              LayHelper, SOLVER);
+        test_graph_singlestep_evolution<100, RingGraphObject, BATCH, EQCLASS>(G, "Ring", SOLVER);
 
     } else if (TOPOLOGY == 1) {
         // Clique Network
         CliqueGraphObject G(N);
-
-        // helpers instantiated here just temporaly :-)
-        unsigned long NVtot = boost::num_vertices(G.g);
-        CommunicationHelper ComHelper(G.g);
-        ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
-        IntegrationHelper IntHelper(NVtot);
-        LayeredSolverHelper LayHelper(NVtot);
-        MappingHelper MapHelper(G.g);
-
-        test_graph_singlestep_evolution<100, CliqueGraphObject, BATCH, EQCLASS>(G, "Clique",
-                                                                                ComHelper, ParHelper,
-                                                                                IntHelper, MapHelper,
-                                                                                LayHelper, SOLVER);
+        test_graph_singlestep_evolution<100, CliqueGraphObject, BATCH, EQCLASS>(G, "Clique", SOLVER);
 
     } else if (TOPOLOGY == 2) {
         // Erdos Renyi Network
         ErdosRenyiGraphObject G(N, p);
+        test_graph_singlestep_evolution<100, ErdosRenyiGraphObject, BATCH, EQCLASS>(G, "ErdosRenyi", SOLVER);
 
-        // helpers instantiated here just temporaly :-)
-        unsigned long NVtot = boost::num_vertices(G.g);
-        CommunicationHelper ComHelper(G.g);
-        ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
-        IntegrationHelper IntHelper(NVtot);
-        LayeredSolverHelper LayHelper(NVtot);
-        MappingHelper MapHelper(G.g);
-
-
-        test_graph_singlestep_evolution<100, ErdosRenyiGraphObject, BATCH, EQCLASS>(G, "ErdosRenyi",
-                                                                                    ComHelper, ParHelper,
-                                                                                    IntHelper, MapHelper,
-                                                                                    LayHelper, SOLVER);
     } else if (TOPOLOGY == 3) {
         // Small World Network
         SmallWorldGraphObject G(N, K, p);
+        test_graph_singlestep_evolution<100, SmallWorldGraphObject, BATCH, EQCLASS>(G, "SmallWorld", SOLVER);
 
-        // helpers instantiated here just temporaly :-)
-        unsigned long NVtot = boost::num_vertices(G.g);
-        CommunicationHelper ComHelper(G.g);
-        ParallelHelper ParHelper(ComHelper.NUM_THREADS, NVtot);
-        IntegrationHelper IntHelper(NVtot);
-        LayeredSolverHelper LayHelper(NVtot);
-        MappingHelper MapHelper(G.g);
-
-
-        test_graph_singlestep_evolution<100, SmallWorldGraphObject, BATCH, EQCLASS>(G, "SmallWorld",
-                                                                                    ComHelper, ParHelper,
-                                                                                    IntHelper, MapHelper,
-                                                                                    LayHelper, SOLVER);
     } else error_report("[ERROR] Requested topology does not exist!\n");
 
 }

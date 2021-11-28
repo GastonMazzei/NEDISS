@@ -13,8 +13,21 @@
 [warning] We currently rely heavily on the long -> int conversion which during compilation raises warnings of being implementation-defined. Two important lines are:    
 (1) 'rank = in_degree(*v, g) + out_degree(*v, g);' and
 (2) 'NLocals = neighbors.second - neighbors.first;'
-I am Proc N'1 and, according to 'boost::num_vertices', I report having 8 nodes! After iterating 'boost::vertices' I noted I own 8 nodes.
- I Have 8 NODES! and 8 EDGES!
+[info][informal-test] about to run 'test_Ring_graph_singlestep_evolution'
+[info][informal-test] about to run 'preparing Ring graph for singlestep evolution'
+SIZE IS 1
+SIZE IS 1
+[info] Ring constructor informs: synchronization has been successful!
+SIZE IS 1
+[info][informal-test] (apparent) success 'preparing ring graph for singlestep evolution' informs: barrier has been successfully applied!
+[info][informal-test] about to run 'showVertex'
+ I Have 4 NODES! and 5 EDGES!
+ I Have 4 NODES! and 3 EDGES!
+node w/ value 12.345 and first param 6.78
+node w/ value 12.345 and first param 6.78
+node w/ value 12.345 and first param 6.78
+node w/ value 12.345 and first param 6.78
+ I Have 4 NODES! and 4 EDGES!
 node w/ value 12.345 and first param 6.78
 node w/ value 12.345 and first param 6.78
 node w/ value 12.345 and first param 6.78
@@ -23,53 +36,3027 @@ node w/ value 12.345 and first param 6.78
 node w/ value 12.345 and first param 6.78
 node w/ value 12.345 and first param 6.78
 node w/ value 12.345 and first param 6.78
-I am Proc N'2 and, according to 'boost::num_vertices', I report having 8 nodes! After iterating 'boost::vertices' I noted I own 8 nodes.
- I Have 8 NODES! and 7 EDGES!
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-I am Proc N'0 and, according to 'boost::num_vertices', I report having 9 nodes! After iterating 'boost::vertices' I noted I own 9 nodes.
- I Have 9 NODES! and 10 EDGES!
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
-node w/ value 12.345 and first param 6.78
--^-^-H-E-A-R-T-B-E-A-T-^-^--^-^-H-E-A-R-T-B-E-A-T-^-^--^-^-H-E-A-R-T-B-E-A-T-^-^--^-^-H-E-A-R-T-B-E-A-T-^-^--^-^-H-E-A-R-T-B-E-A-T-^-^--^-^-H-E-A-R-T-B-E-A-T-^-^--^-^-H-E-A-R-T-B-E-A-T-^-^--^-^-H-E-A-R-T-B-E-A-T-^-^--^-^-H-E-A-R-T-B-E-A-T-^-^- I Have 8 NODES! and 8 EDGES!
- I Have 8 NODES! and 7 EDGES!
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
- I Have 9 NODES! and 10 EDGES!
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
-node w/ value 15.1295323832011 and first param 6.78
+[info][informal-test] (apparent) success 'showVertex' informs: barrier has been successfully applied!
+[WARNING] GeneralSolver constructor that  explicitly uses four weights  params assigns 'true' to 'requires_communication', change it if the current method does not require it. Current method: rk with d=4
+[WARNING] GeneralSolver constructor that  explicitly uses four weights  params assigns 'true' to 'requires_communication', change it if the current method does not require it. Current method: rk with d=4
+[WARNING] GeneralSolver constructor that  explicitly uses four weights  params assigns 'true' to 'requires_communication', change it if the current method does not require it. Current method: rk with d=4
+Accesing values 1
+Accesing values 1
+Accesing values 2
+TOT=1, NNodes=4, ix_update=0, total_processed=0, ix=0
+About to probe! recvTag is 25001
+Accesing values 1
+Accesing values 2
+About to probe! recvTag is 25001
+Accesing values 1
+Accesing values 2
+Accesing values 3: are we the owner? Nowner: 0, we: 0, Vowner 0, Eowner: 0 (<-temp placeholder) MapHelper.Local applied to neighbor yields: 3
+Added ix 2 to CHECKED
+Accesing values 1
+Accesing values 2
+Accesing values 4
+Added ix 3 to CHECKED
+ I am thread 3 (FOR WORKER) and I have finished doing my job ;-)
+This thread is a for worker that has ended :-)
+about to enter 'omp critical unclaimed'
+Claimed by thread 3 of processor 0
+Already checking if we are over, proc 0
+Accesing values 1
+TOT=1, NNodes=4, ix_update=0, total_processed=0, ix=0
+Accesing values 2
+Accesing values 1
+Accesing values 2
+TOT=1, NNodes=4, ix_update=0, total_processed=0, ix=0
+Accesing values 3: are we the owner? Nowner: 0, we: 0, Vowner 0, Eowner: 0 (<-temp placeholder) MapHelper.Local applied to neighbor yields: 1
+Accesing values 3: are we the owner? Nowner: 2, we: 2, Vowner 2, Eowner: 0 (<-temp placeholder) MapHelper.Local applied to neighbor yields: 1
+Added ix 0 to CHECKED
+Accesing values 1
+Accesing values 2
+Accesing values 3: are we the owner? Nowner: 2, we: 2, Vowner 2, Eowner: 0 (<-temp placeholder) MapHelper.Local applied to neighbor yields: 2
+Accesing values 4
+Accesing values 2
+Accesing values 3: are we the owner? Nowner: 1, we: 1, Vowner 1, Eowner: 0 (<-temp placeholder) MapHelper.Local applied to neighbor yields: 1
+About to probe! recvTag is 25001
+Added ix 1 to CHECKED
+ I am thread 2 (FOR WORKER) and I have finished doing my job ;-)
+This thread is a for worker that has ended :-)
+about to enter 'omp critical unclaimed'
+Claimed by thread 2 of processor 2
+Already checking if we are over, proc 2
+Added ix 0 to CHECKED
+Accesing values 1
+Accesing values 2
+Accesing values 3: are we the owner? Nowner: 2, we: 2, Vowner 2, Eowner: 0 (<-temp placeholder) MapHelper.Local applied to neighbor yields: 3
+Accesing values 3: are we the owner? Nowner: 1, we: 1, Vowner 1, Eowner: 0 (<-temp placeholder) MapHelper.Local applied to neighbor yields: 2
+Added ix 1 to CHECKED
+ I am thread 2 (FOR WORKER) and I have finished doing my job ;-)
+This thread is a for worker that has ended :-)
+about to enter 'omp critical unclaimed'
+Claimed by thread 2 of processor 1
+Already checking if we are over, proc 1
+Accesing values 3: are we the owner? Nowner: 1, we: 1, Vowner 1, Eowner: 0 (<-temp placeholder) MapHelper.Local applied to neighbor yields: 3
+Added ix 2 to CHECKED
+Accesing values 1
+Accesing values 2
+Added ix 2 to CHECKED
+Accesing values 1
+Added ix 0 to CHECKED
+Accesing values 2
+Added ix 3 to CHECKED
+ I am thread 3 (FOR WORKER) and I have finished doing my job ;-)
+This thread is a for worker that has ended :-)
+about to enter 'omp critical unclaimed'
+starting to contribute
+Starting the contribution to int
+Accesing values 4
+Accesing values 1
+Accesing values 2
+Added ix 3 to CHECKED
+ I am thread 3 (FOR WORKER) and I have finished doing my job ;-)
+This thread is a for worker that has ended :-)
+about to enter 'omp critical unclaimed'
+starting to contribute
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+Accesing values 3: are we the owner? Nowner: 0, we: 0, Vowner 0, Eowner: 0 (<-temp placeholder) MapHelper.Local applied to neighbor yields: 2
+In total this thread of PROC 2 performed 0 laps!
+Added ix 1 to CHECKED
+ I am thread 2 (FOR WORKER) and I have finished doing my job ;-)
+This thread is a for worker that has ended :-)
+about to enter 'omp critical unclaimed'
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+About to probe! recvTag is 25001
+TOT=1, NNodes=4, ix_update=1, total_processed=0, ix=0
+[PR] About to ask for one node and edge!
+About to send ixs 0.000000 and 3.000000
+not ready yet!
+TOT=1, NNodes=4, ix_update=1, total_processed=0, ix=0
+[PR] About to ask for one node and edge!
+About to send ixs 0.000000 and 3.000000
+TOT=1, NNodes=4, ix_update=1, total_processed=0, ix=2
+[PR] About to ask for one node and edge!
+About to send ixs 2.000000 and 1.000000
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+not ready yet!
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+not ready yet!
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+Starting the contribution to int
+not ready yet!
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+About to probe! recvTag is 25001
+About to probe! recvTag is 25001
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+About to probe! recvTag is 25001
+not ready yet!
+not ready yet!
+About to probe! recvTag is 25001
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+not ready yet!
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+not ready yet!
+About to probe! recvTag is 25001
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+About to probe! recvTag is 25001
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+About to probe! recvTag is 25001
+not ready yet!
+not ready yet!
+About to probe! recvTag is 25001
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+About to probe! recvTag is 25001
+not ready yet!
+About to probe! recvTag is 25001
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+About to probe! recvTag is 25001
+About to probe! recvTag is 25001
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+About to probe! recvTag is 25000
+[GAR] About to receive! recvInt is 0, and recvLength is 2
+[GAR] Received successfully!
+Found the requested node attached to the requested edge!
+[PR] Asked!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 2, and ReqObj.sendTag is 12503
+[PR] About to recv!
+not ready yet!
+Starting the contribution to int
+[PR] Correctly recieved!
+TOT=1, NNodes=4, ix_update=1, total_processed=1, ix=1
+[PR] About to ask for one node and edge!
+About to send ixs 1.000000 and 0.000000
+About to probe! recvTag is 25000
+About to probe! recvTag is 25000
+[GAR] About to receive! recvInt is 0, and recvLength is 2
+[PR] Asked!
+[PR] About to recv!
+[GAR] Received successfully!
+Found the requested node attached to the requested edge!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 2, and ReqObj.sendTag is 12503
+[PR] Correctly recieved!
+(NOTHING TO INT)
+There are 1 remaining vals to integrate...
+starting to locate this uix: 0
+Std output uix: 0 ix: 0 proc: 2. vals are 12.345000 , 3.140000 , 25
+Std output uix: 0 ix: 0 proc: 2. vals are 12.345000 , 3.140000 , 15
+Finished sorting! :-)
+temp[j] would be integerisized to 25 1 2
+temp[j] would be integerisized to 15 3 1
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 1 laps!
+not ready yet!
+not ready yet!
+TOT=1, NNodes=4, ix_update=1, total_processed=1, ix=1
+[PR] About to ask for one node and edge!
+About to send ixs 1.000000 and 0.000000
+Starting the contribution to int
+starting to locate this uix: 0
+Std output uix: 0 ix: 0 proc: 1. vals are 12.345000 , 3.140000 , 13
+Std output uix: 0 ix: 0 proc: 1. vals are 12.345000 , 3.140000 , 3
+Finished sorting! :-)
+temp[j] would be integerisized to 13 1 1
+temp[j] would be integerisized to 3 3 0
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 1 laps!
+not ready yet!
+About to probe! recvTag is 25000
+not ready yet!
+not ready yet!
+Starting the contribution to int
+About to probe! recvTag is 25000
+About to probe! recvTag is 25000
+[GAR] About to receive! recvInt is 0, and recvLength is 2
+[PR] Asked!
+[PR] About to recv!
+[GAR] Received successfully!
+Found the requested node attached to the requested edge!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 2, and ReqObj.sendTag is 12500
+About to probe! recvTag is 25000
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+[PR] Correctly recieved!
+TOT=1, NNodes=4, ix_update=1, total_processed=1, ix=2
+[PR] About to ask for one node and edge!
+About to send ixs 2.000000 and 1.000000
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+[GAR] About to receive! recvInt is 0, and recvLength is 2
+[GAR] Received successfully!
+Found the requested node attached to the requested edge!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 2, and ReqObj.sendTag is 12500
+[PR] Asked!
+[PR] About to recv!
+[PR] Correctly recieved!
+TOT=1, NNodes=4, ix_update=1, total_processed=1, ix=2
+[PR] About to ask for one node and edge!
+About to send ixs 2.000000 and 1.000000
+[GAR] About to receive! recvInt is 0, and recvLength is 2
+[GAR] Received successfully!
+Found the requested node attached to the requested edge!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 2, and ReqObj.sendTag is 12501
+not ready yet!
+[PR] Asked!
+[PR] About to recv!
+[PR] Correctly recieved!
+About to probe! recvTag is 25000
+About to probe! recvTag is 25000
+TOT=1, NNodes=4, ix_update=1, total_processed=1, ix=3
+[PR] About to ask for one node!
+not ready yet!
+Starting the contribution to int
+starting to locate this uix: 1
+Std output uix: 1 ix: 1 proc: 2. vals are 12.345000 , 3.140000 , 26
+Std output uix: 1 ix: 1 proc: 2. vals are 12.345000 , 3.140000 , 24
+Finished sorting! :-)
+temp[j] would be integerisized to 26 2 2
+temp[j] would be integerisized to 24 0 2
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 1 laps!
+Starting the contribution to int
+starting to locate this uix: 1
+Std output uix: 1 ix: 1 proc: 1. vals are 12.345000 , 3.140000 , 14
+not ready yet!
+Std output uix: 1 ix: 1 proc: 1. vals are 12.345000 , 3.140000 , 12
+Finished sorting! :-)
+temp[j] would be integerisized to 14 2 1
+temp[j] would be integerisized to 12 0 1
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 1 laps!
+not ready yet!
+[GAR] About to receive! recvInt is 0, and recvLength is 2
+[GAR] Received successfully!
+Found the requested node attached to the requested edge!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 2, and ReqObj.sendTag is 12501
+[PR] Asked!
+[PR] About to recv!
+[PR] Correctly recieved!
+TOT=1, NNodes=4, ix_update=1, total_processed=1, ix=3
+[PR] About to ask for one node!
+About to probe! recvTag is 25000
+not ready yet!
+[GAR] About to receive! recvInt is 0, and recvLength is 2
+[GAR] Received successfully!
+Found the requested node attached to the requested edge!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 2, and ReqObj.sendTag is 12501
+[PR] Asked!
+[PR] About to recv!
+[PR] Correctly recieved!
+About to probe! recvTag is 25000
+TOT=1, NNodes=4, ix_update=1, total_processed=1, ix=3
+[PR] About to ask for one node and edge!
+About to send ixs 3.000000 and 0.000000
+Starting the contribution to int
+starting to locate this uix: 2
+Std output uix: 2 ix: 2 proc: 2. vals are 12.345000 , 3.140000 , 27
+Std output uix: 2 ix: 2 proc: 2. vals are 12.345000 , 3.140000 , 25
+Finished sorting! :-)
+temp[j] would be integerisized to 27 3 2
+temp[j] would be integerisized to 25 1 2
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 1 laps!
+not ready yet!
+Starting the contribution to int
+starting to locate this uix: 2
+Std output uix: 2 ix: 2 proc: 1. vals are 12.345000 , 3.140000 , 15
+Std output uix: 2 ix: 2 proc: 1. vals are 12.345000 , 3.140000 , 13
+Finished sorting! :-)
+temp[j] would be integerisized to 15 3 1
+temp[j] would be integerisized to 13 1 1
+not ready yet!
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 1 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+[GAR] About to receive! recvInt is 0, and recvLength is 2
+[GAR] Received successfully!
+Found the requested node attached to the requested edge!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 2, and ReqObj.sendTag is 12500
+[PR] Asked!
+[PR] About to recv!
+[PR] Correctly recieved!
+[PR] About to ask for one node and edge!
+About to send ixs 3.000000 and 2.000000
+About to probe! recvTag is 25000
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+[GAR] About to receive! recvInt is 0, and recvLength is 2
+[GAR] Received successfully!
+Found the requested node attached to the requested edge!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 2, and ReqObj.sendTag is 12502
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+[PR] Asked!
+[PR] About to recv!
+[PR] Correctly recieved!
+TOT=5, NNodes=4, ix_update=0, total_processed=1, ix=3
+Final termination of perform_requests :-)
+about to enter 'omp critical unclaimed'
+starting to contribute
+Starting the contribution to int
+starting to locate this uix: 3
+Std output uix: 3 ix: 3 proc: 2. vals are 12.345000 , 3.140000 , 0
+Std output uix: 3 ix: 3 proc: 2. vals are 12.345000 , 3.140000 , 26
+Finished sorting! :-)
+temp[j] would be integerisized to 26 2 2
+temp[j] would be integerisized to 0 0 0
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 1 laps!
+ending to contribute
+About to probe! recvTag is 25000
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+ending to contribute
+
+
+
+
+
+
+WE WERE OVER! NVtot and TOT are: 4 & 5
+
+
+
+Before being ready, we waited for 84 laps!
+
+about to 1st barrier says P:2
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25000
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+About to probe! recvTag is 25000
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25000
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25000
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25000
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+About to probe! recvTag is 25000
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+About to probe! recvTag is 25000
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25000
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+About to probe! recvTag is 25000
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25000
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25000
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25000
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+not ready yet!
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+so far I keep responding U.u cuz keep responding was 1
+About to probe! recvTag is 25001
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25001
+[GAR] About to receive! recvInt is 0, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+About to probe! recvTag is 25001
+[PR] Asked!
+[PR] About to recv!
+[PR] Correctly recieved!
+[PR] About to ask for one node and edge!
+About to send ixs 3.000000 and 2.000000
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+not ready yet!
+In total this thread of PROC 1 performed 0 laps!
+About to probe! recvTag is 25001
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25001
+[GAR] About to receive! recvInt is 0, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+About to probe! recvTag is 25001
+[PR] Asked!
+[PR] About to recv!
+[PR] Correctly recieved!
+[PR] About to ask for one node and edge!
+About to send ixs 3.000000 and 2.000000
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25001
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+About to probe! recvTag is 25001
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+About to probe! recvTag is 25001
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25001
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25001
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25001
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+About to probe! recvTag is 25001
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+About to probe! recvTag is 25001
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+About to probe! recvTag is 25001
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25001
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+About to probe! recvTag is 25001
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25001
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+not ready yet!
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+About to probe! recvTag is 25000
+[GAR] About to receive! recvInt is 0, and recvLength is 2
+[GAR] Received successfully!
+Found the requested node attached to the requested edge!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 2, and ReqObj.sendTag is 12502
+[PR] Asked!
+[PR] About to recv!
+[PR] Correctly recieved!
+About to probe! recvTag is 25000
+not ready yet!
+TOT=1, NNodes=4, ix_update=1, total_processed=1, ix=0
+[PR] About to ask for one node!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+About to probe! recvTag is 25000
+[GAR] About to receive! recvInt is 0, and recvLength is 2
+[GAR] Received successfully!
+Found the requested node attached to the requested edge!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 2, and ReqObj.sendTag is 12502
+[PR] Asked!
+[PR] About to recv!
+[PR] Correctly recieved!
+About to probe! recvTag is 25000
+TOT=5, NNodes=4, ix_update=0, total_processed=1, ix=3
+Final termination of perform_requests :-)
+about to enter 'omp critical unclaimed'
+starting to contribute
+Starting the contribution to int
+starting to locate this uix: 3
+Std output uix: 3 ix: 3 proc: 1. vals are 12.345000 , 3.140000 , 24
+Std output uix: 3 ix: 3 proc: 1. vals are 12.345000 , 3.140000 , 14
+Finished sorting! :-)
+temp[j] would be integerisized to 24 0 2
+temp[j] would be integerisized to 14 2 1
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 1 laps!
+ending to contribute
+[PR] Asked!
+[PR] About to recv!
+not ready yet!
+[PR] Correctly recieved!
+TOT=1, NNodes=4, ix_update=1, total_processed=1, ix=1
+[PR] About to ask for one node and edge!
+About to send ixs 1.000000 and 0.000000
+[GAR] About to receive! recvInt is 0, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+About to probe! recvTag is 25001
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+not ready yet!
+About to probe! recvTag is 25000
+Starting the contribution to int
+The (FIRST) cherry of the cake ;-)
+keep_responding was now set as 0
+active (total) are 1 and finalized are 0
+[GAR] About to receive! recvInt is 0, and recvLength is 2
+[PR] Asked!
+[PR] About to recv!
+[GAR] Received successfully!
+Found the requested node attached to the requested edge!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 2, and ReqObj.sendTag is 12500
+[PR] Correctly recieved!
+TOT=5, NNodes=4, ix_update=0, total_processed=1, ix=1
+Final termination of perform_requests :-)
+about to enter 'omp critical unclaimed'
+starting to contribute
+Starting the contribution to int
+starting to locate this uix: 2
+Std output uix: 2 ix: 2 proc: 0. vals are 12.345000 , 3.140000 , 3
+Std output uix: 2 ix: 2 proc: 0. vals are 12.345000 , 3.140000 , 1
+Finished sorting! :-)
+temp[j] would be integerisized to 3 3 0
+temp[j] would be integerisized to 1 1 0
+About to probe! recvTag is 25000
+There are 3 remaining vals to integrate...
+starting to locate this uix: 3
+Std output uix: 3 ix: 3 proc: 0. vals are 12.345000 , 3.140000 , 12
+Std output uix: 3 ix: 3 proc: 0. vals are 12.345000 , 3.140000 , 2
+Finished sorting! :-)
+temp[j] would be integerisized to 12 0 1
+temp[j] would be integerisized to 2 2 0
+There are 2 remaining vals to integrate...
+starting to locate this uix: 0
+Std output uix: 0 ix: 0 proc: 0. vals are 12.345000 , 3.140000 , 1
+Std output uix: 0 ix: 0 proc: 0. vals are 12.345000 , 3.140000 , 27
+Finished sorting! :-)
+temp[j] would be integerisized to 27 3 2
+temp[j] would be integerisized to 1 1 0
+There are 1 remaining vals to integrate...
+starting to locate this uix: 1
+Std output uix: 1 ix: 1 proc: 0. vals are 12.345000 , 3.140000 , 2
+Std output uix: 1 ix: 1 proc: 0. vals are 12.345000 , 3.140000 , 0
+Finished sorting! :-)
+temp[j] would be integerisized to 2 2 0
+temp[j] would be integerisized to 0 0 0
+There are 0 remaining vals to integrate...
+In total this thread of PROC 0 performed 4 laps!
+ending to contribute
+not ready yet!
+
+
+
+
+
+
+WE WERE OVER! NVtot and TOT are: 4 & 5
+
+
+
+Before being ready, we waited for 243 laps!
+
+about to 1st barrier says P:0
+The (FIRST) cherry of the cake ;-)
+keep_responding was now set as 0
+active (total) are 2 and finalized are 0
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+ending to contribute
+
+
+
+
+
+
+WE WERE OVER! NVtot and TOT are: 4 & 5
+
+
+
+Before being ready, we waited for 84 laps!
+
+about to 1st barrier says P:1
+The (FIRST) cherry of the cake ;-)
+keep_responding was now set as 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+About to probe! recvTag is 25000
+About to probe! recvTag is 25000
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+About to probe! recvTag is 25000
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+About to probe! recvTag is 25000
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+About to probe! recvTag is 25000
+About to probe! recvTag is 25000
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+About to probe! recvTag is 25000
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+About to probe! recvTag is 25000
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+About to probe! recvTag is 25000
+About to probe! recvTag is 25000
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+About to probe! recvTag is 25000
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+About to probe! recvTag is 25000
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 2 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+About to probe! recvTag is 25000
+OVER!  :O
+ I am thread 0 (MESSAGE ANSWERER) and I have finished doing my job ;-)
+about to enter 'omp critical unclaimed'
+active (total) are 2 and finalized are 0
+active (total) are 2 and finalized are 0
+starting to contribute
+Starting the contribution to int
+active (total) are 1 and finalized are 1
+
+about to 2nd barrier says P:1
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+ending to contribute
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+so far I keep responding U.u cuz keep responding was 0
+starting to contribute
+Starting the contribution to int
+active (total) are 2 and finalized are 2
+
+about to 2nd barrier says P:0
+OVER!  :O
+ I am thread 0 (MESSAGE ANSWERER) and I have finished doing my job ;-)
+about to enter 'omp critical unclaimed'
+starting to contribute
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 0 performed 0 laps!
+ending to contribute
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 0 performed 0 laps!
+ending to contribute
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+active (total) are 1 and finalized are 0
+OVER!  :O
+ I am thread 0 (MESSAGE ANSWERER) and I have finished doing my job ;-)
+about to enter 'omp critical unclaimed'
+starting to contribute
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+ending to contribute
+
+Ended barrier says P:1
+The (SECOND) cherry of the cake (-;
+starting to contribute
+Starting the contribution to int
+
+Ended barrier says P:0
+The (SECOND) cherry of the cake (-;
+active (total) are 1 and finalized are 1
+
+about to 2nd barrier says P:2
+
+Ended barrier says P:2
+The (SECOND) cherry of the cake (-;
+starting to contribute
+Starting the contribution to int
+starting to contribute
+Starting the contribution to int
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 2 performed 0 laps!
+ending to contribute
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 1 performed 0 laps!
+ending to contribute
+Exited the parallel construct! solver deg is 4
+Exited the parallel construct! solver deg is 4
+entering the for, i is 2
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24999
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24999
+About to probe! recvTag is 24999
+entering the for, i is 2
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24999
+About to probe! recvTag is 24999
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24999
+(NOTHING TO INT)
+There are 0 remaining vals to integrate...
+In total this thread of PROC 0 performed 0 laps!
+ending to contribute
+Exited the parallel construct! solver deg is 4
+entering the for, i is 2
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+Sent successfully!
+[pfr] About to receive! tag is 0
+[pfr] recieved 6.780000!
+Sent successfully!
+[pfr] About to receive! tag is 3
+[pfr] recieved 6.780000!
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+About to probe! recvTag is 24999
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+About to probe! recvTag is 24999
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24999
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24999
+Sent successfully!
+[pfr] About to receive! tag is 3
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+Sent successfully!
+[pfr] About to receive! tag is 3
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+[pfr] recieved 6.780000!
+Sent successfully!
+[pfr] About to receive! tag is 0
+[pfr] recieved 6.780000!
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+About to probe! recvTag is 24999
+Sent successfully!
+[pfr] About to receive! tag is 0
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+RK2 with ix 1 correctly computed!
+RK2 with ix 2 correctly computed!
+RK2 with ix 3 correctly computed!
+RK2 with ix 0 correctly computed!
+RK2 with ix 1 correctly computed!
+RK2 with ix 0 correctly computed!
+entering the for, i is 3
+RK2 with ix 1 correctly computed!
+RK2 with ix 3 correctly computed!
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24997
+RK2 with ix 3 correctly computed!
+RK2 with ix 2 correctly computed!
+RK2 with ix 2 correctly computed!
+RK2 with ix 0 correctly computed!
+entering the for, i is 3
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24997
+entering the for, i is 3
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24997
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24997
+About to probe! recvTag is 24997
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+Sent successfully!
+[pfr] About to receive! tag is 0
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24997
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24997
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24997
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+Sent successfully!
+[pfr] About to receive! tag is 3
+About to probe! recvTag is 24997
+[pfr] recieved 6.780000!
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+Sent successfully!
+[pfr] About to receive! tag is 3
+Sent successfully!
+[pfr] recieved 6.780000!
+[pfr] About to receive! tag is 0
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24997
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+Sent successfully!
+[pfr] About to receive! tag is 3
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+Sent successfully!
+[pfr] About to receive! tag is 0
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+RK3 with ix 0 correctly computed!
+RK3 with ix 3 correctly computed!
+RK3 with ix 2 correctly computed!
+RK3 with ix 2 correctly computed!
+RK3 with ix 1 correctly computed!
+RK3 with ix 3 correctly computed!
+entering the for, i is 4
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24995
+RK3 with ix 0 correctly computed!
+RK3 with ix 2 correctly computed!
+RK3 with ix 3 correctly computed!
+RK3 with ix 0 correctly computed!
+RK3 with ix 1 correctly computed!
+About to probe! recvTag is 24995
+entering the for, i is 4
+RK3 with ix 1 correctly computed!
+entering the for, i is 4
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24995
+About to probe! recvTag is 24995
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24995
+About to probe! recvTag is 24995
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24995
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24995
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24995
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+Sent successfully!
+[pfr] About to receive! tag is 0
+Sent successfully!
+[pfr] About to receive! tag is 3
+About to probe! recvTag is 24995
+[pfr] recieved 6.780000!
+[pfr] recieved 6.780000!
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+Sent successfully!
+[pfr] About to receive! tag is 0
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24995
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+Sent successfully!
+[pfr] About to receive! tag is 0
+[pfr] recieved 6.780000!
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+Sent successfully!
+[pfr] About to receive! tag is 3
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+Sent successfully!
+[pfr] About to receive! tag is 3
+[GAR] Received successfully!
+About to probe! recvTag is 24995
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+RK4 with ix 1 correctly computed!
+RK4 with ix 3 correctly computed!
+RK4 with ix 1 correctly computed!
+RK4 with ix 0 correctly computed!
+RK4 with ix 3 correctly computed!
+RK4 with ix 2 correctly computed!
+RK4 with ix 2 correctly computed!
+RK4 with ix 0 correctly computed!
+Reached the final integration :-)
+Reached the final integration :-)
+RK4 with ix 0 correctly computed!
+RK4 with ix 1 correctly computed!
+RK4 with ix 3 correctly computed!
+RK4 with ix 2 correctly computed!
+starting to swap register
+starting to swap register
+
+val and temp were: 12.345000 12.412800. Vix: 0 proc: 0
+
+val and temp were: 12.345000 12.412800. Vix: 3 proc: 0
+
+val and temp were: 12.345000 12.412800. Vix: 0 proc: 2
+
+val and temp were: 12.345000 12.412800. Vix: 1 proc: 0
+
+val and temp were: 12.345000 12.412800. Vix: 2 proc: 0
+
+val and temp were: 12.345000 12.412800. Vix: 2 proc: 2
+
+val and temp were: 12.345000 12.412800. Vix: 1 proc: 2
+About to synchronizeReached the final integration :-)
+
+val and temp were: 12.345000 12.412800. Vix: 3 proc: 2
+About to synchronizestarting to swap register
+
+val and temp were: 12.345000 12.412800. Vix: 0 proc: 1
+
+val and temp were: 12.345000 12.412800. Vix: 1 proc: 1
+
+val and temp were: 12.345000 12.412800. Vix: 2 proc: 1
+
+val and temp were: 12.345000 12.412800. Vix: 3 proc: 1
+About to synchronizeAbout to increase time by h
+Done-^-^-H-E-A-R-T-B-E-A-T-^-^-
+
+
+\n
+
+
+
+
+exitedentering the for, i is 1
+About to increase time by h
+About to increase time by h
+Done-^-^-H-E-A-R-T-B-E-A-T-^-^-
+
+
+\n
+
+
+
+
+exitedentering the for, i is 1
+[pfr]==1 About to send! sendbuffer says 3.000000... asking tag is 25001
+About to probe! recvTag is 25001
+Done-^-^-H-E-A-R-T-B-E-A-T-^-^-
+
+
+\n
+
+
+
+
+exitedentering the for, i is 1
+[pfr]==1 About to send! sendbuffer says 3.000000... asking tag is 25001
+About to probe! recvTag is 25001
+[pfr]==1 About to send! sendbuffer says 0.000000... asking tag is 25001
+[pfr]==1 About to send! sendbuffer says 3.000000... asking tag is 25001
+Sent successfully!
+[pfr] About to receive! tag is 3
+[GAR] About to receive! recvInt is 0, and recvLength is 1
+[pfr]==1 About to send! sendbuffer says 0.000000... asking tag is 25001
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+[pfr] recieved 12.412800!
+About to probe! recvTag is 25001
+[pfr]==1 About to send! sendbuffer says 0.000000... asking tag is 25001
+About to probe! recvTag is 25001
+Sent successfully!
+[pfr] About to receive! tag is 0
+[GAR] About to receive! recvInt is 0, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+[pfr] recieved 12.412800!
+[GAR] About to receive! recvInt is 0, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+[GAR] About to receive! recvInt is 0, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+Sent successfully!
+[pfr] About to receive! tag is 0
+[pfr] recieved 12.412800!
+About to probe! recvTag is 25001
+Sent successfully!
+[pfr] About to receive! tag is 0
+[pfr] recieved 12.412800!
+About to probe! recvTag is 25001
+[GAR] About to receive! recvInt is 0, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+Sent successfully!
+[pfr] About to receive! tag is 3
+[pfr] recieved 12.412800!
+[GAR] About to receive! recvInt is 0, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+About to probe! recvTag is 25001
+About to probe! recvTag is 25001
+Sent successfully!
+[pfr] About to receive! tag is 3
+[pfr] recieved 12.412800!
+About to probe! recvTag is 25001
+About to probe! recvTag is 25001
+About to probe! recvTag is 25001
+About to probe! recvTag is 25001
+About to probe! recvTag is 25001
+About to probe! recvTag is 25001
+About to probe! recvTag is 25001
+About to probe! recvTag is 25001
+About to probe! recvTag is 25001
+About to probe! recvTag is 25001
+RK2 with ix 3 correctly computed!
+RK2 with ix 3 correctly computed!
+RK2 with ix 0 correctly computed!
+RK2 with ix 1 correctly computed!
+RK2 with ix 0 correctly computed!
+RK2 with ix 2 correctly computed!
+RK2 with ix 0 correctly computed!
+RK2 with ix 1 correctly computed!
+RK2 with ix 2 correctly computed!
+RK2 with ix 2 correctly computed!
+RK2 with ix 1 correctly computed!
+entering the for, i is 2
+entering the for, i is 2
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24999
+RK2 with ix 3 correctly computed!
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24999
+entering the for, i is 2
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24999
+About to probe! recvTag is 24999
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+About to probe! recvTag is 24999
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24999
+Sent successfully!
+[pfr] About to receive! tag is 3
+[pfr] recieved 6.992729!
+About to probe! recvTag is 24999
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+Sent successfully!
+[pfr] About to receive! tag is 0
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24999
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24999
+Sent successfully!
+[pfr] About to receive! tag is 0
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[pfr] recieved 6.992729!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+About to probe! recvTag is 24999
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+Sent successfully!
+[pfr] About to receive! tag is 3
+About to probe! recvTag is 24999
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24999
+Sent successfully!
+[pfr] About to receive! tag is 0
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+Sent successfully!
+[pfr] About to receive! tag is 3
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+About to probe! recvTag is 24999
+[pfr] recieved 6.992729!
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+About to probe! recvTag is 24999
+RK2 with ix 1 correctly computed!
+RK2 with ix 2 correctly computed!
+RK2 with ix 3 correctly computed!
+RK2 with ix 0 correctly computed!
+RK2 with ix 2 correctly computed!
+RK2 with ix 1 correctly computed!
+entering the for, i is 3
+RK2 with ix 3 correctly computed!
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24997
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24997
+RK2 with ix 0 correctly computed!
+RK2 with ix 1 correctly computed!
+RK2 with ix 0 correctly computed!
+entering the for, i is 3
+RK2 with ix 3 correctly computed!
+About to probe! recvTag is 24997
+RK2 with ix 2 correctly computed!
+entering the for, i is 3
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24997
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24997
+About to probe! recvTag is 24997
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+Sent successfully!
+[pfr] About to receive! tag is 3
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24997
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24997
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24997
+About to probe! recvTag is 24997
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+Sent successfully!
+[pfr] About to receive! tag is 0
+[pfr] recieved 6.989397!
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+Sent successfully!
+[pfr] About to receive! tag is 0
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24997
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+Sent successfully!
+[pfr] About to receive! tag is 3
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+[pfr] recieved 6.989397!
+Sent successfully!
+[pfr] About to receive! tag is 3
+About to probe! recvTag is 24997
+[pfr] recieved 6.989397!
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+Sent successfully!
+[pfr] About to receive! tag is 0
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+About to probe! recvTag is 24997
+RK3 with ix 2 correctly computed!
+RK3 with ix 1 correctly computed!
+RK3 with ix 3 correctly computed!
+RK3 with ix 2 correctly computed!
+RK3 with ix 3 correctly computed!
+RK3 with ix 1 correctly computed!
+RK3 with ix 0 correctly computed!
+RK3 with ix 1 correctly computed!
+RK3 with ix 2 correctly computed!
+RK3 with ix 0 correctly computed!
+entering the for, i is 4
+RK3 with ix 3 correctly computed!
+entering the for, i is 4
+About to probe! recvTag is 24995
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24995
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24995
+About to probe! recvTag is 24995
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24995
+RK3 with ix 0 correctly computed!
+entering the for, i is 4
+About to probe! recvTag is 24995
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24995
+[pfr]!=1 About to send! sendbuffer says 3... asking tag is 24995
+[pfr]!=1 About to send! sendbuffer says 0... asking tag is 24995
+About to probe! recvTag is 24995
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+Sent successfully!
+[pfr] About to receive! tag is 0
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+[pfr] recieved 6.989449!
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+Sent successfully!
+[pfr] About to receive! tag is 3
+[pfr] recieved 6.989449!
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+Sent successfully!
+[pfr] About to receive! tag is 0
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+Sent successfully!
+[pfr] recieved 6.780000!
+[pfr] About to receive! tag is 3
+[GAR] Received successfully!
+About to probe! recvTag is 24995
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+[pfr] recieved 6.989449!
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+Sent successfully!
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 3
+[pfr] About to receive! tag is 3
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24995
+[GAR] About to receive! recvInt is 1, and recvLength is 1
+[GAR] Received successfully!
+[GAR] About to send! sendDouble is 1, ReqObj.sendLength is 1, and ReqObj.sendTag is 0
+Sent successfully!
+[pfr] About to receive! tag is 0
+About to probe! recvTag is 24995
+[pfr] recieved 6.780000!
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+About to probe! recvTag is 24995
+RK4 with ix 3 correctly computed!
+RK4 with ix 2 correctly computed!
+RK4 with ix 0 correctly computed!
+RK4 with ix 3 correctly computed!
+RK4 with ix 1 correctly computed!
+RK4 with ix 0 correctly computed!
+Reached the final integration :-)
+RK4 with ix 1 correctly computed!
+RK4 with ix 2 correctly computed!
+starting to swap register
+RK4 with ix 1 correctly computed!
+Reached the final integration :-)
+RK4 with ix 0 correctly computed!
+RK4 with ix 3 correctly computed!
+
+val and temp were: 12.412800 12.412833. Vix: 2 proc: 0
+
+val and temp were: 12.412800 12.414894. Vix: 0 proc: 0
+RK4 with ix 2 correctly computed!
+Reached the final integration :-)
+
+val and temp were: 12.412800 12.414894. Vix: 3 proc: 0
+
+val and temp were: 12.412800 12.412800. Vix: 1 proc: 0
+About to synchronizestarting to swap register
+
+val and temp were: 12.412800 12.412800. Vix: 0 proc: 1
+
+val and temp were: 12.412800 12.414894. Vix: 3 proc: 1
+
+val and temp were: 12.412800 12.412833. Vix: 2 proc: 1
+
+val and temp were: 12.412800 12.412800. Vix: 1 proc: 1
+starting to swap register
+About to synchronize
+val and temp were: 12.412800 12.412800. Vix: 1 proc: 2
+
+val and temp were: 12.412800 12.412800. Vix: 3 proc: 2
+
+val and temp were: 12.412800 12.412800. Vix: 2 proc: 2
+
+val and temp were: 12.412800 12.412800. Vix: 0 proc: 2
+About to synchronizeAbout to increase time by h
+Done-^-^-H-E-A-R-T-B-E-A-T-^-^-
+
+
+\n
+
+
+
+
+exited I Have 4 NODES! and 4 EDGES!
+node w/ value 12.4128000027441 and first param 6.78
+node w/ value 12.4128003413441 and first param 6.78
+node w/ value 12.4128327082946 and first param 6.78
+node w/ value 12.4148943113134 and first param 6.78
+About to increase time by h
+About to increase time by h
+Done-^-^-H-E-A-R-T-B-E-A-T-^-^-
+
+
+\n
+
+
+
+
+exited I Have 4 NODES! and 3 EDGES!
+node w/ value 12.4128 and first param 6.78
+node w/ value 12.4128 and first param 6.78
+node w/ value 12.4128 and first param 6.78
+node w/ value 12.4128 and first param 6.78
+Done-^-^-H-E-A-R-T-B-E-A-T-^-^-
+
+
+\n
+
+
+
+
+exited[info][informal-test] about to run 'showVertex'
+ I Have 4 NODES! and 5 EDGES!
+node w/ value 12.4148943113134 and first param 6.78
+node w/ value 12.4128003413441 and first param 6.78
+node w/ value 12.4128327082946 and first param 6.78
+node w/ value 12.4148943113134 and first param 6.78
+[info][informal-test] (apparent) success 'showVertex' informs: barrier has been successfully applied!
 End of script has been reached

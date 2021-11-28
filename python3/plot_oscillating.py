@@ -25,7 +25,6 @@ for i in range(L):
 	plt.bar(range(len(v)), v, color='r')
 	plt.ylim(MIN-0.1,MAX+0.1)
 	plt.savefig(f'graphic/timeseries/oscillation-files/{str(i).zfill(D)}.png')
-	plt.clear()
 	plt.close()
 
 

@@ -25,20 +25,6 @@
 void build_answer_nodes(double &answer, ReferenceContainer &REF, double ix, int owner, int &MyNProc);
 void build_answer_edges(double * answer, ReferenceContainer &REF, double * ix, int owner, int &MyNProc);
 
-template <int T>
-void build_answer_generic(double * answer, ReferenceContainer &REF, double * ix, int owner, int &MyNProc){
-    if (T == 0){
-        build_answer_nodes(*answer, REF, *ix, owner, MyNProc);
-    } else if (T == 1) {
-        build_answer_edges(answer, REF, ix, owner, MyNProc);
-    }
-};
-
-
-
-
-
-
 
 template <typename SpecificRequestObject>
 class RequestObject : public SpecificRequestObject {
@@ -117,17 +103,17 @@ template <int field>
 FieldRequestObject<field>::FieldRequestObject(){
     if (field == 0){
         // Answering requests for the field term 1
-        recvLength = 2;
+        recvLength = 1;
         sendLength = 1;
 
     } else if (field == 1) {
         // Answering requests for the field term 2
-        recvLength = 2;
+        recvLength = 1;
         sendLength = 1;
 
     } else if (field == 2) {
         // Answering requests for the field term 3
-        recvLength = 2;
+        recvLength = 1;
         sendLength = 1;
 
     } else if (field == -1) {
@@ -136,7 +122,9 @@ FieldRequestObject<field>::FieldRequestObject(){
         sendDouble = true;
         recvLength = 1;
         sendLength = 1;
+
     } else if (field == -2) {
+        // Answering requests for the edge values
         recvLength = 2;
         sendLength = 2;
         recvInt = false;
@@ -152,13 +140,13 @@ void FieldRequestObject<field>::computeAnswer(ReferenceContainer &REF,
                                        int MYPROC){
     if (field == 0){
 #pragma omp atomic read
-        (*answer) = REF.p_LayHelper->data[*(buffer + 1)].RK1[0];
+        (*answer) = REF.p_LayHelper->data[*(buffer)].RK1[0];
     } else if (field == 1) {
 #pragma omp atomic read
-        (*answer) = REF.p_LayHelper->data[*(buffer + 1)].RK2[0];
+        (*answer) = REF.p_LayHelper->data[*(buffer)].RK2[0];
     } else if (field == 2) {
 #pragma omp atomic read
-        (*answer) = REF.p_LayHelper->data[*(buffer + 1)].RK3[0];
+        (*answer) = REF.p_LayHelper->data[*(buffer)].RK3[0];
     }
 };
 
@@ -193,16 +181,15 @@ template <int field>
 void FieldRequestObject<field>::computeReady(ReferenceContainer &REF, int * buffer, bool &isReady){
     if (field == 0){
 #pragma omp atomic read
-        isReady = REF.p_LayHelper->data[*(buffer + 1)].RK1_status;
-        std::cout << "rk1 status returned " << isReady << std::endl;
+        isReady = REF.p_LayHelper->data[*(buffer)].RK1_status;
         return;
     } else if (field == 1) {
 #pragma omp atomic read
-        isReady = REF.p_LayHelper->data[*(buffer + 1)].RK2_status;
+        isReady = REF.p_LayHelper->data[*(buffer)].RK2_status;
         return;
     } else if (field == 2) {
 #pragma omp atomic read
-        isReady = REF.p_LayHelper->data[*(buffer + 1)].RK3_status;
+        isReady = REF.p_LayHelper->data[*(buffer)].RK3_status;
         return;
     }
 };
@@ -242,6 +229,7 @@ void generic_answer_requests(ReferenceContainer &REF, int MYTHR, RequestClass Re
                         &status);
         }
         if (firstlap) firstlap = false;
+        PRINTF_DBG("About to probe! recvTag is %d\n", ReqObj.recvTag);
         while ((flag != 1) && (t < TIMETOL)) {
             MPI_Improbe(MPI_ANY_SOURCE,
                         ReqObj.recvTag,
@@ -255,6 +243,7 @@ void generic_answer_requests(ReferenceContainer &REF, int MYTHR, RequestClass Re
         if (t >= TIMETOL) ++TRIES;
         t = 0;
         if (flag == 1) {
+            PRINTF_DBG("[GAR] About to receive! recvInt is %d, and recvLength is %d\n", ReqObj.recvInt, ReqObj.recvLength);
             if (ReqObj.recvInt){
                 MPI_Mrecv(&buffer,
                           ReqObj.recvLength,
@@ -266,6 +255,7 @@ void generic_answer_requests(ReferenceContainer &REF, int MYTHR, RequestClass Re
                           MPI_DOUBLE,
                           &M, &S);
             }
+            PRINTF_DBG("[GAR] Received successfully!\n");
             bool isReady = false;
 #pragma omp critical
 {
@@ -276,10 +266,12 @@ void generic_answer_requests(ReferenceContainer &REF, int MYTHR, RequestClass Re
 {
                 ReqObj.computeReady(REF, &buffer[0], isReady);
 };
+                PRINTF_DBG("[GAR] not ready yet!\n");
                 mssleep(DT);
             }
             ReqObj.computeAnswer(REF, &buffer[0], &answer[0], S, MYPROC);
             ReqObj.buildSendTag(&buffer[0]);
+            PRINTF_DBG("[GAR] About to send! sendDouble is %d, ReqObj.sendLength is %d, and ReqObj.sendTag is %d\n", ReqObj.sendDouble, ReqObj.sendLength, ReqObj.sendTag);
             if (ReqObj.sendDouble){
                 MPI_Ssend(&answer[0],
                           ReqObj.sendLength,
@@ -316,7 +308,7 @@ void generic_answer_requests(ReferenceContainer &REF, int MYTHR, RequestClass Re
 template<int DT, int TIMETOL, int BATCH>
 void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,std::queue<long> * queue){
 
-    int ASKING_TAGS[4] = {K1_REQUEST, K2_REQUEST, K3_REQUEST, K4_REQUEST};
+    int ASKING_TAGS[4] = {VERTEXVAL_REQUEST_FLAG, K1_REQUEST, K2_REQUEST, K3_REQUEST};
     bool keep_working = true;
     long ix;
     int L;
@@ -336,6 +328,9 @@ void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,s
             L = REF.p_LayHelper->data[ix].RK2.size();
         } else if (fieldOrder==4) {
             L = REF.p_LayHelper->data[ix].RK2.size();
+        } else if (fieldOrder==1) {
+            assert((*REF.p_IntHelper)[ix].ixMap.size() == (REF.p_LayHelper->data[ix].RK2.size()-1));
+            L = (*REF.p_IntHelper)[ix].ixMap.size() + 1;
         } else {
             printf("[FATAL] field order requested to perform_field_requests does not exist!\n");std::cout<<std::flush;
             exit(1);
@@ -344,9 +339,9 @@ void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,s
         for (int i=0; i<L-1 ; ++i){
             double recvBuffer;
             if (((int) std::get<2>((*REF.p_IntHelper)[ix].ixMap[i])) == MYPROC) {
+                unsigned long owner = std::get<1>((*REF.p_IntHelper)[ix].ixMap[i]);
+                bool isReadyYet = false;
                 if (fieldOrder == 2) {
-                    bool isReadyYet = false; //RECENT: changed from get<2> to get<1>
-                    unsigned long owner = std::get<1>((*REF.p_IntHelper)[ix].ixMap[i]);
 #pragma omp atomic read
                     isReadyYet = REF.p_LayHelper->data[owner].RK1_status;
                     while (!isReadyYet) {
@@ -357,8 +352,6 @@ void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,s
 #pragma omp atomic read
                     recvBuffer = REF.p_LayHelper->data[owner].RK1[0];
                 } else if (fieldOrder == 3) {
-                    bool isReadyYet = false;
-                    unsigned long owner = std::get<2>((*REF.p_IntHelper)[ix].ixMap[i]);
 #pragma omp atomic read
                     isReadyYet = REF.p_LayHelper->data[owner].RK2_status;
                     while (!isReadyYet) {
@@ -369,8 +362,6 @@ void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,s
 #pragma omp atomic read
                     recvBuffer = REF.p_LayHelper->data[owner].RK2[0];
                 } else if (fieldOrder == 4) {
-                    bool isReadyYet = false;
-                    unsigned long owner = std::get<2>((*REF.p_IntHelper)[ix].ixMap[i]);
 #pragma omp atomic read
                     isReadyYet = REF.p_LayHelper->data[owner].RK3_status;
                     while (!isReadyYet) {
@@ -380,30 +371,40 @@ void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,s
                     }
 #pragma omp atomic read
                     recvBuffer = REF.p_LayHelper->data[owner].RK3[0];
+                } else if (fieldOrder == 1) {
+#pragma omp atomic read
+                    recvBuffer = (*REF.p_IntHelper)[owner].centralValue;
                 };
             } else {
-                int sendBuffer[2] = {
-                        (int) std::get<0>((*REF.p_IntHelper)[ix].ixMap[i]),
-                        (int) std::get<1>((*REF.p_IntHelper)[ix].ixMap[i])
-                };
 
-                PRINTF_DBG("[pfr] About to send! sendbuffer says %d and %d... asking tag is %d\n", sendBuffer[0], sendBuffer[1], ASKING_TAGS[fieldOrder-2]);
-                //std::cout << "Originally it is: " << std::get<0>((*REF.p_IntHelper)[ix].ixMap[i]) << std::endl;
-                //std::cout << "L is " << L << " and [ix].ixMap's size is: " << (*REF.p_IntHelper)[ix].ixMap.size() << std::endl;
-                MPI_Ssend(&sendBuffer,
-                          2,
-                          MPI_INT,
-                          (int) std::get<2>((*REF.p_IntHelper)[ix].ixMap[i]),
-                          ASKING_TAGS[fieldOrder-2],
-                          MPI_COMM_WORLD);
-                PRINTF_DBG("[pfr] About to receive! tag is %d\n",
-                       (int) std::get<0>((*REF.p_IntHelper)[ix].ixMap[i])
-                );
+                // This is kinda dumb, but the 'else' clause is for compatibility.
+                if (fieldOrder != 1){
+                    int sendBuffer = (int) std::get<1>((*REF.p_IntHelper)[ix].ixMap[i]);
+                    PRINTF_DBG("[pfr]!=1 About to send! sendbuffer says %d... asking tag is %d\n", sendBuffer, ASKING_TAGS[fieldOrder-1]);
+                    MPI_Ssend(&sendBuffer,
+                              1,
+                              MPI_INT,
+                              (int) std::get<2>((*REF.p_IntHelper)[ix].ixMap[i]),
+                              ASKING_TAGS[fieldOrder-1],
+                              MPI_COMM_WORLD);
+                    PRINTF_DBG("Sent successfully!\n");
+                } else {
+                    double sendBuffer = (double) std::get<1>((*REF.p_IntHelper)[ix].ixMap[i]);
+                    PRINTF_DBG("[pfr]==1 About to send! sendbuffer says %f... asking tag is %d\n", sendBuffer, ASKING_TAGS[fieldOrder-1]);
+                    MPI_Ssend(&sendBuffer,
+                              1,
+                              MPI_DOUBLE,
+                              (int) std::get<2>((*REF.p_IntHelper)[ix].ixMap[i]),
+                              ASKING_TAGS[fieldOrder-1],
+                              MPI_COMM_WORLD);
+                    PRINTF_DBG("Sent successfully!\n");
+                }
+                PRINTF_DBG("[pfr] About to receive! tag is %d\n", (int) std::get<1>((*REF.p_IntHelper)[ix].ixMap[i]));
                 MPI_Recv(&recvBuffer,
                          1,
                          MPI_DOUBLE,
                          (int) std::get<2>((*REF.p_IntHelper)[ix].ixMap[i]),
-                         (int) std::get<0>((*REF.p_IntHelper)[ix].ixMap[i]),
+                         (int) std::get<1>((*REF.p_IntHelper)[ix].ixMap[i]),
                          MPI_COMM_WORLD,
                          MPI_STATUS_IGNORE);
                 PRINTF_DBG("[pfr] recieved %f!\n",recvBuffer);
@@ -415,6 +416,8 @@ void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,s
                 REF.p_LayHelper->data[ix].RK2[i+1] = recvBuffer;
             } else if (fieldOrder == 4) {
                 REF.p_LayHelper->data[ix].RK3[i+1] = recvBuffer;
+            } else if (fieldOrder == 1) {
+                (*REF.p_IntHelper)[ix].neighborValues[i] =  recvBuffer;
             };
         }
 #pragma omp critical
@@ -427,107 +430,6 @@ void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,s
          }
  }
      }
-};
-
-
-template<int DT, int TIMETOL, int BATCH>
-void answer_messages(ReferenceContainer &REF,int MYTHR) {
-
-    int flag;
-    double ix;
-    double buffer;
-    double answer;
-    MPI_Message M;
-    MPI_Status  S;
-    MPI_Request R;
-    int TRIES=0;
-    int t=0;
-    bool firstlap=true;
-    while (TRIES < 3){
-        MPI_Status status;
-        if ((flag == 1) || firstlap) {
-            flag = 0;
-            buffer = -9995.0;
-            R = MPI_Request();
-            M = MPI_Message();
-            S = MPI_Status();
-
-            MPI_Improbe(MPI_ANY_SOURCE, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD,
-                    &flag, &M, &status);
-        }
-        if (firstlap) firstlap = false;
-
-        while ((flag != 1) && (t<TIMETOL)){
-
-            MPI_Improbe(MPI_ANY_SOURCE, VERTEXVAL_REQUEST_FLAG, MPI_COMM_WORLD,
-                        &flag, &M, &status);
-            ++t;
-            mssleep(DT);
-        }
-        if (t>=TIMETOL) ++TRIES;
-        t=0;
-        if (flag == 1){
-            MPI_Mrecv(&buffer, 1, MPI_DOUBLE, &M, &S);
-            build_answer_generic<0>(&answer, REF, &buffer, S.MPI_SOURCE, REF.p_ComHelper->WORLD_RANK[MYTHR]);
-            PRINTF_DBG("About to send one!\n");std::cout<<std::flush;
-            MPI_Ssend(&answer, 1, MPI_DOUBLE, S.MPI_SOURCE, (int) buffer, MPI_COMM_WORLD);
-            PRINTF_DBG("Correctly sent one!\n");std::cout<<std::flush;
-        }
-    }
-};
-
-
-
-
-
-template<int DT, int TIMETOL, int BATCH>
-void answer_messages_edges(ReferenceContainer &REF,int MYTHR) {
-
-    int flag;
-    double ix;
-    double buffer[2];
-    double answer[2];
-    MPI_Message M;
-    MPI_Status  S;
-    MPI_Request R;
-    int TRIES=0;
-    int t=0;
-    bool firstlap=true;
-    while (TRIES < 3){
-        MPI_Status status;
-        if ((flag == 1) || firstlap) {
-            flag = 0;
-            R = MPI_Request();
-            M = MPI_Message();
-            S = MPI_Status();
-
-            MPI_Improbe(MPI_ANY_SOURCE, EDGEVAL_REQUEST_FLAG, MPI_COMM_WORLD,
-                        &flag, &M, &status);
-        }
-        if (firstlap) firstlap = false;
-
-        while ((flag != 1) && (t<TIMETOL)){
-
-            MPI_Improbe(MPI_ANY_SOURCE, EDGEVAL_REQUEST_FLAG, MPI_COMM_WORLD,
-                        &flag, &M, &status);
-            ++t;
-            mssleep(DT);
-        }
-        if (t>=TIMETOL) ++TRIES;
-        t=0;
-        if (flag == 1){
-            MPI_Mrecv(&buffer[0], 2, MPI_DOUBLE, &M, &S);
-            build_answer_generic<1>(&answer[0], REF, &buffer[0], S.MPI_SOURCE, REF.p_ComHelper->WORLD_RANK[MYTHR]);
-            PRINTF_DBG("About to send one!\n");std::cout<<std::flush;
-            MPI_Ssend(&answer[0],
-                      2,
-                      MPI_DOUBLE,
-                      S.MPI_SOURCE,
-                      (int) ((int) buffer[1] + (int) OFFSET),
-                      MPI_COMM_WORLD);
-            PRINTF_DBG("Correctly sent one!\n");std::cout<<std::flush;
-        }
-    }
 };
 
 

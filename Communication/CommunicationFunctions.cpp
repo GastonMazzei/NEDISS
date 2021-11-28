@@ -5,7 +5,6 @@
 
 #include "CommunicationFunctions.h"
 
-#include "../Utils/global_standard_messages.h"
 
 void build_answer_edges(double * answer, ReferenceContainer &REF, double * ix, int owner, int &MyNProc){
     bool found = false;

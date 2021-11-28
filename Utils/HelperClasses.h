@@ -36,10 +36,6 @@ struct LayeredSolverCell{
     bool RK2_status;
     bool RK3_status;
     bool RK4_status;
-//    std::vector<bool> RK1_status;
-//    std::vector<bool> RK2_status;
-//    std::vector<bool> RK3_status;
-//    std::vector<bool> RK4_status;
     LayeredSolverCell(int N);
     LayeredSolverCell(){};
 };
@@ -106,21 +102,17 @@ struct ReferenceContainer {
     LayeredSolverHelper * p_LayHelper;
     Graph * p_g;
     int * p_TOT;
-    bool * p_keepResponding;
+    unsigned long NVtot;
     int * p_PENDING_INT;
     std::pair<std::queue<long>, std::queue<unsigned long>> * p_CHECKED;
     std::pair<std::queue<long>, std::queue<unsigned long>> * p_READY_FOR_INTEGRATION;
     ReferenceContainer(ParallelHelper &ParHelper,
                        CommunicationHelper &ComHelper,
                        Graph & g,
-                       std::pair<std::queue<long>, std::queue<unsigned long>> & CHECKED,
-                       std::pair<std::queue<long>, std::queue<unsigned long>> & READY_FOR_INTEGRATION,
                        IntegrationHelper & IntHelper,
-                       int & TOT,
-                       int & PENDING_INT,
                        MappingHelper & MapHelper,
                        LayeredSolverHelper & LayHelper,
-                       bool keepResponding);
+                       unsigned long NVtot_val);
 };
 
 

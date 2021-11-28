@@ -93,24 +93,15 @@ void LayeredSolverHelper::buildForRank(long ix, long rank){
 ReferenceContainer::ReferenceContainer(ParallelHelper &ParHelper,
                                        CommunicationHelper &ComHelper,
                                        Graph & g,
-                                       std::pair<std::queue<long>, std::queue<unsigned long>> & CHECKED,
-                                       std::pair<std::queue<long>, std::queue<unsigned long>> & READY_FOR_INTEGRATION,
                                        IntegrationHelper & IntHelper,
-                                       int & TOT,
-                                       int & PENDING_INT,
                                        MappingHelper & MapHelper,
                                        LayeredSolverHelper & LayHelper,
-                                       bool keepResponding){
-
+                                       unsigned long NVtot_val){
+    NVtot = NVtot_val;
     p_ParHelper = &ParHelper;
     p_ComHelper = &ComHelper;
     p_MapHelper = &MapHelper;
     p_LayHelper = &LayHelper;
-    p_keepResponding = &keepResponding;
-    p_PENDING_INT = &PENDING_INT;
     p_g = &g;
-    p_CHECKED = &CHECKED;
-    p_READY_FOR_INTEGRATION = &READY_FOR_INTEGRATION;
     p_IntHelper = reinterpret_cast<IntegrationHelper *>(&IntHelper);
-    p_TOT = &TOT;
 }

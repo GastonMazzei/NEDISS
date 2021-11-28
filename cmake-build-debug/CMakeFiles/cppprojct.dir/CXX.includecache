@@ -6,12 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/m4zz31/cppprojct/Communication/CommunicationFunctions.cpp
-CommunicationFunctions.h
-/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
-../Utils/global_standard_messages.h
-/home/m4zz31/cppprojct/Utils/global_standard_messages.h
-
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
 set
 -
@@ -124,12 +118,6 @@ boost/graph/erdos_renyi_generator.hpp
 boost/range/adaptors.hpp
 -
 
-/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp
-GraphFunctions.h
-/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
-cassert
--
-
 /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
 ../macros/macros.h
 /home/m4zz31/cppprojct/macros/macros.h
@@ -199,10 +187,6 @@ GeneralSolver.h
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
 ../macros/macros.h
 /home/m4zz31/cppprojct/macros/macros.h
-
-/home/m4zz31/cppprojct/Tests/graph-test-init.cpp
-graph-test-init.h
-/home/m4zz31/cppprojct/Tests/graph-test-init.h
 
 /home/m4zz31/cppprojct/Tests/graph-test-init.h
 string
