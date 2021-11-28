@@ -453,6 +453,32 @@ CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.s"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/Utils/display_vectors.cpp -o CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.s
 
+CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o: CMakeFiles/cppprojct.dir/flags.make
+CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o: ../GraphClasses/ScaleFreeGraph.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o"
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o -c /home/m4zz31/cppprojct/GraphClasses/ScaleFreeGraph.cpp
+
+CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.i"
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/GraphClasses/ScaleFreeGraph.cpp > CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.i
+
+CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.s"
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/GraphClasses/ScaleFreeGraph.cpp -o CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.s
+
+CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o: CMakeFiles/cppprojct.dir/flags.make
+CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o: ../GraphClasses/GridGraph.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o"
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o -c /home/m4zz31/cppprojct/GraphClasses/GridGraph.cpp
+
+CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.i"
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/cppprojct/GraphClasses/GridGraph.cpp > CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.i
+
+CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.s"
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/cppprojct/GraphClasses/GridGraph.cpp -o CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.s
+
 # Object files for target cppprojct
 cppprojct_OBJECTS = \
 "CMakeFiles/cppprojct.dir/main.cpp.o" \
@@ -483,7 +509,9 @@ cppprojct_OBJECTS = \
 "CMakeFiles/cppprojct.dir/Utils/certify_compliant.cpp.o" \
 "CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.o" \
 "CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.o" \
-"CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.o"
+"CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.o" \
+"CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o" \
+"CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o"
 
 # External object files for target cppprojct
 cppprojct_EXTERNAL_OBJECTS =
@@ -517,6 +545,8 @@ cppprojct: CMakeFiles/cppprojct.dir/Utils/certify_compliant.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.o
+cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o
+cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/build.make
 cppprojct: /usr/lib/x86_64-linux-gnu/libboost_mpi.so
 cppprojct: /usr/lib/x86_64-linux-gnu/libboost_graph_parallel.so
@@ -525,7 +555,7 @@ cppprojct: /usr/lib/x86_64-linux-gnu/libboost_serialization.so
 cppprojct: /usr/lib/gcc/x86_64-linux-gnu/7/libgomp.so
 cppprojct: /usr/lib/x86_64-linux-gnu/libpthread.so
 cppprojct: CMakeFiles/cppprojct.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Linking CXX executable cppprojct"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/m4zz31/cppprojct/cmake-build-debug-coverage/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Linking CXX executable cppprojct"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cppprojct.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

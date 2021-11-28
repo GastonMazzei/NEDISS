@@ -132,10 +132,22 @@
 		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h">
 			<Option target="cppprojct"/>
 		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/GridGraph.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/GridGraph.h">
+			<Option target="cppprojct"/>
+		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/RingGraph.cpp">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/RingGraph.h">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/ScaleFreeGraph.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/ScaleFreeGraph.h">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/GraphClasses/SmallWorldGraph.cpp">

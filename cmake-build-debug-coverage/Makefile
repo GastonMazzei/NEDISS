@@ -358,6 +358,33 @@ GraphClasses/GraphFunctions.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.s
 .PHONY : GraphClasses/GraphFunctions.cpp.s
 
+GraphClasses/GridGraph.o: GraphClasses/GridGraph.cpp.o
+
+.PHONY : GraphClasses/GridGraph.o
+
+# target to build an object file
+GraphClasses/GridGraph.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o
+.PHONY : GraphClasses/GridGraph.cpp.o
+
+GraphClasses/GridGraph.i: GraphClasses/GridGraph.cpp.i
+
+.PHONY : GraphClasses/GridGraph.i
+
+# target to preprocess a source file
+GraphClasses/GridGraph.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.i
+.PHONY : GraphClasses/GridGraph.cpp.i
+
+GraphClasses/GridGraph.s: GraphClasses/GridGraph.cpp.s
+
+.PHONY : GraphClasses/GridGraph.s
+
+# target to generate assembly for a file
+GraphClasses/GridGraph.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.s
+.PHONY : GraphClasses/GridGraph.cpp.s
+
 GraphClasses/RingGraph.o: GraphClasses/RingGraph.cpp.o
 
 .PHONY : GraphClasses/RingGraph.o
@@ -384,6 +411,33 @@ GraphClasses/RingGraph.s: GraphClasses/RingGraph.cpp.s
 GraphClasses/RingGraph.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.s
 .PHONY : GraphClasses/RingGraph.cpp.s
+
+GraphClasses/ScaleFreeGraph.o: GraphClasses/ScaleFreeGraph.cpp.o
+
+.PHONY : GraphClasses/ScaleFreeGraph.o
+
+# target to build an object file
+GraphClasses/ScaleFreeGraph.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o
+.PHONY : GraphClasses/ScaleFreeGraph.cpp.o
+
+GraphClasses/ScaleFreeGraph.i: GraphClasses/ScaleFreeGraph.cpp.i
+
+.PHONY : GraphClasses/ScaleFreeGraph.i
+
+# target to preprocess a source file
+GraphClasses/ScaleFreeGraph.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.i
+.PHONY : GraphClasses/ScaleFreeGraph.cpp.i
+
+GraphClasses/ScaleFreeGraph.s: GraphClasses/ScaleFreeGraph.cpp.s
+
+.PHONY : GraphClasses/ScaleFreeGraph.s
+
+# target to generate assembly for a file
+GraphClasses/ScaleFreeGraph.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.s
+.PHONY : GraphClasses/ScaleFreeGraph.cpp.s
 
 GraphClasses/SmallWorldGraph.o: GraphClasses/SmallWorldGraph.cpp.o
 
@@ -958,9 +1012,15 @@ help:
 	@echo "... GraphClasses/GraphFunctions.o"
 	@echo "... GraphClasses/GraphFunctions.i"
 	@echo "... GraphClasses/GraphFunctions.s"
+	@echo "... GraphClasses/GridGraph.o"
+	@echo "... GraphClasses/GridGraph.i"
+	@echo "... GraphClasses/GridGraph.s"
 	@echo "... GraphClasses/RingGraph.o"
 	@echo "... GraphClasses/RingGraph.i"
 	@echo "... GraphClasses/RingGraph.s"
+	@echo "... GraphClasses/ScaleFreeGraph.o"
+	@echo "... GraphClasses/ScaleFreeGraph.i"
+	@echo "... GraphClasses/ScaleFreeGraph.s"
 	@echo "... GraphClasses/SmallWorldGraph.o"
 	@echo "... GraphClasses/SmallWorldGraph.i"
 	@echo "... GraphClasses/SmallWorldGraph.s"

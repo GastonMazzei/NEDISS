@@ -23,11 +23,13 @@ A brief graphic explanation.
 
 * NNODES: `P*NT*2 - inf` defines the number of total nodes to use. A pathological lower bound can be P*NT*2, which means two times the number of processors times the number of threads per processor.
 
-* TEST: `{0,1,2}` are the possible test modes to run as it is currently under development.
+* TEST: `{0,1,2,3}` is the running mode, see below.
 
 * SEED: `any int` is the seed to use during the entire simulation.
 
 * kneigh: `0-inf` defines the number of neighbors to which connect if building a Small-World graph.
+
+* A,B: `[0,1]` define the proba to initialize the ScaleFree graph.
 
 * proba: `[0,1]` defines the probability used in the relevant constructors, currently Erdos-Renyi and Small-World.
 
@@ -37,8 +39,7 @@ A brief graphic explanation.
 
 * np is the number of processors defined  to mpirun, where the flag `-oversubscribe` allows to use more than the actual number of threads when ran locally in a laptop.
 
-* TODO: more inputs. (1) Erdos-Renyi proba, (2) Hyperparams to be optimized such as BATCH, DT.
-
+* SAMPLING_FREQ: `{1,...,NRUNS}` is the number of iterations to wait between recording the state of the system in a .dot file that can be later used for both graphical plotting and simple value-access. 
 
 <center><i>Equations & Solvers</i></center>
 
@@ -52,21 +53,22 @@ A brief graphic explanation.
 
 | Graph | All nodes 1 value | Nodes different values | All edges 1 value | Edges different values | 
 | --- | --- | --- | --- | --- |
-| Ring(N) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: |
-| Clique(N) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: |
-| Erdos Renyi(N,p) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :black_square_button: |
-| Grid(N,M) | :x: | :x: | :x: | :x: |
-| Torus(N,M) | :x: | :x: | :x: | :x: |
+| Ring(N) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :hourglass: |
+| Clique(N) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :hourglass: |
+| Erdos Renyi(N,p) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :hourglass: |
+| ScaleFree(N,A,B) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :hourglass: |
 | Small World(N,k,p) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: |
+| Grid(N,M) | :hourglass: | :hourglass: | :hourglass: | :hourglass: |
+| Torus(N,M) | :x: | :x: | :x: | :x: |
 | hypercube(N) | :x: | :x: | :x: | :x: |
 
 
-<center><i>Tests</i></center>
+<center><i>Working modes</i></center>
 
 0 - Tests initialization
 1 - Tests single-step evolution
 2 - Tests results after several runs
-
+3 - Produces a graphical simulation
 
 <center><i>Useful tools</i></center>
  
