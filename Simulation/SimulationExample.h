@@ -31,8 +31,8 @@ void run_several_times(GRAPHTYPE &G, std::string name,
     std::vector<std::pair<double, double>> X0_W;
     for (int i=0; i<G.N; i++){
         X0_W.push_back({
-                               std::abs(std::sin(3.14 * ((double) i) / 13)),
-                               1/((double) G.N) * (double) i
+                       std::abs(std::sin(3.14 * ((double) i) / 13)),
+                       1/((double) G.N) * (double) i
                        });
     }
     G.Initialization(X0_W, 1, G.g, G.N);

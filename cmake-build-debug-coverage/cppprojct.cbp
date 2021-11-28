@@ -215,6 +215,12 @@
 		<Unit filename="/home/m4zz31/cppprojct/Utils/differential_equations_aux.h">
 			<Option target="cppprojct"/>
 		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Utils/display_vectors.cpp">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/cppprojct/Utils/display_vectors.h">
+			<Option target="cppprojct"/>
+		</Unit>
 		<Unit filename="/home/m4zz31/cppprojct/Utils/error.cpp">
 			<Option target="cppprojct"/>
 		</Unit>

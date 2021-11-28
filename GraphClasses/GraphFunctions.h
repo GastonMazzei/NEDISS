@@ -5,20 +5,24 @@
 #ifndef CPPPROJCT_GRAPHFUNCTIONS_H
 #define CPPPROJCT_GRAPHFUNCTIONS_H
 
+#include <mpi.h>
+#include <set>
+#include <boost/mpi/environment.hpp>
+
+#include "GeneralGraph.h"
+
 #include "../macros/macros.h"
+
 #include "../Communication/CommunicationFunctions.h"
+
 #include "../Solvers/GeneralSolver.h"
+
 #include "../Utils/adequate_synchronization.h"
 #include "../Utils/memory_management.h"
 #include "../Utils/msleep.h"
 #include "../Utils/error.h"
-#include "GeneralGraph.h"
 #include "../Utils/HelperClasses.h"
-#include <mpi.h>
-#include <set>
-#include <boost/mpi/environment.hpp>
-#include "../Communication/CommunicationFunctions.h"
-
+#include "../Utils/display_vectors.h"
 
 
 template <typename SpecificRequestObject> class RequestObject;
@@ -130,7 +134,7 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
             std::set<unsigned long> seen;
             while (it != end){
                 unsigned long elemix = std::get<2>(*it);
-                const bool is_in = seen.find(elemix) != seen.end(); //CHECKPOINT
+                const bool is_in = seen.find(elemix) != seen.end();
                 PRINTF_DBG("Std output uix: %lu ix: %ld proc: %d. vals are %f , %f , %lu\n",
                        uix, ix, MYPROC,
                        std::get<0>(*it), std::get<1>(*it), std::get<2>(*it));
@@ -200,7 +204,6 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
 
 
 
-
 template<typename DIFFEQ, typename SOLVER, int BATCH>
 void contribute_to_higher_integration(ReferenceContainer &REF,
                                         GeneralSolver<DIFFEQ,SOLVER> &solver,
@@ -208,63 +211,79 @@ void contribute_to_higher_integration(ReferenceContainer &REF,
     int N = REF.p_LayHelper->data.size();
     auto vs = vertices(*REF.p_g);
 #pragma omp parallel firstprivate(N, REF, vs, solver)
-    {
-        int Nthreads = (int) omp_get_num_threads();
-        int myThread = (int) omp_get_thread_num();
-        int begin = N/Nthreads * myThread;
-        int end = N/Nthreads * (myThread + 1);
-        if (myThread + 1 == Nthreads) end += N%Nthreads;
-        for (auto v = vs.first + begin; v != vs.first + end; ++v){
-            long ix = get(get(boost::vertex_index, *(REF.p_g)), *v);
-            if (fieldNum == 2){
-                solver.Term2((*REF.p_IntHelper)[ix].centralValue,
-                             (*REF.p_IntHelper)[ix].centralParams,
-                             (*REF.p_IntHelper)[ix].neighborValues,
-                             (*REF.p_IntHelper)[ix].edgeValues,
-                             REF.p_LayHelper->data[ix].RK1,
-                             REF.p_LayHelper->data[ix].RK2);
-                REF.p_LayHelper->data[ix].RK2_status = true;
-                REF.p_LayHelper->data[ix].RK1_status = false;
-                PRINTF_DBG("RK2 with ix %ld correctly computed!\n", ix);
-            } else if (fieldNum == 3) {
-                solver.Term3((*REF.p_IntHelper)[ix].centralValue,
-                             (*REF.p_IntHelper)[ix].centralParams,
-                             (*REF.p_IntHelper)[ix].neighborValues,
-                             (*REF.p_IntHelper)[ix].edgeValues,
-                             REF.p_LayHelper->data[ix].RK1,
-                             REF.p_LayHelper->data[ix].RK2,
-                             REF.p_LayHelper->data[ix].RK3);
-                REF.p_LayHelper->data[ix].RK3_status = true;
-                REF.p_LayHelper->data[ix].RK2_status = false;
-                PRINTF_DBG("RK3 with ix %ld correctly computed!\n", ix);
-            } else if (fieldNum == 4){
-                solver.Term4((*REF.p_IntHelper)[ix].centralValue,
-                             (*REF.p_IntHelper)[ix].centralParams,
-                             (*REF.p_IntHelper)[ix].neighborValues,
-                             (*REF.p_IntHelper)[ix].edgeValues,
-                             REF.p_LayHelper->data[ix].RK1,
-                             REF.p_LayHelper->data[ix].RK2,
-                             REF.p_LayHelper->data[ix].RK3,
-                             REF.p_LayHelper->data[ix].RK4);
-                REF.p_LayHelper->data[ix].RK4_status = true;
-                REF.p_LayHelper->data[ix].RK3_status = false;
-                PRINTF_DBG("RK4 with ix %ld correctly computed!\n", ix);
-            } else if (fieldNum == 1){
-                solver.Term1((*REF.p_IntHelper)[ix].centralValue,
-                             (*REF.p_IntHelper)[ix].centralParams,
-                             (*REF.p_IntHelper)[ix].neighborValues,
-                             (*REF.p_IntHelper)[ix].edgeValues,
-                             REF.p_LayHelper->data[ix].RK1);
-                REF.p_LayHelper->data[ix].RK1_status = true;
-                PRINTF_DBG("RK2 with ix %ld correctly computed!\n", ix);
-            } else {
-                printf("[FATAL] field order requested does not exist. Requested was: %d\n", fieldNum);
-                std::cout<<std::flush;
-                exit(1);
-            }
+{
+    int Nthreads = (int) omp_get_num_threads();
+    int myThread = (int) omp_get_thread_num();
+    int begin = N/Nthreads * myThread;
+    int end = N/Nthreads * (myThread + 1);
+    if (myThread + 1 == Nthreads) end += N%Nthreads;
+    for (auto v = vs.first + begin; v != vs.first + end; ++v){
+        long ix = get(get(boost::vertex_index, *(REF.p_g)), *v);
+
+
+//            if (ix == 0){
+//                PRINTF_DBG("rk0, central val: %f and neighbors ",(*REF.p_IntHelper)[ix].centralValue);
+//                display((*REF.p_IntHelper)[ix].neighborValues);
+//                PRINTF_DBG("rk1 "); display(REF.p_LayHelper->data[ix].RK1);
+//                if (fieldNum >= 2) {printf("rk2 "); display(REF.p_LayHelper->data[ix].RK2);}
+//                if (fieldNum >= 3) {printf("rk3 "); display(REF.p_LayHelper->data[ix].RK3);}
+//                if (fieldNum >= 4) {printf("rk4 "); display(REF.p_LayHelper->data[ix].RK4);}
+//            }
+
+
+
+        if (fieldNum == 2){
+            solver.Term2((*REF.p_IntHelper)[ix].centralValue,
+                         (*REF.p_IntHelper)[ix].centralParams,
+                         (*REF.p_IntHelper)[ix].neighborValues,
+                         (*REF.p_IntHelper)[ix].edgeValues,
+                         REF.p_LayHelper->data[ix].RK1,
+                         REF.p_LayHelper->data[ix].RK2);
+            REF.p_LayHelper->data[ix].RK2_status = true;
+            PRINTF_DBG("RK2 with ix %ld correctly computed! it yielded %f\n", ix, REF.p_LayHelper->data[ix].RK2[0]);
+        } else if (fieldNum == 3) {
+            solver.Term3((*REF.p_IntHelper)[ix].centralValue,
+                         (*REF.p_IntHelper)[ix].centralParams,
+                         (*REF.p_IntHelper)[ix].neighborValues,
+                         (*REF.p_IntHelper)[ix].edgeValues,
+                         REF.p_LayHelper->data[ix].RK1,
+                         REF.p_LayHelper->data[ix].RK2,
+                         REF.p_LayHelper->data[ix].RK3);
+            REF.p_LayHelper->data[ix].RK3_status = true;
+            PRINTF_DBG("RK3 with ix %ld correctly computed! it yielded %f\n", ix, REF.p_LayHelper->data[ix].RK3[0]);
+        } else if (fieldNum == 4){
+            solver.Term4((*REF.p_IntHelper)[ix].centralValue,
+                         (*REF.p_IntHelper)[ix].centralParams,
+                         (*REF.p_IntHelper)[ix].neighborValues,
+                         (*REF.p_IntHelper)[ix].edgeValues,
+                         REF.p_LayHelper->data[ix].RK1,
+                         REF.p_LayHelper->data[ix].RK2,
+                         REF.p_LayHelper->data[ix].RK3,
+                         REF.p_LayHelper->data[ix].RK4);
+            REF.p_LayHelper->data[ix].RK4_status = true;
+            PRINTF_DBG("RK4 with ix %ld correctly computed! it yielded %f\n", ix, REF.p_LayHelper->data[ix].RK4[0]);
+        } else if (fieldNum == 1){
+            solver.Term1((*REF.p_IntHelper)[ix].centralValue,
+                         (*REF.p_IntHelper)[ix].centralParams,
+                         (*REF.p_IntHelper)[ix].neighborValues,
+                         (*REF.p_IntHelper)[ix].edgeValues,
+                         REF.p_LayHelper->data[ix].RK1);
+            REF.p_LayHelper->data[ix].RK1_status = true;
+            PRINTF_DBG("RK1 with ix %ld correctly computed! it yielded %f and central value was %f\n", ix, REF.p_LayHelper->data[ix].RK1[0], (*REF.p_IntHelper)[ix].centralValue);
+            printf("centralParams are : \n");display((*REF.p_IntHelper)[ix].centralParams);
+            printf("Neighbor values are : \n");display((*REF.p_IntHelper)[ix].neighborValues);
+            printf("edgeValues values are : \n");display((*REF.p_IntHelper)[ix].edgeValues);
+        } else {
+            printf("[FATAL] field order requested does not exist. Requested was: %d\n", fieldNum);
+            std::cout<<std::flush;
+            exit(1);
         }
     }
+}
 };
+
+
+void update_neighbor_values(ReferenceContainer &REF);
 
 template<typename DIFFEQ, typename SOLVER, int BATCH>
 void finalize_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> &solver){
@@ -272,13 +291,17 @@ void finalize_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> 
 	int N = REF.p_LayHelper->data.size();
 
 	auto vs = vertices(*REF.p_g);
-#pragma omp parallel firstprivate(N, REF, vs)
+#pragma omp parallel firstprivate(N, REF, vs, solver)
 {
     int Nthreads = (int) omp_get_num_threads();
 	int myThread = (int) omp_get_thread_num();
 	int begin = N/Nthreads * myThread;
 	int end = N/Nthreads * (myThread + 1);
-	if (myThread + 1 == Nthreads) end += N%Nthreads;
+	if (myThread + 1 == Nthreads) end += N % Nthreads;
+
+        PRINTF_DBG("Currently at 'finalize_integration': N=%d, Nthreads=%d, myThread=%d, begin=%d and end=%d\n",
+                   N, Nthreads, myThread, begin, end); std::cout << std::flush;
+
         for (auto v = vs.first + begin; v != vs.first + end; ++v){
             long ix = get(get(boost::vertex_index, *(REF.p_g)), *v);
             double answer = 0;
@@ -293,7 +316,8 @@ void finalize_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> 
                         REF.p_LayHelper->data[ix].RK4,
                         answer
             );
-            (*REF.p_g)[*v].temporal_register = answer;
+            //(*REF.p_g)[*v].temporal_register = answer;
+            (*REF.p_g)[*v].value = answer;
             REF.p_LayHelper->data[ix].RK1_status = false;
             REF.p_LayHelper->data[ix].RK2_status = false;
             REF.p_LayHelper->data[ix].RK3_status = false;
@@ -339,6 +363,10 @@ void single_evolution2(Graph &g,
     int request_performers_ended=0;
     auto MapHelper = *REF.p_MapHelper;
 
+    // Function that transvereses the graph looking for
+    // ixMap indexes that are owned by the current prcessor and updating em.
+    update_neighbor_values(REF);
+
     for (int i=1; i < solver.deg+1 ; ++i){
         PRINTF_DBG("entering the for, i is %d\n",i);
         if (solver.requires_communication){
@@ -350,7 +378,7 @@ void single_evolution2(Graph &g,
             long pending = (long) NVtot;
             std::queue<long> CAPTURED;
             for (long k=0; k<pending; ++k) CAPTURED.push(k);
-#pragma omp parallel
+#pragma omp parallel firstprivate(solver)
             {
                 if (omp_get_thread_num() == 0) {
                     int v_Ncapturers = 0;
@@ -446,6 +474,7 @@ void single_evolution2(Graph &g,
                 }
             }
         }
+        PRINTF_DBG("About to call 'contribute_to_higher_integration' with i=%d\n",i);
         contribute_to_higher_integration<DIFFEQ, SOLVER, BATCH>(REF,
                                                                 solver,
                                                                 i);
@@ -453,10 +482,11 @@ void single_evolution2(Graph &g,
     // Join all the integration terms
     PRINTF_DBG("Reached the final integration :-)\n");
     finalize_integration<DIFFEQ, SOLVER, BATCH>(REF, solver);
+    PRINTF_DBG("Ended the final integration :-)\n");
 
     // Swap temporal and main registers
     PRINTF_DBG("starting to swap register\n");std::cout<<std::flush;
-    register_to_value(g);
+    //register_to_value(g);
 
     // Synchronize
     PRINTF_DBG("About to synchronize");std::cout<<std::flush;
@@ -944,7 +974,7 @@ void single_evolution(Graph &g,
 
     // Swap temporal and main registers
     PRINTF_DBG("starting to swap register\n");std::cout<<std::flush;
-    register_to_value(g);
+    //register_to_value(g);
 
     // Synchronize
     PRINTF_DBG("About to synchronize");std::cout<<std::flush;

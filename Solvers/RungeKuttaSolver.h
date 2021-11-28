@@ -93,17 +93,7 @@ void RungeKuttaSolver<Equation>::evolve(double t,
                                      std::vector<double> &RK4,
                                      double &answer,
                                      double * P){
-                                    // add here a pointer to REF where we will store the vals ;-)
-//    if (true){
-//        printf("[WARNING] Runge Kutta is currently not implemented. This is not fatal but just returns integration placehholder\n");
-//        std::cout << std::flush;
-//        answer = INTEGRATION_PLACEHOLDER;
-//    } else {
-//        printf("[FATAL] RUNGE KUTTA is not available. Pending communication between processor for vector K1,2,3,4");
-//        std::cout << std::flush;
-//        exit(1);
-//    }
-//    return;
+
 
     answer = a + (*(P+0)) * h * RK1[0] +
                 (*(P+1)) * h * RK2[0] +

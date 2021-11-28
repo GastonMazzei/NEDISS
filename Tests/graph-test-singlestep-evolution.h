@@ -8,7 +8,6 @@
 #include "test-imports.h"
 
 template <int T, typename GRAPHTYPE, int BATCH, typename DIFFEQ>
-
 void test_graph_singlestep_evolution(GRAPHTYPE &G, 
 				                    std::string name,
                                      SolverConfig &SOLVER) {

@@ -108,7 +108,6 @@ void EulerSolver<Equation>::evolve(double t,
 }
 
 
-
 template <typename Equation>
 void EulerSolver<Equation>::Term1(double t,
            double h,
@@ -130,8 +129,12 @@ void EulerSolver<Equation>::Term1(double t,
     T4[0] = 1;
     E.UpdateFlowSpecs(T1,T2,T3,T4,d.size());
     E.Reset();
+    PRINTF_DBG("EulerSolver reports: before computing the field, Specs.result was %f\n",Specs.result);
     E.Field(t,a,b,c,d);
+    PRINTF_DBG("EulerSolver reports: after computing the field, Specs.result was %f\n",Specs.result);
     RK1[0] =  Specs.result; // (*(P+0)) * h
+    PRINTF_DBG("EulerSolver reports: the written value to RK1[0] was %f\n",RK1[0]);
+
 
 }
 
