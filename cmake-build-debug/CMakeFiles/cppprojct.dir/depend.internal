@@ -70,6 +70,14 @@ CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o
  /home/m4zz31/cppprojct/Utils/memory_management.h
  /home/m4zz31/cppprojct/Utils/msleep.h
  /home/m4zz31/cppprojct/macros/macros.h
+CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o
+ /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+ /home/m4zz31/cppprojct/GraphClasses/GridGraph.cpp
+ /home/m4zz31/cppprojct/GraphClasses/GridGraph.h
+ /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
+ /home/m4zz31/cppprojct/Utils/error.h
+ /home/m4zz31/cppprojct/Utils/msleep.h
+ /home/m4zz31/cppprojct/macros/macros.h
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o
  /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
  /home/m4zz31/cppprojct/GraphClasses/RingGraph.cpp
@@ -77,6 +85,12 @@ CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o
  /home/m4zz31/cppprojct/Utils/adequate_synchronization.h
  /home/m4zz31/cppprojct/Utils/error.h
  /home/m4zz31/cppprojct/Utils/msleep.h
+ /home/m4zz31/cppprojct/macros/macros.h
+CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o
+ /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+ /home/m4zz31/cppprojct/GraphClasses/ScaleFreeGraph.cpp
+ /home/m4zz31/cppprojct/GraphClasses/ScaleFreeGraph.h
+ /home/m4zz31/cppprojct/Utils/error.h
  /home/m4zz31/cppprojct/macros/macros.h
 CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.o
  /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h

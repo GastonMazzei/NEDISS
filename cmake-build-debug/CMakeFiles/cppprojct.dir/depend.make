@@ -70,6 +70,14 @@ CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/memory_mana
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../Utils/msleep.h
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../macros/macros.h
 
+CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o: ../GraphClasses/GridGraph.cpp
+CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o: ../GraphClasses/GridGraph.h
+CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o: ../Utils/adequate_synchronization.h
+CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o: ../Utils/error.h
+CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o: ../Utils/msleep.h
+CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o: ../macros/macros.h
+
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../GraphClasses/GeneralGraph.h
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../GraphClasses/RingGraph.cpp
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../GraphClasses/RingGraph.h
@@ -77,6 +85,12 @@ CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../Utils/adequate_synchro
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../Utils/error.h
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../Utils/msleep.h
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../macros/macros.h
+
+CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o: ../GraphClasses/GeneralGraph.h
+CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o: ../GraphClasses/ScaleFreeGraph.cpp
+CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o: ../GraphClasses/ScaleFreeGraph.h
+CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o: ../Utils/error.h
+CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o: ../macros/macros.h
 
 CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.o: ../GraphClasses/GeneralGraph.h
 CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.o: ../GraphClasses/SmallWorldGraph.cpp

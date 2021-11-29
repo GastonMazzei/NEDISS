@@ -3,6 +3,8 @@ import numpy as np
 import pickle
 import os
 
+TITLE = 'Sin(theta) over time for each node'
+
 with open('/home/m4zz31/cppprojct/graphic/timeseries/result.pkl','rb') as f:
   data = pickle.load(f)
 
@@ -24,6 +26,7 @@ for i in range(L):
 		v += [np.sin(data[k][i])]
 	plt.bar(range(len(v)), v, color='r')
 	plt.ylim(MIN-0.1,MAX+0.1)
+	plt.title(TITLE)
 	plt.savefig(f'graphic/timeseries/oscillation-files/{str(i).zfill(D)}.png')
 	plt.close()
 

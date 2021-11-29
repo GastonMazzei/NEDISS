@@ -3,10 +3,13 @@
 # Simulation
 
 EQNUMBER=0;
-NRUNS=300;
+NRUNS=1500;
 TEST=-1;
 SEED=21234;
-SAMPLING_FREQ=2;
+SAMPLING_FREQ=3;
+WMIN=1.3;
+WMAX=0.3;
+J=3;
 
 # Solver
 
@@ -20,9 +23,9 @@ K4=0.16666666666666;
 # Topology
 
 TOPOLOGY=3;
-kneigh=5;
+kneigh=4;
 proba=0.10;
-NNODES=60;
+NNODES=30;
 
 # Performance
 

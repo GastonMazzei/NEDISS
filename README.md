@@ -31,6 +31,8 @@ A brief graphic explanation.
 
 * A,B: `[0,1]` define the proba to initialize the ScaleFree graph.
 
+* J,WMIN,WMAX `double` define the (constant) coupling strength for kuramoto, and the min & max bounds for uniformly sampling the natural frequency of each node.
+
 * proba: `[0,1]` defines the probability used in the relevant constructors, currently Erdos-Renyi and Small-World.
 
 * OMP_THREAD_LIMIT: `3-inf` is the maximum number of threads allowed per processor. At least three are required by our current division of tasks which is thread-id dependant.

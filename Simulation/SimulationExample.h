@@ -29,13 +29,29 @@ void run_several_times(GRAPHTYPE &G, std::string name,
 
     // Initialize values
     std::vector<std::pair<double, double>> X0_W;
+    double J = 3.14;
+    double WMIN=1,WMAX=2;
+    if (std::stoi(std::getenv("EQNUMBER")) == 0){
+        // If it is kuramoto, get the coupling strength from the environment variables
+        J = (double) std::stod(std::getenv("J"));
+        WMIN = (double) std::stod(std::getenv("WMIN"));
+        WMAX = (double) std::stod(std::getenv("WMAX"));
+    }
+    std::uniform_real_distribution<double> initialPhase(0, M_PI);
+    std::uniform_real_distribution<double> naturalFrequency(WMIN, WMAX);
+    std::default_random_engine re;
     for (int i=0; i<G.N; i++){
+        double new_phase = initialPhase(re);
+        double new_freq = naturalFrequency(re);
         X0_W.push_back({
-                       std::abs(std::sin(3.14 * ((double) i) / 13)),
-                       1/((double) G.N) * (double) i
+                        new_phase,new_freq
+// deterministic alternative:
+//                       std::abs(std::sin(3.14 * ((double) i) / 13)),
+//                       1/((double) G.N) * (double) i
                        });
     }
-    G.Initialization(X0_W, 1, G.g, G.N);
+
+    G.Initialization(X0_W, J, G.g, G.N);
 
     unsigned long NVtot = boost::num_vertices(G.g);
     CommunicationHelper ComHelper(G.g);

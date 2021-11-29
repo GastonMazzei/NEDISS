@@ -19,8 +19,13 @@ void test_long_singlestep_run(GRAPHTYPE &G, std::string name,
     // Preprocessing
     adsync_message<T>(msg_prev + "'preparing " + name + " graph for singlestep evolution'", G.g);
     G.build();
-
-    G.Initialization({{12.345, 6.78}}, 3.14, G.g, G.N);
+    double J = 3.14;
+    double W0 = 6.78;
+    if (std::stoi(std::getenv("EQNUMBER")) == 0){
+        // If it is kuramoto, get the coupling strength from the environment variables
+        J = (double) std::stod(std::getenv("J"));
+    }
+    G.Initialization({{12.345, W0}}, J, G.g, G.N);
     adsync_message_barrier<T>(msg_post + "'preparing ring graph for singlestep evolution'", G.g);
 
     adsync_message<T>(msg_prev + "'showVertex'", G.g);

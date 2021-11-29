@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/m4zz31/cppprojct/Communication/CommunicationFunctions.cpp
-CommunicationFunctions.h
-/home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
-
 /home/m4zz31/cppprojct/Communication/CommunicationFunctions.h
 set
 -
@@ -57,24 +53,6 @@ GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/ErdosRenyiGraph.h
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
-
-/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.cpp
-GeneralGraph.h
-/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
-../Utils/error.h
-/home/m4zz31/cppprojct/Utils/error.h
-cmath
--
-mpi.h
-/home/m4zz31/cppprojct/GraphClasses/mpi.h
-../Utils/adequate_synchronization.h
-/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
-../Utils/memory_management.h
-/home/m4zz31/cppprojct/Utils/memory_management.h
-../Utils/msleep.h
-/home/m4zz31/cppprojct/Utils/msleep.h
-iomanip
--
 
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
 iostream
@@ -140,12 +118,6 @@ boost/graph/erdos_renyi_generator.hpp
 boost/range/adaptors.hpp
 -
 
-/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.cpp
-GraphFunctions.h
-/home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
-cassert
--
-
 /home/m4zz31/cppprojct/GraphClasses/GraphFunctions.h
 mpi.h
 -
@@ -174,9 +146,29 @@ GeneralGraph.h
 ../Utils/display_vectors.h
 /home/m4zz31/cppprojct/Utils/display_vectors.h
 
+/home/m4zz31/cppprojct/GraphClasses/GridGraph.cpp
+GridGraph.h
+/home/m4zz31/cppprojct/GraphClasses/GridGraph.h
+../Utils/adequate_synchronization.h
+/home/m4zz31/cppprojct/Utils/adequate_synchronization.h
+
+/home/m4zz31/cppprojct/GraphClasses/GridGraph.h
+GeneralGraph.h
+/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+
 /home/m4zz31/cppprojct/GraphClasses/RingGraph.h
 GeneralGraph.h
 /home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+
+/home/m4zz31/cppprojct/GraphClasses/ScaleFreeGraph.cpp
+ScaleFreeGraph.h
+/home/m4zz31/cppprojct/GraphClasses/ScaleFreeGraph.h
+
+/home/m4zz31/cppprojct/GraphClasses/ScaleFreeGraph.h
+GeneralGraph.h
+/home/m4zz31/cppprojct/GraphClasses/GeneralGraph.h
+boost/graph/plod_generator.hpp
+-
 
 /home/m4zz31/cppprojct/GraphClasses/SmallWorldGraph.h
 GeneralGraph.h
@@ -215,10 +207,6 @@ GeneralSolver.h
 /home/m4zz31/cppprojct/Solvers/GeneralSolver.h
 ../macros/macros.h
 /home/m4zz31/cppprojct/macros/macros.h
-
-/home/m4zz31/cppprojct/Tests/graph-test-init.cpp
-graph-test-init.h
-/home/m4zz31/cppprojct/Tests/graph-test-init.h
 
 /home/m4zz31/cppprojct/Tests/graph-test-init.h
 string
