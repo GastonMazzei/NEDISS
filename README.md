@@ -1,13 +1,20 @@
 
+<center><h1><b>V 1.0.0 is ready!</b></h1> <i>(Decent documentation coming soon!)</i></center>
 
-A brief graphic explanation.
-
-<img src="https://github.com/GastonMazzei/NEDISS/raw/main/front.png" width=800>
+---
 
 
 <center><i>How to run</i></center>
+<i>Just configure the simulation via `simulation.conf.sh` and execute the desired script</i>
 
-```mpirun -oversubscribe -x EQNUMBER=1 -x SOLVER=0 -x SOLVERDEPTH=3 -x K1=0.2 -x K2=0.4 -x K3=0.4 -x K4=0.2  -x TOPOLOGY=0 -x NRUNS=50 -x NNODES=25 -x TEST=1 -x SEED=21234 -x OMP_THREAD_LIMIT=4  -x  OMP_NESTED=true -np 3  cmake-build-debug/cppprojct```
+1) `run.sh` runs the program in whichever mode was specified in the configuration file
+2) `produce_graphical_simulation.sh` runs the program in simulation mode and produces a graphical simulation
+4) `run_debugxterm.sh` runs with gdb and displays each processor in a different console
+5) `run_pipe.sh` runs and pipes the output to a txt file
+6) `run_valgrind.sh` runs and produces a valgrind report
+7) `run_time.sh` runs nonverbose and computes the execution time
+
+The configuration file allows the following to be specified:
 
 * EQNUMBER: `{0,1}` indexes one of the ODEs described below. Currently `0` for 1D linear and `1` for Noiseless Kuramoto.
 
@@ -23,7 +30,7 @@ A brief graphic explanation.
 
 * NNODES: `P*NT*2 - inf` defines the number of total nodes to use. A pathological lower bound can be P*NT*2, which means two times the number of processors times the number of threads per processor.
 
-* TEST: `{0,1,2,3}` is the running mode, see below.
+* TEST: `{-1,1,2,3}` is the running mode, see below.
 
 * SEED: `any int` is the seed to use during the entire simulation.
 
@@ -67,18 +74,21 @@ A brief graphic explanation.
 
 <center><i>Working modes</i></center>
 
-0 - Tests initialization
-1 - Tests single-step evolution
-2 - Tests results after several runs
-3 - Produces a graphical simulation
+-1 - Produces a graphical simulation
 
-<center><i>Useful tools</i></center>
+0 - Tests initialization
+
+1 - Tests single-step evolution
+
+2 - Tests results after several runs
+
+
+<center><i>How to contribute</i></center>
+<i>Open a pull request if you have any idea; at the present time (beggining Dec. 2021) the main focus of attention should be adding random walks to measure diffusion. Also a way to compute Synchronization time in-house (i.e. without producing graphical information) could be useful. Please contact </i>
+
+
+<center><i>Other Useful Tools</i></center>
  
-- `./run.sh` runs the script 
-- `./run_debug_xterm.sh` runs the script in one terminal per processor
-- `./run_valgrind.sh` runs `./run.sh` with valgrind and produces a report
-- `./run_pipe_report.sh` runs `./run.sh` and pipes the output to `tmp/trash.txt`
 - compiling with the `VERBOSE` macro defined produces a loot of output in each run.
-- several Python3 scripts are lying around which can be used to quantify the script's operation, specially when it was compiled with `VERBOSE`. They tend to become obsolete rather fast, as the prints may suffer changes or stop being important.
 - `CONSIDERATIONS.txt` contains special considerations, e.g. how the MPI implementation can affect us.
 - `Guideline-DiffEqsSolvers[ES].txt` is a proto explanation of how to build a Differential Equation for users. It says 'ES' because it is in Spanish! Ouch.
