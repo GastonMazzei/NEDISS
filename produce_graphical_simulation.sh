@@ -24,5 +24,5 @@ python3 python3/kuramoto_distance_over_time.py
 rm graphic/processed-program-output/*
 rm graphic/rendered-program-output/*
 rm graphic/timeseries/oscillation-files/*
-
+./make_youtube_video.sh
 
