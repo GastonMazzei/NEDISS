@@ -4,7 +4,8 @@
 ---
 
 
-<center><i>How to run</i></center>
+<center><b>How to run</b></center>
+
 <i>Just configure the simulation via `simulation.conf.sh` and execute the desired script</i>
 
 1) `run.sh` runs the program in whichever mode was specified in the configuration file
