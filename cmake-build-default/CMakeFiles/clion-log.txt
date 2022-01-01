@@ -1,0 +1,40 @@
+/opt/clion-2021.1.1/bin/cmake/linux/bin/cmake -G "CodeBlocks - Unix Makefiles" /home/m4zz31/Documents/NEDISS
+CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1204 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
+Call Stack (most recent call first):
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1326 (_Boost_COMPONENT_DEPENDENCIES)
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1935 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:39 (find_package)
+
+
+CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1204 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
+Call Stack (most recent call first):
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1326 (_Boost_COMPONENT_DEPENDENCIES)
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1935 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:39 (find_package)
+
+
+CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1204 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
+Call Stack (most recent call first):
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1326 (_Boost_COMPONENT_DEPENDENCIES)
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1935 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:39 (find_package)
+
+
+CMake Warning at /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1204 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
+Call Stack (most recent call first):
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1326 (_Boost_COMPONENT_DEPENDENCIES)
+  /opt/clion-2021.1.1/bin/cmake/linux/share/cmake-3.19/Modules/FindBoost.cmake:1935 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:39 (find_package)
+
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/m4zz31/Documents/NEDISS/cmake-build-default

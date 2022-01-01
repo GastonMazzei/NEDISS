@@ -31,7 +31,7 @@ struct FlowSpecs{
 // PDEs and SDEs and convert them through a general function "BuildForSolver" :-)
 class GeneralDifferentialEquation {
 public:
-    int type; // 0 is ODE, 1 is PDE, 2 could be SDE :-)
+    int type; // 0 is ODE, UPGRADES: 1 is PDE, 2 could be SDE :-)
     bool RequiresBuilding = false; // true  if it requires building :-)
     FlowSpecs Specs;
     GeneralDifferentialEquation(int type): type(type) {};

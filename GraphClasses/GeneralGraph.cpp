@@ -14,25 +14,38 @@
 using namespace boost;
 using namespace std;
 
-// Please include in your radar the following bug: (potential segfault when one process has 0 nodes)
-// https://github.com/boostorg/graph_parallel/issues/18
+/*
+                                     BUG REPORT:
+         1)
+          asking for N nodes and P (mpi) processors produces a sigfault if P>N
+          https://github.com/boostorg/graph_parallel/issues/18
+*/
+
 
 
 void CommonGraphObjectClass::reportNProcs(Graph &g) {
+    /*
+     * Report how many processors are active according to the boost graph interface
+     */
     if (process_id(g.process_group()) == 0) {
         std::cout <<
                   "N processes  is: " <<
                   num_processes(boost::graph::distributed::mpi_process_group()) <<
                   std::endl;
     }
-    adsync_barrier<0>(); // This barrier (attempts) to fix a bug:
-    //                  the program never ends if this function is called w/out barrier
+    adsync_barrier<0>();
 }
 
 
 
 
 void CommonGraphObjectClass::showVertex(Graph &g) {
+    /*
+    * Report how many nodes and edges does each processor can see.
+    * Also, the nodes are iterated and their value is shown.
+    * It could be useful for checking initialization in simple cases where
+    * the idea is to e.g. start being all the same
+    */
     unsigned int MY_NUM = process_id(g.process_group());
     unsigned int MY_NODES = num_vertices(g);
     unsigned int MY_EDGES = num_edges(g);
@@ -49,6 +62,9 @@ void CommonGraphObjectClass::showVertex(Graph &g) {
 }
 
 void CommonGraphObjectClass::reportNodes(Graph &g){
+    /*
+     * Report how many nodes does each processor own
+     */
     vertex_iterator v, v_end;
     int counter = 0;
     for (boost::tie(v, v_end) = vertices(g); v != v_end; ++v) {
@@ -79,7 +95,54 @@ void CommonGraphObjectClass::showEdges(Graph &g) {
 
 
 void CommonGraphObjectClass::Initialization(std::vector<pair<double, double>> X0_W, double J, Graph & g, unsigned int N){
-
+    /*
+     * Function to initialize graphs
+     *
+     *                     NODE INITIALIZATION SUPPORT (X0_W -> Nodes Values)
+     *
+     *      1) X0_W has length == Total Number of Nodes. The mapping is done using
+     *         the vector's indexes as the number of node index, which is assigned
+     *         ~randomly by the Boost Graph interface.
+     *              comment:
+     *                      this should be enough for the study of attractors
+     *                      starting in random configurations, but can't produce
+     *                      a specific initial value configuration
+     *
+     *      2) X0_W has length == Total Number of locally owned nodes. This is as
+     *         the previous case but specially appropiate if an (either random or
+     *         constant) initializer of length total number of nodes cannot fit
+     *         comfortably in memory.
+     *              comment:
+     *                      same as (1).
+     *
+     *      3) X0_W has length == 1. This is interpreted as a command for initializing
+     *         all nodes to the same value.
+     *              comment:
+     *                      as a constant initializer interface is more comfortable
+     *                      than producing a 'number of locally owned nodes' vector
+     *                      before calling this function, but this function will build
+     *                      it anyway so it shouldn't be confused with a space optimization.
+     *
+     *      Further Comment:
+     *              For initial value conditions problems it is more appropriate to
+     *              initialize both the graph itself and the values from a file :-)
+     *
+     *                     NODE INITIALIZATION SUPPORT (X0_W -> Nodes Values)
+     *
+     *      1) J is a constant value, and all the edges will have the same value.
+     *
+     *
+     *      Further Comment:
+     *              As before, to set specific conditions (e.g. distance-dependent-coupling)
+     *              the correct path would be to initialize both the graph and the values
+     *              from a file :-)
+     *
+     *      TODO:
+     *            1) Build the graph building + initialization from file
+     *            2) Refactor this function as to accept either vectors for random J's,
+     *              or better yet only accept constant V and J, two templated distributions,
+     *              and a flag indicating if we should use the constants or the random distros
+     */
     static unsigned int NV = num_vertices(g);
     pair<double, double> myvals[NV];
     OwnerMap owner = get(vertex_owner, g);
@@ -91,8 +154,6 @@ void CommonGraphObjectClass::Initialization(std::vector<pair<double, double>> X0
         PRINTF_DBG("SIZE >1\n");
         if (N == X0_W.size()){
             PRINTF_DBG("SIZE IS N\n");
-            // Procedure to select the NNodesProcessor_i with i the current processor
-            // for the case in which we are given not 'our' values but those of the entire graph
             mpi::communicator world;
             unsigned int NPROCS = world.size();
             unsigned int BALANCE = (unsigned int) std::floor(((double) N) / ((double) NPROCS));
@@ -140,8 +201,6 @@ void CommonGraphObjectClass::Initialization(std::vector<pair<double, double>> X0
     } else if (X0_W.size() == 0) {
         error_report("[error] A zero-length parameter vector was passed to initialization.");
     }
-
-
 
     // Iterate along nodes
     int j = 0;

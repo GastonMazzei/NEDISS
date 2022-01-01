@@ -39,26 +39,17 @@ void NoiselessKuramoto::Field(double t, double a, std::vector<double> &b,
 void NoiselessKuramoto::d1Field(double t, double a, std::vector<double> &b,
                               std::vector<double> &c,
                               std::vector<double> &d){
-    // a: central value
-    // b: own parameters
-    // c: neighbor values
-    // d: interactions
-    // T3 & T4: linear offset and factor (respect.) to apply to "c",
-    // as per generalized Runge Kutta's f(y1,...) replaced with f(a+b*y1,...)
+
+    // asking for the field derivatives leads to termination
     printf("First derivative of the NoiselessKuramoto eq. failed to be parametrized");
     exit(1);
-
 };
 
 void NoiselessKuramoto::d2Field(double t, double a, std::vector<double> &b,
                               std::vector<double> &c,
                               std::vector<double> &d){
-    // a: central value
-    // b: own parameters
-    // c: neighbor values
-    // d: interactions
-    // T3 & T4: linear offset and factor (respect.) to apply to "c",
-    // as per generalized Runge Kutta's f(y1,...) replaced with f(a+b*y1,...)
+
+    // asking for the field derivatives leads to termination
     printf("Second derivative of the NoiselessKuramoto eq. failed to be parametrized");
     exit(1);
 
@@ -67,12 +58,8 @@ void NoiselessKuramoto::d2Field(double t, double a, std::vector<double> &b,
 void NoiselessKuramoto::d3Field(double t, double a, std::vector<double> &b,
                               std::vector<double> &c,
                               std::vector<double> &d){
-    // a: central value
-    // b: own parameters
-    // c: neighbor values
-    // d: interactions
-    // T3 & T4: linear offset and factor (respect.) to apply to "c",
-    // as per generalized Runge Kutta's f(y1,...) replaced with f(a+b*y1,...)
+
+    // asking for the field derivatives leads to termination
     printf("third derivative of the NoiselessKuramoto eq. failed to be parametrized");
     exit(1);
 };
