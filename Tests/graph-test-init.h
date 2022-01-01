@@ -12,7 +12,8 @@
 #include "test-imports.h"
 
 
-
+// TODO: expand to the remaining equations
+// TODO: remove comments
 
 void graph_tests_init(int TOPOLOGY, unsigned int SEED, unsigned long N = 4);
 

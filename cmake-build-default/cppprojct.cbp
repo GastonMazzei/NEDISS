@@ -156,10 +156,10 @@
 		<Unit filename="/home/m4zz31/Documents/NEDISS/GraphClasses/SmallWorldGraph.h">
 			<Option target="cppprojct"/>
 		</Unit>
-		<Unit filename="/home/m4zz31/Documents/NEDISS/Simulation/Simulation.cpp">
+		<Unit filename="/home/m4zz31/Documents/NEDISS/Simulation/SimulationPipe.h">
 			<Option target="cppprojct"/>
 		</Unit>
-		<Unit filename="/home/m4zz31/Documents/NEDISS/Simulation/SimulationExample.h">
+		<Unit filename="/home/m4zz31/Documents/NEDISS/Solvers/EulerSolver.cpp">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/Documents/NEDISS/Solvers/EulerSolver.h">
@@ -169,6 +169,9 @@
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/Documents/NEDISS/Solvers/GeneralSolver.h">
+			<Option target="cppprojct"/>
+		</Unit>
+		<Unit filename="/home/m4zz31/Documents/NEDISS/Solvers/RungeKuttaSolver.cpp">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/Documents/NEDISS/Solvers/RungeKuttaSolver.h">
@@ -190,12 +193,6 @@
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/Documents/NEDISS/Tests/long-singlestep-run.h">
-			<Option target="cppprojct"/>
-		</Unit>
-		<Unit filename="/home/m4zz31/Documents/NEDISS/Tests/solvers-test-init.cpp">
-			<Option target="cppprojct"/>
-		</Unit>
-		<Unit filename="/home/m4zz31/Documents/NEDISS/Tests/solvers-test-init.h">
 			<Option target="cppprojct"/>
 		</Unit>
 		<Unit filename="/home/m4zz31/Documents/NEDISS/Tests/test-imports.h">

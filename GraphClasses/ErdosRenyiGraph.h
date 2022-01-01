@@ -8,21 +8,26 @@
 
 class ErdosRenyiGraphObject : public CommonGraphObjectClass {
 public:
-    // WE SHOULD CHANGE PROBABILITY FOR NUMBER OF EDGES!
-    typedef boost::sorted_erdos_renyi_iterator<boost::minstd_rand, Graph> ERGen;
-    boost::minstd_rand gen;
+
     unsigned long N;
     unsigned long E;
-    double Proba;
     Graph g;
+
+    // Unique to this class :-)
+    typedef boost::sorted_erdos_renyi_iterator<boost::minstd_rand, Graph> ERGen;
+    boost::minstd_rand gen;
+    double Proba;
+
+    // TODO: move this to CommonGraphObjectClass
     unsigned long Procs = num_processes(boost::graph::distributed::mpi_process_group());
 
     ErdosRenyiGraphObject(unsigned long num_nodes, double probability) :
-            E((unsigned long) (probability * (double) num_nodes)), // THIS IS WRONG!
+            E(0), // Actually the expected edge number is combinatorial(num_nodes,2) * probability
             N(num_nodes),
             Proba(probability),
             g(ERGen(gen, num_nodes, probability, false), ERGen(), num_nodes) {};
 
+    // TODO: move this to CommonGraphObjectClass
     void build(){}; // empty function for inter-class compatibility :-)
 };
 #endif //CPPPROJCT_ERDOSRENYIGRAPH_H

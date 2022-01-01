@@ -14,6 +14,8 @@ public:
     unsigned long N;
     unsigned long E;
     Graph g;
+
+    // TODO: move this to CommonGraphObjectClass
     unsigned long Procs = num_processes(boost::graph::distributed::mpi_process_group());
 
     RingGraphObject(unsigned long num_nodes) :

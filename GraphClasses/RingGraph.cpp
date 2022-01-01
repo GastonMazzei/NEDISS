@@ -11,10 +11,12 @@ void RingGraphObject::build(){
     if (process_id(g.process_group()) == 0) {
         int i=0;
         add_edge(vertex(0, g), vertex(N-1, g), g);
-//#pragma omp parallel for
+// TODO:
+// parallelization could occur between HERE
         for (int i=0; i<N-1; i++){
             add_edge(vertex(i,g), vertex(i+1,g), g);
         }
+// and HERE
     }
     adsync_synchronization_barrier<0>("Ring constructor", g);
 }

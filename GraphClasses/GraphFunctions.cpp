@@ -3,12 +3,9 @@
 //
 
 #include "GraphFunctions.h"
-#include <cassert>
 
-#ifndef ASSERT
-#define ASSERT
-#endif
-//
+
+
 
 void update_neighbor_values(ReferenceContainer &REF){
 
@@ -29,19 +26,17 @@ void update_neighbor_values(ReferenceContainer &REF){
                    ix, MYPROC, (*REF.p_IntHelper)[ix].centralValue, (*REF.p_g)[*v].value);
         (*REF.p_IntHelper)[ix].centralValue = (*REF.p_g)[*v].value;
     }
-    // THE FOLLOWING IS NOT REQUIRED: ITS ALREADY COVERED IN PERFORM_FIELD_REQUESTS from communication ;-)
-    //
-//#pragma omp barrier
-//    // Propagate from diagonal terms
-//    for (int ix = begin; ix < end; ++ix){
-//        for (int j=0; j<(*REF.p_IntHelper)[ix].ixMap.size(); ++j){
-//            if (std::get<2>((*REF.p_IntHelper)[ix].ixMap[j]) == MYPROC){
-//                (*REF.p_IntHelper)[ix].neighborValues[j] = (*REF.p_IntHelper)[std::get<1>((*REF.p_IntHelper)[ix].ixMap[j])].centralValue;
-//            }
-//        }
-//    }
-}
+} // end of parallel construct
 };
+
+
+
+// FROM HERE ONWARDS: FLAGGED TO KILL IN THE PROX DEBUG CYCLE
+
+#include <cassert>
+#ifndef ASSERT
+#define ASSERT
+#endif
 
 
 void register_to_value(Graph &g){
@@ -85,6 +80,8 @@ void register_to_value(Graph &g){
     assert(tackled == L);
 #endif
 };
+
+
 
 
 //

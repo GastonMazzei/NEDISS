@@ -25,43 +25,43 @@
 #include "../Utils/display_vectors.h"
 
 
+//*****************************DECLARATIONS GO HERE******************************
 template <typename SpecificRequestObject> class RequestObject;
-
 template <int field> class FieldRequestObject;
-
 template<int DT, int TIMETOL, int BATCH, typename RequestClass>
 void generic_answer_requests(ReferenceContainer &REF,int MYTHR, RequestClass ReqObj);
-
-
 typedef RequestObject<FieldRequestObject<-2>> EdgesRequester;
 typedef RequestObject<FieldRequestObject<-1>> NodesRequester;
 typedef RequestObject<FieldRequestObject<0>> Field0Requester;
 typedef RequestObject<FieldRequestObject<1>> Field1Requester;
 typedef RequestObject<FieldRequestObject<2>> Field2Requester;
-
 template <int DT, int TIMETOL, int BATCH>
 void perform_requests(int NNodes,
                       ReferenceContainer REF,
                       unsigned long N,
                       OpenMPHelper &O);
-
 void register_to_value(Graph &g);
-
 void destroyRequestWithoutCounter(MPI_Request &R);
 void freeRequestWithoutCounter(MPI_Request &R);
-
-
 template<int DT, int TIMETOL, int BATCH>
 void perform_field_requests(ReferenceContainer &REF,int MYPROC, int fieldOrder,std::queue<long> * queue);
+void update_neighbor_values(ReferenceContainer &REF);
 
 
 
 
+/******************************FUNCTIONS GO HERE******************************
+    1) contribute_to_integration< differential equation type, solver type>
+    2) contribute_to_higher_integration< differential equation type, solver type, batch size>
+    3) finalize_integration< differential equation type, solver type, batch size>
+    4) single_evolution< differential equation type, solver type, batch size>
+    5) single_evolution2< differential equation type, solver type, batch size>
+    TODO: explain them, change names, make batch size an actual hyperparameter
+    TODO: make things work with length>1 node values and length>1 edges (interactions)
+*/
 
-// ----------------THIS FUNCTION IS ONLY USED THE FIRST LAP TO CREATE A MAP------------
 template<typename DIFFEQ, typename SOLVER>
 void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> &solver, int MYPROC){
-
     PRINTF_DBG("Starting the contribution to int\n");std::cout<< std::flush;
     // Define timeout utilities
     const int DT= 0;
@@ -71,7 +71,6 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
     auto start = vs.first;
     auto end = vs.second;
     auto v = start;
-
     // Define relevant variables
     bool keepGoing = true;
     bool is_in = false;
@@ -81,13 +80,10 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
     unsigned long uix, currentuix;
     bool wait = false;
     std::vector<InfoVecElem> temp;
-
 #pragma omp critical
     {
         remaining = *(REF.p_PENDING_INT);
     }
-
-
     // Main loop
     while (keepGoing) {
         // Fetch the data
@@ -196,14 +192,6 @@ void contribute_to_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOL
 }
 
 
-
-
-
-
-
-
-
-
 template<typename DIFFEQ, typename SOLVER, int BATCH>
 void contribute_to_higher_integration(ReferenceContainer &REF,
                                         GeneralSolver<DIFFEQ,SOLVER> &solver,
@@ -220,7 +208,7 @@ void contribute_to_higher_integration(ReferenceContainer &REF,
     for (auto v = vs.first + begin; v != vs.first + end; ++v){
         long ix = get(get(boost::vertex_index, *(REF.p_g)), *v);
 
-
+    // FLAGGED FOR KILL AFTER NEXT DEBUG 01 jan 2022
 //            if (ix == 0){
 //                PRINTF_DBG("rk0, central val: %f and neighbors ",(*REF.p_IntHelper)[ix].centralValue);
 //                display((*REF.p_IntHelper)[ix].neighborValues);
@@ -284,8 +272,6 @@ void contribute_to_higher_integration(ReferenceContainer &REF,
 }
 };
 
-
-void update_neighbor_values(ReferenceContainer &REF);
 
 template<typename DIFFEQ, typename SOLVER, int BATCH>
 void finalize_integration(ReferenceContainer &REF, GeneralSolver<DIFFEQ,SOLVER> &solver){

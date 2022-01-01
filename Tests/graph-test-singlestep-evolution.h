@@ -7,6 +7,10 @@
 
 #include "test-imports.h"
 
+// TODO: inherit part of SimulationPipe as to not repeat things... after all,
+// this is just a glorified simulation of one step with prints :-) and we will
+// avoid doubling all the graph subtypes and solvers and eqs etc.
+
 template <int T, typename GRAPHTYPE, int BATCH, typename DIFFEQ>
 void test_graph_singlestep_evolution(GRAPHTYPE &G, 
 				                    std::string name,

@@ -90,6 +90,8 @@ void EulerSolver<Equation>::evolve(double t,
                            std::vector<double> &RK4,
                            double &answer,
                            double * P){
+
+    // The Euler solver tries to use the deepest derivative as possible
     if ((*(P+3)) != 0) {
         answer = a + h * (RK1[0] +
                           h * (RK2[0] +

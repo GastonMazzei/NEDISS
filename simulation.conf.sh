@@ -22,7 +22,7 @@ K4=0.16666666666666;
 
 # Topology
 
-TOPOLOGY=3;
+TOPOLOGY=0;
 kneigh=4;
 proba=0.10;
 NNODES=30;

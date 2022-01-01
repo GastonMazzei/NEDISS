@@ -5,6 +5,7 @@
 #ifndef CPPPROJCT_TEST_IMPORTS_H
 #define CPPPROJCT_TEST_IMPORTS_H
 
+// This file contains common imports that (almost) any test will require
 
 #include "../Utils/adequate_synchronization.h"
 #include "../Utils/global_standard_messages.h"

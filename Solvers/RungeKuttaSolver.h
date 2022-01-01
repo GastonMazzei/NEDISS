@@ -115,7 +115,6 @@ void RungeKuttaSolver<Equation>::Term1(double t,
     // Initialize auxiliary vectors to any value
     std::vector<double> T1={0},T2={1},T3={0},T4={1};
 
-    // Values defined for Euler.
     T1[0] = 0;
     T2[0] = 1;
     T3[0] = 0;
@@ -143,7 +142,6 @@ void RungeKuttaSolver<Equation>::Term2(double t,
     // Initialize auxiliary vectors to any value
     std::vector<double> T1={0},T2={1},T3={0},T4={1};
 
-    // Values defined for Euler.
     // Here RK1 is the first derivative of the other variables :-)
     T1[0] = h * RK1[0] / 2;
     T2[0] = 1;
@@ -173,7 +171,7 @@ void RungeKuttaSolver<Equation>::Term3(double t,
 
     // Initialize auxiliary vectors to any value
     std::vector<double> T1={0},T2={1},T3={0},T4={1};
-    // Values defined for Euler.
+
     // Here RK1 and RK2 are the first amd second derivatives of the other variables :-)
     T1[0] = h * RK2[0] / 2;
     T2[0] = 1;
@@ -205,7 +203,7 @@ void RungeKuttaSolver<Equation>::Term4(double t,
 
     // Initialize auxiliary vectors to any value
     std::vector<double> T1={0},T2={1},T3={0},T4={1};
-    // Values defined for Euler.
+
     // Here RK1, RK2 and RK3 are the first, second and third derivatives of the other variables :-)
     T1[0] = h * RK3[0];
     T2[0] = 1;

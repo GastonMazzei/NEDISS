@@ -3,6 +3,7 @@
 //
 #include "graph-test-init.h"
 
+// TODO: expand to the remaining graph topologies
 
 void graph_tests_init(int TOPOLOGY, unsigned int SEED, unsigned long N){
 

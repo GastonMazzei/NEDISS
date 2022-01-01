@@ -466,32 +466,32 @@ GraphClasses/SmallWorldGraph.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.s
 .PHONY : GraphClasses/SmallWorldGraph.cpp.s
 
-Simulation/Simulation.o: Simulation/Simulation.cpp.o
+Solvers/EulerSolver.o: Solvers/EulerSolver.cpp.o
 
-.PHONY : Simulation/Simulation.o
+.PHONY : Solvers/EulerSolver.o
 
 # target to build an object file
-Simulation/Simulation.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o
-.PHONY : Simulation/Simulation.cpp.o
+Solvers/EulerSolver.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o
+.PHONY : Solvers/EulerSolver.cpp.o
 
-Simulation/Simulation.i: Simulation/Simulation.cpp.i
+Solvers/EulerSolver.i: Solvers/EulerSolver.cpp.i
 
-.PHONY : Simulation/Simulation.i
+.PHONY : Solvers/EulerSolver.i
 
 # target to preprocess a source file
-Simulation/Simulation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.i
-.PHONY : Simulation/Simulation.cpp.i
+Solvers/EulerSolver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.i
+.PHONY : Solvers/EulerSolver.cpp.i
 
-Simulation/Simulation.s: Simulation/Simulation.cpp.s
+Solvers/EulerSolver.s: Solvers/EulerSolver.cpp.s
 
-.PHONY : Simulation/Simulation.s
+.PHONY : Solvers/EulerSolver.s
 
 # target to generate assembly for a file
-Simulation/Simulation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.s
-.PHONY : Simulation/Simulation.cpp.s
+Solvers/EulerSolver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.s
+.PHONY : Solvers/EulerSolver.cpp.s
 
 Solvers/GeneralSolver.o: Solvers/GeneralSolver.cpp.o
 
@@ -519,6 +519,33 @@ Solvers/GeneralSolver.s: Solvers/GeneralSolver.cpp.s
 Solvers/GeneralSolver.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.s
 .PHONY : Solvers/GeneralSolver.cpp.s
+
+Solvers/RungeKuttaSolver.o: Solvers/RungeKuttaSolver.cpp.o
+
+.PHONY : Solvers/RungeKuttaSolver.o
+
+# target to build an object file
+Solvers/RungeKuttaSolver.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o
+.PHONY : Solvers/RungeKuttaSolver.cpp.o
+
+Solvers/RungeKuttaSolver.i: Solvers/RungeKuttaSolver.cpp.i
+
+.PHONY : Solvers/RungeKuttaSolver.i
+
+# target to preprocess a source file
+Solvers/RungeKuttaSolver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.i
+.PHONY : Solvers/RungeKuttaSolver.cpp.i
+
+Solvers/RungeKuttaSolver.s: Solvers/RungeKuttaSolver.cpp.s
+
+.PHONY : Solvers/RungeKuttaSolver.s
+
+# target to generate assembly for a file
+Solvers/RungeKuttaSolver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.s
+.PHONY : Solvers/RungeKuttaSolver.cpp.s
 
 Tests/graph-test-init.o: Tests/graph-test-init.cpp.o
 
@@ -600,33 +627,6 @@ Tests/long-singlestep-run.s: Tests/long-singlestep-run.cpp.s
 Tests/long-singlestep-run.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.s
 .PHONY : Tests/long-singlestep-run.cpp.s
-
-Tests/solvers-test-init.o: Tests/solvers-test-init.cpp.o
-
-.PHONY : Tests/solvers-test-init.o
-
-# target to build an object file
-Tests/solvers-test-init.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o
-.PHONY : Tests/solvers-test-init.cpp.o
-
-Tests/solvers-test-init.i: Tests/solvers-test-init.cpp.i
-
-.PHONY : Tests/solvers-test-init.i
-
-# target to preprocess a source file
-Tests/solvers-test-init.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.i
-.PHONY : Tests/solvers-test-init.cpp.i
-
-Tests/solvers-test-init.s: Tests/solvers-test-init.cpp.s
-
-.PHONY : Tests/solvers-test-init.s
-
-# target to generate assembly for a file
-Tests/solvers-test-init.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cppprojct.dir/build.make CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.s
-.PHONY : Tests/solvers-test-init.cpp.s
 
 Utils/HelperClasses.o: Utils/HelperClasses.cpp.o
 
@@ -1024,12 +1024,15 @@ help:
 	@echo "... GraphClasses/SmallWorldGraph.o"
 	@echo "... GraphClasses/SmallWorldGraph.i"
 	@echo "... GraphClasses/SmallWorldGraph.s"
-	@echo "... Simulation/Simulation.o"
-	@echo "... Simulation/Simulation.i"
-	@echo "... Simulation/Simulation.s"
+	@echo "... Solvers/EulerSolver.o"
+	@echo "... Solvers/EulerSolver.i"
+	@echo "... Solvers/EulerSolver.s"
 	@echo "... Solvers/GeneralSolver.o"
 	@echo "... Solvers/GeneralSolver.i"
 	@echo "... Solvers/GeneralSolver.s"
+	@echo "... Solvers/RungeKuttaSolver.o"
+	@echo "... Solvers/RungeKuttaSolver.i"
+	@echo "... Solvers/RungeKuttaSolver.s"
 	@echo "... Tests/graph-test-init.o"
 	@echo "... Tests/graph-test-init.i"
 	@echo "... Tests/graph-test-init.s"
@@ -1039,9 +1042,6 @@ help:
 	@echo "... Tests/long-singlestep-run.o"
 	@echo "... Tests/long-singlestep-run.i"
 	@echo "... Tests/long-singlestep-run.s"
-	@echo "... Tests/solvers-test-init.o"
-	@echo "... Tests/solvers-test-init.i"
-	@echo "... Tests/solvers-test-init.s"
 	@echo "... Utils/HelperClasses.o"
 	@echo "... Utils/HelperClasses.i"
 	@echo "... Utils/HelperClasses.s"

@@ -11,6 +11,13 @@
 #include "../GraphClasses/GeneralGraph.h"
 #include "../DifferentialEquations/GeneralDifferentialEquation.h"
 
+
+//
+// This file contains the definitions for the GeneralSolver Base Class
+// TODO: Document it, define Term1,2,3,4 so they can be overriden but are not mandatory for derived ones
+// the Document should include a mention that solvers do not support concurrent access :-) locks are not appropriate,
+// just copy the solver class in each thread. For GPU conversion, concurrent access can be allowed with some straightforward mods.
+
 typedef std::function<double(double, double, std::vector<double>, std::vector<double>, std::vector<double>)> ScalarFlow;
 typedef std::function<double(double a, std::vector<double> &b, std::vector<double> &c, std::vector<double> &d, Graph &g, ScalarFlow &F)> SolverOp;
 
@@ -94,6 +101,7 @@ public:
     void EvolveTime();
 };
 
+// A flexible constructor that should be used carefully: d can be set up to the incorrect value
 template <typename DIFFEQ, typename SOLVER>
 GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d, double * params){
     type = valtype;
@@ -107,12 +115,13 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d, double 
     requires_communication = DifferentialEquation.requiresCom(d);
 };
 
+// An easy constructor that yields Euler O(1) or RungeKutta O(2) ("Heun's Method")
 template <typename DIFFEQ, typename SOLVER>
 GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype){
     // Types available should be:
     //  (1) Euler ('eu')
     //  (2) Runge-Kutta ('rk')
-    std::string methods_str = "(1) Euler ('eu').";
+    std::string methods_str = "(1) Euler ('eu'), (2) RungeKutta ('rk').";
     type = std::move(valtype);
     if (type == "rk") {
         // Heun method's initialization :-)
@@ -129,11 +138,12 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype){
         Params[1] = 0;
         Params[2] = 0;
         Params[3] = 0;
-    } else if (type != "eu") {
+    } else {
         error_report("Only support for Integration is available for the following methods:" + methods_str);
     }
 };
 
+// The default constructor: Euler O(1)
 template <typename DIFFEQ, typename SOLVER>
 GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(){
     type = "eu";
@@ -145,12 +155,14 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(){
     requires_communication = DifferentialEquation.requiresCom(deg);
 }
 
+// "Easy" initializer that allows to receive only the name and the order.
+// For Euler it accepts any degree, for Runge Kutta only 'rk' and d=2 for Heun's Method.
 template <typename DIFFEQ, typename SOLVER>
 GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d) {
     // Types available should be:
     //  (1) Euler ('eu')
     //  (2) Runge-Kutta ('rk')
-    std::string methods_str = "(1) Euler ('eu').";
+    std::string methods_str = "(1) Euler ('eu'), (2) RungeKutta O(2) ('rk') a.k.a. Heun's Method";
     type = std::move(valtype);
     deg = d;
     if (type == "rk") {
@@ -162,7 +174,6 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d) {
             Params[3] = 0;
     	    requires_communication = DifferentialEquation.requiresCom(d);
         } else {
-		// todo: build
             printf("[FATAL] GeneralSolver(type='rk', int d) only accepts d=2 for Heun's method, but %d was the input.\n",d);
             std::cout<<std::flush;
             exit(1);
@@ -175,7 +186,6 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d) {
             } else {
                 Params[i] = 0;
             }
-
     	    requires_communication = DifferentialEquation.requiresCom(d);
         }
         if (d!=1) PRINTF_DBG("\n\n[WARNING]\n\nEuler od Order != 1 may not be available for some Equations, i.e. some equation classes may not have defined their field derivatives up to the requested order :O.\n\n");
@@ -184,23 +194,24 @@ GeneralSolver<DIFFEQ, SOLVER>::GeneralSolver(std::string valtype, int d) {
     }
 };
 
+
+
 template <typename DIFFEQ, typename SOLVER>
 void GeneralSolver<DIFFEQ, SOLVER>::SetStep(double h){
     T.h = h;
 }
-
 template <typename DIFFEQ, typename SOLVER>
 void GeneralSolver<DIFFEQ, SOLVER>::SetT0(double t0){
     T.t = t0;
 }
-
 template <typename DIFFEQ, typename SOLVER>
 void GeneralSolver<DIFFEQ, SOLVER>::EvolveTime(){
     T.t += T.h;
 }
 
 
-
+// The following are Class Functions that abstract away the call to the solver's
+// evolutions of the respective differential equations.
 template <typename DIFFEQ, typename SOLVER>
 void GeneralSolver<DIFFEQ, SOLVER>::evolve(double a,
                                              std::vector<double> &b,

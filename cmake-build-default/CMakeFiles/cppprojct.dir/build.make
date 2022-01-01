@@ -154,22 +154,9 @@ CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.s"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/Documents/NEDISS/GraphClasses/CliqueGraph.cpp -o CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.s
 
-CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o: CMakeFiles/cppprojct.dir/flags.make
-CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o: ../Simulation/Simulation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o -c /home/m4zz31/Documents/NEDISS/Simulation/Simulation.cpp
-
-CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.i"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/Documents/NEDISS/Simulation/Simulation.cpp > CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.i
-
-CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.s"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/Documents/NEDISS/Simulation/Simulation.cpp -o CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.s
-
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o: ../Tests/graph-test-init.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o -c /home/m4zz31/Documents/NEDISS/Tests/graph-test-init.cpp
 
 CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.i: cmake_force
@@ -182,7 +169,7 @@ CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.o: ../Utils/reproductibility.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.o -c /home/m4zz31/Documents/NEDISS/Utils/reproductibility.cpp
 
 CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.i: cmake_force
@@ -195,7 +182,7 @@ CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o: ../Utils/adequate_synchronization.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o -c /home/m4zz31/Documents/NEDISS/Utils/adequate_synchronization.cpp
 
 CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.i: cmake_force
@@ -208,7 +195,7 @@ CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o: ../GraphClasses/RingGraph.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o -c /home/m4zz31/Documents/NEDISS/GraphClasses/RingGraph.cpp
 
 CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.i: cmake_force
@@ -221,7 +208,7 @@ CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o: ../Tests/graph-test-singlestep-evolution.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o -c /home/m4zz31/Documents/NEDISS/Tests/graph-test-singlestep-evolution.cpp
 
 CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.i: cmake_force
@@ -234,7 +221,7 @@ CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.s: cmake_forc
 
 CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o: ../Solvers/GeneralSolver.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o -c /home/m4zz31/Documents/NEDISS/Solvers/GeneralSolver.cpp
 
 CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.i: cmake_force
@@ -247,7 +234,7 @@ CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.o: ../Utils/memory_management.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.o -c /home/m4zz31/Documents/NEDISS/Utils/memory_management.cpp
 
 CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.i: cmake_force
@@ -258,22 +245,9 @@ CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.s"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/Documents/NEDISS/Utils/memory_management.cpp -o CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.s
 
-CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o: CMakeFiles/cppprojct.dir/flags.make
-CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o: ../Tests/solvers-test-init.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o -c /home/m4zz31/Documents/NEDISS/Tests/solvers-test-init.cpp
-
-CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.i"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/Documents/NEDISS/Tests/solvers-test-init.cpp > CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.i
-
-CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.s"
-	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/Documents/NEDISS/Tests/solvers-test-init.cpp -o CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.s
-
 CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o: ../DifferentialEquations/GeneralDifferentialEquation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o -c /home/m4zz31/Documents/NEDISS/DifferentialEquations/GeneralDifferentialEquation.cpp
 
 CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.i: cmake_force
@@ -286,7 +260,7 @@ CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.s
 
 CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o: ../Utils/differential_equations_aux.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o -c /home/m4zz31/Documents/NEDISS/Utils/differential_equations_aux.cpp
 
 CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.i: cmake_force
@@ -299,7 +273,7 @@ CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o: ../DifferentialEquations/NoiselessKuramoto.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o -c /home/m4zz31/Documents/NEDISS/DifferentialEquations/NoiselessKuramoto.cpp
 
 CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.i: cmake_force
@@ -312,7 +286,7 @@ CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.s: cmake_fo
 
 CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o: ../Utils/msleep.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Utils/msleep.cpp.o -c /home/m4zz31/Documents/NEDISS/Utils/msleep.cpp
 
 CMakeFiles/cppprojct.dir/Utils/msleep.cpp.i: cmake_force
@@ -325,7 +299,7 @@ CMakeFiles/cppprojct.dir/Utils/msleep.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o: ../GraphClasses/GraphFunctions.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.o -c /home/m4zz31/Documents/NEDISS/GraphClasses/GraphFunctions.cpp
 
 CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.i: cmake_force
@@ -338,7 +312,7 @@ CMakeFiles/cppprojct.dir/GraphClasses/GraphFunctions.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o: ../Communication/CommunicationFunctions.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.o -c /home/m4zz31/Documents/NEDISS/Communication/CommunicationFunctions.cpp
 
 CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.i: cmake_force
@@ -351,7 +325,7 @@ CMakeFiles/cppprojct.dir/Communication/CommunicationFunctions.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.o: ../Utils/HelperClasses.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.o -c /home/m4zz31/Documents/NEDISS/Utils/HelperClasses.cpp
 
 CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.i: cmake_force
@@ -364,7 +338,7 @@ CMakeFiles/cppprojct.dir/Utils/HelperClasses.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/Utils/print_init.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Utils/print_init.cpp.o: ../Utils/print_init.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/cppprojct.dir/Utils/print_init.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/cppprojct.dir/Utils/print_init.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Utils/print_init.cpp.o -c /home/m4zz31/Documents/NEDISS/Utils/print_init.cpp
 
 CMakeFiles/cppprojct.dir/Utils/print_init.cpp.i: cmake_force
@@ -377,7 +351,7 @@ CMakeFiles/cppprojct.dir/Utils/print_init.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.o: ../Utils/print_warnings.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.o -c /home/m4zz31/Documents/NEDISS/Utils/print_warnings.cpp
 
 CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.i: cmake_force
@@ -390,7 +364,7 @@ CMakeFiles/cppprojct.dir/Utils/print_warnings.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o: ../Tests/long-singlestep-run.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.o -c /home/m4zz31/Documents/NEDISS/Tests/long-singlestep-run.cpp
 
 CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.i: cmake_force
@@ -403,7 +377,7 @@ CMakeFiles/cppprojct.dir/Tests/long-singlestep-run.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/Utils/certify_compliant.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Utils/certify_compliant.cpp.o: ../Utils/certify_compliant.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/cppprojct.dir/Utils/certify_compliant.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/cppprojct.dir/Utils/certify_compliant.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Utils/certify_compliant.cpp.o -c /home/m4zz31/Documents/NEDISS/Utils/certify_compliant.cpp
 
 CMakeFiles/cppprojct.dir/Utils/certify_compliant.cpp.i: cmake_force
@@ -416,7 +390,7 @@ CMakeFiles/cppprojct.dir/Utils/certify_compliant.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.o: ../DifferentialEquations/LinearTestEquation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.o -c /home/m4zz31/Documents/NEDISS/DifferentialEquations/LinearTestEquation.cpp
 
 CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.i: cmake_force
@@ -429,7 +403,7 @@ CMakeFiles/cppprojct.dir/DifferentialEquations/LinearTestEquation.cpp.s: cmake_f
 
 CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.o: ../GraphClasses/SmallWorldGraph.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.o -c /home/m4zz31/Documents/NEDISS/GraphClasses/SmallWorldGraph.cpp
 
 CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.i: cmake_force
@@ -442,7 +416,7 @@ CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.o: ../Utils/display_vectors.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.o -c /home/m4zz31/Documents/NEDISS/Utils/display_vectors.cpp
 
 CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.i: cmake_force
@@ -455,7 +429,7 @@ CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o: ../GraphClasses/ScaleFreeGraph.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o -c /home/m4zz31/Documents/NEDISS/GraphClasses/ScaleFreeGraph.cpp
 
 CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.i: cmake_force
@@ -468,7 +442,7 @@ CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.s: cmake_force
 
 CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o: CMakeFiles/cppprojct.dir/flags.make
 CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o: ../GraphClasses/GridGraph.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o -c /home/m4zz31/Documents/NEDISS/GraphClasses/GridGraph.cpp
 
 CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.i: cmake_force
@@ -479,6 +453,32 @@ CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.s"
 	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/Documents/NEDISS/GraphClasses/GridGraph.cpp -o CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.s
 
+CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: CMakeFiles/cppprojct.dir/flags.make
+CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o: ../Solvers/EulerSolver.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o"
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o -c /home/m4zz31/Documents/NEDISS/Solvers/EulerSolver.cpp
+
+CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.i"
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/Documents/NEDISS/Solvers/EulerSolver.cpp > CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.i
+
+CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.s"
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/Documents/NEDISS/Solvers/EulerSolver.cpp -o CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.s
+
+CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: CMakeFiles/cppprojct.dir/flags.make
+CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o: ../Solvers/RungeKuttaSolver.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/m4zz31/Documents/NEDISS/cmake-build-default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o"
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o -c /home/m4zz31/Documents/NEDISS/Solvers/RungeKuttaSolver.cpp
+
+CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.i"
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/m4zz31/Documents/NEDISS/Solvers/RungeKuttaSolver.cpp > CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.i
+
+CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.s"
+	mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/m4zz31/Documents/NEDISS/Solvers/RungeKuttaSolver.cpp -o CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.s
+
 # Object files for target cppprojct
 cppprojct_OBJECTS = \
 "CMakeFiles/cppprojct.dir/main.cpp.o" \
@@ -487,7 +487,6 @@ cppprojct_OBJECTS = \
 "CMakeFiles/cppprojct.dir/Utils/error.cpp.o" \
 "CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o" \
 "CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o" \
-"CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o" \
 "CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o" \
 "CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.o" \
 "CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o" \
@@ -495,7 +494,6 @@ cppprojct_OBJECTS = \
 "CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o" \
 "CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o" \
 "CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.o" \
-"CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o" \
 "CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o" \
 "CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o" \
 "CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o" \
@@ -511,7 +509,9 @@ cppprojct_OBJECTS = \
 "CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.o" \
 "CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.o" \
 "CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o" \
-"CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o"
+"CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o" \
+"CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o" \
+"CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o"
 
 # External object files for target cppprojct
 cppprojct_EXTERNAL_OBJECTS =
@@ -522,7 +522,6 @@ cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/ErdosRenyiGraph.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Utils/error.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/GeneralGraph.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/CliqueGraph.cpp.o
-cppprojct: CMakeFiles/cppprojct.dir/Simulation/Simulation.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Tests/graph-test-init.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Utils/reproductibility.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Utils/adequate_synchronization.cpp.o
@@ -530,7 +529,6 @@ cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/RingGraph.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Tests/graph-test-singlestep-evolution.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Solvers/GeneralSolver.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Utils/memory_management.cpp.o
-cppprojct: CMakeFiles/cppprojct.dir/Tests/solvers-test-init.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/DifferentialEquations/GeneralDifferentialEquation.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Utils/differential_equations_aux.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/DifferentialEquations/NoiselessKuramoto.cpp.o
@@ -547,6 +545,8 @@ cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/SmallWorldGraph.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/Utils/display_vectors.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/ScaleFreeGraph.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/GraphClasses/GridGraph.cpp.o
+cppprojct: CMakeFiles/cppprojct.dir/Solvers/EulerSolver.cpp.o
+cppprojct: CMakeFiles/cppprojct.dir/Solvers/RungeKuttaSolver.cpp.o
 cppprojct: CMakeFiles/cppprojct.dir/build.make
 cppprojct: /usr/lib/x86_64-linux-gnu/libboost_mpi.so
 cppprojct: /usr/lib/x86_64-linux-gnu/libboost_graph_parallel.so

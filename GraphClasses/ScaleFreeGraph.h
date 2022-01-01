@@ -8,14 +8,20 @@
 #include "GeneralGraph.h"
 #include <boost/graph/plod_generator.hpp>
 
+
+// TODO: test this class
 class ScaleFreeGraphObject : public CommonGraphObjectClass {
 public:
-    typedef boost::plod_iterator<boost::minstd_rand, Graph> SFGen;
-    boost::minstd_rand gen;
     unsigned long N;
-    double alpha,beta;
     unsigned long E;
     Graph g;
+
+    // Uniques to this Graph :-)
+    typedef boost::plod_iterator<boost::minstd_rand, Graph> SFGen;
+    boost::minstd_rand gen;
+    double alpha,beta;
+
+    // TODO: move this to CommonGraphObjectClass
     unsigned long Procs = num_processes(boost::graph::distributed::mpi_process_group());
 
     ScaleFreeGraphObject(unsigned long num_nodes, double A, double B) :
@@ -24,7 +30,8 @@ public:
             N(num_nodes),
             g(SFGen(gen, num_nodes, A, B, false), SFGen(), num_nodes) {};
 
-    void build(){}; // empty function for inter-class compatibility :-)
+    // TODO: move this to CommonGraphObjectClass
+    void build(){};
 };
 
 
