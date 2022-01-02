@@ -4,4 +4,5 @@ graphic/processed-program-output/*
 graphic/program-output-backup/*
 graphic/rendered-program-output/*
 graphic/program-output/*
+graphic/video/*
 graphic/timeseries/oscillation-files/*

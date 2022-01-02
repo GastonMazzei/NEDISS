@@ -34,3 +34,5 @@ rm output2.mp4
 rm output3.mp4
 rm output4.mp4
 
+echo "The video is available at FrontUtils/youtube-video.mp4 :-)"
+

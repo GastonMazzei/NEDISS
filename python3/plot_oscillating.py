@@ -5,7 +5,7 @@ import os
 
 TITLE = 'Sin(theta) over time for each node'
 
-with open('/home/m4zz31/cppprojct/graphic/timeseries/result.pkl','rb') as f:
+with open('graphic/timeseries/result.pkl','rb') as f:
   data = pickle.load(f)
 
 
@@ -31,4 +31,5 @@ for i in range(L):
 	plt.close()
 
 
-os.system(f'ffmpeg  -i "graphic/timeseries/oscillation-files/%0{D}d.png" -vcodec mpeg4 "graphic/video/result-oscillating.avi"')
+os.system(f'ffmpeg  -framerate 20 -i "graphic/timeseries/oscillation-files/%0{D}d.png" -vcodec mpeg4 "graphic/video/result-oscillating.avi"')
+

@@ -33,6 +33,7 @@ def ftoh(v):
 
 
 for i in range(TOT):
+	print(f'Processing file {i+1} of {TOT}')
 	with open(f'graphic/processed-program-output/graphviz.{i}.dot','w') as f:
 		for l in d[i]:
 			if '->' in l:

@@ -97,6 +97,7 @@ void run_several_times(GRAPHTYPE &G, std::string name,
                 char * dot = &dots[0];
                 boost::write_graphviz(dot, G.g, boost::make_label_writer(get(&DynamicNode::value, G.g)));
                 fileCounter++;
+		// todo: this only for processor 0 please
                 std::cout << "Writing graphviz into file named" << dots <<std::endl;
             }
             // Evolve the graph? if it were dynamic. Not our case :-).
@@ -120,6 +121,7 @@ void run_several_times(GRAPHTYPE &G, std::string name,
                 char * dot = &dots[0];
                 boost::write_graphviz(dot, G.g, boost::make_label_writer(get(&DynamicNode::value, G.g)));
                 fileCounter++;
+		// todo: this only for processor 0 please
                 std::cout << "Writing graphviz into file named" << dots <<std::endl;
             }
             // Evolve the graph? if it were dynamic. Not our case :-).
