@@ -10,8 +10,8 @@ SEED=21234;
 SAMPLING_FREQ=1;
 WMIN=1.3;
 WMAX=0.3;
-J=30;
-NRUNS=100;
+J=1;
+NRUNS=50;
 
 # ********************************** SOLVER *******************************
 
@@ -19,7 +19,7 @@ NRUNS=100;
 SOLVER=1;
 
 # 1,2,3,4 for EulerSolver, or 1,2,4 for RungeKutta
-SOLVERDEPTH=2;
+SOLVERDEPTH=4;
 
 # Coefficients for Runge Kutta
 if [ $SOLVERDEPTH == 4 ]; then
@@ -42,13 +42,13 @@ else
  K4=0.000000000000000;
 fi
 
-TOPOLOGY=0;
+TOPOLOGY=3;
 
 # 0 Ring, 1 Clique, 2 ErdosRenyi, 3 SmallWorld
-TOPOLOGY=0;
-NNODES=1044;
+TOPOLOGY=3;
+NNODES=1000;
 proba=0.5;
-kneigh=3;
+kneigh=20;
 
 # ********************************** PERFORMANCE *******************************
 

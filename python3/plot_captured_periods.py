@@ -8,15 +8,18 @@ from period_analysis_configuration import TOPOLOGY as T, TOPOLOGY_NAME_DECODER a
 df = pd.read_csv('graphic/timeseries/total-results.csv')
 
 def detect_variation(df):
+	"""
+	TODO: write this. If it detects several variations it asks users for input
+	"""
 	return 'NNODES'
+#	return 'PROBABILITY'
 col = detect_variation(df)
 
 df = df.sort_values([col])
 
 # Filter df file by only keeping UIDs that  have not been deleted
-#filenamesUID = [x.split('.')[0] for x in os.listdir('graphic/timeseries/timeseries-sweep') if 'series.png' in x]
-#df = df[df['UID'].isin(filenamesUID)]
-print(df[col])
+filenamesUID = [x.split('.')[0] for x in os.listdir('graphic/timeseries/timeseries-sweep') if 'series.png' in x]
+df = df[df['UID'].isin(filenamesUID)]
 
 y = df['T'].to_numpy() * df['SAMPLING_FREQ'].to_numpy()
 x = df[col].to_numpy()
