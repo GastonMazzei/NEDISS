@@ -15,7 +15,7 @@ TOPOLOGY_NAME_DECODER = {
 # for N in NODES
 #   for P in PROBA
 #      ....
-NNODES = [205 + i * 50 for i in range(8)]
+NNODES = [54 + i * 110 for i in range(10)]
 PROBA = [0.5]
 KNEIGH = [3]
 J = [30]

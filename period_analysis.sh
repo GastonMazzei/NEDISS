@@ -27,8 +27,8 @@ python3 python3/capture_period_range.py
 python3 python3/plot_captured_periods.py
 
 # End :-)
-rm graphic/image/wholeseries.png
-rm tmp.log
+rm -f graphic/image/wholeseries.png
+rm -f tmp.log
 echo "The script has ended! :-). The final plot is available at graphic/image/period_analysis_result.png. Subsequent applications of this program will overwrite that image. In the following section, user has the possibility of removing outliers to produce a better plot."
 
 # Ask user if the script should continue

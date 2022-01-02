@@ -46,7 +46,7 @@ TOPOLOGY=0;
 
 # 0 Ring, 1 Clique, 2 ErdosRenyi, 3 SmallWorld
 TOPOLOGY=0;
-NNODES=1580;
+NNODES=1044;
 proba=0.5;
 kneigh=3;
 
