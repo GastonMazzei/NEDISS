@@ -1,4 +1,4 @@
-import pickle
+import pickle, os, sys, uuid
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
@@ -6,6 +6,9 @@ from scipy.optimize import curve_fit
 # Define two PI
 TWOPI = np.pi * 2
 
+DEFAULT_TO_ZERO = [True, False][0]
+AVOID_NOT_COMPUTABLE = [True,False][0]
+PROBLEM_DETECTING = False
 
 # Open the simulation configuration file and get relevant info
 with open('simulation.conf.sh','r') as f:
@@ -16,6 +19,8 @@ with open('simulation.conf.sh','r') as f:
 			J = float(x.split('=')[1].split(';')[0])
 		if 'NRUNS=' in x:
 			NRUNS = float(x.split('=')[1].split(';')[0])
+		if 'NNODES=' in x:
+			NNODES = float(x.split('=')[1].split(';')[0])
 		if 'EQNUMBER=' in x:
 			EQNUMBER = float(x.split('=')[1].split(';')[0])
 		if 'SAMPLING_FREQ=' in x:
@@ -107,14 +112,27 @@ if np.mean(dists[new_ixs[:2]]) > np.mean(dists[new_ixs[Lnd // 2-1:Lnd // 2+1]]) 
 		# And we keep only that section
 		new_dists = dists[1:][new_ixs[ixmin:].tolist()]# + list(range(new_ixs[-1]+1,len(dists)-1))]
 	else:		
-		# The full picture is not clear
-		plt.plot(new_ixs, dists[new_ixs], c='r', label='selected')
-		plt.plot(dists, c='b', label='full')
-		plt.legend()
-		plt.title('We had a problem detecting the exponential convergence section... can you please input where it starts manually? (aprox x values)')
-		plt.show()		
-		xs = input('Input the x value in integer format, e.g. "15"... Your answer: ')
-		ixmin = int(xs)
+		PROBLEM_DETECTING = True
+		if DEFAULT_TO_ZERO:
+			ixmin = 0
+			pattern = (
+"""
+  \    /
+   \  /  
+    \/  
+""")
+			print(f'Detected the following pattern, but failed to extract bounds so defaulted to the entire timeseries. To detect it manually change the flag "DEFAULT_TO_ZERO" in python3/kuramoto_distance_over_time.py')
+			print(pattern)
+
+		else:
+			# The full picture is not clear
+			plt.plot(new_ixs, dists[new_ixs], c='r', label='selected')
+			plt.plot(dists, c='b', label='full')
+			plt.legend()
+			plt.title('We had a problem detecting the exponential convergence section... can you please input where it starts manually? (aprox x values)')
+			plt.show()		
+			xs = input('Input the x value in integer format, e.g. "15"... Your answer: ')
+			ixmin = int(xs)
 		new_dists = dists[ixmin:]
 elif np.mean(dists[new_ixs[:2]]) <= np.mean(dists[new_ixs[Lnd // 2-1:Lnd // 2+1]]) and np.mean(dists[new_ixs[-2:]]) <= np.mean(dists[new_ixs[Lnd // 2-1:Lnd // 2+1]]):
 	# it's a  
@@ -132,14 +150,27 @@ elif np.mean(dists[new_ixs[:2]]) <= np.mean(dists[new_ixs[Lnd // 2-1:Lnd // 2+1]
 		# And we keep only that section
 		new_dists = dists[1:][new_ixs[ixmax:].tolist()] # + list(range(new_ixs[-1]+1,len(dists)-1))]
 	else:		
-		# The full picture is not clear
-		plt.plot(new_ixs, dists[new_ixs], c='r', label='selected')
-		plt.plot(dists, c='b', label='full')
-		plt.legend()
-		plt.title('We had a problem detecting the exponential convergence section... can you please input where it starts manually? (aprox x values)')
-		plt.show()		
-		xs = input('Input the x value in integer format, e.g. "15"... Your answer: ')
-		ixmin = int(xs)
+		PROBLEM_DETECTING = True
+		if DEFAULT_TO_ZERO:
+			ixmin = 0
+			pattern = (
+"""
+   /\   
+  /  \    
+ /    \ 
+""")
+			print(f'Detected the following pattern, but failed to extract bounds so defaulted to the entire timeseries. To detect it manually change the flag "DEFAULT_TO_ZERO" in python3/kuramoto_distance_over_time.py')
+			print(pattern)
+
+		else:
+			# The full picture is not clear
+			plt.plot(new_ixs, dists[new_ixs], c='r', label='selected')
+			plt.plot(dists, c='b', label='full')
+			plt.legend()
+			plt.title('We had a problem detecting the exponential convergence section... can you please input where it starts manually? (aprox x values)')
+			plt.show()		
+			xs = input('Input the x value in integer format, e.g. "15"... Your answer: ')
+			ixmin = int(xs)
 		new_dists = dists[ixmin:]
 elif np.mean(dists[new_ixs[:2]]) > np.mean(dists[new_ixs[Lnd // 2-1:Lnd // 2+1]]) and np.mean(dists[new_ixs[-2:]]) <= np.mean(dists[new_ixs[Lnd // 2-1:Lnd // 2+1]]):
 	# it's a  
@@ -154,14 +185,26 @@ elif np.mean(dists[new_ixs[:2]]) > np.mean(dists[new_ixs[Lnd // 2-1:Lnd // 2+1]]
 		# Thus we keep it all.
 		new_dists = dists[1:][new_ixs.tolist()]# + list(range(new_ixs[-1]+1,len(dists)-1))]
 	else:		
-		# The full picture is not clear
-		plt.plot(new_ixs, dists[new_ixs], c='r', label='selected')
-		plt.plot(dists, c='b', label='full')
-		plt.legend()
-		plt.title('We had a problem detecting the exponential convergence section... can you please input where it starts manually? (aprox x values)')
-		plt.show()		
-		xs = input('Input the x value in integer format, e.g. "15"... Your answer: ')
-		ixmin = int(xs)
+		PROBLEM_DETECTING = True
+		if DEFAULT_TO_ZERO:
+			ixmin = 0
+			pattern = (
+"""
+\    
+ \    
+  \/\/\ 
+""")
+			print(f'Detected the following pattern, but failed to extract bounds so defaulted to the entire timeseries. To detect it manually change the flag "DEFAULT_TO_ZERO" in python3/kuramoto_distance_over_time.py')
+			print(pattern)
+		else:
+			# The full picture is not clear
+			plt.plot(new_ixs, dists[new_ixs], c='r', label='selected')
+			plt.plot(dists, c='b', label='full')
+			plt.legend()
+			plt.title('We had a problem detecting the exponential convergence section... can you please input where it starts manually? (aprox x values)')
+			plt.show()		
+			xs = input('Input the x value in integer format, e.g. "15"... Your answer: ')
+			ixmin = int(xs)
 		new_dists = dists[ixmin:]
 elif np.mean(dists[new_ixs[:2]]) <= np.mean(dists[new_ixs[Lnd // 2-1:Lnd // 2+1]]) and np.mean(dists[new_ixs[-2:]]) >= np.mean(dists[new_ixs[Lnd // 2-1:Lnd // 2+1]]):
 	# it's a ___ 
@@ -177,6 +220,36 @@ elif np.mean(dists[new_ixs[:2]]) <= np.mean(dists[new_ixs[Lnd // 2-1:Lnd // 2+1]
 		# Thus we keep it all.
 		new_dists = dists[1:][new_ixs.tolist()]# + list(range(new_ixs[-1]+1,len(dists)-1))]
 	else:		
+		PROBLEM_DETECTING = True
+		if DEFAULT_TO_ZERO:
+			ixmin = 0
+			pattern = (
+"""
+       ___________
+    /\/   
+   /    
+  /   
+""")
+			print(f'Detected the following pattern, but failed to extract bounds so defaulted to the entire timeseries. To detect it manually change the flag "DEFAULT_TO_ZERO" in python3/kuramoto_distance_over_time.py')
+			print(pattern)
+		else:
+
+			# The full picture is not clear
+			plt.plot(new_ixs, dists[new_ixs], c='r', label='selected')
+			plt.plot(dists, c='b', label='full')
+			plt.legend()
+			plt.title('We had a problem detecting the exponential convergence section... can you please input where it starts manually? (aprox x values)')
+			plt.show()		
+			xs = input('Input the x value in integer format, e.g. "15"... Your answer: ')
+			ixmin = int(xs)
+			new_dists = dists[ixmin:]
+else:
+	PROBLEM_DETECTING = True
+	if DEFAULT_TO_ZERO:
+		print(f'Couldn\'t detect a pattern, so defaulted to the entire timeseries. To detect it manually change the flag "DEFAULT_TO_ZERO" in python3/kuramoto_distance_over_time.py')
+		ixmin = 0
+	else:
+		print("Last")
 		# The full picture is not clear
 		plt.plot(new_ixs, dists[new_ixs], c='r', label='selected')
 		plt.plot(dists, c='b', label='full')
@@ -186,17 +259,6 @@ elif np.mean(dists[new_ixs[:2]]) <= np.mean(dists[new_ixs[Lnd // 2-1:Lnd // 2+1]
 		xs = input('Input the x value in integer format, e.g. "15"... Your answer: ')
 		ixmin = int(xs)
 		new_dists = dists[ixmin:]
-else:
-	print("Last")
-	# The full picture is not clear
-	plt.plot(new_ixs, dists[new_ixs], c='r', label='selected')
-	plt.plot(dists, c='b', label='full')
-	plt.legend()
-	plt.title('We had a problem detecting the exponential convergence section... can you please input where it starts manually? (aprox x values)')
-	plt.show()		
-	xs = input('Input the x value in integer format, e.g. "15"... Your answer: ')
-	ixmin = int(xs)
-	new_dists = dists[ixmin:]
 
 # Flagged for kill after next debug, 01 jan 2022
 #
@@ -204,6 +266,12 @@ else:
 #new_dists = dists[1:][ixs.tolist() + list(range(ixs[-1]+1,len(dists)-1))]
 #plt.plot(new_dists);plt.show()
 #new_dists = dists[1:][mask]
+
+
+# OVERWRITE: USE  THE ENTIRE FUNCTION!
+OVERWRITE = True
+if OVERWRITE:
+	new_dists = dists
 
 
 # Function fitting :-)
@@ -223,10 +291,33 @@ plt.savefig('graphic/image/maxdistovertime.png')
 # todo: put the entire graph and add a section of zoomed axis: https://matplotlib.org/stable/gallery/subplots_axes_and_figures/zoom_inset_axes.html
 # actually we can double the vertical dimension and just vertically stack them :-)
 
-T = popt[0] * SAMPLING_FREQ
-#	    T, h, J, NRUNS, EQNUMBER, SAMPLING_FREQ, WMIN, WMAX, TOPOLOGY, proba, kneigh
-myCsvRow = f'{T},{h},{J},{NRUNS},{EQNUMBER},{SAMPLING_FREQ},{WMIN},{WMAX},{TOPOLOGY},{proba},{kneigh}\n'
+# Also plot the entire series :o
+f,ax = plt.subplots(1,2)
+ax[0].plot(dists, c='k',label='entire series')
+ax[1].plot(range(len(dists),len(new_dists)+len(dists)), new_dists, c='r',label='fitted section')
+ax[0].legend()
+ax[1].legend()
+plt.savefig(f'graphic/image/wholeseries.png')
+
+
+if AVOID_NOT_COMPUTABLE:
+	if PROBLEM_DETECTING:
+		# If there was an error detecting the borders, do not store the results :-)
+		sys.exit(0)
+
+T = popt[0]
+UID = uuid.uuid4().__str__()
+#	    T, NNODES, h, J, NRUNS, EQNUMBER, SAMPLING_FREQ, WMIN, WMAX, TOPOLOGY, proba, kneigh, UUID
+myCsvRow = f'{T},{NNODES},{h},{J},{NRUNS},{EQNUMBER},{SAMPLING_FREQ},{WMIN},{WMAX},{TOPOLOGY},{proba},{kneigh},{UID}\n'
+if 'total-results.csv' in os.listdir('graphic/timeseries'):
+	marker = False
+else:
+	marker = True
 with open('graphic/timeseries/total-results.csv','a') as fd:
+    if marker:
+        fd.write('T,NNODES,h,J,NRUNS,EQNUMBER,SAMPLING_FREQ,WMIN,WMAX,TOPOLOGY,PROBABILITY,KNEIGHBOURS,UID\n')
     fd.write(myCsvRow)
+
+
 
 

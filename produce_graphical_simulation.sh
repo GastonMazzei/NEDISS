@@ -1,19 +1,23 @@
 # Create directories
-mkdir graphic/program-output
-mkdir graphic/processed-program-output
-mkdir graphic/rendered-program-output
-mkdir graphic/program-output-backup
-mkdir graphic/timeseries
-mkdir graphic/timeseries/oscillation-files
-mkdir graphic/video
+mkdir -p graphic/image
+mkdir -p graphic/program-output
+mkdir -p graphic/processed-program-output
+mkdir -p graphic/rendered-program-output
+mkdir -p graphic/program-output-backup
+mkdir -p graphic/timeseries
+mkdir -p graphic/timeseries/oscillation-files
+mkdir -p graphic/timeseries/timeseries-sweep
+mkdir -p graphic/video
 
 # Remove old files
-rm graphic/program-output-backup/*
-rm graphic/video/result.avi
-rm graphic/video/result-oscillating.avi
-rm graphic/processed-program-output/*
-rm graphic/rendered-program-output/*
-rm graphic/timeseries/oscillation-files/*
+rm -r graphic/timeseries/timeseries-sweep/*
+rm -f graphic/program-output-backup/*
+rm -f graphic/timeseries/*
+rm -f graphic/video/result.avi
+rm -f graphic/video/result-oscillating.avi
+rm -f graphic/processed-program-output/*
+rm -f graphic/rendered-program-output/*
+rm -f graphic/timeseries/oscillation-files/*
 
 # Load variables
 source simulation.conf.sh
