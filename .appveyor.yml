@@ -20,11 +20,7 @@ install:
 
     else
 
-        #git clone https://boringssl.googlesource.com/boringssl
-
-        #cd boringssl
-
-        #git checkout a2278d4d2cabe73f6663e3299ea7808edfa306b9
+        echo "About to download OpenMPI 4"
 
         wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.2.tar.gz
 
@@ -39,6 +35,22 @@ install:
         make install |& tee install.out
         
         cd ..
+
+        echo "About to download Boost 1.77.0"
+
+        wget https://boostorg.jfrog.io/artifactory/main/release/1.77.0/source/boost_1_77_0.tar.gz
+        
+        tar zxvf boost_1_77_0.tar.gz
+        
+        cd boost_1_77_0
+        
+        ./bootstrap.sh
+        
+        ./b2 install
+
+        cd ..
+
+        echo "About to build the project :-)"
 
         cmake .
 

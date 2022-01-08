@@ -26,6 +26,7 @@ extraction:
         - cd boost_1_77_0
         - ./bootstrap.sh
         - ./b2 install
+        - cd ..
         - python3 -m pip install --upgrade pip setuptools
         - python3 -m pip install conan
         - python3 -m pip install cmake
@@ -35,4 +36,7 @@ extraction:
         - mkdir build
         - cmake -D ENABLE_COVERAGE:BOOL=TRUE -S . -B build
     index:
+      exclude:
+        - python3
+        - html
       build_command: cmake --build ./build -- -j2
