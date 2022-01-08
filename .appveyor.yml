@@ -55,11 +55,19 @@ install:
 
         echo "About to build the project :-)"
 
-        cmake .
+        wget https://github.com/GastonMazzei/NEDISS/archive/refs/heads/main.zip
 
-        make -j4 cmake-build-debug/Makefile
+        unzip main.zip
+
+        cd NEDISS-main
+
+        cmake -D ENABLE_COVERAGE:BOOL=TRUE -S . -B build
+
+        cmake --build ./build -- -j4
 
         cd ..
+
+        echo "Ended succesfully :-)"
 
     fi
 

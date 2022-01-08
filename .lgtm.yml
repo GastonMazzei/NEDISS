@@ -19,6 +19,15 @@ extraction:
         - g++-10
         - ccache
       script:
+        - echo "About to download OpenMPI 4"
+        - wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.2.tar.gz
+        - tar xvzf https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.2.tar.gz
+        - cd openmpi-4.1.2
+        - ./configure |& tee config.out
+        - make -j 8 |& tee make.out
+        - make install |& tee install.out
+        - cd ..
+        - echo "About to download boost 1.77.0"
 #        - mkdir ~/.conan
 #        - cat /usr/local/share/ca-certificates/semmle-cache-ca/semmle-cache-ca.crt >> ~/.conan/cacert.pem
         - wget https://boostorg.jfrog.io/artifactory/main/release/1.77.0/source/boost_1_77_0.tar.gz
@@ -27,16 +36,15 @@ extraction:
         - ./bootstrap.sh
         - ./b2 install
         - cd ..
-        - python3 -m pip install --upgrade pip setuptools
-        - python3 -m pip install conan
-        - python3 -m pip install cmake
-        - source ~/.profile
+#        - python3 -m pip install --upgrade pip setuptools
+#        - python3 -m pip install conan
+#        - python3 -m pip install cmake
+          #        - source ~/.profile
     configure:
       command:
-        - mkdir build
         - cmake -D ENABLE_COVERAGE:BOOL=TRUE -S . -B build
-    index:
-      exclude:
-        - python3
-        - html
+  index:
+    exclude:
+      - python3
+      - html
       build_command: cmake --build ./build -- -j2
