@@ -26,6 +26,20 @@ install:
 
         #git checkout a2278d4d2cabe73f6663e3299ea7808edfa306b9
 
+        wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.2.tar.gz
+
+        tar xvzf https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.2.tar.gz
+
+        cd openmpi-4.1.2
+
+        ./configure |& tee config.out
+
+        make -j 8 |& tee make.out
+
+        make install |& tee install.out
+        
+        cd ..
+
         cmake .
 
         make -j4 cmake-build-debug/Makefile
