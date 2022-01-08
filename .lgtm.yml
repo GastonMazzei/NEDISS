@@ -43,7 +43,7 @@ extraction:
     configure:
       command:
         - cmake -D ENABLE_COVERAGE:BOOL=TRUE -S . -B build
-      build_command: cmake --build ./build -- -j2
+        - cmake --build ./build -- -j2
 
 #  index:
 #    exclude:
