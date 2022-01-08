@@ -1,6 +1,13 @@
 
-<center><h1><b>V 1.0.0 is ready!</b></h1> <i>(Decent documentation coming soon!)</i></center>
+<center><h1><b>V 1.0.0</b></h1> 
 
+ [![Build status](https://ci.appveyor.com/api/projects/status/8t72t8yb59kbdiuj?svg=true)](https://ci.appveyor.com/project/GastonMazzei/nediss)
+[![Language grade: C++](https://img.shields.io/lgtm/grade/cpp/github/GastonMazzei/NEDISS)](https://lgtm.com/projects/g/GastonMazzei/NEDISS/context:cpp)
+
+ 
+ 
+<i>Documentation at https://gastonmazzei.github.io/NEDISS/annotated.html</i></center>
+ 
 ---
 
 
