@@ -7,12 +7,13 @@
 #    - "*/fuzz_test/**/*"
 #    - "*/test/**/*"
 
+
+
 extraction:
   cpp:
     prepare:
       packages:
         - cmake
-        - libboost-all-dev
         - libopenmpi-dev
         - openmpi-bin
         - g++-10
@@ -20,6 +21,11 @@ extraction:
       script:
 #        - mkdir ~/.conan
 #        - cat /usr/local/share/ca-certificates/semmle-cache-ca/semmle-cache-ca.crt >> ~/.conan/cacert.pem
+        - wget https://boostorg.jfrog.io/artifactory/main/release/1.77.0/source/boost_1_77_0.tar.gz
+        - tar zxvf boost_1_77_0.tar.gz
+        - cd boost_1_77_0
+        - ./bootstrap.sh
+        - ./b2 install
         - python3 -m pip install --upgrade pip setuptools
         - python3 -m pip install conan
         - python3 -m pip install cmake
