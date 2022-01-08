@@ -43,8 +43,9 @@ extraction:
     configure:
       command:
         - cmake -D ENABLE_COVERAGE:BOOL=TRUE -S . -B build
-  index:
-    exclude:
-      - python3
-      - html
       build_command: cmake --build ./build -- -j2
+
+#  index:
+#    exclude:
+#      - python3
+#      - html
