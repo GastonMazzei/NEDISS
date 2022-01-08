@@ -5,6 +5,9 @@ image:
 
 build: off
 
+skip_commits:
+  message: /\[unsurveilled\]/
+
 init:
 
 #cache:
