@@ -15,12 +15,14 @@
 
 <i>Just configure the simulation via `simulation.conf.sh` and execute the desired script</i>
 
-1) `run.sh` runs the program in whichever mode was specified in the configuration file
+1) `run.sh` just runs the program in whichever mode was specified in the configuration file
 2) `produce_graphical_simulation.sh` runs the program in simulation mode and produces a graphical simulation
-4) `run_debugxterm.sh` runs with gdb and displays each processor in a different console
-5) `run_pipe.sh` runs and pipes the output to a txt file
-6) `run_valgrind.sh` runs and produces a valgrind report
-7) `run_time.sh` runs nonverbose and computes the execution time
+3) `capture_period.sh` computes the exponential coefficients of the collapse into a locked state for the values specified in the configuration file.
+4) `period_analysis.sh` wraps the capture of the period for a range of parameters indicated in the sweep configuration file, allows to mark outliers to exclude, and finally produces a chart showing the trend. 
+5) `run_debugxterm.sh` runs with gdb and displays each processor in a different console
+6) `run_pipe.sh` runs and pipes the output to a txt file
+7) `run_valgrind.sh` runs and produces a valgrind report
+8) `run_time.sh` runs nonverbose and computes the execution time
 
 The configuration file allows the following to be specified:
 
