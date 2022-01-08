@@ -15,3 +15,7 @@ script:
   - cmake --version
   - cmake CMakeLists.txt
   - cmake  --build . --target neat
+
+before_install:
+  - test -n $CC  && unset CC
+  - test -n $CXX && unset CXX
