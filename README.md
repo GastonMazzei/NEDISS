@@ -75,13 +75,13 @@ The configuration file allows the following to be specified:
 
 <center><i>Working modes</i></center>
 
--1 - Produces a graphical simulation
+-1 - Produces a simulation of length `NRUNS` and samples the node values at `SAMPLING_FREQ`
 
-0 - Tests initialization
+0 - Visually inspect node and edge values at initialization
 
-1 - Tests single-step evolution
+1 - Visually inspect node and edge values after "a few" iterations (currently fixed at 3).
 
-2 - Tests results after several runs
+2 - Visually inspect node and edge values at both initialization and after several configurable (`NRUNS`) iterations. It also verifies the probability of errors, e.g. verification of 10k iterations with 100 threads and no segmentation fault.
 
 
 <center><i>How to contribute</i></center>
@@ -92,4 +92,3 @@ The configuration file allows the following to be specified:
  
 - compiling with the `VERBOSE` macro defined produces a loot of output in each run.
 - `CONSIDERATIONS.txt` contains special considerations, e.g. how the MPI implementation can affect us.
-- `Guideline-DiffEqsSolvers[ES].txt` is a proto explanation of how to build a Differential Equation for users. It says 'ES' because it is in Spanish! Ouch.
