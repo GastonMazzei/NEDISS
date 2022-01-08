@@ -85,7 +85,7 @@ The configuration file allows the following to be specified:
 
 
 <center><i>How to contribute</i></center>
-<i>Open a pull request if you have any idea; at the present time (beggining Dec. 2021) the main focus of attention should be adding random walks to measure diffusion. Also a way to compute Synchronization time in-house (i.e. without producing graphical information) could be useful. Please contact </i>
+<i>Please open a pull request if you have any idea; at the present time (beggining Dec. 2021) the main focus of attention should be adding random walks to measure diffusion. Also a way to compute Synchronization time in-house (i.e. without producing graphical information) could be useful. Please contact </i>
 
 
 <center><i>Other Useful Tools</i></center>
