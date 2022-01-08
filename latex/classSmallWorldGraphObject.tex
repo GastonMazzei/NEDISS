@@ -1,0 +1,66 @@
+\hypertarget{classSmallWorldGraphObject}{}\section{Small\+World\+Graph\+Object Class Reference}
+\label{classSmallWorldGraphObject}\index{Small\+World\+Graph\+Object@{Small\+World\+Graph\+Object}}
+
+
+Inheritance diagram for Small\+World\+Graph\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{classSmallWorldGraphObject__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Small\+World\+Graph\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{classSmallWorldGraphObject__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classSmallWorldGraphObject_acb009e184bb1bee17aef9cbc5b3e3793}\label{classSmallWorldGraphObject_acb009e184bb1bee17aef9cbc5b3e3793}} 
+typedef boost\+::small\+\_\+world\+\_\+iterator$<$ boost\+::minstd\+\_\+rand, Graph $>$ {\bfseries S\+W\+Gen}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classSmallWorldGraphObject_a3cd1132183588dfffba4b6892264f7c9}\label{classSmallWorldGraphObject_a3cd1132183588dfffba4b6892264f7c9}} 
+{\bfseries Small\+World\+Graph\+Object} (unsigned long num\+\_\+nodes, unsigned long k\+Neighbors, double probability)
+\item 
+\mbox{\Hypertarget{classSmallWorldGraphObject_a88b6e629b8058a219a75b1a3eb3ace78}\label{classSmallWorldGraphObject_a88b6e629b8058a219a75b1a3eb3ace78}} 
+void {\bfseries build} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classSmallWorldGraphObject_ac71676e3d70169b86efe9eb8026f22dd}\label{classSmallWorldGraphObject_ac71676e3d70169b86efe9eb8026f22dd}} 
+unsigned long {\bfseries N}
+\item 
+\mbox{\Hypertarget{classSmallWorldGraphObject_ae8743f503dc950297bddc0fe0d479d01}\label{classSmallWorldGraphObject_ae8743f503dc950297bddc0fe0d479d01}} 
+unsigned long {\bfseries E}
+\item 
+\mbox{\Hypertarget{classSmallWorldGraphObject_a93c81ac9467a03d50acf4f652300ee21}\label{classSmallWorldGraphObject_a93c81ac9467a03d50acf4f652300ee21}} 
+Graph {\bfseries g}
+\item 
+\mbox{\Hypertarget{classSmallWorldGraphObject_a2cdff89afdd0a03423557ddb4cb61791}\label{classSmallWorldGraphObject_a2cdff89afdd0a03423557ddb4cb61791}} 
+boost\+::minstd\+\_\+rand {\bfseries gen}
+\item 
+\mbox{\Hypertarget{classSmallWorldGraphObject_a064764c41a03f67791e76d5b957facc0}\label{classSmallWorldGraphObject_a064764c41a03f67791e76d5b957facc0}} 
+unsigned long {\bfseries K}
+\item 
+\mbox{\Hypertarget{classSmallWorldGraphObject_adf39fde9b34c52489a0606c71f071c21}\label{classSmallWorldGraphObject_adf39fde9b34c52489a0606c71f071c21}} 
+double {\bfseries Proba}
+\item 
+\mbox{\Hypertarget{classSmallWorldGraphObject_acd7c02cb7511fe6cd844c10457ff4707}\label{classSmallWorldGraphObject_acd7c02cb7511fe6cd844c10457ff4707}} 
+unsigned long {\bfseries Procs} = num\+\_\+processes(boost\+::graph\+::distributed\+::mpi\+\_\+process\+\_\+group())
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Graph\+Classes/Small\+World\+Graph.\+h\end{DoxyCompactItemize}

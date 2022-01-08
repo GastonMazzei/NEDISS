@@ -1,0 +1,80 @@
+\hypertarget{classGeneralSolver}{}\section{General\+Solver$<$ D\+I\+F\+F\+EQ, S\+O\+L\+V\+ER $>$ Class Template Reference}
+\label{classGeneralSolver}\index{General\+Solver$<$ D\+I\+F\+F\+E\+Q, S\+O\+L\+V\+E\+R $>$@{General\+Solver$<$ D\+I\+F\+F\+E\+Q, S\+O\+L\+V\+E\+R $>$}}
+
+
+Collaboration diagram for General\+Solver$<$ D\+I\+F\+F\+EQ, S\+O\+L\+V\+ER $>$\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=207pt]{classGeneralSolver__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGeneralSolver_ab558a72e287752a64449810029ef036f}\label{classGeneralSolver_ab558a72e287752a64449810029ef036f}} 
+{\bfseries General\+Solver} (std\+::string valtype)
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a5a8d5e0b856b0fb7fb7a05fd6da84fcb}\label{classGeneralSolver_a5a8d5e0b856b0fb7fb7a05fd6da84fcb}} 
+{\bfseries General\+Solver} (std\+::string valtype, int d)
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a79d402c597f2e84337d89036eba4ef9b}\label{classGeneralSolver_a79d402c597f2e84337d89036eba4ef9b}} 
+{\bfseries General\+Solver} (std\+::string valtype, int d, double $\ast$params)
+\item 
+\mbox{\Hypertarget{classGeneralSolver_af26d2bd217b8b2303d5c41d60376588c}\label{classGeneralSolver_af26d2bd217b8b2303d5c41d60376588c}} 
+void {\bfseries Post\+Template\+Processing} ()
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a35bc9d64300be88f4a64d426016018c4}\label{classGeneralSolver_a35bc9d64300be88f4a64d426016018c4}} 
+void {\bfseries evolve} (double a, std\+::vector$<$ double $>$ \&b, std\+::vector$<$ double $>$ \&c, std\+::vector$<$ double $>$ \&d, std\+::vector$<$ double $>$ \&R\+K1, std\+::vector$<$ double $>$ \&R\+K2, std\+::vector$<$ double $>$ \&R\+K3, std\+::vector$<$ double $>$ \&R\+K4, double \&answer)
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a6d8ecaeb7aa8833616f94e526e9ecf75}\label{classGeneralSolver_a6d8ecaeb7aa8833616f94e526e9ecf75}} 
+void {\bfseries Term1} (double a, std\+::vector$<$ double $>$ \&b, std\+::vector$<$ double $>$ \&c, std\+::vector$<$ double $>$ \&d, std\+::vector$<$ double $>$ \&R\+K1)
+\item 
+\mbox{\Hypertarget{classGeneralSolver_aff0944c9a83904ca7f06b49bd4a30e62}\label{classGeneralSolver_aff0944c9a83904ca7f06b49bd4a30e62}} 
+void {\bfseries Term2} (double a, std\+::vector$<$ double $>$ \&b, std\+::vector$<$ double $>$ \&c, std\+::vector$<$ double $>$ \&d, std\+::vector$<$ double $>$ \&R\+K1, std\+::vector$<$ double $>$ \&R\+K2)
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a36e8b1a601b8eaa6e9fdb9db33d1c82e}\label{classGeneralSolver_a36e8b1a601b8eaa6e9fdb9db33d1c82e}} 
+void {\bfseries Term3} (double a, std\+::vector$<$ double $>$ \&b, std\+::vector$<$ double $>$ \&c, std\+::vector$<$ double $>$ \&d, std\+::vector$<$ double $>$ \&R\+K1, std\+::vector$<$ double $>$ \&R\+K2, std\+::vector$<$ double $>$ \&R\+K3)
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a656257a26a068283f5e296a0c800baf6}\label{classGeneralSolver_a656257a26a068283f5e296a0c800baf6}} 
+void {\bfseries Term4} (double a, std\+::vector$<$ double $>$ \&b, std\+::vector$<$ double $>$ \&c, std\+::vector$<$ double $>$ \&d, std\+::vector$<$ double $>$ \&R\+K1, std\+::vector$<$ double $>$ \&R\+K2, std\+::vector$<$ double $>$ \&R\+K3, std\+::vector$<$ double $>$ \&R\+K4)
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a37505b19e23e7949e5ec1c95ac556e11}\label{classGeneralSolver_a37505b19e23e7949e5ec1c95ac556e11}} 
+void {\bfseries Set\+Step} (double h)
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a29e088c061743d092a681666599bcfa4}\label{classGeneralSolver_a29e088c061743d092a681666599bcfa4}} 
+void {\bfseries Set\+T0} (double t0)
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a20243a636c94dbdd8bf56873497721f7}\label{classGeneralSolver_a20243a636c94dbdd8bf56873497721f7}} 
+void {\bfseries Evolve\+Time} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGeneralSolver_aab8c1ef25686ffb53c043e1c1ff098d2}\label{classGeneralSolver_aab8c1ef25686ffb53c043e1c1ff098d2}} 
+double {\bfseries Params} \mbox{[}4\mbox{]}
+\item 
+\mbox{\Hypertarget{classGeneralSolver_ab04759cf4ed2570d988446cfb121c0cc}\label{classGeneralSolver_ab04759cf4ed2570d988446cfb121c0cc}} 
+int {\bfseries deg}
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a44930211006db48661bf9bbef9722ea1}\label{classGeneralSolver_a44930211006db48661bf9bbef9722ea1}} 
+std\+::string {\bfseries type}
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a4adb47207dde1bf87b13c8c04cbbb89f}\label{classGeneralSolver_a4adb47207dde1bf87b13c8c04cbbb89f}} 
+bool {\bfseries requires\+\_\+communication} = false
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a2585069188cd1b9abdf7e66bb029481c}\label{classGeneralSolver_a2585069188cd1b9abdf7e66bb029481c}} 
+D\+I\+F\+F\+EQ {\bfseries Differential\+Equation}
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a56c223b1e7d8679d97bf7f153f09bd07}\label{classGeneralSolver_a56c223b1e7d8679d97bf7f153f09bd07}} 
+S\+O\+L\+V\+ER {\bfseries Solver}
+\item 
+\mbox{\Hypertarget{classGeneralSolver_a6bedad6e0a204022c10363aa8f0bb302}\label{classGeneralSolver_a6bedad6e0a204022c10363aa8f0bb302}} 
+\hyperlink{structTimeStructure}{Time\+Structure} {\bfseries T}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Solvers/General\+Solver.\+h\end{DoxyCompactItemize}

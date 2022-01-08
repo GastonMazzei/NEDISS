@@ -1,0 +1,94 @@
+\begin{center}\section*{{\bfseries V 1.\+0.\+0 is ready!}}\end{center} 
+
+\begin{center} {\itshape (Decent documentation coming soon!)}\end{center}  
+
+
+
+\begin{center}{\bfseries How to run}\end{center} 
+
+{\itshape Just configure the simulation via {\ttfamily simulation.\+conf.\+sh} and execute the desired script}
+
+1) {\ttfamily run.\+sh} runs the program in whichever mode was specified in the configuration file 2) {\ttfamily produce\+\_\+graphical\+\_\+simulation.\+sh} runs the program in simulation mode and produces a graphical simulation 4) {\ttfamily run\+\_\+debugxterm.\+sh} runs with gdb and displays each processor in a different console 5) {\ttfamily run\+\_\+pipe.\+sh} runs and pipes the output to a txt file 6) {\ttfamily run\+\_\+valgrind.\+sh} runs and produces a valgrind report 7) {\ttfamily run\+\_\+time.\+sh} runs nonverbose and computes the execution time
+
+The configuration file allows the following to be specified\+:
+
+
+\begin{DoxyItemize}
+\item E\+Q\+N\+U\+M\+B\+ER\+: {\ttfamily \{0,1\}} indexes one of the O\+D\+Es described below. Currently {\ttfamily 0} for 1D linear and {\ttfamily 1} for Noiseless Kuramoto.
+\item S\+O\+L\+V\+ER\+: {\ttfamily \{0,1\}} indexes the solver. {\ttfamily 0} for the Euler method and {\ttfamily 1} for Runge Kutta.
+\item S\+O\+L\+V\+E\+R\+D\+E\+P\+TH\+: {\ttfamily \{1,2,3,4\}} is the depth used in Euler\textquotesingle{}s method. A depth of i with i$>$1 requires the (i-\/1)-\/th derivative of the Equation\textquotesingle{}s field to be implemented.
+\item K1, K2, K3, K4\+: {\ttfamily \mbox{[}0,1\mbox{]}} are the weights to apply to each of the Runge Kutta terms.
+\item T\+O\+P\+O\+L\+O\+GY\+: {\ttfamily \{0,1,2,3\}} indexes the topology. Currently {\ttfamily 0} is a ring, {\ttfamily 1} is a Clique, {\ttfamily 2} is Erdos-\/\+Renyi, and {\ttfamily 3} is Small-\/\+World. The latter currently has its probability p fixed at compilation.
+\item N\+R\+U\+NS\+: {\ttfamily 0-\/inf} defines the number of iterations to perform for the test that can be accessed through the flag T\+E\+ST=2.
+\item N\+N\+O\+D\+ES\+: {\ttfamily P$\ast$\+N\+T$\ast$2 -\/ inf} defines the number of total nodes to use. A pathological lower bound can be P$\ast$\+N\+T$\ast$2, which means two times the number of processors times the number of threads per processor.
+\item T\+E\+ST\+: {\ttfamily \{-\/1,1,2,3\}} is the running mode, see below.
+\item S\+E\+ED\+: {\ttfamily any int} is the seed to use during the entire simulation.
+\item kneigh\+: {\ttfamily 0-\/inf} defines the number of neighbors to which connect if building a Small-\/\+World graph.
+\item A,B\+: {\ttfamily \mbox{[}0,1\mbox{]}} define the proba to initialize the Scale\+Free graph.
+\item J,W\+M\+IN,W\+M\+AX {\ttfamily double} define the (constant) coupling strength for kuramoto, and the min \& max bounds for uniformly sampling the natural frequency of each node.
+\item proba\+: {\ttfamily \mbox{[}0,1\mbox{]}} defines the probability used in the relevant constructors, currently Erdos-\/\+Renyi and Small-\/\+World.
+\item O\+M\+P\+\_\+\+T\+H\+R\+E\+A\+D\+\_\+\+L\+I\+M\+IT\+: {\ttfamily 3-\/inf} is the maximum number of threads allowed per processor. At least three are required by our current division of tasks which is thread-\/id dependant.
+\item O\+M\+P\+\_\+\+N\+E\+S\+T\+ED\+: {\ttfamily true} is a flag for Open\+MP and it\textquotesingle{}s required to be {\ttfamily true} .
+\item np is the number of processors defined to mpirun, where the flag {\ttfamily -\/oversubscribe} allows to use more than the actual number of threads when ran locally in a laptop.
+\item S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+F\+R\+EQ\+: {\ttfamily \{1,...,N\+R\+U\+NS\}} is the number of iterations to wait between recording the state of the system in a .dot file that can be later used for both graphical plotting and simple value-\/access.
+\end{DoxyItemize}
+
+\begin{center}{\itshape Equations \& Solvers}\end{center} 
+
+\tabulinesep=1mm
+\begin{longtabu} spread 0pt [c]{*{4}{|X[-1]}|}
+\hline
+\rowcolor{\tableheadbgcolor}\textbf{ Equation }&\textbf{ Euler order 1 }&\textbf{ Euler up to O(4) }&\textbf{ Generalized Runge Kutta  }\\\cline{1-4}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\rowcolor{\tableheadbgcolor}\textbf{ Equation }&\textbf{ Euler order 1 }&\textbf{ Euler up to O(4) }&\textbf{ Generalized Runge Kutta  }\\\cline{1-4}
+\endhead
+1D linear &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: \\\cline{1-4}
+Noiseless \href{https://en.wikipedia.org/wiki/Kuramoto_model}{\tt Kuramoto} &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: \\\cline{1-4}
+N-\/D linear &\+:x\+: &\+:x\+: &\+:x\+: \\\cline{1-4}
+\end{longtabu}
+\begin{center}{\itshape Topology \& Initialization}\end{center} 
+
+\tabulinesep=1mm
+\begin{longtabu} spread 0pt [c]{*{5}{|X[-1]}|}
+\hline
+\rowcolor{\tableheadbgcolor}\textbf{ Graph }&\textbf{ All nodes 1 value }&\textbf{ Nodes different values }&\textbf{ All edges 1 value }&\textbf{ Edges different values  }\\\cline{1-5}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\rowcolor{\tableheadbgcolor}\textbf{ Graph }&\textbf{ All nodes 1 value }&\textbf{ Nodes different values }&\textbf{ All edges 1 value }&\textbf{ Edges different values  }\\\cline{1-5}
+\endhead
+Ring(\+N) &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: &\+:hourglass\+: \\\cline{1-5}
+Clique(\+N) &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: &\+:hourglass\+: \\\cline{1-5}
+Erdos Renyi(\+N,p) &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: &\+:hourglass\+: \\\cline{1-5}
+Scale\+Free(\+N,\+A,\+B) &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: &\+:hourglass\+: \\\cline{1-5}
+Small World(\+N,k,p) &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: &\+:heavy\+\_\+check\+\_\+mark\+: &\+:x\+: \\\cline{1-5}
+Grid(\+N,\+M) &\+:hourglass\+: &\+:hourglass\+: &\+:hourglass\+: &\+:hourglass\+: \\\cline{1-5}
+Torus(\+N,\+M) &\+:x\+: &\+:x\+: &\+:x\+: &\+:x\+: \\\cline{1-5}
+hypercube(\+N) &\+:x\+: &\+:x\+: &\+:x\+: &\+:x\+: \\\cline{1-5}
+\end{longtabu}
+
+
+\begin{center}{\itshape Working modes}\end{center} 
+
+-\/1 -\/ Produces a graphical simulation
+
+0 -\/ Tests initialization
+
+1 -\/ Tests single-\/step evolution
+
+2 -\/ Tests results after several runs
+
+\begin{center}{\itshape How to contribute}\end{center}  {\itshape Open a pull request if you have any idea; at the present time (beggining Dec. 2021) the main focus of attention should be adding random walks to measure diffusion. Also a way to compute Synchronization time in-\/house (i.\+e. without producing graphical information) could be useful. Please contact }
+
+\begin{center}{\itshape Other Useful Tools}\end{center} 
+
+
+\begin{DoxyItemize}
+\item compiling with the {\ttfamily V\+E\+R\+B\+O\+SE} macro defined produces a loot of output in each run.
+\item {\ttfamily C\+O\+N\+S\+I\+D\+E\+R\+A\+T\+I\+O\+N\+S.\+txt} contains special considerations, e.\+g. how the M\+PI implementation can affect us.
+\item {\ttfamily Guideline-\/\+Diff\+Eqs\+Solvers\mbox{[}ES\mbox{]}.txt} is a proto explanation of how to build a Differential Equation for users. It says \textquotesingle{}ES\textquotesingle{} because it is in Spanish! Ouch. 
+\end{DoxyItemize}
