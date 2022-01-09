@@ -66,9 +66,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><center><h1><b>V 1.0.0</b></h1>
-</center><center></center><center> <a href="https://ci.appveyor.com/project/GastonMazzei/nediss"><img src="https://ci.appveyor.com/api/projects/status/8t72t8yb59kbdiuj?svg=true" alt="Build status" class="inline"/></a> <a href="https://lgtm.com/projects/g/GastonMazzei/NEDISS/context:cpp"><img src="https://img.shields.io/lgtm/grade/cpp/github/GastonMazzei/NEDISS" alt="Language grade: C++" class="inline"/></a></center><center><em>Documentation at <a href="https://gastonmazzei.github.io/NEDISS/annotated.html">https://gastonmazzei.github.io/NEDISS/annotated.html</a></em></center><hr  />
-<center><b>How to run</b></center><p ><em>Just configure the simulation via <code>simulation.conf.sh</code> and execute the desired script</em></p>
-<p >1) <code>run.sh</code> just runs the program in whichever mode was specified in the configuration file 2) <code>produce_graphical_simulation.sh</code> runs the program in simulation mode and produces a graphical simulation 3) <code>capture_period.sh</code> computes the exponential coefficients of the collapse into a locked state for the values specified in the configuration file. 4) <code>period_analysis.sh</code> wraps the capture of the period for a range of parameters indicated in the sweep configuration file, allows to mark outliers to exclude, and finally produces a chart showing the trend. 5) <code>run_debugxterm.sh</code> runs with gdb and displays each processor in a different console 6) <code>run_pipe.sh</code> runs and pipes the output to a txt file 7) <code>run_valgrind.sh</code> runs and produces a valgrind report 8) <code>run_time.sh</code> runs nonverbose and computes the execution time</p>
+</center><center></center><center> <a href="https://ci.appveyor.com/project/GastonMazzei/nediss"><img src="https://ci.appveyor.com/api/projects/status/8t72t8yb59kbdiuj?svg=true" alt="Build status" class="inline"/></a> <a href="https://lgtm.com/projects/g/GastonMazzei/NEDISS/context:cpp"><img src="https://img.shields.io/lgtm/grade/cpp/github/GastonMazzei/NEDISS" alt="Language grade: C++" class="inline"/></a></center><center> <a href="https://gastonmazzei.github.io/NEDISS/annotated.html"><em>DOCS</em></a></center><hr  />
+<center><b>How to run</b></center><p ><em>Configure the simulation at <code>simulation.conf.sh</code> and execute the desired script. If it's a sweep, configuring <code>period_analysis_configuration.py</code> is also required. (TODO: video tutorial)</em></p>
+<p >1) <code>produce_graphical_simulation.sh</code> runs the program in simulation mode and produces a graphical simulation 2) <code>capture_period.sh</code> computes the exponential coefficients of the collapse into a locked state for the values specified in the configuration file. 3) <code>period_analysis.sh</code> wraps the capture of the period for a range of parameters indicated in the sweep configuration file, allows to mark outliers to exclude, and finally produces a chart showing the trend. 4) TODO: compute the average return probability using Monte Carlo solver.</p>
 <p >The configuration file allows the following to be specified:</p>
 <ul>
 <li>EQNUMBER: <code>{0,1}</code> indexes one of the ODEs described below. Currently <code>0</code> for 1D linear and <code>1</code> for Noiseless Kuramoto.</li>
@@ -89,45 +89,41 @@ $(function() {
 <li>np is the number of processors defined to mpirun, where the flag <code>-oversubscribe</code> allows to use more than the actual number of threads when ran locally in a laptop.</li>
 <li>SAMPLING_FREQ: <code>{1,...,NRUNS}</code> is the number of iterations to wait between recording the state of the system in a .dot file that can be later used for both graphical plotting and simple value-access.</li>
 </ul>
-<center><em>Equations &amp; Solvers</em></center><table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Equation   </th><th class="markdownTableHeadNone">Euler order 1   </th><th class="markdownTableHeadNone">Euler up to O(4)   </th><th class="markdownTableHeadNone">Generalized Runge Kutta    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">1D linear   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Noiseless <a href="https://en.wikipedia.org/wiki/Kuramoto_model">Kuramoto</a>   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">N-D linear   </td><td class="markdownTableBodyNone">:x:   </td><td class="markdownTableBodyNone">:x:   </td><td class="markdownTableBodyNone">:x:   </td></tr>
-</table>
+<center><em>Equations &amp; Solvers</em></center><p >| Equation | Euler order 1 | Euler up to O(4) | Generalized Runge Kutta | Solver Wrapper w/Noise models | Monte Carlo Evolution | | &mdash; | &mdash; | &mdash; | &mdash; | &mdash; | | 1D linear | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: | :bulb: | :x: | | Noiseless <a href="https://en.wikipedia.org/wiki/Kuramoto_model">Kuramoto</a> | :heavy_check_mark: | :x: | :heavy_check_mark: | :x: | :bulb: | :x: | | N-D linear |:bulb: | :bulb: | :bulb: | :x: | :bulb: | :x: | | <a href="http://www.scholarpedia.org/article/Pulse_coupled_oscillators">Pulse-coupled</a> oscillators | :bulb: | :bulb: | :bulb: | :x: | :bulb: | :x: | | Fractional Brownian Motion | :x: | :x: | :x: | :x: | :bulb: |</p>
+<p >|<b>Refs.</b> | :heavy_check_mark: done and tested | :white_check_mark: done but untested | :x: not supported |:bulb: potential feature|</p>
 <center><em>Topology &amp; Initialization</em></center><table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Graph   </th><th class="markdownTableHeadNone">All nodes 1 value   </th><th class="markdownTableHeadNone">Nodes different values   </th><th class="markdownTableHeadNone">All edges 1 value   </th><th class="markdownTableHeadNone">Edges different values    </th></tr>
+<th class="markdownTableHeadNone">Graph   </th><th class="markdownTableHeadNone">All nodes 1 value   </th><th class="markdownTableHeadNone">Nodes different random values   </th><th class="markdownTableHeadNone">All edges 1 value   </th><th class="markdownTableHeadNone">Edges different random values   </th><th class="markdownTableHeadNone">Node and edges read from file    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Ring(N)   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:hourglass:    </td></tr>
+<td class="markdownTableBodyNone">Ring(N)   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:bulb:   </td><td class="markdownTableBodyNone">:bulb:    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Clique(N)   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:hourglass:    </td></tr>
+<td class="markdownTableBodyNone">Clique(N)   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:bulb:   </td><td class="markdownTableBodyNone">:bulb:    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Erdos Renyi(N,p)   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:hourglass:    </td></tr>
+<td class="markdownTableBodyNone">Erdos Renyi(N,p)   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:bulb:   </td><td class="markdownTableBodyNone">:bulb:    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">ScaleFree(N,A,B)   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:hourglass:    </td></tr>
+<td class="markdownTableBodyNone">ScaleFree(N,A,B)   </td><td class="markdownTableBodyNone">:white_check_mark:   </td><td class="markdownTableBodyNone">:white_check_mark:   </td><td class="markdownTableBodyNone">:white_check_mark:   </td><td class="markdownTableBodyNone">:bulb:   </td><td class="markdownTableBodyNone">:bulb:    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Small World(N,k,p)   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:x:    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Grid(N,M)   </td><td class="markdownTableBodyNone">:hourglass:   </td><td class="markdownTableBodyNone">:hourglass:   </td><td class="markdownTableBodyNone">:hourglass:   </td><td class="markdownTableBodyNone">:hourglass:    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Torus(N,M)   </td><td class="markdownTableBodyNone">:x:   </td><td class="markdownTableBodyNone">:x:   </td><td class="markdownTableBodyNone">:x:   </td><td class="markdownTableBodyNone">:x:    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">hypercube(N)   </td><td class="markdownTableBodyNone">:x:   </td><td class="markdownTableBodyNone">:x:   </td><td class="markdownTableBodyNone">:x:   </td><td class="markdownTableBodyNone">:x:   </td></tr>
+<td class="markdownTableBodyNone">Small World(N,k,p)   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:heavy_check_mark:   </td><td class="markdownTableBodyNone">:hourglass:   </td><td class="markdownTableBodyNone">:hourglass:   </td></tr>
 </table>
-<center><em>Working modes</em></center><p >-1 - Produces a simulation of length <code>NRUNS</code> and samples the node values at <code>SAMPLING_FREQ</code></p>
+<p>| Grid(N,M) | :bulb: | :bulb: | :bulb: | :bulb: | | Torus(N,M) | :bulb: | :bulb: | :bulb: | :bulb: | | hypercube(N) | :bulb: | :bulb: | :bulb: | :bulb: |</p>
+<p >|<b>Refs.</b> | :heavy_check_mark: done and tested | :white_check_mark: done but untested |:hourglass: under construction |:bulb: potential feature|</p>
+<center><em>TODO: How to write plugins</em></center><ul>
+<li>Write your own initial condition</li>
+<li>Write your own equation</li>
+<li>Write your own Graph Topology</li>
+</ul>
+<center><em>Other running modes</em></center><ul>
+<li><code>run.sh</code> just runs the program in whichever mode was specified in the configuration file</li>
+<li><code>run_debugxterm.sh</code> runs with gdb and displays each processor in a different console</li>
+<li><code>run_pipe.sh</code> runs and pipes the output to a txt file</li>
+<li><code>run_valgrind.sh</code> runs and produces a valgrind report</li>
+<li><code>run_time.sh</code> runs nonverbose and computes the execution time</li>
+</ul>
+<center><em>Internal Working Modes (exposed to <code>run.sh</code>)</em></center><p >-1 - Produces a simulation of length <code>NRUNS</code> and samples the node values at <code>SAMPLING_FREQ</code></p>
 <p >0 - Visually inspect node and edge values at initialization</p>
 <p >1 - Visually inspect node and edge values after "a few" iterations (currently fixed at 3).</p>
 <p >2 - Visually inspect node and edge values at both initialization and after several configurable (<code>NRUNS</code>) iterations. It also verifies the probability of errors, e.g. verification of 10k iterations with 100 threads and no segmentation fault.</p>
-<center><em>How to contribute</em></center><p> <em>Please open a pull request if you have any idea; at the present time (beggining Dec. 2021) the main focus of attention should be adding random walks to measure diffusion. Also a way to compute Synchronization time in-house (i.e. without producing graphical information) could be useful. Please contact </em></p>
-<center><em>Other Useful Tools</em></center><ul>
-<li>compiling with the <code>VERBOSE</code> macro defined produces a loot of output in each run.</li>
-<li><code>CONSIDERATIONS.txt</code> contains special considerations, e.g. how the MPI implementation can affect us. </li>
-</ul>
+<center><em>How to contribute</em></center><p> <em>Please open a pull request if you have any idea; at the present time (beggining Jan. 2022) the main focus of attention should be adding random walks to measure diffusion. Do not hesitate to contact me. As a developer please consider compiling with the <code>VERBOSE</code> macro defined. The pattern for pushing minor changes without triggering an appveyor job is the commit title "[unsurveilled]".</em> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
