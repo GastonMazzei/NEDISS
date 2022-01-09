@@ -6,23 +6,21 @@
 
  
  
-<i>Documentation at https://gastonmazzei.github.io/NEDISS/annotated.html</i></center>
+ <a href='https://gastonmazzei.github.io/NEDISS/annotated.html'><i>DOCS</i></a></center>
  
 ---
 
 
 <center><b>How to run</b></center>
 
-<i>Just configure the simulation via `simulation.conf.sh` and execute the desired script</i>
+<i>Configure the simulation at `simulation.conf.sh` and execute the desired script. If it's a sweep, configuring `period_analysis_configuration.py` is also required. (TODO: video tutorial)</i>
 
-1) `run.sh` just runs the program in whichever mode was specified in the configuration file
-2) `produce_graphical_simulation.sh` runs the program in simulation mode and produces a graphical simulation
-3) `capture_period.sh` computes the exponential coefficients of the collapse into a locked state for the values specified in the configuration file.
-4) `period_analysis.sh` wraps the capture of the period for a range of parameters indicated in the sweep configuration file, allows to mark outliers to exclude, and finally produces a chart showing the trend. 
-5) `run_debugxterm.sh` runs with gdb and displays each processor in a different console
-6) `run_pipe.sh` runs and pipes the output to a txt file
-7) `run_valgrind.sh` runs and produces a valgrind report
-8) `run_time.sh` runs nonverbose and computes the execution time
+1) `produce_graphical_simulation.sh` runs the program in simulation mode and produces a graphical simulation
+2) `capture_period.sh` computes the exponential coefficients of the collapse into a locked state for the values specified in the configuration file.
+3) `period_analysis.sh` wraps the capture of the period for a range of parameters indicated in the sweep configuration file, allows to mark outliers to exclude, and finally produces a chart showing the trend. 
+4) TODO: compute the average return probability using Monte Carlo solver.
+
+
 
 The configuration file allows the following to be specified:
 
@@ -62,27 +60,65 @@ The configuration file allows the following to be specified:
 
 <center><i>Equations & Solvers</i></center>
 
-| Equation | Euler order 1 | Euler up to O(4) | Generalized Runge Kutta|
-| --- | --- | --- | --- |
-| 1D linear | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| Noiseless <a href='https://en.wikipedia.org/wiki/Kuramoto_model'>Kuramoto</a> | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| N-D linear | :x: | :x: | :x: |
+| Equation | Euler order 1 | Euler up to O(4) | Generalized Runge Kutta | Solver Wrapper w/Noise models | Monte Carlo Evolution |
+| --- | --- | --- | --- | --- |
+| 1D linear | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: | :bulb: | :x: |
+| Noiseless <a href='https://en.wikipedia.org/wiki/Kuramoto_model'>Kuramoto</a> | :heavy_check_mark: | :x: | :heavy_check_mark: | :x: | :bulb: | :x: |
+| N-D linear |:bulb: | :bulb: | :bulb: | :x: | :bulb: | :x: |
+| <a href='http://www.scholarpedia.org/article/Pulse_coupled_oscillators'>Pulse-coupled</a> oscillators | :bulb: | :bulb: | :bulb: | :x:  | :bulb: | :x: |
+| Fractional Brownian Motion | :x: | :x: | :x: | :x: | :bulb: |
+
+|<b>Refs.</b>
+| :heavy_check_mark: done and tested
+| :white_check_mark: done but untested 
+| :x: not supported 
+|:bulb: potential feature|
+
 
 <center><i>Topology & Initialization</i></center>
 
-| Graph | All nodes 1 value | Nodes different values | All edges 1 value | Edges different values | 
-| --- | --- | --- | --- | --- |
-| Ring(N) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :hourglass: |
-| Clique(N) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :hourglass: |
-| Erdos Renyi(N,p) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :hourglass: |
-| ScaleFree(N,A,B) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :hourglass: |
-| Small World(N,k,p) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: |
-| Grid(N,M) | :hourglass: | :hourglass: | :hourglass: | :hourglass: |
-| Torus(N,M) | :x: | :x: | :x: | :x: |
-| hypercube(N) | :x: | :x: | :x: | :x: |
+| Graph | All nodes 1 value | Nodes different random values | All edges 1 value | Edges different random values | Node and edges read from file | 
+| --- | --- | --- | --- | --- | --- |
+| Ring(N) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :bulb: | :bulb: |
+| Clique(N) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :bulb: | :bulb: |
+| Erdos Renyi(N,p) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :bulb: | :bulb: |
+| ScaleFree(N,A,B) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :bulb: | :bulb: |
+| Small World(N,k,p) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :hourglass: | :hourglass: |
+| Grid(N,M) | :bulb: | :bulb: | :bulb: | :bulb: |
+| Torus(N,M) | :bulb: | :bulb: | :bulb: | :bulb: |
+| hypercube(N) | :bulb: | :bulb: | :bulb: | :bulb: |
+
+|<b>Refs.</b>
+| :heavy_check_mark: done and tested
+| :white_check_mark: done but untested 
+|:hourglass: under construction 
+|:bulb: potential feature|
 
 
-<center><i>Working modes</i></center>
+<center><i>TODO: How to write plugins</i></center>
+
+- Write your own initial condition
+
+- Write your own equation
+
+-  Write your own Graph Topology
+
+
+
+<center><i>Other running modes</i></center>
+
+- `run.sh` just runs the program in whichever mode was specified in the configuration file
+
+- `run_debugxterm.sh` runs with gdb and displays each processor in a different console
+
+- `run_pipe.sh` runs and pipes the output to a txt file
+
+- `run_valgrind.sh` runs and produces a valgrind report
+
+- `run_time.sh` runs nonverbose and computes the execution time
+
+
+<center><i>Internal Working Modes (exposed to `run.sh`)</i></center>
 
 -1 - Produces a simulation of length `NRUNS` and samples the node values at `SAMPLING_FREQ`
 
@@ -93,11 +129,6 @@ The configuration file allows the following to be specified:
 2 - Visually inspect node and edge values at both initialization and after several configurable (`NRUNS`) iterations. It also verifies the probability of errors, e.g. verification of 10k iterations with 100 threads and no segmentation fault.
 
 
+
 <center><i>How to contribute</i></center>
-<i>Please open a pull request if you have any idea; at the present time (beggining Dec. 2021) the main focus of attention should be adding random walks to measure diffusion. Also a way to compute Synchronization time in-house (i.e. without producing graphical information) could be useful. Please contact </i>
-
-
-<center><i>Other Useful Tools</i></center>
- 
-- compiling with the `VERBOSE` macro defined produces a loot of output in each run.
-- `CONSIDERATIONS.txt` contains special considerations, e.g. how the MPI implementation can affect us.
+<i>Please open a pull request if you have any idea; at the present time (beggining Jan. 2022) the main focus of attention should be adding random walks to measure diffusion. Do not hesitate to contact me. As a developer please consider compiling with the `VERBOSE` macro defined. The pattern for pushing minor changes without triggering an appveyor job is the commit title "[unsurveilled]".</i>
