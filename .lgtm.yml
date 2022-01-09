@@ -16,6 +16,7 @@ extraction:
         - cmake
         - libopenmpi-dev
         - openmpi-bin
+        - libboost-all-dev
         - g++-10
         - ccache
       script:
@@ -27,16 +28,16 @@ extraction:
           #        - make -j 8 |& tee make.out
           #        - make install |& tee install.out
           #        - cd ..
-        - sudo apt-get install --reinstall openmpi-bin libopenmpi-dev
-        - echo "About to download boost 1.77.0"
+          #- sudo apt-get install --reinstall openmpi-bin libopenmpi-dev
+          #- echo "About to download boost 1.77.0"
 #        - mkdir ~/.conan
 #        - cat /usr/local/share/ca-certificates/semmle-cache-ca/semmle-cache-ca.crt >> ~/.conan/cacert.pem
-        - wget https://boostorg.jfrog.io/artifactory/main/release/1.77.0/source/boost_1_77_0.tar.gz
-        - tar zxvf boost_1_77_0.tar.gz
-        - cd boost_1_77_0
-        - ./bootstrap.sh
-        - ./b2 install
-        - cd ..
+#- wget https://boostorg.jfrog.io/artifactory/main/release/1.77.0/source/boost_1_77_0.tar.gz
+#       - tar zxvf boost_1_77_0.tar.gz
+#       - cd boost_1_77_0
+#       - ./bootstrap.sh
+#       - ./b2 install
+#       - cd ..
 #        - python3 -m pip install --upgrade pip setuptools
 #        - python3 -m pip install conan
 #        - python3 -m pip install cmake
