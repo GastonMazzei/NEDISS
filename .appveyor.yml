@@ -25,21 +25,21 @@ install:
 
         echo "About to download OpenMPI 4"
 
-        #        wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.2.tar.gz
+        wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.2.tar.gz
 
-        #        tar xvzf https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.2.tar.gz
+        tar xvzf openmpi-4.1.2.tar.gz
 
-        #        cd openmpi-4.1.2
+        cd openmpi-4.1.2
 
-        #        ./configure |& tee config.out
+        ./configure |& tee config.out
 
-        #        make -j 8 |& tee make.out
+        make -j 4 |& tee make.out
 
-        #        make install |& tee install.out
+        make install |& tee install.out
         
-        #        cd ..
+        cd ..
 
-        apt-get install --reinstall openmpi-bin libopenmpi-dev
+        #apt-get install --reinstall openmpi-bin libopenmpi-dev
 
         echo "About to download Boost 1.77.0"
 
