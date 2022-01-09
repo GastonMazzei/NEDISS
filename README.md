@@ -21,7 +21,44 @@
 4) TODO: compute the average return probability using Monte Carlo solver.
 
 
+<center><b>Equations & Solvers</b></center>
 
+| Equation | Euler order 1 | Euler up to O(4) | Generalized Runge Kutta | Solver Wrapper w/Noise models | Monte Carlo Evolution |
+| --- | --- | --- | --- | --- | --- |
+| 1D linear | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: | :bulb: | :x: |
+| Noiseless <a href='https://en.wikipedia.org/wiki/Kuramoto_model'>Kuramoto</a> | :heavy_check_mark: | :x: | :heavy_check_mark: | :x: | :bulb: | :x: |
+| N-D linear |:bulb: | :bulb: | :bulb: | :x: | :bulb: | :x: |
+| <a href='http://www.scholarpedia.org/article/Pulse_coupled_oscillators'>Pulse-coupled</a> oscillators | :bulb: | :bulb: | :bulb: | :x:  | :bulb: | :x: |
+| Fractional Brownian Motion | :x: | :x: | :x: | :x: | :bulb: |
+
+|<b>Refs.</b>
+| :heavy_check_mark: done and tested
+| :x: not supported 
+|:bulb: potential feature|
+
+
+<center><b>Topologies & Initializations</b></center>
+
+| Graph | All nodes 1 value | Nodes different random values | All edges 1 value | Edges different random values | Node and edges read from file | 
+| --- | --- | --- | --- | --- | --- |
+| Ring(N) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :bulb: | :bulb: |
+| Clique(N) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :bulb: | :bulb: |
+| Erdos Renyi(N,p) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :bulb: | :bulb: |
+| ScaleFree(N,A,B) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :bulb: | :bulb: |
+| Small World(N,k,p) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :hourglass: | :hourglass: |
+| Grid(N,M) | :bulb: | :bulb: | :bulb: | :bulb: | :bulb: |
+| Torus(N,M) | :bulb: | :bulb: | :bulb: | :bulb: | :bulb: |
+| hypercube(N) | :bulb: | :bulb: | :bulb: | :bulb: | :bulb: |
+
+|<b>Refs.</b>
+| :heavy_check_mark: done and tested
+| :white_check_mark: done but untested 
+|:hourglass: under construction 
+|:bulb: potential feature|
+
+
+
+<center><b>How to Configure</b></center>
 The configuration file allows the following to be specified:
 
 * EQNUMBER: `{0,1}` indexes one of the ODEs described below. Currently `0` for 1D linear and `1` for Noiseless Kuramoto.
@@ -58,44 +95,10 @@ The configuration file allows the following to be specified:
 
 * SAMPLING_FREQ: `{1,...,NRUNS}` is the number of iterations to wait between recording the state of the system in a .dot file that can be later used for both graphical plotting and simple value-access. 
 
-<center><i>Equations & Solvers</i></center>
-
-| Equation | Euler order 1 | Euler up to O(4) | Generalized Runge Kutta | Solver Wrapper w/Noise models | Monte Carlo Evolution |
-| --- | --- | --- | --- | --- |
-| 1D linear | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: | :bulb: | :x: |
-| Noiseless <a href='https://en.wikipedia.org/wiki/Kuramoto_model'>Kuramoto</a> | :heavy_check_mark: | :x: | :heavy_check_mark: | :x: | :bulb: | :x: |
-| N-D linear |:bulb: | :bulb: | :bulb: | :x: | :bulb: | :x: |
-| <a href='http://www.scholarpedia.org/article/Pulse_coupled_oscillators'>Pulse-coupled</a> oscillators | :bulb: | :bulb: | :bulb: | :x:  | :bulb: | :x: |
-| Fractional Brownian Motion | :x: | :x: | :x: | :x: | :bulb: |
-
-|<b>Refs.</b>
-| :heavy_check_mark: done and tested
-| :white_check_mark: done but untested 
-| :x: not supported 
-|:bulb: potential feature|
 
 
-<center><i>Topology & Initialization</i></center>
 
-| Graph | All nodes 1 value | Nodes different random values | All edges 1 value | Edges different random values | Node and edges read from file | 
-| --- | --- | --- | --- | --- | --- |
-| Ring(N) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :bulb: | :bulb: |
-| Clique(N) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :bulb: | :bulb: |
-| Erdos Renyi(N,p) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :bulb: | :bulb: |
-| ScaleFree(N,A,B) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :bulb: | :bulb: |
-| Small World(N,k,p) | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :hourglass: | :hourglass: |
-| Grid(N,M) | :bulb: | :bulb: | :bulb: | :bulb: |
-| Torus(N,M) | :bulb: | :bulb: | :bulb: | :bulb: |
-| hypercube(N) | :bulb: | :bulb: | :bulb: | :bulb: |
-
-|<b>Refs.</b>
-| :heavy_check_mark: done and tested
-| :white_check_mark: done but untested 
-|:hourglass: under construction 
-|:bulb: potential feature|
-
-
-<center><i>TODO: How to write plugins</i></center>
+<center><b>TODO: How to write plugins</b></center>
 
 - Write your own initial condition
 
@@ -105,7 +108,7 @@ The configuration file allows the following to be specified:
 
 
 
-<center><i>Other running modes</i></center>
+<center><b>Other running modes</b></center>
 
 - `run.sh` just runs the program in whichever mode was specified in the configuration file
 
@@ -118,7 +121,7 @@ The configuration file allows the following to be specified:
 - `run_time.sh` runs nonverbose and computes the execution time
 
 
-<center><i>Internal Working Modes (exposed to `run.sh`)</i></center>
+<center><b>Internal Working Modes (exposed to `run.sh`)</b></center>
 
 -1 - Produces a simulation of length `NRUNS` and samples the node values at `SAMPLING_FREQ`
 
@@ -130,5 +133,5 @@ The configuration file allows the following to be specified:
 
 
 
-<center><i>How to contribute</i></center>
+<center><b>How to contribute</b></center>
 <i>Please open a pull request if you have any idea; at the present time (beggining Jan. 2022) the main focus of attention should be adding random walks to measure diffusion. Do not hesitate to contact me. As a developer please consider compiling with the `VERBOSE` macro defined. The pattern for pushing minor changes without triggering an appveyor job is the commit title "[unsurveilled]".</i>
